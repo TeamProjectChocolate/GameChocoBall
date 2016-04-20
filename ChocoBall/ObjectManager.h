@@ -47,7 +47,7 @@ public:
 	//引き数: CGameObject*型 登録するGameObjectのポインタ
 	//		　short型 更新優先度(0が最小、数字が大きいほど優先度が低い)
 	//返り値: なし
-	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいオブジェクトのインスタンス,_T("インスタンスの名前"),0);
+	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいインスタンスのポインタ,_T("インスタンスの名前"),0);
 	//※オブジェクトの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
 	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
@@ -56,7 +56,7 @@ public:
 	//すでに生成されているオブジェクトをマネージャークラスに登録する関数(優先度なし：自動的に優先度は最低になります)
 	//引き数: CGameObject*型 登録するGameObjectのポインタ
 	//返り値: なし
-	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいオブジェクトのインスタンス,_T("インスタンスの名前"));
+	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいインスタンスのポインタ,_T("インスタンスの名前"));
 	//※インスタンスの名前は被らないようにユニークなものをプログラマーが指定してください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
 	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
@@ -65,7 +65,7 @@ public:
 	//Objectmanagerクラスに登録されているGameObjectのインスタンスを名前で検索する関数
 	//引き数: LPCSTR型 インスタンスの名前
 	//返り値: CGameObject*型 引き数の名前と一致したオブジェクトのポインタ(どれか一つ)
-	//呼び出し例: SINSTANCE(CObjectManager)->FindGameObject(_T("インスタンスの名前"));
+	//呼び出し例: SINSTANCE(CObjectManager)->FindGameObject<検索したいクラス名>(_T("インスタンスの名前"));
 	//※複数名前が一致した場合どれか一つが返されます
 	//※確実にそのインスタンスを取得したい場合はプログラマーがきちんとユニークな名前で登録してください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと

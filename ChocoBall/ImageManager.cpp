@@ -10,7 +10,7 @@ void CImageManager::Add2D(LPCSTR pFileName,LPDIRECT3DTEXTURE9 pTexture,RECT rect
 	image->pFileName = pFileName;
 	image->pTex = pTexture;
 	image->rect = rect;
-	m_ImageList.push_back(image);		// IMAGE情報配列に追加
+	m_ImageList.push_back(image);		// IMAGE2D情報配列に追加
 }
 
 IMAGE2D* CImageManager::Find2DImage(LPCSTR pFileName){
@@ -35,7 +35,7 @@ void CImageManager::Add3D(LPCSTR pFileName, D3DMATERIAL9* m_pMeshMat,
 	image->pMat = m_pMeshMat;
 	image->pMesh = m_pMesh;
 	image->NumMaterials = m_NumMaterials;
-	m_ModelList.push_back(image);		// IMAGE情報配列に追加
+	m_ModelList.push_back(image);		// IMAGE3D情報配列に追加
 }
 
 IMAGE3D* CImageManager::Find3DImage(LPCSTR pFileName){

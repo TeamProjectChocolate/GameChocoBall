@@ -10,7 +10,7 @@ void C2DImage::Initialize()
 	if (Image != nullptr){
 		m_pTexture = Image->pTex;
 		m_rect = Image->rect;
-		m_texCenter = D3DXVECTOR2(m_rect.right / 2, m_rect.bottom / 2);
+		m_texCenter = D3DXVECTOR2(FLOAT(m_rect.right / 2), FLOAT(m_rect.bottom / 2));
 		return;
 	}
 	LoadTextureFile();

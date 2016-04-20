@@ -16,7 +16,7 @@ public:
 	bool GetAlive(){
 		return m_alive;
 	}
-	bool GetType(){
+	short GetType(){
 		return m_ObjecType;
 	}
 	bool GetOriginal(){
