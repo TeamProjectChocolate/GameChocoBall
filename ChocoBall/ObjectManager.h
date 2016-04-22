@@ -1,9 +1,17 @@
 #pragma once
 #include "stdafx.h"
 #include "GameObject.h"
+#include "Assert.h"
 
+#define OBJECTNAME_MAX 255
 #define MAX_PRIORTY 255
 
+// ゲームオブジェクト構造体
+typedef struct OBJECT_DATA{
+	CHAR objectname[OBJECTNAME_MAX + 1];	// 生成するオブジェクト名
+	CGameObject* object;	// ゲームオブジェクトのポインタ
+	short priority;			// 実行優先度(数字が小さいほど優先度が高い　最小値：0)
+}OBJECT_DATA;
 
 class CObjectManager
 {
@@ -15,12 +23,14 @@ public:
 	//		  short型 更新優先度(0が最小、数字が大きいほど優先度が低い)
 	//返り値: T*型 生成したクラスのオブジェクトを返却
 	//呼び出し例: SINSTANCE(CObjectManager)->GenerationObject<生成したいクラス名>(_T("インスタンスの名前"),0);
-	//※オブジェクトの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
+	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
 	template<class T>
 	T* GenerationObject(LPCSTR ObjectName,short priorty){
 		T* Object = new T;
+		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		if (priorty > MAX_PRIORTY){
 			priorty = MAX_PRIORTY;
 		}
@@ -32,12 +42,14 @@ public:
 	//引き数: LPCSTR型 インスタンスの名前
 	//返り値: T*型 生成したクラスのオブジェクトを返却
 	//呼び出し例: SINSTANCE(CObjectManager)->GenerationObject<生成したいクラス名>(_T("インスタンスの名前"));
-	//※オブジェクトの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
+	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
 	 template<class T>
 	T* GenerationObject(LPCSTR ObjectName){
 		T* Object = new T;
+		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		short priorty = MAX_PRIORTY;
 		this->Add(Object,ObjectName ,priorty);
 		return Object;
@@ -48,19 +60,21 @@ public:
 	//		　short型 更新優先度(0が最小、数字が大きいほど優先度が低い)
 	//返り値: なし
 	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいインスタンスのポインタ,_T("インスタンスの名前"),0);
-	//※オブジェクトの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
-	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
+	//※この関数で登録したインスタンスをnewで生成している場合は、必ずCObjectManagerクラスのDeleteGameObject関数を呼び出した後に
+	//  CObjectManagerクラスの外部できちんとdeleteしてください
 	void AddObject(CGameObject*,LPCSTR, short);
 
 	//すでに生成されているオブジェクトをマネージャークラスに登録する関数(優先度なし：自動的に優先度は最低になります)
 	//引き数: CGameObject*型 登録するGameObjectのポインタ
 	//返り値: なし
 	//呼び出し例: SINSTANCE(CObjectManager)->AddObject(追加したいインスタンスのポインタ,_T("インスタンスの名前"));
-	//※インスタンスの名前は被らないようにユニークなものをプログラマーが指定してください
-	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
-	void AddObject(CGameObject*,LPCSTR);
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
+	//※この関数で登録したインスタンスをnewで生成している場合は、必ずCObjectManagerクラスのDeleteGameObject関数を呼び出した後に
+	//  CObjectManagerクラスの外部できちんとdeleteしてください
+	void AddObject(CGameObject*, LPCSTR);
 
 	//Objectmanagerクラスに登録されているGameObjectのインスタンスを名前で検索する関数
 	//引き数: LPCSTR型 インスタンスの名前
@@ -69,7 +83,7 @@ public:
 	//※複数名前が一致した場合どれか一つが返されます
 	//※確実にそのインスタンスを取得したい場合はプログラマーがきちんとユニークな名前で登録してください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスの削除関数(名前未定)を呼び出して行うこと
+	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
 	//※関数が重いため多用しないこと
 	template<class T>
 	T* FindGameObject(LPCSTR ObjectName)
@@ -85,6 +99,7 @@ public:
 	}
 
 	//Objectmanagerクラスに登録されているGameObjectのインスタンスを名前で検索し、一致したものを一件削除する関数
+	//※ここでは削除リストにプールされるだけで、削除自体はCObjectManagerクラスのExcuteDeleteObjects関数にて行われる
 	//引き数: LPCSTR型 インスタンスの名前
 	//返り値: なし
 	//呼び出し例: SINSTANCE(CObjectManager)->DeleteGameObject(_T("インスタンスの名前"));
@@ -95,10 +110,18 @@ public:
 	//※関数が重いため多用しないこと
 	void DeleteGameObject(LPCSTR);
 
+	//削除リストに登録されているGameObjectを削除する関数
+	//引き数: なし
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CObjectManager)->ExcuteDeleteObject();
+	//※必ずメインループで最後に呼び出す
+	void ExcuteDeleteObjects();
+
 	void Intialize(LPD3DXSPRITE);
 	void Update();
 	void Draw();
 private:
 	void Add(CGameObject*,LPCSTR, short);
-	vector<OBJECT_DATA*> m_GameObjects;
+	vector<OBJECT_DATA*> m_GameObjects;	// GameObject*のリスト
+	vector<CGameObject*> m_DeleteObjects;	// 削除リスト
 };

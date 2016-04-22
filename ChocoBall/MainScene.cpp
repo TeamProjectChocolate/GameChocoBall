@@ -11,8 +11,7 @@ CMainScene::~CMainScene(){
 void CMainScene::Initialize(){
 	this->CreateSprite();
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 0);
-	CPlayer* Player = new CPlayer;
-	SINSTANCE(CObjectManager)->AddObject(Player, _T("bbb"));
+	SINSTANCE(CObjectManager)->AddObject(&m_Player, _T("bbb"));
 	//for (short i = 0; i < 5; i++){
 	//	LPCSTR name;
 	//	name = CLASS_NAME(CPlayer);
@@ -26,12 +25,12 @@ void CMainScene::Initialize(){
 		"aaa"
 	};
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(0.0f, 5.0f);
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(0.0f, -5.0f);
+	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.0f);
 	SINSTANCE(CObjectManager)->DeleteGameObject(objectName);
 
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
-	m_pAudio->PlayCue("22-emiya[1]");	// 音楽再生
+	m_pAudio->PlayCue("emiya");	// 音楽再生
 }
 
 void CMainScene::Update(){

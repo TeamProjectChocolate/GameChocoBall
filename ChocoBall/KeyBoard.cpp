@@ -26,7 +26,7 @@ HRESULT CKeyBoard::CreateInput(HWND hWnd, LPDIRECTINPUT8 InputObject){
 	}
 	
 	// ã¶í≤ÉåÉxÉãê›íË
-	HRESULT ret = CDirectInput::CooperativeLevel(hWnd, m_Device);
+	ret = CDirectInput::CooperativeLevel(hWnd, m_Device);
 	if (FAILED(ret)){
 		return E_FAIL;
 	}
@@ -45,10 +45,10 @@ void CKeyBoard::Update(){
 }
 
 
-BYTE CKeyBoard::KBGetPrs(const UINT KeyCode)const{
+BYTE CKeyBoard::GetPrs(const UINT KeyCode)const{
 	return (m_KBNowBuf[KeyCode]);
 };
 
-BYTE CKeyBoard::KBGetTrg(const UINT KeyCode)const{
+BYTE CKeyBoard::GetTrg(const UINT KeyCode)const{
 	return (m_KBNowBuf[KeyCode] && !m_KBOldBuf[KeyCode]);
 };

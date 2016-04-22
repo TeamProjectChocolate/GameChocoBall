@@ -84,6 +84,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assert.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
