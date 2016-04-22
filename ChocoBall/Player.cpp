@@ -31,18 +31,6 @@ void CPlayer::Initialize(float x,float y)
 
 void CPlayer::Update()
 {
-<<<<<<< HEAD
-	//m_transform.position.z--;
-	//m_transform.position.y++;
-	if (GetAsyncKeyState(VK_LEFT))
-	{
-		m_transform.position.x -= 0.1f;
-	}
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		m_transform.position.x += 0.1f;
-	}
-=======
 	if (m_pInput->IsPressUp()){
 		m_transform.position.y += 0.05f;
 	}
@@ -56,6 +44,5 @@ void CPlayer::Update()
 		m_transform.position.x -= 0.05f;
 	}
 	//m_transform.angle.y += 0.1f;
->>>>>>> a1aa3cf87bbfca9d4f38796c0a8263d4a683fd2e
 	this->SetUp();
 }
