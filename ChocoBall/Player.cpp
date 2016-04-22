@@ -31,6 +31,13 @@ void CPlayer::Update()
 {
 	//m_transform.position.z--;
 	//m_transform.position.y++;
-	m_transform.position.x -= 0.1f;
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		m_transform.position.x -= 0.1f;
+	}
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		m_transform.position.x += 0.1f;
+	}
 	this->SetUp();
 }
