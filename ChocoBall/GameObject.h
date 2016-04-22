@@ -1,16 +1,25 @@
 #pragma once
 #include "Infomation.h"
+#include "Assert.h"
+
+#define MAX_FILENAME 255
 
 class CGameObject
 {
 public:
-	CGameObject(){ m_ManagerNewFlg = false; };
+	CGameObject(){
+		m_ManagerNewFlg = false;
+	};
 	~CGameObject();
 	virtual void OnDestroy(){};		// ObjectManagerクラスのDeleteGameObject関数が呼ばれたときに呼び出される関数
 	virtual void SetSprite(LPD3DXSPRITE){};	// 仮想関数:継承先が2Dクラスなら継承先クラスで中身を実装
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	void SetFileName(LPCSTR Name){
+		CH_ASSERT(strlen(Name) < MAX_FILENAME);
+		strcpy(m_pFileName, Name);
+	}
 	void SetAlive(bool alive){
 		m_alive = alive;
 	}
@@ -30,7 +39,7 @@ public:
 		return m_ManagerNewFlg;
 	}
 protected:
-	LPCSTR m_pFileName;		// 読み込むファイルの名前を格納する
+	CHAR m_pFileName[MAX_FILENAME + 1];		// 読み込むファイルの名前を格納する
 	TRANSEFORM m_transform; // オブジェクトの座標、回転、大きさ情報
 	bool m_alive;			// 生存フラグ(trueなら生存、falseなら死亡)
 	short m_ObjecType;		// オブジェクトが2Dか3Dかを示す変数(0なら2D,1なら3D)

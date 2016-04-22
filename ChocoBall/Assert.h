@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 
 /*!
 *@brief	アサート
@@ -12,6 +11,7 @@ static inline void Assert(bool flag)
 		std::abort();
 	}
 }
+
 #ifdef _DEBUG
 #define 	CH_ASSERT( flg)	Assert( flg)
 #else

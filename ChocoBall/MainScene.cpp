@@ -19,14 +19,15 @@ void CMainScene::Initialize(){
 		//this->m_pPlayer[i]->Initialize(((float)i - 5) * 2, 1.0f);
 	//	SINSTANCE(CObjectManager)->AddObject(m_pPlayer[i],name,0);
 	//}
-	SINSTANCE(CObjectManager)->Intialize(m_pSprite);
 	//SINSTANCE(CObjectManager)->GetGameObject<CPlayer>(_T("aaa"))->Initialize(0.0f,5.0f);
 	char objectName[] = {
 		"aaa"
 	};
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(0.0f, 5.0f);
+	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->SetFileName("image/Kanshou.x");
+	SINSTANCE(CObjectManager)->Intialize(m_pSprite);
+	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(-0.25f, 1.5f);
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.25f);
-	SINSTANCE(CObjectManager)->DeleteGameObject(objectName);
+	//SINSTANCE(CObjectManager)->DeleteGameObject(objectName);
 
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
