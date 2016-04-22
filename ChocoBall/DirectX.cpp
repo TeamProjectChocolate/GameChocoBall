@@ -72,6 +72,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
+			if (SINSTANCE(CInputManager)->GetInput()->IsTriggerEscape()){
+				PostQuitMessage(0);
+			}
 			Update();
 			Draw();
 			SINSTANCE(CObjectManager)->ExcuteDeleteObjects();

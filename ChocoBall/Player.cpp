@@ -32,17 +32,17 @@ void CPlayer::Initialize(float x,float y)
 void CPlayer::Update()
 {
 	if (m_pInput->IsPressUp()){
-		m_transform.position.y += 0.1f;
+		m_transform.position.y += 0.05f;
 	}
 	if (m_pInput->IsPressDown()){
-		m_transform.position.y -= 0.1f;
+		m_transform.position.y -= 0.05f;
 	}
 	if (m_pInput->IsPressRight()){
-		m_transform.position.x += 0.1f;
+		m_transform.position.x += 0.05f;
 	}
 	if (m_pInput->IsPressLeft()){
-		m_transform.position.x -= 0.1f;
+		m_transform.position.x -= 0.05f;
 	}
-	//m_transform.position.z -= 0.1f;
+	//m_transform.angle.y += 0.1f;
 	this->SetUp();
 }

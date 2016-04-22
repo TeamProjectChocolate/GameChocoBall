@@ -14,6 +14,8 @@ public:
 	virtual bool IsPressDecision();	// 決定ボタンが長押し
 	virtual bool IsTriggerCancel();	// キャンセル、戻るボタンが押されたら
 	virtual bool IsPressCancel();	// キャンセル、戻るボタンが長押し
+	virtual bool IsTriggerEscape();	// エスケープボタンが押されたら
+	virtual bool IsPressEscape();	// エスケープボタン長押し
 	virtual bool IsTriggerUp();		// ↑が押されたら
 	virtual bool IsPressUp();		// ↑が長押し
 	virtual bool IsTriggerDown();	// ↓が押されたら

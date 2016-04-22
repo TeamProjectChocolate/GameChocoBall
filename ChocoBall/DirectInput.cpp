@@ -18,6 +18,8 @@ bool CDirectInput::IsTriggerDecsion(){ return GetTrg(DIK_RETURN); }
 bool CDirectInput::IsPressDecision(){ return GetPrs(DIK_RETURN); }
 bool CDirectInput::IsTriggerCancel(){ return GetTrg(DIK_BACK); }
 bool CDirectInput::IsPressCancel(){ return GetPrs(DIK_BACK); }
+bool CDirectInput::IsTriggerEscape(){ return GetTrg(DIK_ESCAPE); }
+bool CDirectInput::IsPressEscape(){ return GetPrs(DIK_ESCAPE); }
 bool CDirectInput::IsTriggerUp(){ return GetTrg(DIK_UP); }
 bool CDirectInput::IsPressUp(){ return GetPrs(DIK_UP); }
 bool CDirectInput::IsTriggerDown(){ return GetTrg(DIK_DOWN); }

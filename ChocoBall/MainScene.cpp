@@ -25,7 +25,7 @@ void CMainScene::Initialize(){
 		"aaa"
 	};
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(0.0f, 5.0f);
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.0f);
+	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.25f);
 	SINSTANCE(CObjectManager)->DeleteGameObject(objectName);
 
 	m_pAudio = new CAudio;
