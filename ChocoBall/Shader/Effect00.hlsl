@@ -4,17 +4,28 @@ float4x4 View;	// ビュー変換行列宣言
 float4x4 Proj;	// 射影変換行列宣言
 
 texture g_Texture;			// テクスチャ
+sampler g_TextureSampler = 
+sampler_state{
+	Texture = g_Texture;
+	MipFilter = NONE;
+	MinFilter = NONE;
+	MagFilter = NONE;
+	AddressU = Wrap;
+	AddressV = Wrap;
+};
 
-// 入力用構造体
+// 頂点情報入力用構造体
 struct VS_INPUT{
 	float4	pos		: POSITION;
 	float4	color	: COLOR0;
+	float2  uv		: TEXCOORD0;	// 頂点に貼るべきテクスチャのアドレス？
 };
 
-// 出力用構造体
+// 頂点情報出力用構造体
 struct VS_OUTPUT{
 	float4	pos		: POSITION;
 	float4	color	: COLOR0;
+	float2  uv		: TEXCOORD0;
 };
 
 // 頂点シェーダ
@@ -30,12 +41,16 @@ VS_OUTPUT BasicTransform(VS_INPUT In /*頂点情報(ローカル座標*/)
 	pos = mul(pos, Proj);			// プロジェクション座標に変換
 	Screen.pos = pos;
 	Screen.color = In.color;
+	Screen.uv = In.uv;
 	return Screen;	// 頂点情報(スクリーン座標)←スクリーン座標を返さなければエラーとなってしまう。
 };
 
 // ピクセルシェーダ
 float4 NoWorkingPixelShader(VS_OUTPUT In) : COLOR{
-	return In.color;	// 最終的なピクセルの色とテクスチャの座標を返す。
+	//if (g_Texture){
+	//	return In.color = float4(0.0f, 0.0f, 1.0f, 1.0f);	// 最終的なピクセルの色とテクスチャの座標を返す。
+	//}
+	return tex2D(g_TextureSampler,In.uv);	// テクスチャを貼り付ける
 };
 
 technique BasicTec{

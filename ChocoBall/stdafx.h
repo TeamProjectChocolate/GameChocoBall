@@ -31,6 +31,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <list>
 
 
 #define SAFE_RELEASE(p)			{ if(p) { (p)->Release(); (p) = NULL; } }	//インスタンスリリース

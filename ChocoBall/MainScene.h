@@ -14,6 +14,6 @@ public:
 	HRESULT CreateSprite();
 private:
 	LPD3DXSPRITE m_pSprite;	//スプライト
-	CPlayer* m_pPlayer[10];
+	CPlayer m_Player;
 	CAudio* m_pAudio;
 };

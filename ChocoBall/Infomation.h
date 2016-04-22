@@ -33,10 +33,3 @@ typedef struct TRANSEFORM{
 	D3DXVECTOR3 angle;
 	D3DXVECTOR3 scale;
 }TRANSFORM;
-
-// ゲームオブジェクト構造体
-typedef struct OBJECT_DATA{
-	LPCSTR objectname;		// 生成するオブジェクトのクラス名
-	CGameObject* object;	// ゲームオブジェクトのポインタ
-	short priority;			// 実行優先度(数字が小さいほど優先度が高い　最小値：0)
-}OBJECT_DATA;

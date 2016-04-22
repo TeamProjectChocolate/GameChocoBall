@@ -17,10 +17,10 @@ void CCamera::Initialize(){
 	m_position.y = 1.2f;
 	m_position.z = -20.0f;
 	m_target.x = 0.0f;
-	m_target.y = 0.1f;
+	m_target.y = 1.0f;
 	m_target.z = 0.0f;
 	m_up.x = 0.0f;
-	m_up.y = 1.0f;
+	m_up.y = 0.1f;
 	m_up.z = 0.0f;
 	m_ViewAngle = D3DXToRadian(45);		// 45度をラジアンに変換して格納
 	m_aspect = 1.0f / 1.0f;				// アスペクト比に計算

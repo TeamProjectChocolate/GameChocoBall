@@ -107,7 +107,7 @@ void C3DImage::Draw(){
 
 	for (i = 0; i < m_NumMaterials; i++){
 		//(*graphicsDevice()).SetMaterial(&m_pMeshMat[i]);		// マテリアル情報をセット
-		//(*graphicsDevice()).SetTexture(0, m_pMeshTex[i]);	// テクスチャ情報をセット
+		SINSTANCE(CEffect)->GetEffect()->SetTexture("g_Texture", m_pMeshTex[i]);	// テクスチャ情報をセット
 		m_pMesh->DrawSubset(i);						// メッシュを描画
 	}
 }

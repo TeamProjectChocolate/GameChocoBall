@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "ImageManager.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
 
 
 #define MAX_LOADSTRING 100
@@ -71,8 +72,12 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
+			if (SINSTANCE(CInputManager)->GetInput()->IsTriggerEscape()){
+				PostQuitMessage(0);
+			}
 			Update();
 			Draw();
+			SINSTANCE(CObjectManager)->ExcuteDeleteObjects();
 		}
 
 	} while (msg.message != WM_QUIT);
@@ -214,11 +219,16 @@ void Initialize()
 	SINSTANCE(CEffect)->SetEffect(_T("Shader/Effect00.hlsl"));	// 使用するshaderファイルを指定
 	CImageManager::CreateInstance();		// シングルトンクラス:オブジェクトのモデル情報管理クラスのインスタンスを生成
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
+	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
+	SINSTANCE(CInputManager)->InitManager();
+	SINSTANCE(CInputManager)->DI_Init();
+	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 	MainScene.Initialize();
 }
 
 void Update()
 {
+	SINSTANCE(CInputManager)->Update();
 	g_camera.Update();
 	MainScene.Update();		//シーン更新
 }
