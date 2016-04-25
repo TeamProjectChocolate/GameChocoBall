@@ -33,7 +33,6 @@
 #include <vector>
 #include <list>
 
-
 #define SAFE_RELEASE(p)			{ if(p) { (p)->Release(); (p) = NULL; } }	//インスタンスリリース
 #define SAFE_DELETE_ARRAY(p)	{ if(p) { delete[] (p);   (p) = NULL; } }	//インスタンス配列削除
 #define SAFE_DELETE(p)			{ if(p) { delete (p);     (p) = NULL; } }	//インスタンス削除

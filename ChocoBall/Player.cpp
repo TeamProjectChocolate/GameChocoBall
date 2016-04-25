@@ -1,14 +1,16 @@
 #include "Player.h"
 #include "InputManager.h"
 
+
 CPlayer::CPlayer() {
-	strcpy(m_pFileName, "image\\Bakuya.x");
+	strcpy(m_pFileName, "image/stage.x");
 }
 
 CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
+	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0, 1, -17);
 	m_transform.angle = D3DXVECTOR3(2, 1, 0);
@@ -19,6 +21,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Initialize(float x,float y)
 {
+	C3DImage::Initialize();
 	m_transform.position = D3DXVECTOR3(x, y,-18);
 	m_transform.angle = D3DXVECTOR3(2,1,0);
 	m_transform.scale = D3DXVECTOR3(1,1,1);
@@ -42,5 +45,8 @@ void CPlayer::Update()
 		m_transform.position.x -= 0.05f;
 	}
 	//m_transform.angle.y += 0.1f;
-	this->SetUp();
+}
+
+void CPlayer::Draw(){
+	C3DImage::Draw();
 }

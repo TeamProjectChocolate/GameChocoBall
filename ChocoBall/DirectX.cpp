@@ -9,6 +9,7 @@
 #include "ImageManager.h"
 #include "ObjectManager.h"
 #include "InputManager.h"
+#include "RenderContext.h"
 
 
 #define MAX_LOADSTRING 100
@@ -25,7 +26,6 @@ CCamera g_camera;
 void Initialize();
 void Update();
 void Draw();
-void SharderDraw();
 
 
 // このコード モジュールに含まれる関数の宣言を転送します:
@@ -214,12 +214,11 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 void Initialize()
 {
 	graphicsDevice().InitD3d(g_hWnd);
-	g_camera.Initialize();
-	CEffect::CreateInstance();		// シングルトンクラス:エフェクトファイル管理クラスのインスタンスを生成
-	SINSTANCE(CEffect)->SetEffect(_T("Shader/Effect00.hlsl"));	// 使用するshaderファイルを指定
+	CEffect::CreateInstance();				// シングルトンクラス:エフェクトファイル管理クラスのインスタンスを生成
 	CImageManager::CreateInstance();		// シングルトンクラス:オブジェクトのモデル情報管理クラスのインスタンスを生成
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
+	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
 	SINSTANCE(CInputManager)->InitManager();
 	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
@@ -229,52 +228,7 @@ void Initialize()
 void Update()
 {
 	SINSTANCE(CInputManager)->Update();
-	g_camera.Update();
 	MainScene.Update();		//シーン更新
-}
-
-void SetupRenderState()
-{
-	// ライト設定(白色、鏡面反射)
-	D3DXVECTOR3 vDirec(0, -1, -1);		// ライト方向
-	D3DLIGHT9 light;					// ライト構造体
-	ZeroMemory(&light, sizeof(D3DLIGHT9));		// 初期化
-	light.Type = D3DLIGHT_DIRECTIONAL;		// 平行光源
-	// 拡散光
-	light.Diffuse.r = 1.0f;
-	light.Diffuse.g = 1.0f;
-	light.Diffuse.b = 1.0f;
-	// 鏡面光
-	light.Specular.r = 1.0f;
-	light.Specular.g = 1.0f;
-	light.Specular.b = 1.0f;
-
-	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vDirec);		// ライト方向の設定
-	(*graphicsDevice()).SetLight(0, &light);			// ライト設定
-	(*graphicsDevice()).LightEnable(0, TRUE);		// ライト当てる
-	// Zバッファー、ライトの設定
-	(*graphicsDevice()).SetRenderState(D3DRS_LIGHTING, TRUE);	// ライトを有効
-	(*graphicsDevice()).SetRenderState(D3DRS_AMBIENT, 0x00aaaaaa);	// 環境光を設定
-	(*graphicsDevice()).SetRenderState(D3DRS_SPECULARENABLE, TRUE);	// 鏡面反射有効
-	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, TRUE);			// Zバッファーを有効
-
-	g_camera.SetCamera();	// カメラセット
-}
-
-void SharderDraw(){
-	SINSTANCE(CEffect)->GetEffect()->SetTechnique("BasicTec");	// テクニックの選択
-	UINT numPass;
-	SINSTANCE(CEffect)->GetEffect()->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
-	SINSTANCE(CEffect)->GetEffect()->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
-
-	MainScene.Draw();		// メイン描画
-
-	//ここで固定描画と同じように、ローカル座標に設定された頂点群をデバイスに渡す。通常と同じ方法。
-	//	メッシュも同じく、マテリアルやテクスチャを設定
-	//DrawSubset()を呼び出して描画
-
-	SINSTANCE(CEffect)->GetEffect()->EndPass();
-	SINSTANCE(CEffect)->GetEffect()->End();
 }
 
 void Draw()
@@ -283,8 +237,7 @@ void Draw()
 
 	if (SUCCEEDED((*graphicsDevice()).BeginScene()))
 	{
-		SetupRenderState();
-		SharderDraw();
+		MainScene.Draw();		// メイン描画
 		(*graphicsDevice()).EndScene();
 	}
 	(*graphicsDevice()).Present(NULL, NULL, NULL, NULL);

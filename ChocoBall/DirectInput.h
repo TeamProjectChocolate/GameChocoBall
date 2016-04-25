@@ -10,20 +10,20 @@ public:
 	virtual HRESULT CreateInput(HWND, LPDIRECTINPUT8) = 0;
 	HRESULT WINAPI CooperativeLevel(HWND, LPDIRECTINPUTDEVICE8);	// DirectInput排他制御設定処理
 	virtual void Update() = 0;
-	virtual bool IsTriggerDecsion();// 決定ボタンが押されたら
-	virtual bool IsPressDecision();	// 決定ボタンが長押し
-	virtual bool IsTriggerCancel();	// キャンセル、戻るボタンが押されたら
-	virtual bool IsPressCancel();	// キャンセル、戻るボタンが長押し
-	virtual bool IsTriggerEscape();	// エスケープボタンが押されたら
-	virtual bool IsPressEscape();	// エスケープボタン長押し
-	virtual bool IsTriggerUp();		// ↑が押されたら
-	virtual bool IsPressUp();		// ↑が長押し
-	virtual bool IsTriggerDown();	// ↓が押されたら
-	virtual bool IsPressDown();		// ↓が長押し
-	virtual bool IsTriggerRight();	// →が押されたら
-	virtual bool IsPressRight();	// →が長押し
-	virtual bool IsTriggerLeft();	// ←が押されたら
-	virtual bool IsPressLeft();		// ←が長押し
+	virtual BYTE IsTriggerDecsion();// 決定ボタンが押されたら
+	virtual BYTE IsPressDecision();	// 決定ボタンが長押し
+	virtual BYTE IsTriggerCancel();	// キャンセル、戻るボタンが押されたら
+	virtual BYTE IsPressCancel();	// キャンセル、戻るボタンが長押し
+	virtual BYTE IsTriggerEscape();	// エスケープボタンが押されたら
+	virtual BYTE IsPressEscape();	// エスケープボタン長押し
+	virtual BYTE IsTriggerUp();		// ↑が押されたら
+	virtual BYTE IsPressUp();		// ↑が長押し
+	virtual BYTE IsTriggerDown();	// ↓が押されたら
+	virtual BYTE IsPressDown();		// ↓が長押し
+	virtual BYTE IsTriggerRight();	// →が押されたら
+	virtual BYTE IsPressRight();	// →が長押し
+	virtual BYTE IsTriggerLeft();	// ←が押されたら
+	virtual BYTE IsPressLeft();		// ←が長押し
 protected:
 	LPDIRECTINPUTDEVICE8 m_Device;
 	virtual BYTE GetPrs(const UINT KeyCode)const = 0;	// キー判定(押しっぱなし)

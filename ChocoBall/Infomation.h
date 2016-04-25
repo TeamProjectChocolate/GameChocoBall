@@ -2,11 +2,11 @@
 
 class CGameObject;
 
-enum OBJECT{TYPE_2D = 0,TYPE_3D};
+#define MAX_FILENAME 255
 
 // シェーダファイル格納用構造体
 typedef struct EFFECT_DATA{
-	LPCSTR pFileName;
+	CHAR pFileName[MAX_FILENAME];
 	LPD3DXEFFECT Effect;	// インタフェースポインタ
 }EFFECT_DATA;
 

@@ -5,14 +5,10 @@ class CEffect
 {
 	SINGLETON_DECL(CEffect);
 public:
-	HRESULT SetEffect(LPCSTR);
-	void LoadEffect(LPCSTR);
-	inline LPD3DXEFFECT GetEffect()
-	{
-		return m_NowEffect;
-	}
+	LPD3DXEFFECT SetEffect(LPCSTR);
+	LPD3DXEFFECT LoadEffect(LPCSTR);
+	LPD3DXEFFECT FindEffect(LPCSTR);
 private:
 	vector<EFFECT_DATA*> m_EffectFiles;
-	LPD3DXEFFECT m_NowEffect;		// 現在使用中のエフェクトファイル
 };
 

@@ -6,7 +6,7 @@ public:
 	~CCamera();
 	void Initialize();
 	void Update();
-	void SetCamera();
+	void SetCamera(LPD3DXEFFECT);
 	inline void SetPos(D3DXVECTOR3 pos){
 		m_position = pos;
 	}

@@ -1,36 +1,47 @@
 #include "stdafx.h"
 #include "Effect.h"
 #include "GraphicsDevice.h"
+#include "Assert.h"
+
+
 CEffect* CEffect::m_instance = nullptr;
 
-HRESULT CEffect::SetEffect(LPCSTR pFileName){
-
+LPD3DXEFFECT CEffect::SetEffect(LPCSTR pFileName){
 	int size = m_EffectFiles.size();
-	// すでに使用するXファイルがあれば新しく読み込まない
+	// すでに使用するシェーダーファイルがあれば新しく読み込まない
 	for (int idx = 0; idx < size; idx++){
 		if (!strcmp(m_EffectFiles[idx]->pFileName,pFileName)){
-			m_NowEffect = m_EffectFiles[idx]->Effect;
-			return S_OK;
+			return m_EffectFiles[idx]->Effect;
 		}
 	}
-
-	LoadEffect(pFileName);
-
-	return S_OK;
+	return LoadEffect(pFileName);
 }
 
-void CEffect::LoadEffect(LPCSTR pFileName){
+LPD3DXEFFECT CEffect::LoadEffect(LPCSTR pFileName){
 	HRESULT hr;
 	LPD3DXBUFFER compileErrorBuffer = nullptr;
 	EFFECT_DATA Effect;
-	Effect.pFileName = pFileName;
+	CH_ASSERT(strlen(pFileName) < MAX_FILENAME);
+	strcpy(Effect.pFileName,pFileName);
 	// ID3DXEffectインタフェース生成
 	hr = D3DXCreateEffectFromFile(graphicsDevice(), pFileName/*シェーダプログラムが書き込まれたファイル名*/,
 		NULL, NULL, D3DXSHADER_DEBUG, NULL, &(Effect.Effect), &compileErrorBuffer/*エラー情報が入る*/);
 	if (FAILED(hr)) {
 		MessageBox(nullptr, reinterpret_cast<char*>(compileErrorBuffer->GetBufferPointer()), "error", MB_OK);
+		return nullptr;
 		//(SUCCEEDED(hr), "error");
 	}
-	m_NowEffect = Effect.Effect;
 	m_EffectFiles.push_back(&Effect);
+	return Effect.Effect;
+}
+
+LPD3DXEFFECT CEffect::FindEffect(LPCSTR name)
+{
+	int size = m_EffectFiles.size();
+	for (int idx = 0; idx < size; idx++){
+		if (!strcmp(m_EffectFiles[idx]->pFileName, name)){
+			return m_EffectFiles[idx]->Effect;
+		}
+	}
+	return nullptr;
 }

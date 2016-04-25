@@ -5,13 +5,16 @@
 
 class C3DImage :public CGameObject{
 public:
-	C3DImage(){ m_ObjecType = OBJECT::TYPE_3D; };
+	C3DImage(){};
 	~C3DImage(){};
+	virtual void Initialize()override;
 	virtual void Draw()override;
+	virtual void SetUpTechnique()override{
+		m_pEffect->SetTechnique("BasicTec");	// テクニックの選択
+	}
 	HRESULT SetImage();
 	HRESULT ReSet();
 	HRESULT LoadXFile();
-	virtual void SetUp();
 private:
 	D3DMATERIAL9* m_pMeshMat;			// マテリアル情報
 	LPDIRECT3DTEXTURE9* m_pMeshTex;		// メッシュのテクスチャ

@@ -1,7 +1,8 @@
 #include "C3DImage.h"
 #include "Effect.h"
 #include "ImageManager.h"
-
+#include "RenderContext.h"
+#include "Camera.h"
 
 HRESULT C3DImage::SetImage(){
 	IMAGE3D* Image = SINSTANCE(CImageManager)->Find3DImage(m_pFileName);
@@ -72,7 +73,21 @@ HRESULT C3DImage::LoadXFile(){
 	return S_OK;
 }
 
-void C3DImage::SetUp(){
+void C3DImage::Initialize(){
+	m_pEffect = SINSTANCE(CEffect)->SetEffect(_T("Shader/Effect00.hlsl"));	// 使用するshaderファイルを指定(デフォルト)
+}
+
+void C3DImage::Draw(){
+	SetUpTechnique();
+	UINT numPass;
+	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
+	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
+
+	SINSTANCE(CRenderContext)->GetCurrentCamera()->SetCamera(m_pEffect);
+	//ここで固定描画と同じように、ローカル座標に設定された頂点群をデバイスに渡す。通常と同じ方法。
+	//	メッシュも同じく、マテリアルやテクスチャを設定
+	//DrawSubset()を呼び出して描画
+
 	// ワールドトランスフォーム(絶対座標変換)
 	D3DXMatrixIdentity(&mWorld);	// 行列初期化
 
@@ -88,26 +103,19 @@ void C3DImage::SetUp(){
 	D3DXMatrixTranslation(&m_translation, m_transform.position.x, m_transform.position.y, m_transform.position.z/*-18.0f*/);
 	D3DXMatrixMultiply(&mWorld, &mWorld, &m_translation);
 
-	SINSTANCE(CEffect)->GetEffect()->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
-	//g_pEffect->SetTexture("g_Texture", texture /*テクスチャ情報*/);
-	SINSTANCE(CEffect)->GetEffect()->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
-}
-
-void C3DImage::Draw(){
-
-	DWORD i;
-
-	// 頂点シェーダをセット(使わない場合はNULL)
-	//(*graphicsDevice()).SetVertexShader(NULL);
-
-	this->SetUp();
+	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
 
 	// 頂点フォーマットをセット
 	(*graphicsDevice()).SetFVF(m_pMesh->GetFVF());
 
+	DWORD i;
+
 	for (i = 0; i < m_NumMaterials; i++){
 		//(*graphicsDevice()).SetMaterial(&m_pMeshMat[i]);		// マテリアル情報をセット
-		SINSTANCE(CEffect)->GetEffect()->SetTexture("g_Texture", m_pMeshTex[i]);	// テクスチャ情報をセット
+		m_pEffect->SetTexture("g_Texture", m_pMeshTex[i]);	// テクスチャ情報をセット
+		m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 		m_pMesh->DrawSubset(i);						// メッシュを描画
 	}
+	m_pEffect->EndPass();
+	m_pEffect->End();
 }

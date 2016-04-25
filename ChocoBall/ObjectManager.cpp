@@ -5,9 +5,6 @@
 CObjectManager* CObjectManager::m_instance = nullptr;
 
 void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, short priorty){
-	//CH_ASSERT(strlen(ObjectName) < OBJECTNAME_MAX);
-	//CHAR objectname[OBJECTNAME_MAX];
-	//strcpy(objectname, ObjectName);		// コピーせずにアドレスを保持させるとローカル変数が渡されるとクラッシュする
 	if (priorty > MAX_PRIORTY){
 		priorty = MAX_PRIORTY;
 	}
@@ -15,9 +12,6 @@ void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, short pri
 }
 
 void CObjectManager::AddObject(CGameObject* Object,LPCSTR ObjectName){
-	//CH_ASSERT(strlen(ObjectName) < OBJECTNAME_MAX);
-	//CHAR objectname[OBJECTNAME_MAX];
-	//strcpy(objectname, ObjectName);		// コピーせずにアドレスを保持させるとローカル変数が渡されるとクラッシュする
 	short priorty = MAX_PRIORTY;
 	this->Add(Object,ObjectName, priorty);
 }
@@ -69,13 +63,7 @@ void CObjectManager::Intialize(LPD3DXSPRITE pSprite){
 	int size = m_GameObjects.size();
 	for (int idx = 0; idx < size; idx++){
 		if (!(m_GameObjects[idx]->object->GetOriginal())){
-			if (m_GameObjects[idx]->object->GetType() == OBJECT::TYPE_3D){
-				m_GameObjects[idx]->object->Initialize();
-			}
-			else{
-				m_GameObjects[idx]->object->SetSprite(pSprite);
-				m_GameObjects[idx]->object->Initialize();
-			}
+			m_GameObjects[idx]->object->Initialize();
 		}
 	}
 }
@@ -85,7 +73,7 @@ void CObjectManager::Update(){
 	for (short priorty = 0; priorty <= MAX_PRIORTY;priorty++){	// 優先度の高いものから更新
 		for (int idx = 0; idx < size; idx++){
 			if (m_GameObjects[idx]->object->GetAlive()){	// 生存しているもののみ更新
-				if (m_GameObjects[idx]->priority == priorty){
+				if (m_GameObjects[idx]->priority == priorty){	// 現在の優先度と一致するものを更新
 					m_GameObjects[idx]->object->Update();
 				}
 			}
@@ -95,9 +83,13 @@ void CObjectManager::Update(){
 
 void CObjectManager::Draw(){
 	int size = m_GameObjects.size();
-	for (int idx = 0; idx < size; idx++){
-		if (m_GameObjects[idx]->object->GetAlive()){	// 生存しているもののみ描画
-			m_GameObjects[idx]->object->Draw();
+	for (short priorty = 0; priorty <= MAX_PRIORTY; priorty++){	// 優先度の高いものから更新
+		for (int idx = 0; idx < size; idx++){
+			if (m_GameObjects[idx]->object->GetAlive()){	// 生存しているもののみ描画
+				if (m_GameObjects[idx]->priority == priorty){	// 現在の優先度と一致するものを描画
+					m_GameObjects[idx]->object->Draw();
+				}
+			}
 		}
 	}
 }

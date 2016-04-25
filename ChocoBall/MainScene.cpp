@@ -1,6 +1,8 @@
 #include "MainScene.h"
 #include "ObjectManager.h"
+#include "GameCamera.h"
 #include "Audio.h"
+#include "TestObject2D.h"
 
 CMainScene::CMainScene(){
 }
@@ -10,16 +12,10 @@ CMainScene::~CMainScene(){
 
 void CMainScene::Initialize(){
 	this->CreateSprite();
-	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 0);
+	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), 0);
+	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 1);
 	SINSTANCE(CObjectManager)->AddObject(&m_Player, _T("bbb"));
-	//for (short i = 0; i < 5; i++){
-	//	LPCSTR name;
-	//	name = CLASS_NAME(CPlayer);
-	//	this->m_pPlayer[i] = new CPlayer;
-		//this->m_pPlayer[i]->Initialize(((float)i - 5) * 2, 1.0f);
-	//	SINSTANCE(CObjectManager)->AddObject(m_pPlayer[i],name,0);
-	//}
-	//SINSTANCE(CObjectManager)->GetGameObject<CPlayer>(_T("aaa"))->Initialize(0.0f,5.0f);
+	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 3);
 	char objectName[] = {
 		"aaa"
 	};
@@ -27,8 +23,6 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->Intialize(m_pSprite);
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(-0.25f, 1.5f);
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.25f);
-	//SINSTANCE(CObjectManager)->DeleteGameObject(objectName);
-
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
 	m_pAudio->PlayCue("emiya");	// 音楽再生
