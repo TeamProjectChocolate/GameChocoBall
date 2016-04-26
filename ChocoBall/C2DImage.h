@@ -11,17 +11,15 @@ struct SVertex
 	FLOAT x, y, z, w;
 	DWORD color;
 	FLOAT u, v;
-
-	//D3DXVECTOR4 pos;
-	//DWORD color;
-	//FLOAT u,v;
 };
 
 class C2DImage :public CGameObject
 {
 public:
 	C2DImage(){};
-	~C2DImage(){};
+	~C2DImage(){
+		SAFE_RELEASE(m_pVertexBuffer);
+	};
 	virtual void SetImage();
 	virtual void Initialize()override;
 	virtual void Draw()override;
@@ -36,7 +34,6 @@ protected:
 	D3DXVECTOR2 m_texCenter;		//テクスチャの中点
 	RECT m_rect;					//描画矩形
 	D3DXIMAGE_INFO imgInfo;			//画像情報格納用構造体
-	//LPD3DXSPRITE m_pSprite;			//渡されたスプライトを格納
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;		// 生成された頂点バッファへのポインタを格納する変数
 	D3DXMATRIX mWorld;		// ワールド行列

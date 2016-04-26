@@ -117,7 +117,7 @@ public:
 	//※必ずメインループで最後に呼び出す
 	void ExcuteDeleteObjects();
 
-	void Intialize(LPD3DXSPRITE);
+	void Intialize();
 	void Update();
 	void Draw();
 private:

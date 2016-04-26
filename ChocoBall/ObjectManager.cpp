@@ -59,7 +59,7 @@ void CObjectManager::ExcuteDeleteObjects(){
 	m_DeleteObjects.clear();
 }
 
-void CObjectManager::Intialize(LPD3DXSPRITE pSprite){
+void CObjectManager::Intialize(){
 	int size = m_GameObjects.size();
 	for (int idx = 0; idx < size; idx++){
 		if (!(m_GameObjects[idx]->object->GetOriginal())){

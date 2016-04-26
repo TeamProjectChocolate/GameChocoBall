@@ -11,7 +11,6 @@ CMainScene::~CMainScene(){
 }
 
 void CMainScene::Initialize(){
-	this->CreateSprite();
 	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), 0);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 1);
 	SINSTANCE(CObjectManager)->AddObject(&m_Player, _T("bbb"));
@@ -20,7 +19,7 @@ void CMainScene::Initialize(){
 		"aaa"
 	};
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->SetFileName("image/Kanshou.x");
-	SINSTANCE(CObjectManager)->Intialize(m_pSprite);
+	SINSTANCE(CObjectManager)->Intialize();
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(-0.25f, 1.5f);
 	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.25f);
 	m_pAudio = new CAudio;
@@ -35,13 +34,4 @@ void CMainScene::Update(){
 
 void CMainScene::Draw(){
 	SINSTANCE(CObjectManager)->Draw();
-}
-
-HRESULT CMainScene::CreateSprite(){
-	if (FAILED(D3DXCreateSprite(graphicsDevice(), &m_pSprite)))
-	{
-		MessageBox(0, TEXT("ÉXÉvÉâÉCÉgçÏê¨é∏îs"), NULL, MB_OK);
-		return E_FAIL;//é∏îsï‘ãp
-	}
-	return S_OK;
 }

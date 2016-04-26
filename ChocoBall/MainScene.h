@@ -11,9 +11,7 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
-	HRESULT CreateSprite();
 private:
-	LPD3DXSPRITE m_pSprite;	//スプライト
 	CPlayer m_Player;
 	CAudio* m_pAudio;
 };

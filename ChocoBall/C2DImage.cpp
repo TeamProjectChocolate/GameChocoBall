@@ -37,19 +37,13 @@ void C2DImage::Initialize(){
 		{ 1.0f, -1.0f, 0.0f, 1.0f, 0xffffffff, 1.0f, 1.0f, },
 		{ -1.0f, 1.0f, 0.0f, 1.0f, 0xffffffff, 0.0f, 0.0f, },
 		{ 1.0f, 1.0f, 0.0f, 1.0f, 0xffffffff, 1.0f, 0.0f, },
-		/*{ D3DXVECTOR4(-1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 1.0f, },
-		{ D3DXVECTOR4(-1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 0.0f, },
-		{ D3DXVECTOR4(1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 1.0f, },
-		{ D3DXVECTOR4(1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 1.0f, },
-		{ D3DXVECTOR4(-1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 0.0f, },
-		{ D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 0.0f, },*/
 	};
+
 	(*graphicsDevice()).CreateVertexBuffer(6 * sizeof(SVertex), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &m_pVertexBuffer, NULL);
 	VOID* pVertices;
 	m_pVertexBuffer->Lock(0, sizeof(vertices), (void**)&pVertices, 0);
 	memcpy(pVertices, vertices, sizeof(vertices));
 	m_pVertexBuffer->Unlock();
-
 }
 
 void C2DImage::Draw()
