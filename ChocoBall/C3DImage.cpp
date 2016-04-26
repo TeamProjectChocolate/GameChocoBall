@@ -79,6 +79,10 @@ void C3DImage::Initialize(){
 
 void C3DImage::Draw(){
 	SetUpTechnique();
+	if (m_pMeshTex[0] == nullptr){
+		m_pEffect->SetTechnique("BasicTec");
+	}
+
 	UINT numPass;
 	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
@@ -89,19 +93,28 @@ void C3DImage::Draw(){
 	//DrawSubset()を呼び出して描画
 
 	// ワールドトランスフォーム(絶対座標変換)
+	// ワールド行列生成
+
+	D3DXMATRIX Trans;	// 移動行列
+	D3DXMATRIX Rota;	// 回転行列
+	D3DXMATRIX Scale;	// 拡大・縮小行列
+
 	D3DXMatrixIdentity(&mWorld);	// 行列初期化
 
-	D3DXMatrixRotationX(&m_rotation, m_transform.angle.x);
-	D3DXMatrixMultiply(&mWorld, &mWorld, &m_rotation);
+	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
+	D3DXMatrixMultiply(&mWorld, &mWorld, &Scale);
 
-	D3DXMatrixRotationY(&m_rotation, m_transform.angle.y);
-	D3DXMatrixMultiply(&mWorld, &mWorld, &m_rotation);
+	D3DXMatrixRotationX(&Rota, m_transform.angle.x);
+	D3DXMatrixMultiply(&mWorld, &mWorld, &Rota);
 
-	D3DXMatrixRotationZ(&m_rotation, m_transform.angle.z);
-	D3DXMatrixMultiply(&mWorld, &mWorld, &m_rotation);
+	D3DXMatrixRotationY(&Rota, m_transform.angle.y);
+	D3DXMatrixMultiply(&mWorld, &mWorld, &Rota);
 
-	D3DXMatrixTranslation(&m_translation, m_transform.position.x, m_transform.position.y, m_transform.position.z/*-18.0f*/);
-	D3DXMatrixMultiply(&mWorld, &mWorld, &m_translation);
+	D3DXMatrixRotationZ(&Rota, m_transform.angle.z);
+	D3DXMatrixMultiply(&mWorld, &mWorld, &Rota);
+
+	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
+	D3DXMatrixMultiply(&mWorld, &mWorld, &Trans);
 
 	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
 
@@ -111,7 +124,6 @@ void C3DImage::Draw(){
 	DWORD i;
 
 	for (i = 0; i < m_NumMaterials; i++){
-		//(*graphicsDevice()).SetMaterial(&m_pMeshMat[i]);		// マテリアル情報をセット
 		m_pEffect->SetTexture("g_Texture", m_pMeshTex[i]);	// テクスチャ情報をセット
 		m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 		m_pMesh->DrawSubset(i);						// メッシュを描画

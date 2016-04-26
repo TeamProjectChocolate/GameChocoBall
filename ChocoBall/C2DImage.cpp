@@ -69,11 +69,6 @@ void C2DImage::Draw()
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
-
-	//m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);		//スプライト描画開始
-	//m_pSprite->SetTransform(&this->m_transformMatrix);	//変換行列セット
-	//m_pSprite->Draw(this->m_pTexture, &this->m_rect, &D3DXVECTOR3(this->m_texCenter.x, this->m_texCenter.y, 0.0f), NULL, this->m_backColor);	//スプライトにテクスチャ貼付け
-	//m_pSprite->End();	//スプライト描画終了
 }
 
 void C2DImage::SetupMatrices()

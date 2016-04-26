@@ -1,10 +1,9 @@
 #pragma once
 #include "GraphicsDevice.h"
+#include "Scene.h"
 #include "Player.h"
 
-class CAudio;
-
-class CMainScene{
+class CMainScene:public CScene{
 public:
 	CMainScene();
 	~CMainScene();
@@ -13,5 +12,4 @@ public:
 	void Draw();
 private:
 	CPlayer m_Player;
-	CAudio* m_pAudio;
 };

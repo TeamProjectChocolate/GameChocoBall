@@ -3,7 +3,7 @@
 
 
 CPlayer::CPlayer() {
-	strcpy(m_pFileName, "image/stage.x");
+	strcpy(m_pFileName, "image/kyu.x");
 }
 
 CPlayer::~CPlayer(){ }

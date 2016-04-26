@@ -10,7 +10,7 @@ public:
 	virtual void Initialize()override;
 	virtual void Draw()override;
 	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("BasicTec");	// テクニックの選択
+		m_pEffect->SetTechnique("TextureTec");
 	}
 	HRESULT SetImage();
 	HRESULT ReSet();
@@ -24,6 +24,4 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 g_pVB = NULL;
 protected:
 	D3DXMATRIX mWorld;		// ワールド行列
-	D3DXMATRIX m_translation;
-	D3DXMATRIX m_rotation;
 };

@@ -46,16 +46,24 @@ VS_OUTPUT BasicTransform(VS_INPUT In /*頂点情報(ローカル座標*/)
 };
 
 // ピクセルシェーダ
-float4 NoWorkingPixelShader(VS_OUTPUT In) : COLOR{
-	//if (g_Texture){
-	//	return In.color = float4(0.0f, 0.0f, 1.0f, 1.0f);	// 最終的なピクセルの色とテクスチャの座標を返す。
-	//}
+float4 TextureShader(VS_OUTPUT In) : COLOR{
 	return tex2D(g_TextureSampler,In.uv);	// テクスチャを貼り付ける
+};
+
+float4 NoWorkingPixelShader(VS_OUTPUT In) :COLOR{
+	return In.color;
+};
+
+technique TextureTec{
+	pass p0{
+		VertexShader = compile vs_2_0 BasicTransform();	// 頂点シェーダ
+		PixelShader = compile ps_2_0 TextureShader();		// ピクセルシェーダ
+	}
 };
 
 technique BasicTec{
 	pass p0{
-		VertexShader = compile vs_2_0 BasicTransform();	// 頂点シェーダ
-		PixelShader = compile ps_2_0 NoWorkingPixelShader();		// ピクセルシェーダ
+		VertexShader = compile vs_2_0 BasicTransform();
+		PixelShader = compile ps_2_0 NoWorkingPixelShader();
 	}
 };

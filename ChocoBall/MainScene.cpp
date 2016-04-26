@@ -12,16 +12,9 @@ CMainScene::~CMainScene(){
 
 void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), 0);
-	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 1);
-	SINSTANCE(CObjectManager)->AddObject(&m_Player, _T("bbb"));
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 3);
-	char objectName[] = {
-		"aaa"
-	};
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->SetFileName("image/Kanshou.x");
+	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"));
 	SINSTANCE(CObjectManager)->Intialize();
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(objectName)->Initialize(-0.25f, 1.5f);
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("bbb"))->Initialize(-0.25f, 1.25f);
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
 	m_pAudio->PlayCue("emiya");	// 音楽再生
