@@ -20,6 +20,8 @@ BYTE CDirectInput::IsTriggerCancel(){ return GetTrg(DIK_BACK); }
 BYTE CDirectInput::IsPressCancel(){ return GetPrs(DIK_BACK); }
 BYTE CDirectInput::IsTriggerEscape(){ return GetTrg(DIK_ESCAPE); }
 BYTE CDirectInput::IsPressEscape(){ return GetPrs(DIK_ESCAPE); }
+BYTE CDirectInput::IsTrggerShift(){ return GetTrg(DIK_LSHIFT); }
+BYTE CDirectInput::IsPressShift(){ return GetPrs(DIK_LSHIFT); }
 BYTE CDirectInput::IsTriggerUp(){ return GetTrg(DIK_UP); }
 BYTE CDirectInput::IsPressUp(){ return GetPrs(DIK_UP); }
 BYTE CDirectInput::IsTriggerDown(){ return GetTrg(DIK_DOWN); }

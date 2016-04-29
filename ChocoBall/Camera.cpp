@@ -26,6 +26,7 @@ void CCamera::Initialize(){
 	m_aspect = 1.0f / 1.0f;				// アスペクト比に計算
 	m_Near = 1.0f;						// どこから
 	m_Far = 1000.0f;					// どこまで描画するか
+	m_updateType = enUpdateTypeTarget;
 }
 
 void CCamera::Update(){
@@ -41,35 +42,35 @@ void CCamera::Update(){
 	// ビュートランスフォーム(視点座標変換)
 	D3DXMatrixIdentity(&m_View);									// 行列初期化
 	D3DXVECTOR3 vEye(m_position.x, m_position.y, m_position.z);		// カメラ位置
-	D3DXVECTOR3 vLookAt(m_target.x, m_target.y, m_target.z);		// 注視位置　カメラ向き
-	D3DXVECTOR3 vUpVec(m_up.x, m_up.y, m_up.z);						// 上向き　カメラ傾き
-	D3DXMatrixLookAtLH(&m_View, &vEye, &vLookAt, &vUpVec);			// ビューマトリックス設定
+
+	if (m_updateType == enUpdateTypeTarget){
+		m_direction = m_target - m_position;
+		D3DXVec3Normalize(&m_direction,&m_direction);
+		float t = fabsf(D3DXVec3Dot(&m_direction, &D3DXVECTOR3(0.0f, 1.0f, 0.0f)));
+		if (fabsf((t - 1.0f)) < 0.00001f) {
+			//ライトの方向がほぼY軸と並行。
+			m_up = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		}
+		else {
+			m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		}
+		D3DXMatrixLookAtLH(&m_View, &vEye, &m_target, &m_up);			// ビューマトリックス設定
+	}
+	else if (m_updateType == enUpdateTypeDirection){
+		float t = fabsf(D3DXVec3Dot(&m_direction, &D3DXVECTOR3(0.0f, 1.0f, 0.0f)));
+		if (fabsf((t - 1.0f)) < 0.00001f) {
+			//ライトの方向がほぼY軸と並行。
+			m_up = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		}
+		else {
+			m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		}
+		D3DXVECTOR3 target = vEye + m_direction;
+		D3DXMatrixLookAtLH(&m_View, &vEye, &target, &m_up);
+	}
 }
 
 void CCamera::SetCamera(LPD3DXEFFECT effect){
-	//// ライト設定(白色、鏡面反射)
-	//D3DXVECTOR3 vDirec(0, -1, -1);		// ライト方向
-	//D3DLIGHT9 light;					// ライト構造体
-	//ZeroMemory(&light, sizeof(D3DLIGHT9));		// 初期化
-	//light.Type = D3DLIGHT_DIRECTIONAL;		// 平行光源
-	//// 拡散光
-	//light.Diffuse.r = 1.0f;
-	//light.Diffuse.g = 1.0f;
-	//light.Diffuse.b = 1.0f;
-	//// 鏡面光
-	//light.Specular.r = 1.0f;
-	//light.Specular.g = 1.0f;
-	//light.Specular.b = 1.0f;
-
-	//D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vDirec);		// ライト方向の設定
-	//(*graphicsDevice()).SetLight(0, &light);			// ライト設定
-	//(*graphicsDevice()).LightEnable(0, TRUE);		// ライト当てる
-	//// Zバッファー、ライトの設定
-	//(*graphicsDevice()).SetRenderState(D3DRS_LIGHTING, TRUE);	// ライトを有効
-	//(*graphicsDevice()).SetRenderState(D3DRS_AMBIENT, 0x00aaaaaa);	// 環境光を設定
-	//(*graphicsDevice()).SetRenderState(D3DRS_SPECULARENABLE, TRUE);	// 鏡面反射有効
-	//(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, TRUE);			// Zバッファーを有効
-
 	effect->SetMatrix("Proj"/*エフェクトファイル内の変数名*/, &m_Proj/*設定したい行列へのポインタ*/);
 	effect->SetMatrix("View"/*エフェクトファイル内の変数名*/, &m_View/*設定したい行列へのポインタ*/);
 }

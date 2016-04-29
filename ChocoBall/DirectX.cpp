@@ -11,6 +11,7 @@
 #include "InputManager.h"
 #include "RenderContext.h"
 #include "GameManager.h"
+#include "ShadowRender.h"
 
 
 #define MAX_LOADSTRING 100
@@ -223,6 +224,8 @@ void Initialize()
 	CGameManager::CreateInstance();			// シングルトンクラス:ゲーム管理クラスのインスタンスを生成
 	CEffect::CreateInstance();				// シングルトンクラス:エフェクトファイル管理クラスのインスタンスを生成
 	CImageManager::CreateInstance();		// シングルトンクラス:オブジェクトのモデル情報管理クラスのインスタンスを生成
+	CShadowRender::CreateInstance();		// シングルトンクラス:影生成するオブジェクト管理クラスのインスタンスを生成
+	SINSTANCE(CShadowRender)->Initialize();
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成

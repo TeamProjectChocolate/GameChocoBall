@@ -3,6 +3,8 @@
 #include "GameCamera.h"
 #include "Audio.h"
 #include "TestObject2D.h"
+#include "Field.h"
+#include "ShadowRender.h"
 
 CMainScene::CMainScene(){
 }
@@ -15,8 +17,10 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 3);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"));
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D2"));
-	SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D2"))->SetFileName(_T("image/kyu.x"));
+	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"));
 	SINSTANCE(CObjectManager)->Intialize();
+
+	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
 	m_pAudio->PlayCue("emiya");	// 音楽再生
@@ -25,8 +29,10 @@ void CMainScene::Initialize(){
 void CMainScene::Update(){
 	m_pAudio->Run();		// 音楽更新
 	SINSTANCE(CObjectManager)->Update();
+	SINSTANCE(CShadowRender)->Update();
 }
 
 void CMainScene::Draw(){
+	SINSTANCE(CShadowRender)->Draw();
 	SINSTANCE(CObjectManager)->Draw();
 }
