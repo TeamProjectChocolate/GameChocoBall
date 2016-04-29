@@ -17,4 +17,5 @@ public:
 	}
 private:
 	CCamera* m_pCamera;
+	void DeleteAll(){};
 };

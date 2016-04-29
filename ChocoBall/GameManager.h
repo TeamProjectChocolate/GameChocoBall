@@ -9,26 +9,69 @@
 typedef struct SCENE_DATA{
 	CHAR SceneName[SCENENAME_MAX + 1];
 	CScene* Scene;
-};
+}SCENE_DATA;
 
 class CGameManager
 {
 	SINGLETON_DECL(CGameManager)
 public:
+	//引き数で渡したSceneのインスタンスをGameManagerクラスに追加する関数
+	//引き数:CScene*型 追加する、CSceneクラスを継承したクラスのポインタ 
+	//		 LPCSTR型 インスタンスの名前
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CGameManager)->AddScene(&m_TitleScene,_T("インスタンスの名前"));
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
+	//※この関数で生成したインスタンスをnewで生成している場合は、CGameManagerクラスの外部で必ずdeleteしてください
 	void AddScene(CScene*,LPCSTR);
+
+	template<class T>
+	//指定したSceneのインスタンスを自動生成する関数
+	//引き数: LPCSTR型 インスタンスの名前
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CGameManager)->GenerationObject<生成したいシーンのクラス名>(_T("インスタンスの名前"));
+	//※インスタンスの名前はインスタンスごとに被らないようにユニークなものをプログラマーが指定してください
+	//※インスタンスの名前は255文字以内としてください
+	//※この関数で生成したインスタンスはCGameManagerクラスの外部でdeleteしないこと
+	void GenerationScene(LPCSTR SceneName){
+		CH_ASSERT(strlen(SceneName) <= SCENENAME_MAX);
+		if (FindScene(SceneName) != nullptr){
+			MessageBox(NULL, "その名前のSceneインスタンスはすでに登録されています", 0, 0);
+			return;
+		}
+		T* Scene = new T;
+		Scene->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
+		SCENE_DATA SceneData;
+		strcpy(SceneData.SceneName, SceneName);
+		SceneData.Scene = Scene;
+		this->Add(&SceneData);
+	}
+
+	//GameManagerクラスに登録されているSceneクラスのインスタンスを名前で検索する関数
+	//引き数: LPCSTR型 インスタンスの名前
+	//返り値: CScene*型 引き数の名前と一致したオブジェクトのポインタ(どれか一つ)
+	//呼び出し例: SINSTANCE(CGameManager)->FindScene(_T("インスタンスの名前"));
+	//※関数が重いため多用しないこと
 	CScene* FindScene(LPCSTR);
-	void Initialize();
+
+	//シーン切り替え関数
+	//引き数: LPCSTR型 どのシーンに切り替えるか
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CGameManager)->ChangeScene(_T("インスタンスの名前"));
+	//※関数が重いため多用しないこと
+	void ChangeScene(LPCSTR);
+
 	void Update();
 	void Draw();
-	void ChangeScene(LPCSTR);
-	inline void SetNextScene(LPCSTR SceneName){
-		CH_ASSERT(strlen(SceneName) <= SCENENAME_MAX);
-		strcpy(m_NextSceneName, SceneName);
-	}
+
 private:
 	vector<SCENE_DATA*> m_Scenes;
 	CScene* m_NowScene;
-	CHAR m_NextSceneName[SCENENAME_MAX + 1];
+	void Initialize();
 	void Add(SCENE_DATA*);
+
+	//vectorに登録された要素をすべて削除する関数
+	//※デストラクタにて呼び出される
+	void DeleteAll();
 };
 

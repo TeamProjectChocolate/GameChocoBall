@@ -45,3 +45,10 @@ void CInputManager::ReleaseObject(){
 	}
 	SAFE_RELEASE(m_pInputObject);
 }
+
+void CInputManager::DeleteAll(){
+	for (int idx = 0, size = m_Inputs.size(); idx < size; idx++){
+		SAFE_DELETE(m_Inputs[idx]);
+	}
+	m_Inputs.clear();
+}

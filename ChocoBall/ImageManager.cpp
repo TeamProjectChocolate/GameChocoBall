@@ -48,3 +48,17 @@ IMAGE3D* CImageManager::Find3DImage(LPCSTR pFileName){
 	}
 	return nullptr;
 }
+
+void CImageManager::DeleteAll(){
+	for (int idx = 0,size = m_ModelList.size(); idx < size; idx++){
+		SAFE_DELETE(m_ModelList[idx]->pMat);
+		SAFE_DELETE(m_ModelList[idx]->pMesh);
+		SAFE_DELETE(m_ModelList[idx]->ppTex);
+	}
+	m_ModelList.clear();
+	for (int idx = 0, size = m_ModelList.size(); idx < size; idx++){
+		SAFE_DELETE(m_ImageList[idx]->pTex);
+		SAFE_DELETE(m_ImageList[idx]);
+	}
+	m_ImageList.clear();
+}

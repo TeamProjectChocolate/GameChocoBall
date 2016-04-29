@@ -10,6 +10,9 @@ public:
 	inline void SetPos(D3DXVECTOR3 pos){
 		m_position = pos;
 	}
+	inline D3DXVECTOR3 GetPos(){
+		return m_position;
+	}
 	inline void SetTarget(D3DXVECTOR3 target){
 		m_target = target;
 	}

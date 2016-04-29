@@ -13,5 +13,9 @@ public:
 private:
 	vector<IMAGE3D*> m_ModelList;
 	vector<IMAGE2D*> m_ImageList;
+
+	//vectorに登録された要素をすべて削除する関数
+	//※デストラクタにて呼び出される
+	void DeleteAll();
 };
 

@@ -93,3 +93,11 @@ void CObjectManager::Draw(){
 		}
 	}
 }
+
+void CObjectManager::DeleteAll(){
+	for (int idx = 0, size = m_GameObjects.size(); idx < size; idx++){
+		SAFE_DELETE(m_GameObjects[idx]->object);
+		SAFE_DELETE(m_GameObjects[idx]);
+	}
+	m_GameObjects.clear();
+}

@@ -10,5 +10,9 @@ public:
 	LPD3DXEFFECT FindEffect(LPCSTR);
 private:
 	vector<EFFECT_DATA*> m_EffectFiles;
+
+	//vectorに登録された要素をすべて削除する関数
+	//※デストラクタにて呼び出される
+	void DeleteAll();
 };
 

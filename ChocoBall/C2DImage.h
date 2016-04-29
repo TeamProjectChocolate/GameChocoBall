@@ -3,8 +3,6 @@
 #include "GameObject.h"
 
 #define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
-#define WINDOW_WIDTH 960
-#define WINDOW_HEIGHT 540
 
 struct SVertex
 {

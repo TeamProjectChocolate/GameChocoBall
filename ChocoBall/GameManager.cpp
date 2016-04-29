@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "GameManager.h"
 
 
@@ -10,10 +9,10 @@ void CGameManager::AddScene(CScene* SceneInstance, LPCSTR SceneName){
 		MessageBox(NULL, "その名前のSceneインスタンスはすでに登録されています", 0, 0);
 		return;
 	}
-	SCENE_DATA SceneData;
-	strcpy(SceneData.SceneName, SceneName);
-	SceneData.Scene = SceneInstance;
-	Add(&SceneData);
+	SCENE_DATA* SceneData = new SCENE_DATA;
+	strcpy(SceneData->SceneName, SceneName);
+	SceneData->Scene = SceneInstance;
+	Add(SceneData);
 }
 
 void CGameManager::Add(SCENE_DATA* data){
@@ -21,6 +20,7 @@ void CGameManager::Add(SCENE_DATA* data){
 }
 
 CScene* CGameManager::FindScene(LPCSTR SceneName){
+	CH_ASSERT(strlen(SceneName) <= SCENENAME_MAX);
 	int size = m_Scenes.size();
 	for (int idx = 0; idx < size; idx++){
 		if (!strcmp(m_Scenes[idx]->SceneName, SceneName)){
@@ -31,8 +31,8 @@ CScene* CGameManager::FindScene(LPCSTR SceneName){
 }
 
 void CGameManager::ChangeScene(LPCSTR SceneName){
-	CH_ASSERT(strlen(SceneName) <= SCENENAME_MAX);
-
+	m_NowScene = FindScene(SceneName);
+	Initialize();
 }
 
 void CGameManager::Initialize(){
@@ -45,4 +45,12 @@ void CGameManager::Update(){
 
 void CGameManager::Draw(){
 	m_NowScene->Draw();
+}
+
+void CGameManager::DeleteAll(){
+	for (int idx = 0,size = m_Scenes.size(); idx < size; idx++){
+		SAFE_DELETE(m_Scenes[idx]->Scene);
+		SAFE_DELETE(m_Scenes[idx]);
+	}
+	m_Scenes.clear();
 }

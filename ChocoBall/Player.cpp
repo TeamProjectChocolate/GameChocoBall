@@ -3,7 +3,7 @@
 
 
 CPlayer::CPlayer() {
-	strcpy(m_pFileName, "image/kyu.x");
+	strcpy(m_pFileName, "image/stage.x");
 }
 
 CPlayer::~CPlayer(){ }
@@ -44,7 +44,8 @@ void CPlayer::Update()
 	if (m_pInput->IsPressLeft()){
 		m_transform.position.x -= 0.05f;
 	}
-	//m_transform.angle.y += 0.1f;
+	//m_transform.angle.z += 0.1f;
+	C3DImage::Update();
 }
 
 void CPlayer::Draw(){
