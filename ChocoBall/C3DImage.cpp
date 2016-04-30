@@ -36,6 +36,41 @@ HRESULT C3DImage::LoadXFile(){
 		pMesh->Release();
 		pMesh = pTempMesh;
 	}
+	// 頂点宣言
+	const D3DVERTEXELEMENT9 vertexDecl[] =
+	{
+		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+		{ 0, 20, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0 },
+		{ 0, 32, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TANGENT, 0 },
+		{ 0, 44, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BINORMAL, 0 }, 
+		{ 0, 60, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0 },
+		D3DDECL_END()
+	};
+
+	LPD3DXMESH* ppCloneMesh = nullptr;
+
+	pMesh->CloneMesh(pMesh->GetOptions(), vertexDecl, &(*graphicsDevice()), ppCloneMesh);
+	D3DXComputeTangentFrameEx(pMesh,
+		D3DDECLUSAGE_TEXCOORD,
+		0,
+		D3DDECLUSAGE_TANGENT,
+		0,
+		D3DDECLUSAGE_BINORMAL,
+		0,
+		D3DDECLUSAGE_NORMAL,
+		0,
+		0,
+		NULL,
+		0.01f,    //ボケ具合.値をおおきくするとぼけなくなる
+		0.25f,
+		0.01f,
+		ppCloneMesh,
+		NULL
+		);
+
+	pMesh->Release();
+	pMesh = *ppCloneMesh;
 
 	// マテリアル、テクスチャの準備
 	D3DMATERIAL9* pMeshMat = new D3DMATERIAL9[NumMaterials];		// メッシュ情報を確保
