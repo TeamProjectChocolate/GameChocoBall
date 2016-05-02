@@ -89,6 +89,8 @@
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="DirectX.h" />
@@ -105,12 +107,12 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="TestObject2D.h" />
-    <ClInclude Include="TitleBack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -120,7 +122,9 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -131,13 +135,13 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderContext.cpp" />
-    <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestObject2D.cpp" />
-    <ClCompile Include="TitleBack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

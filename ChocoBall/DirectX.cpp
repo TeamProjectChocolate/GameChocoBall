@@ -10,6 +10,8 @@
 #include "ObjectManager.h"
 #include "InputManager.h"
 #include "RenderContext.h"
+#include "GameManager.h"
+#include "ShadowRender.h"
 
 
 #define MAX_LOADSTRING 100
@@ -23,6 +25,7 @@ HWND g_hWnd;
 CGraphicsDevice g_graphicsDevice;
 CMainScene MainScene;
 CCamera g_camera;
+void addScene();
 void Initialize();
 void Update();
 void Draw();
@@ -211,24 +214,33 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	return (INT_PTR)FALSE;
 }
 
+void AddScene(){	// ゲームで使用するシーンを登録
+	SINSTANCE(CGameManager)->AddScene(&MainScene, _T("Main"));
+}
+
 void Initialize()
 {
 	graphicsDevice().InitD3d(g_hWnd);
+	CGameManager::CreateInstance();			// シングルトンクラス:ゲーム管理クラスのインスタンスを生成
 	CEffect::CreateInstance();				// シングルトンクラス:エフェクトファイル管理クラスのインスタンスを生成
 	CImageManager::CreateInstance();		// シングルトンクラス:オブジェクトのモデル情報管理クラスのインスタンスを生成
+	CShadowRender::CreateInstance();		// シングルトンクラス:影生成するオブジェクト管理クラスのインスタンスを生成
+	SINSTANCE(CShadowRender)->Initialize();
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
 	SINSTANCE(CInputManager)->InitManager();
 	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
-	MainScene.Initialize();
+
+	AddScene();
+	SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 }
 
 void Update()
 {
 	SINSTANCE(CInputManager)->Update();
-	MainScene.Update();		//シーン更新
+	SINSTANCE(CGameManager)->Update();		//シーン更新
 }
 
 void Draw()
@@ -237,7 +249,7 @@ void Draw()
 
 	if (SUCCEEDED((*graphicsDevice()).BeginScene()))
 	{
-		MainScene.Draw();		// メイン描画
+		SINSTANCE(CGameManager)->Draw();		// シーン描画
 		(*graphicsDevice()).EndScene();
 	}
 	(*graphicsDevice()).Present(NULL, NULL, NULL, NULL);

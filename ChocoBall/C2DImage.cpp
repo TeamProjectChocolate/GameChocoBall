@@ -37,19 +37,13 @@ void C2DImage::Initialize(){
 		{ 1.0f, -1.0f, 0.0f, 1.0f, 0xffffffff, 1.0f, 1.0f, },
 		{ -1.0f, 1.0f, 0.0f, 1.0f, 0xffffffff, 0.0f, 0.0f, },
 		{ 1.0f, 1.0f, 0.0f, 1.0f, 0xffffffff, 1.0f, 0.0f, },
-		/*{ D3DXVECTOR4(-1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 1.0f, },
-		{ D3DXVECTOR4(-1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 0.0f, },
-		{ D3DXVECTOR4(1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 1.0f, },
-		{ D3DXVECTOR4(1.0f, -1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 1.0f, },
-		{ D3DXVECTOR4(-1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 0.0f, 0.0f, },
-		{ D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f), 0xffffffff, 1.0f, 0.0f, },*/
 	};
+
 	(*graphicsDevice()).CreateVertexBuffer(6 * sizeof(SVertex), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &m_pVertexBuffer, NULL);
 	VOID* pVertices;
 	m_pVertexBuffer->Lock(0, sizeof(vertices), (void**)&pVertices, 0);
 	memcpy(pVertices, vertices, sizeof(vertices));
 	m_pVertexBuffer->Unlock();
-
 }
 
 void C2DImage::Draw()
@@ -75,11 +69,6 @@ void C2DImage::Draw()
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
-
-	//m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);		//スプライト描画開始
-	//m_pSprite->SetTransform(&this->m_transformMatrix);	//変換行列セット
-	//m_pSprite->Draw(this->m_pTexture, &this->m_rect, &D3DXVECTOR3(this->m_texCenter.x, this->m_texCenter.y, 0.0f), NULL, this->m_backColor);	//スプライトにテクスチャ貼付け
-	//m_pSprite->End();	//スプライト描画終了
 }
 
 void C2DImage::SetupMatrices()

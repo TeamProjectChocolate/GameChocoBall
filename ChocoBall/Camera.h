@@ -1,4 +1,10 @@
 #pragma once
+
+enum EUpdateType{
+	enUpdateTypeTarget = 0,		//カメラ行列を注視点を使って計算する。
+	enUpdateTypeDirection,	//カメラ行列を向きを使って計算する。
+};
+
 class CCamera
 {
 public:
@@ -9,6 +15,9 @@ public:
 	void SetCamera(LPD3DXEFFECT);
 	inline void SetPos(D3DXVECTOR3 pos){
 		m_position = pos;
+	}
+	inline D3DXVECTOR3 GetPos(){
+		return m_position;
 	}
 	inline void SetTarget(D3DXVECTOR3 target){
 		m_target = target;
@@ -28,10 +37,26 @@ public:
 	inline void SetFar(float Far){
 		m_Far = Far;
 	}
+	inline void SetDirection(D3DXVECTOR3 dir)
+	{
+		m_direction = dir;
+	}
+	inline void SetUpdateType(EUpdateType type)
+	{
+		m_updateType = type;
+	}
+	D3DXMATRIX GetView(){
+		return m_View;
+	}
+	D3DXMATRIX GetProj(){
+		return m_Proj;
+	}
 private:
 	D3DXVECTOR3 m_position;
 	D3DXVECTOR3 m_target;
 	D3DXVECTOR3 m_up;
+	D3DXVECTOR3 m_direction;	//カメラの向き。
+	EUpdateType m_updateType;
 	float m_ViewAngle;	// 画角
 	float m_aspect;
 	float m_Near;

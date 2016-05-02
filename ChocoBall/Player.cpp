@@ -1,10 +1,11 @@
 
 #include "Player.h"
 #include "InputManager.h"
+#include "ShadowRender.h"
 
 
 CPlayer::CPlayer() {
-	strcpy(m_pFileName, "image/stage.x");
+	strcpy(m_pFileName, "image/kyu.x");
 }
 
 CPlayer::~CPlayer(){ }
@@ -33,11 +34,17 @@ void CPlayer::Initialize(float x,float y)
 
 void CPlayer::Update()
 {
-	if (m_pInput->IsPressUp()){
+	if (m_pInput->IsPressShift() && m_pInput->IsPressUp()){
 		m_transform.position.y += 0.05f;
 	}
-	if (m_pInput->IsPressDown()){
+	else if (m_pInput->IsPressUp()){
+		m_transform.position.z += 0.05f;
+	}
+	if (m_pInput->IsPressShift() && m_pInput->IsPressDown()){
 		m_transform.position.y -= 0.05f;
+	}
+	else if (m_pInput->IsPressDown()){
+		m_transform.position.z -= 0.05f;
 	}
 	if (m_pInput->IsPressRight()){
 		m_transform.position.x += 0.05f;
@@ -45,9 +52,13 @@ void CPlayer::Update()
 	if (m_pInput->IsPressLeft()){
 		m_transform.position.x -= 0.05f;
 	}
-	//m_transform.angle.y += 0.1f;
+	//m_transform.angle.z += 0.1f;
+	C3DImage::Update();
+	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
 }
 
 void CPlayer::Draw(){
+	SetUpTechnique();
 	C3DImage::Draw();
 }

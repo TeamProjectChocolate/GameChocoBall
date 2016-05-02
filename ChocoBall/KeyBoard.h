@@ -18,10 +18,3 @@ private:
 	BYTE m_KBOldBuf[256];	// 一瞬前のキーボード情報
 	BYTE m_KBNowBuf[256];	// 現在のキーボード情報
 };
-
-////グローバル関数を定義してどこかにある実体を返す(ここでいうとCKeyBoardクラスのインスタンスを返す)
-//inline CKeyBoard& KeyBoard()
-//{
-//	extern CKeyBoard g_KeyboardDevice;
-//	return g_KeyboardDevice;
-//}

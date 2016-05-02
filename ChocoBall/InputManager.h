@@ -33,5 +33,9 @@ private:
 	LPDIRECTINPUT8 m_pInputObject;	// DirectInputオブジェクト
 	vector<CDirectInput*> m_Inputs;	// キーボードが複数あれば複数格納
 	CDirectInput* m_currentInput;
+
+	//vectorに登録された要素をすべて削除する関数
+	//※デストラクタにて呼び出される
+	void DeleteAll();
 };
 

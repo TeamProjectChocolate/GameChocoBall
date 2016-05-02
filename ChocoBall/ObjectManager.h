@@ -18,6 +18,7 @@ class CObjectManager
 	SINGLETON_DECL(CObjectManager)
 public:
 
+	template<class T>
 	//指定したオブジェクトを自動生成する関数(優先度を指定したい場合)
 	//引き数: LPCSTR型 インスタンスの名前 
 	//		  short型 更新優先度(0が最小、数字が大きいほど優先度が低い)
@@ -27,7 +28,6 @@ public:
 	//※インスタンスの名前は255文字以内としてください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
 	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
-	template<class T>
 	T* GenerationObject(LPCSTR ObjectName,short priorty){
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
@@ -38,6 +38,7 @@ public:
 		return Object;
 	}
 
+	template<class T>
 	//指定したオブジェクトを自動生成する関数(優先度なし：自動的に優先度は最低になります)
 	//引き数: LPCSTR型 インスタンスの名前
 	//返り値: T*型 生成したクラスのオブジェクトを返却
@@ -46,7 +47,6 @@ public:
 	//※インスタンスの名前は255文字以内としてください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
 	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
-	 template<class T>
 	T* GenerationObject(LPCSTR ObjectName){
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
@@ -76,16 +76,14 @@ public:
 	//  CObjectManagerクラスの外部できちんとdeleteしてください
 	void AddObject(CGameObject*, LPCSTR);
 
-	//Objectmanagerクラスに登録されているGameObjectのインスタンスを名前で検索する関数
+	template<class T>
+	//ObjectManagerクラスに登録されているGameObjectのインスタンスを名前で検索する関数
 	//引き数: LPCSTR型 インスタンスの名前
 	//返り値: CGameObject*型 引き数の名前と一致したオブジェクトのポインタ(どれか一つ)
 	//呼び出し例: SINSTANCE(CObjectManager)->FindGameObject<検索したいクラス名>(_T("インスタンスの名前"));
 	//※複数名前が一致した場合どれか一つが返されます
 	//※確実にそのインスタンスを取得したい場合はプログラマーがきちんとユニークな名前で登録してください
-	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
-	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
 	//※関数が重いため多用しないこと
-	template<class T>
 	T* FindGameObject(LPCSTR ObjectName)
 	{
 		int size = m_GameObjects.size();
@@ -117,11 +115,15 @@ public:
 	//※必ずメインループで最後に呼び出す
 	void ExcuteDeleteObjects();
 
-	void Intialize(LPD3DXSPRITE);
+	void Intialize();
 	void Update();
 	void Draw();
 private:
 	void Add(CGameObject*,LPCSTR, short);
 	vector<OBJECT_DATA*> m_GameObjects;	// GameObject*のリスト
 	vector<CGameObject*> m_DeleteObjects;	// 削除リスト
+
+	//vectorに登録された要素をすべて削除する関数
+	//※デストラクタにて呼び出される
+	void DeleteAll();
 };

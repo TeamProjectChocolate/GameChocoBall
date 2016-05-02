@@ -4,6 +4,9 @@ class CGameObject;
 
 #define MAX_FILENAME 255
 
+#define NUM_DIFFUSE_LIGHT 4		// 使用するディフューズライトの数
+
+
 // シェーダファイル格納用構造体
 typedef struct EFFECT_DATA{
 	CHAR pFileName[MAX_FILENAME];
@@ -33,3 +36,7 @@ typedef struct TRANSEFORM{
 	D3DXVECTOR3 angle;
 	D3DXVECTOR3 scale;
 }TRANSFORM;
+
+
+#define WINDOW_WIDTH 960
+#define WINDOW_HEIGHT 540

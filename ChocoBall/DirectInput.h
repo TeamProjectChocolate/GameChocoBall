@@ -16,6 +16,8 @@ public:
 	virtual BYTE IsPressCancel();	// キャンセル、戻るボタンが長押し
 	virtual BYTE IsTriggerEscape();	// エスケープボタンが押されたら
 	virtual BYTE IsPressEscape();	// エスケープボタン長押し
+	virtual BYTE IsTrggerShift();	// シフトキーが押されたら
+	virtual BYTE IsPressShift();	// シフトキー長押し
 	virtual BYTE IsTriggerUp();		// ↑が押されたら
 	virtual BYTE IsPressUp();		// ↑が長押し
 	virtual BYTE IsTriggerDown();	// ↓が押されたら
