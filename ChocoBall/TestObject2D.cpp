@@ -18,13 +18,13 @@ void CTestObject2D::Initialize(){
 	m_Input = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_transform.angle = D3DXVECTOR3(1, 1, 1);
-	m_transform.scale = D3DXVECTOR3(96, 54, 1);
+	m_transform.scale = D3DXVECTOR3(96, 80, 1);
 	SetAlive(true);
 	C2DImage::SetImage();
 }
 
-void CTestObject2D::Update(){
-	if(m_Input->IsPressUp()){
+void CTestObject2D::Update(){ 
+	if (m_Input->IsPressUp()){
 		m_transform.position.y--/* -= 0.1f*/;
 	}
 	if (m_Input->IsPressDown()){
@@ -41,4 +41,5 @@ void CTestObject2D::Update(){
 void CTestObject2D::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
+
 }

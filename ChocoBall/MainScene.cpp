@@ -3,6 +3,8 @@
 #include "GameCamera.h"
 #include "Audio.h"
 #include "TestObject2D.h"
+#include "SceneTitle.h"
+#include "TitleBack.h"
 
 CMainScene::CMainScene(){
 }
@@ -16,6 +18,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("aaa"), 1);
 	SINSTANCE(CObjectManager)->AddObject(&m_Player, _T("bbb"));
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 3);
+	SINSTANCE(CObjectManager)->GenerationObject<CTitleBack>(_T("2DTest"), 3);
 	char objectName[] = {
 		"aaa"
 	};
