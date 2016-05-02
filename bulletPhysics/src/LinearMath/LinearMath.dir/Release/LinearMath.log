@@ -1,0 +1,28 @@
+﻿2016/04/26 18:47:40 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "D:\_Users\kbc15_000\Desktop\Programing\physicsDemo\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\_Users\kbc15_000\Desktop\Programing\physicsDemo\\BulletPhysics\src /nologo /W3 /WX- /O2 /Ob2 /Oy- /D WIN32 /D NDEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /EHsc /MT /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"LinearMath.dir\Release\\" /Fd"LinearMath.dir\Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt btAlignedAllocator.cpp btConvexHull.cpp btConvexHullComputer.cpp btGeometryUtil.cpp btPolarDecomposition.cpp btQuickprof.cpp btSerializer.cpp btVector3.cpp
+         btAlignedAllocator.cpp
+         btConvexHull.cpp
+         btConvexHullComputer.cpp
+         btGeometryUtil.cpp
+         btPolarDecomposition.cpp
+         btQuickprof.cpp
+         btSerializer.cpp
+         btVector3.cpp
+         コードを生成中...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\_Users\kbc15_000\Desktop\Programing\physicsDemo\\bulletPhysics\lib\Release\LinearMath.lib" /NOLOGO  /machine:X86 LinearMath.dir\Release\btAlignedAllocator.obj
+         LinearMath.dir\Release\btConvexHull.obj
+         LinearMath.dir\Release\btConvexHullComputer.obj
+         LinearMath.dir\Release\btGeometryUtil.obj
+         LinearMath.dir\Release\btPolarDecomposition.obj
+         LinearMath.dir\Release\btQuickprof.obj
+         LinearMath.dir\Release\btSerializer.obj
+         LinearMath.dir\Release\btVector3.obj
+         LinearMath.vcxproj -> D:\_Users\kbc15_000\Desktop\Programing\physicsDemo\\bulletPhysics\lib\Release\LinearMath.lib
+     1>プロジェクト "D:\_Users\kbc15_000\Desktop\Programing\physicsDemo\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:03.98
