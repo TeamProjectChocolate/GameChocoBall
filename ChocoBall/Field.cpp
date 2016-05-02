@@ -14,8 +14,8 @@ CField::~CField()
 
 void CField::Initialize(){
 	C3DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(0, 1, -17);
-	m_transform.angle = D3DXVECTOR3(2, 1, 0);
+	m_transform.position = D3DXVECTOR3(0,0.6, -16.5);
+	m_transform.angle = D3DXVECTOR3(2.5, 1.65, 2.48);
 	m_transform.scale = D3DXVECTOR3(1, 1, 1);
 	SetAlive(true);
 	C3DImage::SetImage();

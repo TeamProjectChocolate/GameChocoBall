@@ -173,9 +173,6 @@ void C3DImage::Update(){
 
 	D3DXMatrixIdentity(&m_World);	// çsóÒèâä˙âª
 
-	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &Scale);
-
 	D3DXMatrixRotationX(&m_Rota, m_transform.angle.x);
 	D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
 
@@ -187,8 +184,12 @@ void C3DImage::Update(){
 
 	m_Rota = m_World;
 
+	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
+	D3DXMatrixMultiply(&m_World, &m_World, &Scale);
+
 	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
+
 
 }
 
