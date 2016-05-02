@@ -1,5 +1,5 @@
-﻿2016/05/02 17:22:29 にビルドを開始しました。
-     1>ノード 3 上のプロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット)。
+﻿2016/05/02 18:05:01 にビルドを開始しました。
+     1>ノード 3 上のプロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Rebuild ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\_Users\kbc15_000\Desktop\GameChocoBall\\BulletPhysics\src /Zi /nologo /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _DEBUG /D _DEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MTd /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"BulletDynamics.dir\Debug\\" /Fd"BulletDynamics.dir\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Character\btKinematicCharacterController.cpp ConstraintSolver\btConeTwistConstraint.cpp ConstraintSolver\btContactConstraint.cpp ConstraintSolver\btFixedConstraint.cpp ConstraintSolver\btGearConstraint.cpp ConstraintSolver\btGeneric6DofConstraint.cpp ConstraintSolver\btGeneric6DofSpring2Constraint.cpp ConstraintSolver\btGeneric6DofSpringConstraint.cpp ConstraintSolver\btHinge2Constraint.cpp ConstraintSolver\btHingeConstraint.cpp ConstraintSolver\btNNCGConstraintSolver.cpp ConstraintSolver\btPoint2PointConstraint.cpp ConstraintSolver\btSequentialImpulseConstraintSolver.cpp ConstraintSolver\btSliderConstraint.cpp ConstraintSolver\btSolve2LinearConstraint.cpp ConstraintSolver\btTypedConstraint.cpp ConstraintSolver\btUniversalConstraint.cpp Dynamics\btDiscreteDynamicsWorld.cpp Dynamics\btRigidBody.cpp Dynamics\btSimpleDynamicsWorld.cpp Featherstone\btMultiBody.cpp Featherstone\btMultiBodyConstraint.cpp Featherstone\btMultiBodyConstraintSolver.cpp Featherstone\btMultiBodyDynamicsWorld.cpp Featherstone\btMultiBodyJointLimitConstraint.cpp Featherstone\btMultiBodyJointMotor.cpp Featherstone\btMultiBodyPoint2Point.cpp MLCPSolvers\btDantzigLCP.cpp MLCPSolvers\btLemkeAlgorithm.cpp MLCPSolvers\btMLCPSolver.cpp Vehicle\btRaycastVehicle.cpp Vehicle\btWheelInfo.cpp
          btKinematicCharacterController.cpp
@@ -22,58 +22,8 @@
          btDiscreteDynamicsWorld.cpp
          btRigidBody.cpp
          btSimpleDynamicsWorld.cpp
-         コードを生成中...
-         コンパイル中...
-         btMultiBody.cpp
-         btMultiBodyConstraint.cpp
-         btMultiBodyConstraintSolver.cpp
-         btMultiBodyDynamicsWorld.cpp
-         btMultiBodyJointLimitConstraint.cpp
-     1>Featherstone\btMultiBodyJointLimitConstraint.cpp(114): warning C4244: '初期化中' : 'int' から 'btScalar' への変換です。データが失われる可能性があります。
-         btMultiBodyJointMotor.cpp
-         btMultiBodyPoint2Point.cpp
-         btDantzigLCP.cpp
-         btLemkeAlgorithm.cpp
-         btMLCPSolver.cpp
-         btRaycastVehicle.cpp
-         btWheelInfo.cpp
-         コードを生成中...
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\_Users\kbc15_000\Desktop\GameChocoBall\\bulletPhysics\lib\Debug\BulletDynamics_Debug.lib" /NOLOGO  /machine:X86 BulletDynamics.dir\Debug\btKinematicCharacterController.obj
-         BulletDynamics.dir\Debug\btConeTwistConstraint.obj
-         BulletDynamics.dir\Debug\btContactConstraint.obj
-         BulletDynamics.dir\Debug\btFixedConstraint.obj
-         BulletDynamics.dir\Debug\btGearConstraint.obj
-         BulletDynamics.dir\Debug\btGeneric6DofConstraint.obj
-         BulletDynamics.dir\Debug\btGeneric6DofSpring2Constraint.obj
-         BulletDynamics.dir\Debug\btGeneric6DofSpringConstraint.obj
-         BulletDynamics.dir\Debug\btHinge2Constraint.obj
-         BulletDynamics.dir\Debug\btHingeConstraint.obj
-         BulletDynamics.dir\Debug\btNNCGConstraintSolver.obj
-         BulletDynamics.dir\Debug\btPoint2PointConstraint.obj
-         BulletDynamics.dir\Debug\btSequentialImpulseConstraintSolver.obj
-         BulletDynamics.dir\Debug\btSliderConstraint.obj
-         BulletDynamics.dir\Debug\btSolve2LinearConstraint.obj
-         BulletDynamics.dir\Debug\btTypedConstraint.obj
-         BulletDynamics.dir\Debug\btUniversalConstraint.obj
-         BulletDynamics.dir\Debug\btDiscreteDynamicsWorld.obj
-         BulletDynamics.dir\Debug\btRigidBody.obj
-         BulletDynamics.dir\Debug\btSimpleDynamicsWorld.obj
-         BulletDynamics.dir\Debug\btMultiBody.obj
-         BulletDynamics.dir\Debug\btMultiBodyConstraint.obj
-         BulletDynamics.dir\Debug\btMultiBodyConstraintSolver.obj
-         BulletDynamics.dir\Debug\btMultiBodyDynamicsWorld.obj
-         BulletDynamics.dir\Debug\btMultiBodyJointLimitConstraint.obj
-         BulletDynamics.dir\Debug\btMultiBodyJointMotor.obj
-         BulletDynamics.dir\Debug\btMultiBodyPoint2Point.obj
-         BulletDynamics.dir\Debug\btDantzigLCP.obj
-         BulletDynamics.dir\Debug\btLemkeAlgorithm.obj
-         BulletDynamics.dir\Debug\btMLCPSolver.obj
-         BulletDynamics.dir\Debug\btRaycastVehicle.obj
-         BulletDynamics.dir\Debug\btWheelInfo.obj
-         BulletDynamics.vcxproj -> D:\_Users\kbc15_000\Desktop\GameChocoBall\\bulletPhysics\lib\Debug\BulletDynamics_Debug.lib
-     1>プロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット) のビルドが完了しました。
+     1>プロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Rebuild ターゲット) のビルドが終了しました -- 失敗。
 
-ビルドに成功しました。
+ビルドに失敗しました。
 
-経過時間 00:00:08.98
+経過時間 00:00:05.39

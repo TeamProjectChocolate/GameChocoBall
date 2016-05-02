@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "C3DImage.h"
 #include "Effect.h"
 #include "ImageManager.h"
