@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameManager.h"
+#include "ObjectManager.h"
 
 
 CGameManager* CGameManager::m_instance = nullptr;
@@ -32,6 +33,7 @@ CScene* CGameManager::FindScene(LPCSTR SceneName){
 }
 
 void CGameManager::ChangeScene(LPCSTR SceneName){
+	SINSTANCE(CObjectManager)->CleanManager();
 	m_NowScene = FindScene(SceneName);
 	Initialize();
 }
