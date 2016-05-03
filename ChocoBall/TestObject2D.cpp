@@ -19,6 +19,7 @@ void CTestObject2D::Initialize(){
 	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_transform.angle = D3DXVECTOR3(1, 1, 1);
 	m_transform.scale = D3DXVECTOR3(96, 54, 1);
+	m_alpha = 0.5f;
 	SetAlive(true);
 	C2DImage::SetImage();
 }

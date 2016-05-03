@@ -14,10 +14,9 @@ CMainScene::~CMainScene(){
 
 void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), 0);
-	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 3);
-	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"));
-	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D2"));
-	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"));
+	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), 2);
+	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), 1);
+	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),1);
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));

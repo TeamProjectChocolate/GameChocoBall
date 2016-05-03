@@ -9,13 +9,13 @@ class CGameObject;
 
 // シェーダファイル格納用構造体
 typedef struct EFFECT_DATA{
-	CHAR pFileName[MAX_FILENAME];
+	CHAR pFileName[MAX_FILENAME + 1];
 	LPD3DXEFFECT Effect;	// インタフェースポインタ
 }EFFECT_DATA;
 
 // 3Dモデル情報格納用構造体
 typedef struct IMAGE3D{
-	LPCSTR pFileName;
+	CHAR pFileName[MAX_FILENAME + 1];
 	D3DMATERIAL9* pMat;
 	LPDIRECT3DTEXTURE9* ppTex;
 	LPD3DXMESH pMesh;
@@ -24,7 +24,7 @@ typedef struct IMAGE3D{
 
 // 2Dモデル情報格納用構造体
 typedef struct IMAGE2D{
-	LPCSTR pFileName;
+	CHAR pFileName[MAX_FILENAME + 1];
 	LPDIRECT3DTEXTURE9 pTex;
 	RECT rect;
 }IMAGE2D;

@@ -9,6 +9,7 @@ class CGameObject
 public:
 	CGameObject(){
 		m_ManagerNewFlg = false;
+		m_alpha = 1.0f;
 	};
 	~CGameObject();
 	virtual void OnDestroy(){};		// ObjectManagerクラスのDeleteGameObject関数が呼ばれたときに呼び出される関数
@@ -45,5 +46,6 @@ protected:
 	bool m_OriginalInit;
 	bool m_ManagerNewFlg;	// ObjectManagerクラスでnewされたものか判定する変数
 	LPD3DXEFFECT m_pEffect;		// 使用するエフェクト
+	float m_alpha;				// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
 };
 

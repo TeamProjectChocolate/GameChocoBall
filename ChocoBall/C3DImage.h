@@ -12,7 +12,7 @@ public:
 	virtual void Update()override;
 	virtual void Draw()override;
 	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("TextureTec");
+		m_pEffect->SetTechnique("NotNormalMapTextureTec");
 	}
 	IMAGE3D* GetImage(){
 		return m_pImage;
