@@ -329,7 +329,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "image\\af18.jpg";
+    "image\\diffuse.jpg";
    }
   }
  }

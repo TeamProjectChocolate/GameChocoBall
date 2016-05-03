@@ -1,16 +1,26 @@
 #include "stdafx.h"
 #include "ImageManager.h"
+#include "GraphicsDevice.h"
 
 CImageManager* CImageManager::m_instance = nullptr;
 
-void CImageManager::Add2D(LPCSTR pFileName,LPDIRECT3DTEXTURE9 pTexture,RECT rect){
+void CImageManager::Add2D(IMAGE2D* image){
 	// 新しく読み込んだXファイルを登録
+	m_ImageList.push_back(image);		// IMAGE2D情報配列に追加
+}
+
+IMAGE2D* CImageManager::LoadTextureFile(LPCSTR pFileName){
 	IMAGE2D* image;
 	image = new IMAGE2D;
-	image->pFileName = pFileName;
-	image->pTex = pTexture;
-	image->rect = rect;
-	m_ImageList.push_back(image);		// IMAGE2D情報配列に追加
+	strcpy(image->pFileName,pFileName);
+
+	D3DXIMAGE_INFO imgInfo;										//画像情報格納用構造体
+	D3DXCreateTextureFromFileEx(graphicsDevice(), pFileName, 0, 0, 0, 0, D3DFMT_UNKNOWN,
+		D3DPOOL_DEFAULT, D3DX_FILTER_NONE, D3DX_DEFAULT, 0xff000000, &imgInfo, NULL, &image->pTex);	//テクスチャ読込
+	RECT rec = { 0, 0, imgInfo.Width, imgInfo.Height };			//描画領域
+	memcpy(&image->rect, &rec, sizeof(RECT));					//描画領域セット
+	SINSTANCE(CImageManager)->Add2D(image);
+	return image;
 }
 
 IMAGE2D* CImageManager::Find2DImage(LPCSTR pFileName){
@@ -21,7 +31,7 @@ IMAGE2D* CImageManager::Find2DImage(LPCSTR pFileName){
 			return m_ImageList[idx];
 		}
 	}
-	return nullptr;
+	return LoadTextureFile(pFileName);
 }
 
 void CImageManager::Add3D(LPCSTR pFileName, D3DMATERIAL9* m_pMeshMat,
@@ -30,7 +40,7 @@ void CImageManager::Add3D(LPCSTR pFileName, D3DMATERIAL9* m_pMeshMat,
 	// 新しく読み込んだXファイルを登録
 	IMAGE3D* image;
 	image = new IMAGE3D;
-	image->pFileName = pFileName;
+	strcpy(image->pFileName,pFileName);
 	image->ppTex = m_pMeshTex;
 	image->pMat = m_pMeshMat;
 	image->pMesh = m_pMesh;
