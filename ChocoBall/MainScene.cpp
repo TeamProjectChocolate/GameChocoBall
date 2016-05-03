@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MainScene.h"
 #include "ObjectManager.h"
 #include "GameCamera.h"

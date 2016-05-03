@@ -1,0 +1,28 @@
+﻿2016/05/02 18:05:01 にビルドを開始しました。
+     1>ノード 5 上のプロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\_Users\kbc15_000\Desktop\GameChocoBall\\BulletPhysics\src /Zi /nologo /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _DEBUG /D _DEBUG /D USE_GRAPHICAL_BENCHMARK /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MTd /GS /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Fo"LinearMath.dir\Debug\\" /Fd"LinearMath.dir\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt btAlignedAllocator.cpp btConvexHull.cpp btConvexHullComputer.cpp btGeometryUtil.cpp btPolarDecomposition.cpp btQuickprof.cpp btSerializer.cpp btVector3.cpp
+         btAlignedAllocator.cpp
+         btConvexHull.cpp
+         btConvexHullComputer.cpp
+         btGeometryUtil.cpp
+         btPolarDecomposition.cpp
+         btQuickprof.cpp
+         btSerializer.cpp
+         btVector3.cpp
+         コードを生成中...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\_Users\kbc15_000\Desktop\GameChocoBall\\bulletPhysics\lib\Debug\LinearMath_Debug.lib" /NOLOGO  /machine:X86 LinearMath.dir\Debug\btAlignedAllocator.obj
+         LinearMath.dir\Debug\btConvexHull.obj
+         LinearMath.dir\Debug\btConvexHullComputer.obj
+         LinearMath.dir\Debug\btGeometryUtil.obj
+         LinearMath.dir\Debug\btPolarDecomposition.obj
+         LinearMath.dir\Debug\btQuickprof.obj
+         LinearMath.dir\Debug\btSerializer.obj
+         LinearMath.dir\Debug\btVector3.obj
+         LinearMath.vcxproj -> D:\_Users\kbc15_000\Desktop\GameChocoBall\\bulletPhysics\lib\Debug\LinearMath_Debug.lib
+     1>プロジェクト "D:\_Users\kbc15_000\Desktop\GameChocoBall\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Rebuild ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:01.93

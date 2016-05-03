@@ -12,6 +12,7 @@
 #include "RenderContext.h"
 #include "GameManager.h"
 #include "ShadowRender.h"
+#include "BulletPhysics.h"
 
 
 #define MAX_LOADSTRING 100
@@ -229,6 +230,7 @@ void Initialize()
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
+	g_bulletPhysics.InitPysics();			//グローバル変数はこう呼ぶ。
 	SINSTANCE(CInputManager)->InitManager();
 	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);

@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "Scene.h"
+
 #include "Assert.h"
 
 #define SCENENAME_MAX 255
