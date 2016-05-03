@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "GameObject.h"
-#include "BulletPhysics.h"
+#include "bulletPhysics/BulletPhysics.h"
 #include "Assert.h"
 
 #define OBJECTNAME_MAX 255
