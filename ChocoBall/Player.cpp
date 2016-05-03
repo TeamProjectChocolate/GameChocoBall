@@ -19,7 +19,7 @@ void CPlayer::Initialize()
 	m_transform.angle = D3DXVECTOR3(0, 0, 0);
 	m_transform.scale = D3DXVECTOR3(1, 1, 1);
 	SetAlive(true);
-	m_alpha = 0.5f;
+	SetAlpha(0.5f);
 	C3DImage::SetImage();
 }
 

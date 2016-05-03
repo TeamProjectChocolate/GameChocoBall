@@ -39,6 +39,9 @@ public:
 	void SetAlpha(float alpha){
 		m_alpha = alpha;
 	}
+	float GetAlpha(){
+		return m_alpha;
+	}
 	void SetCommon(float common){
 		m_common = common;
 	}
