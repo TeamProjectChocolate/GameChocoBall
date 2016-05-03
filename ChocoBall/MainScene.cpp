@@ -6,6 +6,7 @@
 #include "TestObject2D.h"
 #include "Field.h"
 #include "ShadowRender.h"
+#include "Debri.h"
 
 CMainScene::CMainScene(){
 }
@@ -19,6 +20,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"));
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D2"));
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"));
+	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"));
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));

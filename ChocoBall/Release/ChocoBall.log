@@ -1,0 +1,41 @@
+﻿2016/05/03 13:31:29 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Github\GameChocoBall\ChocoBall\ChocoBall.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\ChocoBall.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Debri.cpp
+         Debri.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Github\GameChocoBall\Release\ChocoBall.exe" /INCREMENTAL:NO /NOLOGO d3d9.lib d3dx9.lib BulletCollision.lib BulletDynamics.lib BulletSoftBody.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Github\GameChocoBall\Release\ChocoBall.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Github\GameChocoBall\Release\ChocoBall.lib" /MACHINE:X86 /SAFESEH Release\DirectX.res
+         Release\Audio.obj
+         Release\BulletPhysics.obj
+         Release\C2DImage.obj
+         Release\C3DImage.obj
+         Release\Camera.obj
+         Release\Debri.obj
+         Release\DirectInput.obj
+         Release\DirectX.obj
+         Release\Effect.obj
+         Release\Field.obj
+         Release\GameCamera.obj
+         Release\GameManager.obj
+         Release\GameObject.obj
+         Release\GraphicsDevice.obj
+         Release\ImageManager.obj
+         Release\InputManager.obj
+         Release\KeyBoard.obj
+         Release\Light.obj
+         Release\MainScene.obj
+         Release\ObjectManager.obj
+         Release\Player.obj
+         Release\RenderContext.obj
+         Release\Scene.obj
+         Release\ShadowRender.obj
+         Release\stdafx.obj
+         Release\TestObject2D.obj
+         コード生成しています。
+         コード生成が終了しました。
+         ChocoBall.vcxproj -> C:\Github\GameChocoBall\Release\ChocoBall.exe
+     1>プロジェクト "C:\Github\GameChocoBall\ChocoBall\ChocoBall.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:02.10

@@ -96,6 +96,7 @@
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Debri.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="RenderContext.h" />
@@ -127,6 +128,7 @@
     <ClCompile Include="C2DImage.cpp" />
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Debri.cpp" />
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
