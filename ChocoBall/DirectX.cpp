@@ -230,13 +230,14 @@ void Initialize()
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
-	g_bulletPhysics.InitPysics();			//グローバル変数はこう呼ぶ。
+	g_bulletPhysics.InitPysics();			// 物理エンジンの初期化(グローバル変数はこう呼ぶ。)
 	SINSTANCE(CInputManager)->InitManager();
 	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 
 	AddScene();
 	SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
+	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"), 0);
 }
 
 void Update()

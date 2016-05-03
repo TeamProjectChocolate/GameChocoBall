@@ -4,6 +4,7 @@
 #include "ShadowRender.h"
 
 
+
 CPlayer::CPlayer() {
 	strcpy(m_pFileName, "image/TestPlayer.x");
 }

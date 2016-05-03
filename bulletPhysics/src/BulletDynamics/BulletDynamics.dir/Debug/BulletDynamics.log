@@ -1,1 +1,13 @@
+<<<<<<< HEAD
 ﻿  BulletDynamics.vcxproj -> C:\Github\GameChocoBall\\bulletPhysics\lib\Debug\BulletDynamics_Debug.lib
+=======
+﻿2016/05/03 13:48:29 にビルドを開始しました。
+     1>ノード 3 上のプロジェクト "C:\Github\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット)。
+     1>Lib:
+         BulletDynamics.vcxproj -> C:\Github\GameChocoBall\\bulletPhysics\lib\Debug\BulletDynamics_Debug.lib
+     1>プロジェクト "C:\Github\GameChocoBall\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:00.31
+>>>>>>> 6b5df60407bed87e459d2f54855f2e4a541965b9
