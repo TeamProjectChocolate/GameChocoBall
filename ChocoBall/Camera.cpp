@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "GraphicsDevice.h"
 #include "Effect.h"
-#include "bulletPhysics/BulletPhysics.h"
+#include "BulletPhysics.h"
 
 CCamera::CCamera()
 {
