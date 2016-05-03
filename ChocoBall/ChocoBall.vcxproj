@@ -116,11 +116,15 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="TestObject2D.h" />
+    <ClInclude Include="TitleBack.h" />
+    <ClInclude Include="TitleCursor.h" />
+    <ClInclude Include="TitleSelect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -146,12 +150,16 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderContext.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestObject2D.cpp" />
+    <ClCompile Include="TitleBack.cpp" />
+    <ClCompile Include="TitleCursor.cpp" />
+    <ClCompile Include="TitleSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

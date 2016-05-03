@@ -36,6 +36,9 @@ public:
 	bool GetManagerNewFlg(){
 		return m_ManagerNewFlg;
 	}
+	void SetPos(D3DXVECTOR3 pos){
+		m_transform.position = pos;
+	}
 	void SetAlpha(float alpha){
 		m_alpha = alpha;
 	}
