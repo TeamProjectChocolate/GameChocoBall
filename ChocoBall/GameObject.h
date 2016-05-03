@@ -37,6 +37,9 @@ public:
 	bool GetManagerNewFlg(){
 		return m_ManagerNewFlg;
 	}
+	void SetAlpha(float alpha){
+		m_alpha = alpha;
+	}
 protected:
 	CHAR m_pFileName[MAX_FILENAME + 1];		// 読み込むファイルの名前を格納する
 	TRANSEFORM m_transform; // オブジェクトの座標、回転、大きさ情報
