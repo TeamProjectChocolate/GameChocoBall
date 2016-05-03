@@ -36,6 +36,9 @@ public:
 	bool GetManagerNewFlg(){
 		return m_ManagerNewFlg;
 	}
+	void SetPos(D3DXVECTOR3 pos){
+		m_transform.position = pos;
+	}
 protected:
 	CHAR m_pFileName[MAX_FILENAME + 1];		// 読み込むファイルの名前を格納する
 	TRANSEFORM m_transform; // オブジェクトの座標、回転、大きさ情報

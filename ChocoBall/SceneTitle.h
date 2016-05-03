@@ -2,8 +2,10 @@
 #include "Scene.h"
 #include "DirectInput.h"
 #include "TitleBack.h"
+#include "TitleSelect.h"
+#include "TitleCursor.h"
 
-class CSceneTitle:
+class CSceneTitle :
 	public CScene
 {
 public:
@@ -15,4 +17,6 @@ public:
 private:
 	CDirectInput* m_Input;
 	CTitleBack m_Back;
+	CTitleSelect m_Select[2];
+	CTitleCursor m_Cursor;
 };

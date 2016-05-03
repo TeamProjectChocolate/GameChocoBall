@@ -12,6 +12,7 @@
 #include "RenderContext.h"
 #include "GameManager.h"
 #include "ShadowRender.h"
+#include "SceneTitle.h"
 
 
 #define MAX_LOADSTRING 100
@@ -23,6 +24,7 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// メイン ウィンドウ クラス名
 
 HWND g_hWnd;
 CGraphicsDevice g_graphicsDevice;
+CSceneTitle SceneTitle;
 CMainScene MainScene;
 CCamera g_camera;
 void addScene();
@@ -215,6 +217,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 void AddScene(){	// ゲームで使用するシーンを登録
+	SINSTANCE(CGameManager)->AddScene(&SceneTitle, _T("Title"));
 	SINSTANCE(CGameManager)->AddScene(&MainScene, _T("Main"));
 }
 
@@ -234,7 +237,7 @@ void Initialize()
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 
 	AddScene();
-	SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
+	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
 }
 
 void Update()

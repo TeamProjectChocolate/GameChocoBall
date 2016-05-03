@@ -1,45 +1,33 @@
-//#include "stdafx.h"
-//#include "SceneTitle.h"
-//#include "InputManager.h"
-//
-//
-//CSceneTitle::CSceneTitle()
-//{
-//	strcpy(m_pFileName, "image/noborin.png");
-//}
-//
-//
-//CSceneTitle::~CSceneTitle()
-//{
-//}
-//
-//void CSceneTitle::Initialize(){
-//	C2DImage::Initialize();
-//	m_Input = SINSTANCE(CInputManager)->GetInput();
-//	m_transform.position = D3DXVECTOR3(100.100f, 100.0f, 1.0f);
-//	m_transform.angle = D3DXVECTOR3(1, 1, 1);
-//	m_transform.scale = D3DXVECTOR3(100, 100, 100);
-//	SetAlive(true);
-//	C2DImage::SetImage();
-//}
-//
-//void CSceneTitle::Update(){
-//	if (m_Input->IsPressUp()){
-//		
-//	}
-//	if (m_Input->IsPressDown()){
-//		
-//	}
-//	if (m_Input->IsPressLeft()){
-//		
-//	}
-//	if (m_Input->IsPressRight()){
-//		
-//	}
-//}
-//
-//void CSceneTitle::Draw(){
-//	C2DImage::SetupMatrices();
-//	C2DImage::Draw();
-//
-//}
+#include "stdafx.h"
+#include "SceneTitle.h"
+#include "InputManager.h"
+#include "ObjectManager.h"
+
+
+CSceneTitle::CSceneTitle()
+{
+}
+
+
+CSceneTitle::~CSceneTitle()
+{
+}
+
+void CSceneTitle::Initialize(){
+	m_Input = SINSTANCE(CInputManager)->GetInput();
+	SINSTANCE(CObjectManager)->AddObject(&m_Back, _T("TitleBack"));
+	SINSTANCE(CObjectManager)->AddObject(&m_Select[0], _T("Start"));
+	m_Select[1].SetFileName(_T("image/exit.png"));
+	SINSTANCE(CObjectManager)->AddObject(&m_Select[1], _T("Exit"));
+	SINSTANCE(CObjectManager)->AddObject(&m_Cursor, _T("Cursor"));
+	SINSTANCE(CObjectManager)->Intialize();
+	SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Exit"))->SetPos(D3DXVECTOR3(500.0f, 350.0f, 0.0f));//Exit‚Ìƒ|ƒWƒVƒ‡ƒ“
+}
+
+void CSceneTitle::Update(){
+	SINSTANCE(CObjectManager)->Update();
+}
+
+void CSceneTitle::Draw(){
+	SINSTANCE(CObjectManager)->Draw();
+}
