@@ -39,6 +39,11 @@ public:
 	void SetPos(D3DXVECTOR3 pos){
 		m_transform.position = pos;
 	}
+	D3DXVECTOR3 GetPos()
+	{
+		return m_transform.position;
+
+	}
 	void SetAlpha(float alpha){
 		m_alpha = alpha;
 	}

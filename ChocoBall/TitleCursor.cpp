@@ -27,8 +27,12 @@ void CTitleCursor::Initialize(){
 }
 
 void CTitleCursor::Update(){
-	if (m_Input->IsTriggerDecsion()){
+	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
+		
+	}
+	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 350.0f){
+		
 	}
 	if (m_Input->IsTriggerUp()){
 		m_transform.position.y = 250.0f;		
