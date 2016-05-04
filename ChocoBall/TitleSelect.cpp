@@ -27,8 +27,8 @@ void CTitleSelect::Initialize(){
 }
 
 void CTitleSelect::Update(){
-	if (m_alpha)
-	m_alpha -= 0.009;
+	/*if (m_alpha)
+	m_alpha -= 0.009;*/
 
 	
 	// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
