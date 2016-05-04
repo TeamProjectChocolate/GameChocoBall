@@ -6,9 +6,6 @@ void CDebri::Initialize()
 {
 	C3DImage::Initialize();
 	strcpy(m_pFileName, "image/Debri.x");
-	/*m_transform.position.x = 0.0f;
-	m_transform.position.y = 1.0f;
-	m_transform.position.z = -17.0f;*/
 	m_transform.position = D3DXVECTOR3(0, 10, -17);
 	m_transform.angle = D3DXVECTOR3(0, 0, 0);
 	m_transform.scale = D3DXVECTOR3(0.1f,0.1f,0.1f);
