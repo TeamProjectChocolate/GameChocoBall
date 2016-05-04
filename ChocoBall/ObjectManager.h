@@ -109,6 +109,14 @@ public:
 	//※関数が重いため多用しないこと
 	void DeleteGameObject(LPCSTR);
 
+	//削除リストに登録されている、常駐GameObject以外を削除リストにすべてプールする関数
+	//引き数: なし
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CObjectManager)->CleanManager();
+	//※シーン切り替えの際に呼び出す
+	//※この関数では常駐オブジェクトは削除できない
+	void CObjectManager::CleanManager();
+
 	//削除リストに登録されているGameObjectを削除する関数
 	//引き数: なし
 	//返り値: なし

@@ -233,7 +233,7 @@ void C3DImage::Draw(){
 	m_pEffect->SetMatrix("Rota", &m_Rota);
 	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &m_World/*設定したい行列へのポインタ*/);
 
-	m_pEffect->SetFloat("Alpha", m_alpha);
+	m_pEffect->SetFloat("Alpha", GetAlpha());
 
 	// 頂点フォーマットをセット
 	(*graphicsDevice()).SetFVF(m_pImage->pMesh->GetFVF());

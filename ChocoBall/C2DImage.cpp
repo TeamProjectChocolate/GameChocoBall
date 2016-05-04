@@ -52,11 +52,11 @@ void C2DImage::Draw()
 
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
-	m_pEffect->SetMatrix("World"/*エフ5ェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
+	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
 
 	m_pEffect->SetTexture("g_Texture", m_pTexture /*テクスチャ情報*/);
 
-	m_pEffect->SetFloat("Alpha", m_alpha);
+	m_pEffect->SetFloat("Alpha", GetAlpha());
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 
 	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
