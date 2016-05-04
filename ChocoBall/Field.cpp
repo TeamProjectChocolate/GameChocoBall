@@ -5,7 +5,7 @@
 
 CField::CField()
 {
-	strcpy(m_pFileName, "image/stage.x");
+	strcpy(m_pFileName, "image/stage2.x");
 }
 
 
@@ -20,7 +20,7 @@ void CField::Initialize(){
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	SetAlive(true);
 
-	D3DXVECTOR3 boxSize(1000.0f, 10.0f, 1000.0f);
+	D3DXVECTOR3 boxSize(1000.0f, 11.5f, 1000.0f);
 	D3DXVECTOR3 boxPosition(m_transform.position.x, m_transform.position.y-5.6f, m_transform.position.z);
 
 	//çÑëÃÇèâä˙âªÅB

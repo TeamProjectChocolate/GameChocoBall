@@ -45,7 +45,8 @@ public:
 	float GetAlpha(){
 		return m_alpha;
 	}
-	void SetCommon(float common){
+	//‘åì‚ÖAŒx‚ª‚ ‚Á‚½‚Ì‚Åˆø”‚Ìfloat‚ğbool‚É•ÏX‚µ‚½‚¨
+	void SetCommon(bool common){
 		m_common = common;
 	}
 	bool GetCommon(){

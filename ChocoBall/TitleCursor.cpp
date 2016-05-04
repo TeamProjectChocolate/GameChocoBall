@@ -27,19 +27,24 @@ void CTitleCursor::Initialize(){
 }
 
 void CTitleCursor::Update(){
-	if (m_Input->IsTriggerDecsion()){
+	if (m_Input->IsTriggerDecsion()&&m_transform.position.y==250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
 	if (m_Input->IsTriggerUp()){
-		m_transform.position.y = 250.0f;		
+		m_transform.position.y = 250.0f;
+
 	}
+	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 350.0f){
+			MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
+			PostQuitMessage(0);
+		}
 	if (m_Input->IsTriggerDown()){
 		m_transform.position.y = 350.0f;
+		
 	}
 }
 
 void CTitleCursor::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
-
 }
