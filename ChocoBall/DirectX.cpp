@@ -12,6 +12,7 @@
 #include "RenderContext.h"
 #include "GameManager.h"
 #include "ShadowRender.h"
+#include "SceneTitle.h"
 #include "BulletPhysics.h"
 
 
@@ -24,6 +25,7 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// メイン ウィンドウ クラス名
 
 HWND g_hWnd;
 CGraphicsDevice g_graphicsDevice;
+CSceneTitle SceneTitle;
 CMainScene MainScene;
 CCamera g_camera;
 void addScene();
@@ -216,6 +218,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 void AddScene(){	// ゲームで使用するシーンを登録
+	SINSTANCE(CGameManager)->AddScene(&SceneTitle, _T("Title"));
 	SINSTANCE(CGameManager)->AddScene(&MainScene, _T("Main"));
 }
 

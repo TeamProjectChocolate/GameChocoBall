@@ -1,9 +1,0 @@
-﻿2016/05/03 13:48:29 にビルドを開始しました。
-     1>ノード 5 上のプロジェクト "C:\Github\GameChocoBall\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Build ターゲット)。
-     1>Lib:
-         LinearMath.vcxproj -> C:\Github\GameChocoBall\\bulletPhysics\lib\Debug\LinearMath_Debug.lib
-     1>プロジェクト "C:\Github\GameChocoBall\bulletPhysics\src\LinearMath\LinearMath.vcxproj" (Build ターゲット) のビルドが完了しました。
-
-ビルドに成功しました。
-
-経過時間 00:00:00.23

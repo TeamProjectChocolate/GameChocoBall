@@ -17,8 +17,9 @@ void CPlayer::Initialize()
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0, 1, -17);
 	m_transform.angle = D3DXVECTOR3(0, 0, 0);
-	m_transform.scale = D3DXVECTOR3(0.5, 0.5, 0.5);
+	m_transform.scale = D3DXVECTOR3(1, 1, 1);
 	SetAlive(true);
+	SetAlpha(0.5f);
 	C3DImage::SetImage();
 }
 

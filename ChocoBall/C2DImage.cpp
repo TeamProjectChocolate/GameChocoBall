@@ -9,24 +9,11 @@
 void C2DImage::SetImage()
 {
 	IMAGE2D* Image = SINSTANCE(CImageManager)->Find2DImage(m_pFileName);
-	if (Image != nullptr){
-		m_pTexture = Image->pTex;
-		m_rect = Image->rect;
-		m_texCenter = D3DXVECTOR2(FLOAT(m_rect.right / 2), FLOAT(m_rect.bottom / 2));
-		return;
-	}
-	LoadTextureFile();
+	m_pTexture = Image->pTex;
+	m_rect = Image->rect;
+	m_texCenter = D3DXVECTOR2(FLOAT(m_rect.right / 2), FLOAT(m_rect.bottom / 2));
 }
 
-void C2DImage::LoadTextureFile(){
-	D3DXIMAGE_INFO imgInfo;										//画像情報格納用構造体
-	D3DXCreateTextureFromFileEx(graphicsDevice(), this->m_pFileName, 0, 0, 0, 0, D3DFMT_UNKNOWN,
-		D3DPOOL_DEFAULT, D3DX_FILTER_NONE, D3DX_DEFAULT, 0xff000000, &imgInfo, NULL, &this->m_pTexture);	//テクスチャ読込
-	this->m_texCenter = D3DXVECTOR2((float)imgInfo.Width / 2, (float)imgInfo.Height / 2);	//テクスチャの中点セット
-	RECT rec = { 0, 0, imgInfo.Width, imgInfo.Height };			//描画領域
-	memcpy(&this->m_rect, &rec, sizeof(RECT));					//描画領域セット
-	SINSTANCE(CImageManager)->Add2D(m_pFileName, m_pTexture, m_rect);
-}
 
 void C2DImage::Initialize(){
 	m_pEffect = SINSTANCE(CEffect)->SetEffect(_T("Shader/2DShader.hlsl"));	// 使用するshaderファイルを指定(デフォルト)
@@ -50,7 +37,13 @@ void C2DImage::Draw()
 {
 	SetUpTechnique();
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
+
 
 	//SINSTANCE(CRenderContext)->GetCurrentCamera()->SetCamera(m_pEffect);
 	//ここで固定描画と同じように、ローカル座標に設定された頂点群をデバイスに渡す。通常と同じ方法。
@@ -59,16 +52,18 @@ void C2DImage::Draw()
 
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
-	m_pEffect->SetMatrix("World"/*エフ5ェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
+	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
 
 	m_pEffect->SetTexture("g_Texture", m_pTexture /*テクスチャ情報*/);
 
+	m_pEffect->SetFloat("Alpha", GetAlpha());
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 
 	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 }
 
 void C2DImage::SetupMatrices()
@@ -87,7 +82,7 @@ void C2DImage::SetupMatrices()
 	D3DXMATRIX matRota;
 	D3DXMatrixIdentity(&this->mWorld);	//ワールド行列初期化
 	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
-	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
 	D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
+	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
 	mWorld = matScale * matRota * matTrans;
 }
