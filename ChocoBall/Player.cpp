@@ -3,13 +3,8 @@
 #include "InputManager.h"
 #include "ShadowRender.h"
 
-CPlayer::CPlayer()
-{
-	strcpy(m_pFileName, "image/TestPlayer.x");
-}
 
 CPlayer::~CPlayer(){ }
-
 
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {

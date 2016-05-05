@@ -14,7 +14,10 @@ struct SVertex
 class C2DImage :public CGameObject
 {
 public:
-	C2DImage(){};
+	C2DImage(){
+		m_pTexture = nullptr;
+		m_pVertexBuffer = nullptr;
+	};
 	~C2DImage(){
 		SAFE_RELEASE(m_pVertexBuffer);
 	};

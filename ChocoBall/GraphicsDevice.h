@@ -5,7 +5,16 @@
 class CGraphicsDevice
 {
 public:
-	CGraphicsDevice(void);
+	CGraphicsDevice(){
+		m_pD3d = nullptr;
+		m_pDevice = nullptr;
+		m_pMeshMat = nullptr;
+		m_pMeshTex = nullptr;
+		m_pMaterials = nullptr;
+		m_pMesh = nullptr;
+		m_pFileName = nullptr;
+	}
+	~CGraphicsDevice(){}
 	HRESULT InitD3d(HWND);	//Direct3Dオブジェクトおよびデバイス初期化
 	void ChangeDisplayMode(HWND, HMENU, bool*, bool*, RECT*);	// ディスプレイモードの変更
 	void FreeDX();		//Direct3Dデバイス・オブジェクト解放

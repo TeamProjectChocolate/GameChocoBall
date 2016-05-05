@@ -6,7 +6,9 @@
 
 class C3DImage :public CGameObject{
 public:
-	C3DImage(){};
+	C3DImage(){
+		m_pImage = nullptr;
+	};
 	~C3DImage(){};
 	virtual void Initialize()override;
 	virtual void Update()override;

@@ -8,6 +8,8 @@ class CGameObject
 {
 public:
 	CGameObject(){
+		m_pEffect = nullptr;
+		m_OriginalInit = false;
 		m_ManagerNewFlg = false;
 		m_alpha = 1.0f;
 	};

@@ -6,8 +6,6 @@ class CInputManager
 {
 	SINGLETON_DECL(CInputManager);
 public:
-	void InitManager();
-
 	//DirectInputオブジェクト生成関数
 	//引き数: なし
 	//返り値: HRESULT型 エラーコードを返却
@@ -30,9 +28,9 @@ public:
 	void Update();
 	void ReleaseObject();
 private:
-	LPDIRECTINPUT8 m_pInputObject;	// DirectInputオブジェクト
+	LPDIRECTINPUT8 m_pInputObject = nullptr;	// DirectInputオブジェクト
 	vector<CDirectInput*> m_Inputs;	// キーボードが複数あれば複数格納
-	CDirectInput* m_currentInput;
+	CDirectInput* m_currentInput= nullptr;
 
 	//vectorに登録された要素をすべて削除する関数
 	//※デストラクタにて呼び出される

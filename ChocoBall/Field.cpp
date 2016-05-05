@@ -3,12 +3,6 @@
 #include "BulletPhysics.h"
 
 
-CField::CField()
-{
-	strcpy(m_pFileName, "image/stage2.x");
-}
-
-
 CField::~CField()
 {
 }

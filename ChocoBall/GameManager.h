@@ -67,7 +67,7 @@ public:
 
 private:
 	vector<SCENE_DATA*> m_Scenes;
-	CScene* m_NowScene;
+	CScene* m_NowScene = nullptr;
 	void Initialize();
 	void Add(SCENE_DATA*);
 

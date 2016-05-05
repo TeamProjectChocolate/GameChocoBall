@@ -122,6 +122,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestObject2D.h" />
     <ClInclude Include="TitleBack.h" />
+    <ClInclude Include="TitleCursor.h" />
+    <ClInclude Include="TitleSelect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -155,6 +157,8 @@
     </ClCompile>
     <ClCompile Include="TestObject2D.cpp" />
     <ClCompile Include="TitleBack.cpp" />
+    <ClCompile Include="TitleCursor.cpp" />
+    <ClCompile Include="TitleSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

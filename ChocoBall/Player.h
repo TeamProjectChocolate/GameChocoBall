@@ -9,8 +9,16 @@
 class CPlayer : public C3DImage
 {
 public:
-	CPlayer();
+	CPlayer(){
+		m_pInput = nullptr;
+		m_ghostObject = nullptr;
+		m_collisionShape = nullptr;
+		m_rigidBody = nullptr;
+		m_myMotionState = nullptr;
+		strcpy(m_pFileName, "image/TestPlayer.x");
+	};
 	~CPlayer();
+
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
@@ -27,8 +35,7 @@ private:
 	btDefaultMotionState*	m_myMotionState;
 	D3DXVECTOR3 m_position;
 	float			m_radius;
-	D3DXVECTOR3		m_moveSpeed;	//移動速度。
-	
+	D3DXVECTOR3		m_moveSpeed;	//移動速度。	
 };
 
 namespace tkEngine{

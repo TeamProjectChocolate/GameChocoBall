@@ -5,7 +5,7 @@
 
 CTitleBack::CTitleBack()
 {
-	strcpy(m_pFileName, "image/noborin.png");
+	strcpy(m_pFileName, "image/ACFA.jpg");
 }
 
 
