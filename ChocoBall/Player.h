@@ -8,7 +8,6 @@ public:
 	CPlayer();
 	~CPlayer();
 	void Initialize()override;
-	void Initialize(float,float);
 	void Update()override;
 	void Draw()override;
 	D3DXVECTOR3 GetPos(){

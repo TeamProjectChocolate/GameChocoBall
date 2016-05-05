@@ -13,5 +13,6 @@ public:
 	void Draw()override;
 private:
 	CDirectInput* m_Input;
+	float m_angle;
 };
 

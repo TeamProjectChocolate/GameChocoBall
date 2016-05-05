@@ -33,7 +33,7 @@ typedef struct IMAGE2D{
 // オブジェクト座標格納構造体
 typedef struct TRANSEFORM{
 	D3DXVECTOR3 position;
-	D3DXVECTOR3 angle;
+	D3DXQUATERNION angle;
 	D3DXVECTOR3 scale;
 }TRANSFORM;
 

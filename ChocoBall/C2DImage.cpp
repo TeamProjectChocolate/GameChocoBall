@@ -82,7 +82,8 @@ void C2DImage::SetupMatrices()
 	D3DXMATRIX matRota;
 	D3DXMatrixIdentity(&this->mWorld);	//ƒ[ƒ‹ƒhs—ñ‰Šú‰»
 	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
-	D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
+	D3DXMatrixRotationQuaternion(&matRota, &m_transform.angle);
+	//D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
 	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
 	mWorld = matScale * matRota * matTrans;
 }

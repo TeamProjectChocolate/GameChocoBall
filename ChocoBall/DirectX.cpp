@@ -239,8 +239,8 @@ void Initialize()
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 
 	AddScene();
-	SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
-	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"), 0);
+	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"), 0,true);
 }
 
 void Update()

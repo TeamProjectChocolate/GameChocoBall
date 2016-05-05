@@ -5,7 +5,7 @@
 
 CTitleBack::CTitleBack()
 {
-	strcpy(m_pFileName, "image/ACFA.jpg");
+	strcpy(m_pFileName, "image/noborin.png");
 }
 
 
@@ -17,7 +17,7 @@ void CTitleBack::Initialize(){
 	C2DImage::Initialize();
 	m_Input = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(450.0f, 400.0f, 1.0f);
-	m_transform.angle = D3DXVECTOR3(0, 0, 0);
+	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(800, 800, 100);
 	SetAlive(true);
 	C2DImage::SetImage();

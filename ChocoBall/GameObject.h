@@ -45,7 +45,7 @@ public:
 	float GetAlpha(){
 		return m_alpha;
 	}
-	void SetCommon(float common){
+	void SetCommon(bool common){
 		m_common = common;
 	}
 	bool GetCommon(){
@@ -61,7 +61,7 @@ protected:
 private:
 	bool m_ManagerNewFlg;	// ObjectManagerクラスでnewされたものか判定する変数
 	bool m_alive;			// 生存フラグ(trueなら生存、falseなら死亡)
-	float m_alpha;				// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
+	float m_alpha;			// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
 	bool m_common;			// 常駐フラグ(trueならシーン切り替えで削除されない)
 };
 
