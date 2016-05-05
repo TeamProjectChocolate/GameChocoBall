@@ -15,7 +15,6 @@ CTitleBack::~CTitleBack()
 
 void CTitleBack::Initialize(){
 	C2DImage::Initialize();
-	m_Input = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(450.0f, 400.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(800, 800, 100);
