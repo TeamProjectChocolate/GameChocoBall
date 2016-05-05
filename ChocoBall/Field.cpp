@@ -5,7 +5,7 @@
 
 CField::CField()
 {
-	strcpy(m_pFileName, "image/stage.x");
+	strcpy(m_pFileName, "image/stage2.x");
 }
 
 
@@ -15,12 +15,13 @@ CField::~CField()
 
 void CField::Initialize(){
 	C3DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(0,0.6, -16.5);
+	m_transform.position = D3DXVECTOR3(0.0f,0.6f, -16.5f);
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(90.0f));
-	m_transform.scale = D3DXVECTOR3(1, 1, 1);
+	//m_transform.angle = D3DXVECTOR3(2.5f, 1.65f, 2.48f);
+	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	SetAlive(true);
 
-	D3DXVECTOR3 boxSize(1000.0f, 10.0f, 1000.0f);
+	D3DXVECTOR3 boxSize(1000.0f, 11.5f, 1000.0f);
 	D3DXVECTOR3 boxPosition(m_transform.position.x, m_transform.position.y-5.6f, m_transform.position.z);
 
 	//çÑëÃÇèâä˙âªÅB

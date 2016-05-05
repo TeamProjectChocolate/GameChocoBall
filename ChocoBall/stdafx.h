@@ -55,7 +55,21 @@ public:											\
 			m_instance = new CLASS_NAME();			\
 		}											\
 		return m_instance;						\
-	}
+}
+
+const D3DXVECTOR3 CVec3Zero = { 0.0f, 0.0f, 0.0f };
+const D3DXVECTOR3 CVec3Right = { 1.0f, 0.0f, 0.0f };
+const D3DXVECTOR3 CVec3Left = { -1.0f, 0.0f, 0.0f };
+const D3DXVECTOR3 CVec3Up = { 0.0f, 1.0f, 0.0f };
+const D3DXVECTOR3 CVec3Down = { 0.0f, -1.0f, 0.0f };
+const D3DXVECTOR3 CVec3Front = { 0.0f, 0.0f, 1.0f };
+const D3DXVECTOR3 CVec3Back = { 0.0f, 0.0f, -1.0f };
+
+const D3DXVECTOR3 CVec3AxisX = { 1.0f, 0.0f, 0.0f };
+const D3DXVECTOR3 CVec3AxisY = { 0.0f, 1.0f, 0.0f };
+const D3DXVECTOR3 CVec3AxisZ = { 0.0f, 0.0f, 1.0f };
+
+#define PI 3.14159265358979323846f
 
 #define SINSTANCE(CLASS_NAME) CLASS_NAME::GetInstance()		// シングルトンオブジェクトのインスタンスを取得するマクロ関数(引き数：クラス名)
 

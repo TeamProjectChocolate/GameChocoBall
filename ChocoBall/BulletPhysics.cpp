@@ -28,6 +28,7 @@ void CBulletPhysics::InitPysics()
 		);
 	m_dynamicWorld->setGravity(btVector3(0, -10, 0));
 	SetAlive(true);
+	SetCommon(true);
 }
 
 void CBulletPhysics::Update()
