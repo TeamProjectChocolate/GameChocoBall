@@ -10,10 +10,17 @@ static const float fPI = 3.14159265358979323846f;
 class CPlayer : public C3DImage
 {
 public:
-	CPlayer();
+	CPlayer(){
+		m_pInput = nullptr;
+		m_ghostObject = nullptr;
+		m_collisionShape = nullptr;
+		m_rigidBody = nullptr;
+		m_myMotionState = nullptr;
+		strcpy(m_pFileName, "image/TestPlayer.x");
+	};
 	~CPlayer();
+
 	void Initialize()override;
-	void Initialize(float, float);
 	void Update()override;
 	void Draw()override;
 	D3DXVECTOR3 GetPos(){

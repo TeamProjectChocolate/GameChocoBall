@@ -27,10 +27,10 @@ public:
 		effect->SetMatrix("LightViewProj", &(m_camera.GetView() * m_camera.GetProj()));
 	}
 private:
-	LPDIRECT3DSURFACE9 m_pMapZ;			// 深度バッファ
-	LPDIRECT3DTEXTURE9 m_pShadow;		// 影を落とすためのテクスチャ
-	LPDIRECT3DSURFACE9 m_pOriginalSurf;	// サーフェス
-	LPD3DXEFFECT m_pEffect;
+	LPDIRECT3DSURFACE9 m_pMapZ = nullptr;			// 深度バッファ
+	LPDIRECT3DTEXTURE9 m_pShadow = nullptr;		// 影を落とすためのテクスチャ
+	LPDIRECT3DSURFACE9 m_pOriginalSurf = nullptr;	// サーフェス
+	LPD3DXEFFECT m_pEffect = nullptr;
 	vector<C3DImage*> m_ShadowObjects;	// 影を生成したいオブジェクトの配列
 	D3DXVECTOR3 m_target;		// 影を生成したいオブジェクトのポジション
 	D3DXVECTOR3 m_ShadowLightPos;		// 影を描画するためのカメラのポジション

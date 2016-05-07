@@ -6,6 +6,13 @@
 
 class CDebri : public C3DImage {
 public:
+	CDebri(){
+		m_collisionShape = nullptr;
+		m_rigidBody = nullptr;
+		m_myMotionState = nullptr;
+	}
+	~CDebri(){}
+
 	void Initialize();
 	void Update();
 	void Draw();

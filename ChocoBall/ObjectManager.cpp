@@ -4,15 +4,17 @@
 
 CObjectManager* CObjectManager::m_instance = nullptr;
 
-void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, short priorty){
+void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, short priorty,bool common){
 	if (priorty > MAX_PRIORTY){
 		priorty = MAX_PRIORTY;
 	}
+	Object->SetCommon(common);
 	this->Add(Object,ObjectName,priorty);
 }
 
-void CObjectManager::AddObject(CGameObject* Object,LPCSTR ObjectName){
+void CObjectManager::AddObject(CGameObject* Object,LPCSTR ObjectName,bool common){
 	short priorty = MAX_PRIORTY;
+	Object->SetCommon(common);
 	this->Add(Object,ObjectName, priorty);
 }
 
@@ -20,7 +22,7 @@ void CObjectManager::Add(CGameObject* GameObject,LPCSTR ObjectName, short priori
 	OBJECT_DATA* Obj;
 	Obj = new OBJECT_DATA;
 	CH_ASSERT(strlen(ObjectName) < OBJECTNAME_MAX);
-	strcpy(Obj->objectname, ObjectName);		// コピーせずにアドレスを保持させるとローカル変数が渡されるとクラッシュする
+	strcpy(Obj->objectname, ObjectName);		// コピーせずにアドレスを保持させると、ローカル変数が渡された際にクラッシュする
 	Obj->object = GameObject;
 	Obj->priority = priority;
 	m_GameObjects.push_back(Obj);

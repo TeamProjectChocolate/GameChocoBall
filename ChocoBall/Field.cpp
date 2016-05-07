@@ -30,10 +30,6 @@ SCollisionInfo collisionInfoTable[] = {
 	},
 };
 
-CField::CField()
-{
-	strcpy(m_pFileName, "image/stage2.x");
-}
 
 
 CField::~CField()
@@ -42,8 +38,9 @@ CField::~CField()
 
 void CField::Initialize(){
 	C3DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(0.0f, 0.6f, -16.5f);
-	m_transform.angle = D3DXVECTOR3(2.5f, 1.65f, 2.48f);
+	m_transform.position = D3DXVECTOR3(0.0f,0.6f, -16.5f);
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(90.0f));
+	//m_transform.angle = D3DXVECTOR3(2.5f, 1.65f, 2.48f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	SetAlive(true);
 

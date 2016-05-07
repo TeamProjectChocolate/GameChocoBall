@@ -12,6 +12,7 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	CDirectInput* m_Input;
+	CDirectInput* m_Input = nullptr;
+	float m_angle;
 };
 

@@ -175,14 +175,16 @@ void C3DImage::Update(){
 
 	D3DXMatrixIdentity(&m_World);	// 行列初期化
 
-	D3DXMatrixRotationX(&m_Rota, m_transform.angle.x);
-	D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
+	//D3DXMatrixRotationX(&m_Rota, m_transform.angle.x);
+	//D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
 
-	D3DXMatrixRotationY(&m_Rota, m_transform.angle.y);
-	D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
+	//D3DXMatrixRotationY(&m_Rota, m_transform.angle.y);
+	//D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
 
-	D3DXMatrixRotationZ(&m_Rota, m_transform.angle.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
+	//D3DXMatrixRotationZ(&m_Rota, m_transform.angle.z);
+	//D3DXMatrixMultiply(&m_World, &m_World, &m_Rota);
+
+	D3DXMatrixRotationQuaternion(&m_World, &m_transform.angle);	// クォータニオンによる回転行列の作成
 
 	m_Rota = m_World;
 

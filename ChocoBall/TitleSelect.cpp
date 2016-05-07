@@ -16,9 +16,8 @@ CTitleSelect::~CTitleSelect()
 
 void CTitleSelect::Initialize(){
 	C2DImage::Initialize();
-	m_Input = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(500.0f, 250.0f, 1.0f);
-	m_transform.angle = D3DXVECTOR3(0, 0, 0);
+	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 45, 0);
 	SetAlive(true);
 	C2DImage::SetImage();
@@ -37,5 +36,4 @@ void CTitleSelect::Update(){
 void CTitleSelect::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
-
 }

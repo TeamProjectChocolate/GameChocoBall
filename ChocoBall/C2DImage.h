@@ -14,7 +14,10 @@ struct SVertex
 class C2DImage :public CGameObject
 {
 public:
-	C2DImage(){};
+	C2DImage(){
+		m_pTexture = nullptr;
+		m_pVertexBuffer = nullptr;
+	};
 	~C2DImage(){
 		SAFE_RELEASE(m_pVertexBuffer);
 	};
@@ -26,6 +29,9 @@ public:
 	}
 	void LoadTextureFile();
 	void SetupMatrices();
+	void SetRotation(float rota){
+		D3DXQuaternionRotationAxis(&m_transform.angle, &D3DXVECTOR3(0.0f,0.0f,1.0f), rota);
+	}
 protected:
 	LPDIRECT3DTEXTURE9 m_pTexture;	//テクスチャ
 	D3DCOLOR m_backColor;			//背景カラー

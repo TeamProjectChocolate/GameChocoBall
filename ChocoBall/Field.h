@@ -8,8 +8,13 @@ class CField :
 	public C3DImage
 {
 public:
-	CField();
+	CField(){
+		m_ghostObject = nullptr;
+		m_myMotionState = nullptr;
+		strcpy(m_pFileName, "image/stage.x" /*"image/stage2.x"*/);
+	};
 	~CField();
+
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

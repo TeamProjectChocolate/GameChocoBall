@@ -16,6 +16,6 @@ public:
 		return m_pCamera;
 	}
 private:
-	CCamera* m_pCamera;
+	CCamera* m_pCamera = nullptr;
 	void DeleteAll(){};
 };
