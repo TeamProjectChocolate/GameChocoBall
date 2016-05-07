@@ -96,17 +96,21 @@ void CPlayer::Initialize()
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0, 1.0f, -17);
 	m_transform.angle = D3DXVECTOR3(0, 0, 0);
-	m_transform.scale = D3DXVECTOR3(1, 1, 1);
+	m_transform.scale = D3DXVECTOR3(0.1f, 0.1f, 0.1f);
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 
-	m_radius = 1.0f;
+	m_radius = 0.1f;
 
 	SetAlive(true);
 
 	SetAlpha(0.5f);
 
+	g_currentAngleY = 0.0f;
+	g_targetAngleY = 0.0f;
+	g_turnSpeed = 0.0f;
+	
 	//コリジョン初期化。
 	m_collisionShape = new btSphereShape(m_radius);
 	float mass = 1000.0f;
@@ -227,33 +231,62 @@ void CPlayer::Update()
 		m_rigidBody->getWorldTransform().setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	}
 
+	isTurn = false;
 
-	if (m_pInput->IsPressShift() && m_pInput->IsPressUp()){
+	if (m_pInput->IsPressShift() && m_pInput->IsTriggerUp()){
 		m_moveSpeed.y = 5.5f;
-		//m_transform.position.y += 0.05f;
 	}
 	else if (m_pInput->IsPressUp()){
-		m_transform.position.z +=0.05f;
-		m_transform.angle.y = D3DXToRadian(180);;
+		m_transform.position.z +=0.01f;
+		isTurn = true;
+		//180度向かせる。
+		g_targetAngleY = D3DXToRadian(180.0f);
 	}
 	if (m_pInput->IsPressDown()){
-		m_transform.position.z -= 0.05f;
-		m_transform.angle.y = D3DXToRadian(0);
+		m_transform.position.z -= 0.01f;
+		isTurn = true;
+		//正面を向かせる。
+		g_targetAngleY = D3DXToRadian(0.0f);
 	}
 	if (m_pInput->IsPressShift() && m_pInput->IsPressRight()){
-		m_transform.angle.y -= 0.05f;
+		m_transform.angle.y -= 0.01f;
 	}
 	else if (m_pInput->IsPressRight()){
-		m_transform.position.x += 0.05f;
-		m_transform.angle.y = D3DXToRadian(-90);
+		m_transform.position.x += 0.01f;
+		isTurn = true;
+		//右方向を向かせる。
+		g_targetAngleY = D3DXToRadian(-90.0f);
 	}
 	if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
-		m_transform.angle.y += 0.05f;
+		m_transform.angle.y += 0.01f;
 	}
 	else if (m_pInput->IsPressLeft()){
-		m_transform.position.x -= 0.05f;
-		m_transform.angle.y = D3DXToRadian(90);;
+		m_transform.position.x -= 0.01f;
+		isTurn = true;
+		//左方向を向かせる
+		g_targetAngleY = D3DXToRadian(90.0f);
 	}
+	static const float fPI = 3.14159265358979323846f;
+	if (isTurn) {
+		float angleDiff = g_targetAngleY - g_currentAngleY;	//目的角度までどれだけ回せがいいのかを計算する。
+		float angleDiffAbs = fabsf(angleDiff);				//回す角度の絶対値を計算。
+		if (angleDiffAbs > 0.0001f) {						//回す角度の大きさが非常に小さい場合は回さない。
+			float turnDir = angleDiff / angleDiffAbs;		//回転させる方向を計算する。
+			if (angleDiffAbs >  fPI) {						//回転させる角度が180度を越えているかを判定する。
+				//180度を越える回転のため遠回り。
+				g_currentAngleY += 2.0f * fPI *  turnDir;	//現在の角度を-90度なら270度、180度なら-180度にする。
+				turnDir *= -1.0f;							//回す方向を反転。
+			}
+			g_turnSpeed = g_cTurnSpeed * turnDir;
+		}
+	}
+	g_currentAngleY += g_turnSpeed;
+	if (fabsf(g_targetAngleY - g_currentAngleY) < fabsf(g_turnSpeed) + 0.01f) {
+		//ターン終わり。
+		g_turnSpeed = 0.0f;
+		g_currentAngleY = g_targetAngleY;
+	}
+	m_transform.angle.y = g_currentAngleY;
 	C3DImage::Update();
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
 	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
