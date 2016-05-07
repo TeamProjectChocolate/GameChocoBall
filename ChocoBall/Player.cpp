@@ -92,7 +92,7 @@ void CPlayer::Initialize()
 	m_transform.position = D3DXVECTOR3(0, 1.0f, -17);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	//m_transform.angle = D3DXVECTOR3(0, 0, 0);
-	m_transform.scale = D3DXVECTOR3(0.1, 0.1, 0.1);
+	m_transform.scale = D3DXVECTOR3(0.1, 0.1, 0.1%);
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
