@@ -11,7 +11,7 @@ public:
 	CField(){
 		m_ghostObject = nullptr;
 		m_myMotionState = nullptr;
-		strcpy(m_pFileName, "image/stage.x" /*"image/stage2.x"*/);
+		strcpy(m_pFileName, "image/stage2.x" /*"image/stage2.x"*/);
 	};
 	~CField();
 

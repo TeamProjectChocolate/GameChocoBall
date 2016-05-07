@@ -25,7 +25,7 @@ void CGameCamera::Update(){
 }
 
 void CGameCamera::Draw(){
-	m_camera.SetPos(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos() + D3DXVECTOR3(0.0f,0.5f,-1.0f));
+	m_camera.SetPos(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos() + D3DXVECTOR3(0.0f,5.0f,-10.0f));
 	m_camera.SetTarget(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos());
 	SINSTANCE(CRenderContext)->SetCurrentCamera(&m_camera);
 }

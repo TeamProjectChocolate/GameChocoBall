@@ -2,7 +2,6 @@
 #include "Field.h"
 #include "BulletPhysics.h"
 
-
 struct SCollisionInfo {
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 angle;
@@ -12,33 +11,30 @@ struct SCollisionInfo {
 SCollisionInfo collisionInfoTable[] = {
 	{
 		//地面のコリジョン
-		D3DXVECTOR3(0.0f, -1.0f, 0.0f),		//座標。
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//座標。
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),	//回転。
-		D3DXVECTOR3(2.0f, 0.5f, 2.0f),	//拡大。	
+		D3DXVECTOR3(20.0f, 0.6f, 20.0f),	//拡大。	
 	},
 	{
 		//saka00のコリジョン。
-		D3DXVECTOR3(12.0f, 12.0f,12.0f),		//座標。
+		D3DXVECTOR3(3.0f, 3.0f,3.0f),		//座標。
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
-		D3DXVECTOR3(100.0f, 200.0f, 100.0f),	//拡大。	
+		D3DXVECTOR3(20.0f, 0.6f, 20.0f),	//拡大。	
 	},
 	{
 		//saka01のコリジョン。
-		D3DXVECTOR3(15.0f, 15.0f, 15.0f),			//座標。
+		D3DXVECTOR3(10.0f, 10.0f, 10.0f),			//座標。
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
 		D3DXVECTOR3(100.0f, 200.0f, 100.0f),	//拡大。	
 	},
 };
-
-
-
 CField::~CField()
 {
 }
 
 void CField::Initialize(){
 	C3DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(0.0f,0.6f, -16.5f);
+	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXToRadian(90.0f));
 	//m_transform.angle = D3DXVECTOR3(2.5f, 1.65f, 2.48f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

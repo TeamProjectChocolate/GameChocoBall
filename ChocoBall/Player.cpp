@@ -89,15 +89,15 @@ void CPlayer::Initialize()
 {
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
-	m_transform.position = D3DXVECTOR3(0, 1.0f, -17);
+	m_transform.position = D3DXVECTOR3(0, 2.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	//m_transform.angle = D3DXVECTOR3(0, 0, 0);
-	m_transform.scale = D3DXVECTOR3(0.1, 0.1, 0.1%);
+	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 
-	m_radius = 0.1f;
+	m_radius = 1.0f;
 
 	SetAlive(true);
 
@@ -218,34 +218,34 @@ void CPlayer::Update()
 	isTurn = false;
 
 	if (m_pInput->IsPressShift() && m_pInput->IsTriggerUp()){
-		m_moveSpeed.y = 5.5f;
+		m_moveSpeed.y = 10.0f;
 	}
 	else if (m_pInput->IsPressUp()){
-		m_transform.position.z +=0.01f;
+		m_transform.position.z +=0.1f;
 		isTurn = true;
 		//180度向かせる。
 		g_targetAngleY = D3DXToRadian(180.0f);
 	}
 	if (m_pInput->IsPressDown()){
-		m_transform.position.z -= 0.01f;
+		m_transform.position.z -= 0.1f;
 		isTurn = true;
 		//正面を向かせる。
 		g_targetAngleY = D3DXToRadian(0.0f);
 	}
 	if (m_pInput->IsPressShift() && m_pInput->IsPressRight()){
-		m_transform.angle.y -= 0.01f;
+		m_transform.angle.y -= 0.1f;
 	}
 	else if (m_pInput->IsPressRight()){
-		m_transform.position.x += 0.01f;
+		m_transform.position.x += 0.1f;
 		isTurn = true;
 		//右方向を向かせる。
 		g_targetAngleY = D3DXToRadian(-90.0f);
 	}
 	if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
-		m_transform.angle.y += 0.01f;
+		m_transform.angle.y += 0.1f;
 	}
 	else if (m_pInput->IsPressLeft()){
-		m_transform.position.x -= 0.01f;
+		m_transform.position.x -= 0.1f;
 		isTurn = true;
 		//左方向を向かせる
 		g_targetAngleY = D3DXToRadian(90.0f);
