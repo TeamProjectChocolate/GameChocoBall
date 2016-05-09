@@ -14,4 +14,6 @@ public:
 	void Draw()override;
 private:
 	CTitleCursor* m_cursor;	//カーソル。
+	float t;
+	short dir;
 };

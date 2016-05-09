@@ -22,20 +22,30 @@ void CTitleSelect::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 45, 0);
 	SetAlive(true);
-	
+	dir = -1;
 	C2DImage::SetImage();
 	m_cursor = SINSTANCE(CObjectManager)->FindGameObject<CTitleCursor>(_T("Cursor"));
+	t = 1.0f;
 
 }
 
 void CTitleSelect::Update(){
 	if (m_transform.position.y == m_cursor->GetPos().y){
-		SetAlpha(1.0f);
-
+		if (t >= 1.0f){
+			dir = -1;
+		}
+		else if (t <= 0.0f)
+		{
+			dir = 1;
+		}
+		t += 0.01f * dir;
+		SetAlpha(t);
 	}
 	else{
-		SetAlpha(0.5f);
-	}
+		dir = -1;
+		t = 1.0f;
+		SetAlpha(1.0f);
+	}	
 }
 
 void CTitleSelect::Draw(){
