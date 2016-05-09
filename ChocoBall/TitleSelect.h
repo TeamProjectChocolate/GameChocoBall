@@ -12,6 +12,5 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	CDirectInput* m_Input;
 	CTitleCursor* m_cursor;	//カーソル。
 };

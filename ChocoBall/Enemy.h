@@ -4,19 +4,18 @@
 #include "DirectInput.h"
 #include "BulletPhysics.h"
 
-
-class CPlayer : public C3DImage
+class CEnemy : public C3DImage
 {
 public:
-	CPlayer(){
+	CEnemy(){
 		m_pInput = nullptr;
 		m_ghostObject = nullptr;
 		m_collisionShape = nullptr;
 		m_rigidBody = nullptr;
 		m_myMotionState = nullptr;
-		strcpy(m_pFileName, "image/TestPlayer.x");
+		strcpy(m_pFileName, "image/kyu.x");
 	};
-	~CPlayer();
+	~CEnemy();
 
 	void Initialize()override;
 	void Update()override;
@@ -41,16 +40,3 @@ private:
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
 };
 
-namespace tkEngine{
-	const D3DXVECTOR3 vec3Zero = { 0.0f, 0.0f, 0.0f };
-	const D3DXVECTOR3 vec3Right = { 1.0f, 0.0f, 0.0f };
-	const D3DXVECTOR3 vec3Left = { -1.0f, 0.0f, 0.0f };
-	const D3DXVECTOR3 vec3Up = { 0.0f, 1.0f, 0.0f };
-	const D3DXVECTOR3 vec3Down = { 0.0f, -1.0f, 0.0f };
-	const D3DXVECTOR3 vec3Front = { 0.0f, 0.0f, 1.0f };
-	const D3DXVECTOR3 vec3Back = { 0.0f, 0.0f, -1.0f };
-
-	const D3DXVECTOR3 vec3AxisX = { 1.0f, 0.0f, 0.0f };
-	const D3DXVECTOR3 vec3AxisY = { 0.0f, 1.0f, 0.0f };
-	const D3DXVECTOR3 vec3AxisZ = { 0.0f, 0.0f, 1.0f };
-}
