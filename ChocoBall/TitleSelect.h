@@ -2,6 +2,7 @@
 #include "C2DImage.h"
 
 class CTitleCursor;
+
 class CTitleSelect :
 	public C2DImage
 {
@@ -12,6 +13,5 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	CDirectInput* m_Input;
 	CTitleCursor* m_cursor;	//カーソル。
 };
