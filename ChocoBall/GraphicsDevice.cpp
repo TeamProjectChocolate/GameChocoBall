@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GraphicsDevice.h"
 
-CGraphicsDevice::CGraphicsDevice(){}
+
 /************************************************/
 /*					InitD3d関数					*/
 /*機能：Direct3Dデバイス・オブジェクト初期化　  */

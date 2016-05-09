@@ -79,6 +79,16 @@ public:
 	{
 		m_dynamicWorld->removeCollisionObject(gost);
 	}
+	void ConvexSweepTest(
+		const btConvexShape* castShape,
+		const btTransform& convexFromWorld,
+		const btTransform& convexToWorld,
+		btCollisionWorld::ConvexResultCallback& resultCallback,
+		btScalar allowedCcdPenetration = 0.0f
+		)
+	{
+		m_dynamicWorld->convexSweepTest(castShape, convexFromWorld, convexToWorld, resultCallback, allowedCcdPenetration);
+	}
 };
 
 extern CBulletPhysics g_bulletPhysics;	//bulletPhysicsŒ^‚ÌƒOƒ[ƒoƒ‹•Ï”

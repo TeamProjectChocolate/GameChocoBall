@@ -6,7 +6,9 @@
 
 class C3DImage :public CGameObject{
 public:
-	C3DImage(){};
+	C3DImage(){
+		m_pImage = nullptr;
+	};
 	~C3DImage(){};
 	virtual void Initialize()override;
 	virtual void Update()override;
@@ -23,6 +25,9 @@ public:
 	HRESULT SetImage();
 	HRESULT ReSet();
 	HRESULT LoadXFile();
+	void SetRotation(D3DXVECTOR3 axis, float rota){
+		D3DXQuaternionRotationAxis(&m_transform.angle, &axis, rota);
+	}
 private:
 	IMAGE3D* m_pImage;
 	D3DXMATRIX m_Rota;	// âÒì]çsóÒ

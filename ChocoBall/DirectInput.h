@@ -3,7 +3,9 @@
 
 class CDirectInput{
 public:
-	CDirectInput();
+	CDirectInput(){
+		m_Device = nullptr;
+	};
 	~CDirectInput(){
 		SAFE_RELEASE(m_Device);
 	}

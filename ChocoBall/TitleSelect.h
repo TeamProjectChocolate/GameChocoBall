@@ -1,6 +1,5 @@
 #pragma once
 #include "C2DImage.h"
-#include "DirectInput.h"
 
 class CTitleCursor;
 class CTitleSelect :

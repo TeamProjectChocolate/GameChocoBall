@@ -2,9 +2,6 @@
 #include "DirectInput.h"
 
 
-CDirectInput::CDirectInput(){
-}
-
 HRESULT WINAPI CDirectInput::CooperativeLevel(HWND hWnd, LPDIRECTINPUTDEVICE8 pDevice){
 	HRESULT ret = pDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 	if (FAILED(ret)){
