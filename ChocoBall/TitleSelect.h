@@ -2,6 +2,7 @@
 #include "C2DImage.h"
 
 class CTitleCursor;
+
 class CTitleSelect :
 	public C2DImage
 {
