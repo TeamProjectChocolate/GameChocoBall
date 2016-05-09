@@ -4,7 +4,8 @@
 #include "DirectInput.h"
 #include "BulletPhysics.h"
 
-
+const float	g_cTurnSpeed = D3DXToRadian(10.0f);
+static const float fPI = 3.14159265358979323846f;
 
 class CPlayer : public C3DImage
 {
@@ -33,9 +34,13 @@ private:
 	btSphereShape*		m_collisionShape;	//!<コリジョン形状。
 	btRigidBody*			m_rigidBody;
 	btDefaultMotionState*	m_myMotionState;
-	D3DXVECTOR3 m_position;
+	D3DXVECTOR3		m_position;
 	float			m_radius;
-	D3DXVECTOR3		m_moveSpeed;	//移動速度。	
+	D3DXVECTOR3		m_moveSpeed;		//移動速度。
+	float			g_currentAngleY;	//現在の方向
+	float			g_targetAngleY;		//向きたい方向
+	float			g_turnSpeed;		//回転速度
+	bool			isTurn;				//回転フラグ
 };
 
 namespace tkEngine{

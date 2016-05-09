@@ -22,7 +22,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
 	SINSTANCE(CObjectManager)->Intialize();
 
-	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
+	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TESTStage3D")));
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
 	m_pAudio->PlayCue("emiya");	// 音楽再生
