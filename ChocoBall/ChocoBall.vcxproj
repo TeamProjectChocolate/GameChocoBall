@@ -118,6 +118,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="ShadowRender.h" />
+    <ClInclude Include="SkinModelData.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestObject2D.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
+    <ClCompile Include="SkinModelData.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
