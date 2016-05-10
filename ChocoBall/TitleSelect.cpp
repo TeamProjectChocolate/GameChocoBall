@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "TitleSelect.h"
 #include "InputManager.h"
-
+#include "GameObject.h"
+#include "TitleCursor.h"
+#include "ObjectManager.h"
 
 CTitleSelect::CTitleSelect()
 {
@@ -20,17 +22,30 @@ void CTitleSelect::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 45, 0);
 	SetAlive(true);
+	dir = -1;
 	C2DImage::SetImage();
-
+	m_cursor = SINSTANCE(CObjectManager)->FindGameObject<CTitleCursor>(_T("Cursor"));
+	t = 1.0f;
 
 }
 
 void CTitleSelect::Update(){
-	/*if (m_alpha)
-	m_alpha -= 0.009;*/
-
-	
-	// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
+	if (m_transform.position.y == m_cursor->GetPos().y){
+		if (t >= 1.0f){
+			dir = -1;
+		}
+		else if (t <= 0.0f)
+		{
+			dir = 1;
+		}
+		t += 0.01f * dir;
+		SetAlpha(t);
+	}
+	else{
+		dir = -1;
+		t = 1.0f;
+		SetAlpha(1.0f);
+	}	
 }
 
 void CTitleSelect::Draw(){

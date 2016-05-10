@@ -5,8 +5,6 @@
 #include "BulletPhysics.h"
 #include "islntersect.h"
 
-const float	g_cTurnSpeed = D3DXToRadian(10.0f);
-static const float fPI = 3.14159265358979323846f;
 
 class CPlayer : public C3DImage
 {

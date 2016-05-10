@@ -97,6 +97,7 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debri.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="islntersect.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameManager.cpp" />
