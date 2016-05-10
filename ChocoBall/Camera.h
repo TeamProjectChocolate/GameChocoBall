@@ -45,10 +45,12 @@ public:
 	{
 		m_updateType = type;
 	}
-	D3DXMATRIX GetView(){
+	D3DXMATRIX GetView()
+	{
 		return m_View;
 	}
-	D3DXMATRIX GetProj(){
+	D3DXMATRIX GetProj()
+	{
 		return m_Proj;
 	}
 private:
@@ -63,6 +65,5 @@ private:
 	float m_Far;
 	D3DXMATRIX m_View;	// ビュー変換行列
 	D3DXMATRIX m_Proj;	// 射影変換行列
-
 };
 

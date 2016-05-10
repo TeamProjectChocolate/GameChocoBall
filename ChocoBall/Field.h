@@ -4,6 +4,12 @@
 
 #define MaxCollision 100
 
+struct SCollisionInfo {
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 angle;
+	D3DXVECTOR3 scale;
+};
+
 class CField :
 	public C3DImage
 {
@@ -11,7 +17,7 @@ public:
 	CField(){
 		m_ghostObject = nullptr;
 		m_myMotionState = nullptr;
-		strcpy(m_pFileName, "image/stage2.x" /*"image/stage2.x"*/);
+		strcpy(m_pFileName, "image/SUTE.x" /*"image/stage2.x"*/);
 	};
 	~CField();
 
@@ -21,7 +27,7 @@ public:
 	void SetUpTechnique()override{
 		m_pEffect->SetTechnique("ShadowTec");
 	}
-	void CreateCollision(){};
+	
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。

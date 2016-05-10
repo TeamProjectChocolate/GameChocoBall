@@ -6,12 +6,12 @@ void CDebri::Initialize()
 {
 	C3DImage::Initialize();
 	strcpy(m_pFileName, "image/Debri.x");
-	m_transform.position = D3DXVECTOR3(0.0f,2.0f,0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f,4.0f,0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 1.0f), 0.0f);
-	m_transform.scale = D3DXVECTOR3(0.1f, 0.1f, 0.1f);
+	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	m_life = 0.0f;
 	SetAlive(true);
-	this->Build(D3DXVECTOR3(1.4f, 1.4f, 1.4f), m_transform.position);
+	this->Build(D3DXVECTOR3(1.4f,1.4f,1.4f), m_transform.position);
 	C3DImage::SetImage();
 }
 void CDebri::Update()
@@ -29,7 +29,7 @@ void CDebri::Update()
 	m_box.UpdateWorldMatrix();
 	m_shadowModel.SetWorldMatrix(m_box.GetWorldMatrix());
 	ShadowMap().Entry(&m_shadowModel);*/
-	//m_life += 1.0f / 60.0f;
+	m_life += 1.0f / 60.0f;
 	C3DImage::Update();
 }
 void CDebri::Draw()
@@ -50,12 +50,13 @@ void CDebri::OnDestroy()
 */
 void CDebri::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 {
+
 	//この引数に渡すのはボックスhalfsizeなので、0.5倍する。
 	m_collisionShape = new btBoxShape(btVector3(size.x*0.5f, size.y*0.5f, size.z*0.5f));
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
-	float mass = 1.0f;
+	float mass = 1000.0f;
 
 	//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
 	m_myMotionState = new btDefaultMotionState(groundTransform);

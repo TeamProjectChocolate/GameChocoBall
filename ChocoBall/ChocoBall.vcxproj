@@ -99,6 +99,7 @@
     <ClInclude Include="Debri.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="islntersect.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="DirectX.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainScene.cpp" />

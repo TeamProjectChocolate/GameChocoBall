@@ -3,6 +3,7 @@
 #include "C3DImage.h"
 #include "DirectInput.h"
 #include "BulletPhysics.h"
+#include "islntersect.h"
 
 const float	g_cTurnSpeed = D3DXToRadian(10.0f);
 static const float fPI = 3.14159265358979323846f;
@@ -11,11 +12,6 @@ class CPlayer : public C3DImage
 {
 public:
 	CPlayer(){
-		m_pInput = nullptr;
-		m_ghostObject = nullptr;
-		m_collisionShape = nullptr;
-		m_rigidBody = nullptr;
-		m_myMotionState = nullptr;
 		strcpy(m_pFileName, "image/TestPlayer.x");
 	};
 	~CPlayer();
@@ -26,14 +22,13 @@ public:
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
+	void Setradius(float radius)
+	{
+		m_radius = radius;
+	}
 private:
 	CDirectInput* m_pInput;
 
-	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
-	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。
-	btSphereShape*		m_collisionShape;	//!<コリジョン形状。
-	btRigidBody*			m_rigidBody;
-	btDefaultMotionState*	m_myMotionState;
 	D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
@@ -41,6 +36,7 @@ private:
 	float			g_targetAngleY;		//向きたい方向
 	float			g_turnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
+	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 };
 
 namespace tkEngine{
