@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "DirectInput.h"
-#include "BulletPhysics.h"
 #include "islntersect.h"
 
 

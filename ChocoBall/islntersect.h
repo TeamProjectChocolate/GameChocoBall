@@ -1,6 +1,5 @@
 #pragma once
 #include "BulletPhysics.h"
-#include "C3DImage.h"
 
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {

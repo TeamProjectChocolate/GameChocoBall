@@ -3,6 +3,20 @@
 #include "BulletPhysics.h"
 
 
+SCollisionInfo collisionInfoTable[] = {
+	{
+		//地面のコリジョン
+		D3DXVECTOR3(0.0f, -2.2f, 0.0f),		//座標。
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
+		D3DXVECTOR3(4.0f, 0.6f, 20.0f),		//拡大。	
+	},
+	{
+		//地面のコリジョン
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//座標。
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
+		D3DXVECTOR3(1.0f, 1.0f, 1.0f),		//拡大。	
+	}
+};
 
 CField::~CField()
 {
@@ -10,34 +24,12 @@ CField::~CField()
 
 void CField::Initialize(){
 
-	SCollisionInfo collisionInfoTable[] = {
-		{
-			//地面のコリジョン
-			D3DXVECTOR3(0.0f, -2.0f, 0.0f),		//座標。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
-			D3DXVECTOR3(4.0f, 0.6f, 20.0f),	//拡大。	
-		},
-		{
-			//左壁のコリジョン。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//座標。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
-			D3DXVECTOR3(1.0f, 1.0f, 1.0f),		//拡大。	
-		},
-		{
-			//右壁のコリジョン。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//座標。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//回転。
-			D3DXVECTOR3(0.0f, 0.0f, 0.0f),		//拡大。	
-		}
-	};
-
-	C3DImage::Initialize();
+	
 	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXToRadian(90.0f));
-	//m_transform.angle = D3DXVECTOR3(2.5f, 1.65f, 2.48f);
+	//m_transform.angle = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	SetAlive(true);
-
 
 	//剛体を初期化。
 	{
@@ -61,6 +53,7 @@ void CField::Initialize(){
 			g_bulletPhysics.AddRigidBody(m_rigidBody[i]);
 		}
 	}
+	C3DImage::Initialize();
 	C3DImage::SetImage();
 }
 
