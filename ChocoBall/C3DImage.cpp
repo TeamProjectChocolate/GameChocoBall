@@ -129,7 +129,7 @@ void C3DImage::Initialize(){
 
 void C3DImage::Update(){
 
-	if (m_lightDir[0].x > 1.0f){
+	/*if (m_lightDir[0].x > 1.0f){
 		dir.x *= -1;
 	}
 	else if (m_lightDir[0].x < -1.0f){
@@ -160,7 +160,7 @@ void C3DImage::Update(){
 		m_lightDir[2] = m_lightDir[3];
 		m_lightDir[3] = work;
 		count = 0;
-	}
+	}*/
 
 	m_light.SetDiffuseLightDirection(0, D3DXVECTOR4(m_lightDir[0].x, m_lightDir[0].y, m_lightDir[0].z, 0.0f));
 	m_light.SetDiffuseLightDirection(1, D3DXVECTOR4(m_lightDir[1].x, m_lightDir[1].y, m_lightDir[1].z, 0.0f));

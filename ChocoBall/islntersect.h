@@ -91,7 +91,7 @@ public:
 private:
 	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。
-	btBoxShape*		m_collisionShape;	//!<コリジョン形状。
+	btSphereShape*		m_collisionShape;	//!<コリジョン形状。
 	btRigidBody*			m_rigidBody;
 	btDefaultMotionState*	m_myMotionState;
 
