@@ -2,12 +2,16 @@
 #include "stdafx.h"
 #include "Graphicsdevice.h"
 #include "GameObject.h"
-#include "Light.h"
+#include "SkinModelData.h"
+
+extern UINT g_NumBoneMatricesMax;
+extern D3DXMATRIXA16* g_pBoneMatrices;
 
 class C3DImage :public CGameObject{
 public:
 	C3DImage(){
 		m_pImage = nullptr;
+		m_pSkinModel = nullptr;
 	};
 	~C3DImage(){};
 	virtual void Initialize()override;
@@ -31,10 +35,14 @@ public:
 private:
 	IMAGE3D* m_pImage;
 	D3DXMATRIX m_Rota;	// 回転行列
+	void UpdateFrame(LPDIRECT3DDEVICE9, LPD3DXFRAME);
+	void AnimationUpdate();
+	void NonAnimationUpdate();
+	void DrawFrame(LPDIRECT3DDEVICE9, LPD3DXFRAME);
+	void DrawMeshContainer(LPDIRECT3DDEVICE9, LPD3DXMESHCONTAINER, LPD3DXFRAME);
+	void AnimationDraw(LPDIRECT3DDEVICE9, D3DXMESHCONTAINER_DERIVED*, LPD3DXMESHCONTAINER, LPD3DXFRAME);
+	void NonAnimationDraw();
 protected:
 	D3DXMATRIX m_World;		// ワールド行列
-	CLight m_light;
-	D3DXVECTOR3 m_lightDir[NUM_DIFFUSE_LIGHT];
-	short count;
-	D3DXVECTOR3 dir;
+	CSkinModelData* m_pSkinModel;
 };

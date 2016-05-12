@@ -33,7 +33,6 @@ void Initialize();
 void Update();
 void Draw();
 
-
 // このコード モジュールに含まれる関数の宣言を転送します:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
@@ -239,7 +238,7 @@ void Initialize()
 
 	AddScene();
 	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
-	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"), 0,true);
+	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"),PRIORTY::CONFIG,true);
 }
 
 void Update()

@@ -3,6 +3,8 @@
 #include "C3DImage.h"
 #include "DirectInput.h"
 #include "BulletPhysics.h"
+#include "Light.h"
+
 
 const float	g_cTurnSpeed = D3DXToRadian(10.0f);
 static const float fPI = 3.14159265358979323846f;
@@ -23,11 +25,19 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void ConfigLight();
+	void ReflectionLight(D3DXVECTOR4);
+	void SetUpLight();
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
 private:
 	CDirectInput* m_pInput;
+	CLight m_light;
+	D3DXVECTOR3 m_lightDir[NUM_DIFFUSE_LIGHT];
+	D3DXVECTOR4 m_lightColor[NUM_DIFFUSE_LIGHT];
+	short count;
+	D3DXVECTOR3 dir;
 
 	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。

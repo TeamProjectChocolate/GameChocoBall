@@ -63,6 +63,8 @@ public:
 	D3DXVECTOR4& GetAmbientLight(){
 		return m_ambientLight;
 	}
+
+	void SetLight(LPD3DXEFFECT);
 private:
 	D3DXVECTOR4 m_diffuseLightDirection[NUM_DIFFUSE_LIGHT];		// ディフューズライトの向き
 	D3DXVECTOR4 m_diffuseLightColor[NUM_DIFFUSE_LIGHT];			// ディフューズライトのカラー

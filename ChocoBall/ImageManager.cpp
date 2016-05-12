@@ -34,19 +34,16 @@ IMAGE2D* CImageManager::Find2DImage(LPCSTR pFileName){
 	return LoadTextureFile(pFileName);
 }
 
-void CImageManager::Add3D(LPCSTR pFileName, D3DMATERIAL9* m_pMeshMat,
-	LPDIRECT3DTEXTURE9* m_pMeshTex,DWORD m_NumMaterials,LPD3DXMESH m_pMesh)
+void CImageManager::Add3D(LPCSTR pFileName,CSkinModelData* ModelData)
 {
 	// 新しく読み込んだXファイルを登録
 	IMAGE3D* image;
 	image = new IMAGE3D;
 	strcpy(image->pFileName,pFileName);
-	image->ppTex = m_pMeshTex;
-	image->pMat = m_pMeshMat;
-	image->pMesh = m_pMesh;
-	image->NumMaterials = m_NumMaterials;
+	image->pModel = ModelData;
 	m_ModelList.push_back(image);		// IMAGE3D情報配列に追加
 }
+
 
 IMAGE3D* CImageManager::Find3DImage(LPCSTR pFileName){
 	int size = m_ModelList.size();
@@ -61,9 +58,7 @@ IMAGE3D* CImageManager::Find3DImage(LPCSTR pFileName){
 
 void CImageManager::DeleteAll(){
 	for (int idx = 0,size = m_ModelList.size(); idx < size; idx++){
-		SAFE_DELETE(m_ModelList[idx]->pMat);
-		SAFE_DELETE(m_ModelList[idx]->pMesh);
-		SAFE_DELETE(m_ModelList[idx]->ppTex);
+		SAFE_DELETE(m_ModelList[idx]->pModel);
 	}
 	m_ModelList.clear();
 	for (int idx = 0, size = m_ModelList.size(); idx < size; idx++){

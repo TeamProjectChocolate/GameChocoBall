@@ -8,7 +8,7 @@ class CImageManager
 public:
 	void Add2D(IMAGE2D*);
 	IMAGE2D* LoadTextureFile(LPCSTR);
-	void Add3D(LPCSTR, D3DMATERIAL9*,LPDIRECT3DTEXTURE9*,DWORD,LPD3DXMESH);
+	void Add3D(LPCSTR,CSkinModelData*);
 	IMAGE2D* Find2DImage(LPCSTR);
 	IMAGE3D* Find3DImage(LPCSTR);
 private:

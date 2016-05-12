@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "ShadowRender.h"
+#include "RenderContext.h"
 
 
 CPlayer::~CPlayer(){ }
@@ -101,6 +102,10 @@ void CPlayer::Initialize()
 
 	SetAlive(true);
 
+	count = 0;
+	dir = D3DXVECTOR3(1, 1, 1);
+	ConfigLight();
+
 	SetAlpha(0.5f);
 
 	g_currentAngleY = 0.0f;
@@ -126,6 +131,43 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+
+	if (m_lightDir[0].x > 1.0f){
+		dir.x *= -1;
+	}
+	else if (m_lightDir[0].x < -1.0f){
+		dir.x *= -1;
+	}
+	m_lightDir[0].x += 0.1f * dir.x;
+
+	if (m_lightDir[0].y > 1.0f){
+		dir.y *= -1;
+	}
+	else if (m_lightDir[0].y < -1.0f){
+		dir.y *= -1;
+	}
+	m_lightDir[0].y += 0.1f * dir.y;
+
+	if (m_lightDir[0].z > 1.0f){
+		dir.z *= -1;
+	}
+	else if (m_lightDir[0].z < -1.0f){
+		dir.z *= -1;
+	}
+	m_lightDir[0].z += 0.1f * dir.z;
+	count++;
+
+	if (count % 60 == 0){
+		D3DXVECTOR3 work = m_lightDir[0];
+		m_lightDir[0] = m_lightDir[1];
+		m_lightDir[1] = m_lightDir[2];
+		m_lightDir[2] = m_lightDir[3];
+		m_lightDir[3] = work;
+		count = 0;
+	}
+
+	SetUpLight();
+
 	{
 		static float deltaTime = (1.0f / 60.0f);
 		static D3DXVECTOR3 gravity(0.0f, -9.8f, 0.0f);
@@ -278,7 +320,7 @@ void CPlayer::Update()
 
 void CPlayer::Draw(){
 	IMAGE3D* img = GetImage();
-	LPD3DXMESH mesh = img->pMesh;
+	LPD3DXMESH mesh = img->pModel->GetContainer()->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
 	int numVertex = mesh->GetNumVertices();
@@ -301,5 +343,44 @@ void CPlayer::Draw(){
 	pVB->Unlock();
 
 	SetUpTechnique();
+	SINSTANCE(CRenderContext)->SetCurrentLight(&m_light);
 	C3DImage::Draw();
+}
+
+void CPlayer::ConfigLight(){
+	// ディフューズライト(キャラライト)の向き設定(ライト1～4)
+	m_lightDir[0] = D3DXVECTOR3(0.707f, 0.707f, 0.0f);
+	m_lightDir[1] = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	m_lightDir[2] = D3DXVECTOR3(1.0f, -1.0f, 0.5f);
+	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+
+	// ディフューズライト(キャラライト)の色設定(ライト1～4)
+	m_lightColor[0] = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
+	m_lightColor[3] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// アンビエントライト(環境光)の強さ設定
+	D3DXVECTOR4 ambientLight;
+	ambientLight = D3DXVECTOR4(0.2f, 0.0f, 0.0f, 100.0f);
+
+	// ライトの設定を反映
+	ReflectionLight(ambientLight);
+}
+
+void CPlayer::ReflectionLight(D3DXVECTOR4 ambient){
+	SetUpLight();
+	m_light.SetAmbientLight(ambient);
+}
+
+void CPlayer::SetUpLight(){
+	for (short num = 0; num < NUM_DIFFUSE_LIGHT; num++){
+		D3DXVECTOR4 dir;
+		dir.x = m_lightDir[num].x;
+		dir.y = m_lightDir[num].y;
+		dir.z = m_lightDir[num].z;
+		dir.w = 1.0f;
+		m_light.SetDiffuseLightDirection(num, dir);
+		m_light.SetDiffuseLightColor(num, m_lightColor[num]);
+	}
 }

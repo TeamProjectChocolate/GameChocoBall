@@ -90,6 +90,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllocateHierarchy.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BulletPhysics.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="TitleSelect.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllocateHierarchy.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BulletPhysics.cpp" />
     <ClCompile Include="C2DImage.cpp" />

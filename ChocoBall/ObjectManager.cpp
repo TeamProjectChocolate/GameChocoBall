@@ -4,21 +4,21 @@
 
 CObjectManager* CObjectManager::m_instance = nullptr;
 
-void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, short priorty,bool common){
-	if (priorty > MAX_PRIORTY){
-		priorty = MAX_PRIORTY;
+void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, PRIORTY priorty,bool common){
+	if (priorty > PRIORTY::LOWEST){
+		priorty = PRIORTY::LOWEST;
 	}
 	Object->SetCommon(common);
 	this->Add(Object,ObjectName,priorty);
 }
 
 void CObjectManager::AddObject(CGameObject* Object,LPCSTR ObjectName,bool common){
-	short priorty = MAX_PRIORTY;
+	PRIORTY priorty = PRIORTY::LOWEST;
 	Object->SetCommon(common);
 	this->Add(Object,ObjectName, priorty);
 }
 
-void CObjectManager::Add(CGameObject* GameObject,LPCSTR ObjectName, short priority){
+void CObjectManager::Add(CGameObject* GameObject,LPCSTR ObjectName, PRIORTY priority){
 	OBJECT_DATA* Obj;
 	Obj = new OBJECT_DATA;
 	CH_ASSERT(strlen(ObjectName) < OBJECTNAME_MAX);
