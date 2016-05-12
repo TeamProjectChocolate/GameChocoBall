@@ -14,12 +14,12 @@ class CBulletPhysics : public CGameObject
 	btBroadphaseInterface*					m_overlappingPairCache;	//!<ブロードフェーズ。衝突判定の枝切り。
 	btSequentialImpulseConstraintSolver*	m_constraintSolver;		//!<コンストレイントソルバー。拘束条件の解決処理。
 	btDiscreteDynamicsWorld*				m_dynamicWorld;			//!<ワールド。
+
 public:
 	
 	void Initialize(){};
 	void Update() override;
 	void Draw(){};
-
 
 	/*!
 	* @brief	コンストラクタ。

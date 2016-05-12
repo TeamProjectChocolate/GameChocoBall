@@ -264,7 +264,7 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	// アンビエントライトを加算
 	light.xyz += ambientLight;
 
-	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
+	float4 color = In.color;	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
 	color.w = Alpha;
 	return color;

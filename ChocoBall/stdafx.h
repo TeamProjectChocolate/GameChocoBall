@@ -69,7 +69,7 @@ const D3DXVECTOR3 CVec3AxisX = { 1.0f, 0.0f, 0.0f };
 const D3DXVECTOR3 CVec3AxisY = { 0.0f, 1.0f, 0.0f };
 const D3DXVECTOR3 CVec3AxisZ = { 0.0f, 0.0f, 1.0f };
 
-#define PI 3.14159265358979323846f
+#define fPI 3.14159265358979323846f
 
 #define SINSTANCE(CLASS_NAME) CLASS_NAME::GetInstance()		// シングルトンオブジェクトのインスタンスを取得するマクロ関数(引き数：クラス名)
 

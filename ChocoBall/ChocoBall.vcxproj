@@ -98,8 +98,10 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debri.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="islntersect.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="DirectX.h" />
@@ -116,6 +118,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="ShadowRender.h" />
@@ -126,6 +129,7 @@
     <ClInclude Include="TitleBack.h" />
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
+    <ClInclude Include="Turn.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllocateHierarchy.cpp" />
@@ -138,6 +142,7 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -145,12 +150,14 @@
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderContext.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
@@ -163,6 +170,7 @@
     <ClCompile Include="TitleBack.cpp" />
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
+    <ClCompile Include="Tunr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

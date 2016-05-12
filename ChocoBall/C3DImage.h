@@ -7,6 +7,8 @@
 extern UINT g_NumBoneMatricesMax;
 extern D3DXMATRIXA16* g_pBoneMatrices;
 
+const float	g_cTurnSpeed = D3DXToRadian(10.0f);
+
 class C3DImage :public CGameObject{
 public:
 	C3DImage(){
