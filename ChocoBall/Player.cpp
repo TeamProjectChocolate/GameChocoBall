@@ -78,7 +78,7 @@ void CPlayer::Update()
 	}
 
 	//回転処理
-	static const float fPI = 3.14159265358979323846f;
+	//static const float fPI = 3.14159265358979323846f;
 	if (isTurn) {
 		float angleDiff = g_targetAngleY - g_currentAngleY;	//目的角度までどれだけ回せがいいのかを計算する。
 		float angleDiffAbs = fabsf(angleDiff);				//回す角度の絶対値を計算。

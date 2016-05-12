@@ -26,7 +26,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			//当たってない。
 			return 0.0f;
 		}
-		if (acosf(d) > PI * 0.2) {
+		if (acosf(d) > fPI * 0.2) {
 			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
 			return 0.0f;
 		}
@@ -60,7 +60,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
 
 		float d = D3DXVec3Dot(&hitPointNormal, &CVec3Up);
-		if (acosf(d) < PI * 0.2) {
+		if (acosf(d) < fPI * 0.2) {
 			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
 			return 0.0f;
 		}
