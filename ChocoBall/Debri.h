@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
-#include "BulletPhysics.h"
 #include "C3DImage.h"
+#include "Rigidbody.h"
 
 
 class CDebri : public C3DImage {
@@ -10,6 +10,7 @@ public:
 		m_collisionShape = nullptr;
 		m_rigidBody = nullptr;
 		m_myMotionState = nullptr;
+		strcpy(m_pFileName, "image/Debri.x");
 	}
 	~CDebri(){}
 
@@ -17,16 +18,12 @@ public:
 	void Update();
 	void Draw();
 	void OnDestroy();
-	/*!
-	*@brief	構築処理。
-	*@param[in]	size	箱のサイズ。
-	*@param[in]	pos		箱の座標。
-	*/
-	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
+	void Build();
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
 	btRigidBody*		m_rigidBody;		//剛体。
 	btDefaultMotionState* m_myMotionState;
 	float m_life;
+	CRigidbody m_Rigidbody;
 };
