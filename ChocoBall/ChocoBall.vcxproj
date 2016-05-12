@@ -116,7 +116,11 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResultBack.h" />
+    <ClInclude Include="ResultCursor.h" />
+    <ClInclude Include="ResultSelect.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="stdafx.h" />
@@ -150,7 +154,11 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderContext.cpp" />
+    <ClCompile Include="ResultBack.cpp" />
+    <ClCompile Include="ResultCursor.cpp" />
+    <ClCompile Include="ResultSelect.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="stdafx.cpp">

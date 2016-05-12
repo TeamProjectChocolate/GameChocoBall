@@ -13,6 +13,7 @@
 #include "GameManager.h"
 #include "ShadowRender.h"
 #include "SceneTitle.h"
+#include "SceneResult.h"
 #include "BulletPhysics.h"
 
 
@@ -27,6 +28,7 @@ HWND g_hWnd;
 CGraphicsDevice g_graphicsDevice;
 CSceneTitle SceneTitle;
 CMainScene MainScene;
+CSceneResult SceneResult;
 CCamera g_camera;
 void addScene();
 void Initialize();
@@ -220,6 +222,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 void AddScene(){	// ƒQ[ƒ€‚ÅŽg—p‚·‚éƒV[ƒ“‚ð“o˜^
 	SINSTANCE(CGameManager)->AddScene(&SceneTitle, _T("Title"));
 	SINSTANCE(CGameManager)->AddScene(&MainScene, _T("Main"));
+	SINSTANCE(CGameManager)->AddScene(&SceneResult, _T("Result"));
 }
 
 void Initialize()
@@ -238,7 +241,8 @@ void Initialize()
 	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 
 	AddScene();
-	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	//SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"), 0,true);
 }
 
