@@ -42,6 +42,8 @@ private:
 	float			g_turnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+
+	void UpdateLight();
 };
 
 namespace tkEngine{

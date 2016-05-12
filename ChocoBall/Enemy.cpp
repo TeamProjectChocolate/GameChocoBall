@@ -56,7 +56,7 @@ void CEnemy::Update()
 
 void CEnemy::Draw(){
 	IMAGE3D* img = GetImage();
-	LPD3DXMESH mesh = img->pMesh;
+	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
 	int numVertex = mesh->GetNumVertices();

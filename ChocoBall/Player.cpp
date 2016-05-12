@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "ShadowRender.h"
+#include "RenderContext.h"
 
 
 CPlayer::~CPlayer(){ }
@@ -118,7 +119,7 @@ void CPlayer::Update()
 
 void CPlayer::Draw(){
 	IMAGE3D* img = GetImage();
-	LPD3DXMESH mesh = img->pMesh;
+	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
 	int numVertex = mesh->GetNumVertices();
@@ -218,4 +219,5 @@ void CPlayer::SetUpLight(){
 		m_light.SetDiffuseLightDirection(num, dir);
 		m_light.SetDiffuseLightColor(num, m_lightColor[num]);
 	}
+	SINSTANCE(CRenderContext)->SetCurrentLight(&m_light);
 }
