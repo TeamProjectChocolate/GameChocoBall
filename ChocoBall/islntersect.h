@@ -26,7 +26,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			//当たってない。
 			return 0.0f;
 		}
-		if (acosf(d) > PI * 0.2) {
+		if (acosf(d) > fPI * 0.2) {
 			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
 			return 0.0f;
 		}
@@ -60,7 +60,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
 
 		float d = D3DXVec3Dot(&hitPointNormal, &CVec3Up);
-		if (acosf(d) < PI * 0.2) {
+		if (acosf(d) < fPI * 0.2) {
 			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
 			return 0.0f;
 		}
@@ -91,7 +91,7 @@ public:
 private:
 	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。
-	btBoxShape*		m_collisionShape;	//!<コリジョン形状。
+	btSphereShape*		m_collisionShape;	//!<コリジョン形状。
 	btRigidBody*			m_rigidBody;
 	btDefaultMotionState*	m_myMotionState;
 

@@ -5,8 +5,6 @@
 #include "Light.h"
 
 const float	g_cTurnSpeed = D3DXToRadian(10.0f);
-static const float fPI = 3.14159265358979323846f;
-
 
 class C3DImage :public CGameObject{
 public:

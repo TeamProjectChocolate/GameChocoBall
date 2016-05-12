@@ -127,6 +127,7 @@
     <ClInclude Include="TitleBack.h" />
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
+    <ClInclude Include="Turn.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="TitleBack.cpp" />
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
+    <ClCompile Include="Tunr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />
