@@ -3,6 +3,7 @@
 #include "C3DImage.h"
 #include "DirectInput.h"
 #include "islntersect.h"
+#include "Turn.h"
 
 class CPlayer : public C3DImage
 {
@@ -28,11 +29,13 @@ private:
 	D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
-	float			g_currentAngleY;	//現在の方向
-	float			g_targetAngleY;		//向きたい方向
-	float			g_turnSpeed;		//回転速度
+	float			m_currentAngleY;	//現在の方向
+	float			m_targetAngleY;		//向きたい方向
+	float			m_turnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
+
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+	CTurn			m_Turn;				//CTurnのインスタンス		
 };
 
 namespace tkEngine{

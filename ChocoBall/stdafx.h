@@ -71,6 +71,10 @@ const D3DXVECTOR3 CVec3AxisZ = { 0.0f, 0.0f, 1.0f };
 
 #define fPI 3.14159265358979323846f
 
+#define MOVE_SPEED  8.0f
+
+const float g_cTurnSpeed D3DXToRadian(10.0f);
+
 #define SINSTANCE(CLASS_NAME) CLASS_NAME::GetInstance()		// シングルトンオブジェクトのインスタンスを取得するマクロ関数(引き数：クラス名)
 
 #define CLASS_NAME(p) typeid(p).name()		//クラス名の文字列を取得するマクロ関数(引数：クラス名)

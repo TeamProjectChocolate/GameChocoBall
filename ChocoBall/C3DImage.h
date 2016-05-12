@@ -4,8 +4,6 @@
 #include "GameObject.h"
 #include "Light.h"
 
-const float	g_cTurnSpeed = D3DXToRadian(10.0f);
-
 class C3DImage :public CGameObject{
 public:
 	C3DImage(){
