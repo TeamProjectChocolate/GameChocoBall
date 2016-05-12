@@ -4,7 +4,6 @@
 #include "DirectInput.h"
 #include "islntersect.h"
 
-
 class CPlayer : public C3DImage
 {
 public:
