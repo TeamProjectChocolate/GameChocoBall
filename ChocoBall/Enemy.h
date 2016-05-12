@@ -32,5 +32,6 @@ private:
 	float			g_turnSpeed;		//‰ñ“]‘¬“x
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
 	CRigidbody		m_Rigidbody;
+	bool			flg;
 };
 
