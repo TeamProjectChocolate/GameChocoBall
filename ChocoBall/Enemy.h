@@ -10,6 +10,9 @@ public:
 		strcpy(m_pFileName, "image/kyu.x");
 	};
 	~CEnemy();
+	void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapBasicTec");
+	}
 
 	void Initialize()override;
 	void Update()override;

@@ -146,40 +146,6 @@ void CPlayer::Draw(){
 }
 
 void CPlayer::UpdateLight(){
-	if (m_lightDir[0].x > 1.0f){
-		dir.x *= -1;
-	}
-	else if (m_lightDir[0].x < -1.0f){
-		dir.x *= -1;
-	}
-	m_lightDir[0].x += 0.1f * dir.x;
-
-	if (m_lightDir[0].y > 1.0f){
-		dir.y *= -1;
-	}
-	else if (m_lightDir[0].y < -1.0f){
-		dir.y *= -1;
-	}
-	m_lightDir[0].y += 0.1f * dir.y;
-
-	if (m_lightDir[0].z > 1.0f){
-		dir.z *= -1;
-	}
-	else if (m_lightDir[0].z < -1.0f){
-		dir.z *= -1;
-	}
-	m_lightDir[0].z += 0.1f * dir.z;
-	count++;
-
-	if (count % 60 == 0){
-		D3DXVECTOR3 work = m_lightDir[0];
-		m_lightDir[0] = m_lightDir[1];
-		m_lightDir[1] = m_lightDir[2];
-		m_lightDir[2] = m_lightDir[3];
-		m_lightDir[3] = work;
-		count = 0;
-	}
-
 	this->SetUpLight();
 }
 
@@ -191,9 +157,9 @@ void CPlayer::ConfigLight(){
 	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 	// ディフューズライト(キャラライト)の色設定(ライト1～4)
-	m_lightColor[0] = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	m_lightColor[1] = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
-	m_lightColor[2] = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
+	m_lightColor[0] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_lightColor[3] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// アンビエントライト(環境光)の強さ設定
