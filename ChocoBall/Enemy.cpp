@@ -12,10 +12,8 @@ void CEnemy::Initialize()
 	//m_transform.angle = D3DXVECTOR3(0, 0, 0);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_moveSpeed.x = 0.05f;
-	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
-
-	m_radius = 0.1f;
+	m_moveSpeed.z = 0.0f;
 
 	SetAlive(true);
 
@@ -26,9 +24,8 @@ void CEnemy::Initialize()
 	g_turnSpeed = 0.0f;
 
 	flg = true;
-
 	C3DImage::SetImage();
-	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
+	
 }
 
 void CEnemy::Update()

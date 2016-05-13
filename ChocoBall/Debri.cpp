@@ -3,12 +3,18 @@
 
 void CDebri::Initialize()
 {
+	C3DImage::Initialize();
 	m_transform.position = D3DXVECTOR3(0.0f,4.0f,0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 1.0f), 0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	SetAlive(true);
+	
+	m_moveSpeed.x = 0.05f;
+	m_moveSpeed.z = 0.0f;
+	m_moveSpeed.y = 0.0f;
+	
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
-	C3DImage::Initialize();
+	
 	C3DImage::SetImage();
 }
 
@@ -21,7 +27,6 @@ void CDebri::Update()
 void CDebri::Draw()
 {
 	SetUpTechnique();
-	m_Rigidbody.Draw();
 	C3DImage::Draw();
 }
 void CDebri::OnDestroy()

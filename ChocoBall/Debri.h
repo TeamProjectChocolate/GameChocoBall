@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "Rigidbody.h"
+#include "islntersect.h"
 
 
 class CDebri : public C3DImage {
@@ -26,4 +27,7 @@ private:
 	btDefaultMotionState* m_myMotionState;
 	float m_life;
 	CRigidbody m_Rigidbody;
+	CIsIntersect m_IsIntersect;
+	float			m_radius;
+	D3DXVECTOR3		m_moveSpeed;		//ˆÚ“®‘¬“xB
 };

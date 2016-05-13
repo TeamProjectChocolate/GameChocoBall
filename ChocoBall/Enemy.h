@@ -34,7 +34,6 @@ private:
 	float			g_targetAngleY;		//Œü‚«‚½‚¢•ûŒü
 	float			g_turnSpeed;		//‰ñ“]‘¬“x
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
-	CRigidbody		m_Rigidbody;
+	CRigidbody      m_Rigidbody;
 	bool			flg;
 };
-
