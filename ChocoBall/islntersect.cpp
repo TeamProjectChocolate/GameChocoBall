@@ -16,9 +16,9 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_radius = radius;
 	//Box(—§•û‘Ì),sphere(‹…‘Ì)‚È‚Ç‚Å“–‚½‚è”ÍˆÍ‚ðŒˆ‚ß‚éB
 	m_collisionShape = new btSphereShape(m_radius);//‚±‚±‚Å„‘Ì‚ÌŒ`ó‚ðŒˆ’è
-	/*(btVector3(m_radius, m_radius, */
+	/*(btVector3(m_radius, m_radius, );*/
 
-	float mass = 1000.0f;
+	float mass = 1.0f;
 	btTransform rbTransform;
 	rbTransform.setIdentity();
 	rbTransform.setOrigin(btVector3(position->x, position->y, position->z));
