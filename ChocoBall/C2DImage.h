@@ -29,6 +29,7 @@ public:
 	}
 	void LoadTextureFile();
 	void SetupMatrices();
+	void SetupMatrices(RECT,D3DXVECTOR2,D3DXVECTOR2);
 	void SetRotation(float rota){
 		D3DXQuaternionRotationAxis(&m_transform.angle, &D3DXVECTOR3(0.0f,0.0f,1.0f), rota);
 	}

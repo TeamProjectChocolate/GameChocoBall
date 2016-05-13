@@ -1,18 +1,15 @@
 #pragma once
 #include "C2DImage.h"
-#include "DirectInput.h"
-
-class CTitleCursor :
+class CClearText :
 	public C2DImage
 {
 public:
-	CTitleCursor();
-	~CTitleCursor();
+	CClearText();
+	~CClearText();
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-private:
-	CDirectInput* m_Input = nullptr;
 	float t;
 	short dir;
 };
+

@@ -2,19 +2,19 @@
 #include "C2DImage.h"
 #include "DirectInput.h"
 
-class CTitleCursor;
+class CResultCursor;
 
-class CTitleSelect :
+class CResultSelect :
 	public C2DImage
 {
 public:
-	CTitleSelect();
-	~CTitleSelect();
+	CResultSelect();
+	~CResultSelect();
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
 private:
-	CTitleCursor* m_cursor;	//カーソル。
+	CResultCursor* m_resultcursor;	//カーソル。
 	CDirectInput* m_Input = nullptr;
 	float t;
 	short dir;
