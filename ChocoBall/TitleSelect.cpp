@@ -38,7 +38,7 @@ void CTitleSelect::Update(){
 		{
 			dir = 1;
 		}
-		t += 0.01f * dir;
+		t += 0.015f * dir;
 		SetAlpha(t);
 	}
 	else{

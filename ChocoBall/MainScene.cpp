@@ -8,6 +8,8 @@
 #include "ShadowRender.h"
 #include "Debri.h"
 #include "Block.h"
+#include "Result.h"
+#include "Number.h"
 
 CMainScene::CMainScene(){
 }
@@ -23,6 +25,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("TEST3D2"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBlock>(_T("Block"), false);
+	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
@@ -33,6 +36,11 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
+	//static bool flg = true;
+	//if (flg){
+	//	SINSTANCE(CObjectManager)->GenerationObject<CResult>(_T("Clear"), 3, false);
+	//	flg = false;
+	//}
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }
