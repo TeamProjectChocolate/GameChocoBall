@@ -13,6 +13,11 @@ float4 diffuseLightDirection[DIFFUSE_LIGHT_NUM];	// ディフューズライトの方向
 float4 diffuseLightColor[DIFFUSE_LIGHT_NUM];	// ディフューズライトのカラー
 float4 ambientLight;							// 環境光
 
+// スキン行列
+#define MAX_MATRICES 26
+float4x3 g_WorldMatrixArray[MAX_MATRICES]:WORLDMATRIXARRAY;
+float g_numBone;		// 骨の数
+
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler = 
 sampler_state{
@@ -49,6 +54,8 @@ sampler_state{
 // 頂点情報入力用構造体
 struct VS_INPUT{
 	float4	pos		: POSITION;
+	float4  BlendWeights:BLENDWEIGHT;
+	float4  BlendIndices:BLENDINDICES;
 	float4	color	: COLOR0;
 	float3  normal  : NORMAL0;	// ワールド座標における法線?
 	float2  uv		: TEXCOORD0;
@@ -98,6 +105,34 @@ VS_OUTPUT ShadowVertex(VS_INPUT In){
 	Out.uv = In.uv;
 	Out.normal = mul(In.normal, Rota);
 	Out.tangent = mul(In.tangent, Rota);
+	return Out;
+}
+
+VS_OUTPUT AnimationVertex(VS_INPUT In){
+	VS_OUTPUT Out = (VS_OUTPUT)0;
+
+	// ブレンドするボーンのインデックス
+	int4 IndexVector = D3DCOLORtoUBYTE4(In.BlendIndices);
+
+	// ブレンドレート
+	float BlendWeightsArray[4] = (float[4])In.BlendWeights;
+	int IndexArray[4] = (int[4])IndexVector;
+	float LastWeight = 0.0f;
+	float3 pos = 0.0f;
+	float3 normal = 0.0f;
+	for (int iBone = 0; iBone < g_numBone - 1; iBone++){
+		LastWeight = LastWeight + BlendWeightsArray[iBone];
+		pos.xyz += mul(In.pos, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+		normal += mul(In.normal, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+	}
+	LastWeight = 1.0f - LastWeight;
+	pos += (mul(In.pos, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight);
+	normal += mul(In.normal, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight;
+
+	Out.pos = mul(float4(pos.xyz, 1.0f), View);
+	Out.pos = mul(Out.pos, Proj);
+	Out.normal = normalize(normal);
+	Out.uv = In.uv;
 	return Out;
 }
 
@@ -253,6 +288,13 @@ technique BasicTec{
 	pass p0{
 		VertexShader = compile vs_3_0 BasicTransform();
 		PixelShader = compile ps_3_0 NoWorkingPixelShader(true);
+	}
+};
+
+technique NotNormalMapAnimationTec{
+	pass p0{
+		VertexShader = compile vs_3_0 AnimationVertex();
+		PixelShader = compile ps_3_0 TextureShader(false);
 	}
 };
 

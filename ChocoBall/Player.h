@@ -2,8 +2,9 @@
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "DirectInput.h"
+#include "Light.h"
 #include "islntersect.h"
-
+#include "Turn.h"
 
 class CPlayer : public C3DImage
 {
@@ -16,6 +17,9 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void ConfigLight();
+	void ReflectionLight(D3DXVECTOR4);
+	void SetUpLight();
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
@@ -25,15 +29,24 @@ public:
 	}
 private:
 	CDirectInput* m_pInput;
+	CLight m_light;
+	D3DXVECTOR3 m_lightDir[NUM_DIFFUSE_LIGHT];
+	D3DXVECTOR4 m_lightColor[NUM_DIFFUSE_LIGHT];
+	short count;
+	D3DXVECTOR3 dir;
 
 	D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
-	float			g_currentAngleY;	//現在の方向
-	float			g_targetAngleY;		//向きたい方向
-	float			g_turnSpeed;		//回転速度
+	float			m_currentAngleY;	//現在の方向
+	float			m_targetAngleY;		//向きたい方向
+	float			m_turnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
+
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+
+	void UpdateLight();
+	CTurn			m_Turn;				//CTurnのインスタンス		
 };
 
 namespace tkEngine{

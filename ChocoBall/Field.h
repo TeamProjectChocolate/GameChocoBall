@@ -6,7 +6,7 @@
 
 struct SCollisionInfo {
 	D3DXVECTOR3 pos;
-	D3DXVECTOR3 angle;
+	D3DXQUATERNION rotation;
 	D3DXVECTOR3 scale;
 };
 

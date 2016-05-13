@@ -5,7 +5,6 @@
 #include "Assert.h"
 
 #define OBJECTNAME_MAX 255
-#define MAX_PRIORTY 255
 
 // ゲームオブジェクト構造体
 typedef struct OBJECT_DATA{
@@ -30,12 +29,12 @@ public:
 	//※インスタンスの名前は255文字以内としてください
 	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
 	//※必ずCObjectManagerクラスのDeleteGameObject関数を呼び出して行うこと
-	T* GenerationObject(LPCSTR ObjectName,short priorty,bool common){
+	T* GenerationObject(LPCSTR ObjectName,PRIORTY priorty,bool common){
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		Object->SetCommon(common);
-		if (priorty > MAX_PRIORTY){
-			priorty = MAX_PRIORTY;
+		if (priorty > PRIORTY::LOWEST){
+			priorty = PRIORTY::LOWEST;
 		}
 		this->Add(Object, ObjectName,priorty);
 		return Object;
@@ -55,7 +54,7 @@ public:
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		Object->SetCommon(common);
-		short priorty = MAX_PRIORTY;
+		PRIORTY priorty = PRIORTY::LOWEST;
 		this->Add(Object,ObjectName ,priorty);
 		return Object;
 	}
@@ -70,7 +69,7 @@ public:
 	//※インスタンスの名前は255文字以内としてください
 	//※この関数で登録したインスタンスをnewで生成している場合は、必ずCObjectManagerクラスのDeleteGameObject関数を呼び出した後に
 	//  CObjectManagerクラスの外部できちんとdeleteしてください
-	void AddObject(CGameObject*,LPCSTR, short,bool);
+	void AddObject(CGameObject*,LPCSTR, PRIORTY,bool);
 
 	//すでに生成されているオブジェクトをマネージャークラスに登録する関数(優先度なし：自動的に優先度は最低になります)
 	//引き数: CGameObject*型 登録するGameObjectのポインタ
@@ -134,7 +133,7 @@ public:
 	void Update();
 	void Draw();
 private:
-	void Add(CGameObject*,LPCSTR, short);
+	void Add(CGameObject*,LPCSTR, PRIORTY);
 	vector<OBJECT_DATA*> m_GameObjects;	// GameObject*のリスト
 	vector<CGameObject*> m_DeleteObjects;	// 削除リスト
 

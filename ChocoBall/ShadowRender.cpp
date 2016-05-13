@@ -66,14 +66,14 @@ void CShadowRender::Draw(){
 			m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &m_ShadowObjects[idx]->GetWorldMatrix()/*設定したい行列へのポインタ*/);
 			// 頂点フォーマットをセット
 
-			IMAGE3D* pImage = m_ShadowObjects[idx]->GetImage();
+			D3DXMESHCONTAINER_DERIVED* container = m_ShadowObjects[idx]->GetImage()->pModel->GetContainer();
 
-			(*graphicsDevice()).SetFVF(pImage->pMesh->GetFVF());
+			//(*graphicsDevice()).SetFVF(container->pMesh->GetFVF());
 
 			m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
 
-			for (DWORD i = 0; i < pImage->NumMaterials; i++){
-				pImage->pMesh->DrawSubset(i);						// メッシュを描画
+			for (DWORD i = 0; i < container->NumMaterials; i++){
+				container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
 			}
 			m_pEffect->EndPass();
 		}

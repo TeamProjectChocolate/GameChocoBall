@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "ShadowRender.h"
+#include "RenderContext.h"
 
 
 CPlayer::~CPlayer(){ }
@@ -24,95 +25,80 @@ void CPlayer::Initialize()
 
 	SetAlpha(1.0f);
 
-	g_currentAngleY = 0.0f;
-	g_targetAngleY = 0.0f;
-	g_turnSpeed = 0.0f;
-	
-	C3DImage::SetImage();
+	// ライト関連の初期化
+	count = 0;
+	dir = D3DXVECTOR3(1, 1, 1);
+	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
+	C3DImage::SetImage();
 }
 
 void CPlayer::Update()
 {
-	{
-		isTurn = false;
+	this->UpdateLight();
 
-		m_moveSpeed.x = 0.0f;
-		m_moveSpeed.z = 0.0f;
+	isTurn = false;
 
-		const float MOVE_SPEED = 4.0f;
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
 
-		if (m_pInput->IsTriggerCancel()){
-			m_moveSpeed.y = 10.0f;
-		}
-		else if (m_pInput->IsPressUp()){
-			m_moveSpeed.z = MOVE_SPEED;
-			isTurn = true;
-			//180度向かせる。
-			g_targetAngleY = D3DXToRadian(180.0f);
-		}
-		if (m_pInput->IsPressDown()){
-			m_moveSpeed.z = -MOVE_SPEED;
-			isTurn = true;
-			//正面を向かせる。
-			g_targetAngleY = D3DXToRadian(0.0f);
-		}
-		if (m_pInput->IsPressShift() && m_pInput->IsPressRight()){
-			m_transform.angle.y -= 0.1f;
-		}
-		else if (m_pInput->IsPressRight()){
-			m_moveSpeed.x = MOVE_SPEED;
-			isTurn = true;
-			//右方向を向かせる。
-			g_targetAngleY = D3DXToRadian(-90.0f);
-		}
-		if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
-			m_transform.angle.y += 0.1f;
-		}
-		else if (m_pInput->IsPressLeft()){
-			m_moveSpeed.x = -MOVE_SPEED;
-			isTurn = true;
-			//左方向を向かせる
-			g_targetAngleY = D3DXToRadian(90.0f);
-		}
-
-		//回転処理
-		static const float fPI = 3.14159265358979323846f;
-		if (isTurn) {
-			float angleDiff = g_targetAngleY - g_currentAngleY;	//目的角度までどれだけ回せがいいのかを計算する。
-			float angleDiffAbs = fabsf(angleDiff);				//回す角度の絶対値を計算。
-			if (angleDiffAbs > 0.0001f) {						//回す角度の大きさが非常に小さい場合は回さない。
-				float turnDir = angleDiff / angleDiffAbs;		//回転させる方向を計算する。
-				if (angleDiffAbs > fPI) {						//回転させる角度が180度を越えているかを判定する。
-					//180度を越える回転のため遠回り。
-					g_currentAngleY += 2.0f * fPI *  turnDir;	//現在の角度を-90度なら270度、180度なら-180度にする。
-					turnDir *= -1.0f;							//回す方向を反転。
-				}
-				g_turnSpeed = g_cTurnSpeed * turnDir;
-			}
-		}
-		g_currentAngleY += g_turnSpeed;
-		if (fabsf(g_targetAngleY - g_currentAngleY) < fabsf(g_turnSpeed) + 0.01f) {
-			//ターン終わり。
-			g_turnSpeed = 0.0f;
-			g_currentAngleY = g_targetAngleY;
-		}
-
-		m_IsIntersect.Intersect(&m_transform.position,&m_moveSpeed);//プレイヤーの処理の最後になるべく書いて
-
-		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), g_currentAngleY);//回転行列
-
-		C3DImage::Update();
-		
-		SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-		SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	if (m_pInput->IsTriggerCancel()){
+		m_moveSpeed.y = 5.0f;
 	}
+	else if (m_pInput->IsPressUp()){
+		m_moveSpeed.z = MOVE_SPEED;
+		isTurn = true;
+		//180度向かせる。
+		m_targetAngleY = D3DXToRadian(180.0f);
+	}
+	if (m_pInput->IsPressDown()){
+		m_moveSpeed.z = -MOVE_SPEED;
+		isTurn = true;
+		//正面を向かせる。
+		m_targetAngleY = D3DXToRadian(0.0f);
+	}
+	if (m_pInput->IsPressShift() && m_pInput->IsPressRight()){
+		m_transform.angle.y -= 0.1f;
+	}
+	else if (m_pInput->IsPressRight()){
+		m_moveSpeed.x = MOVE_SPEED;
+		isTurn = true;
+		//右方向を向かせる。
+		m_targetAngleY = D3DXToRadian(-90.0f);
+	}
+	if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
+		m_transform.angle.y += 0.1f;
+	}
+	else if (m_pInput->IsPressLeft()){
+		m_moveSpeed.x = -MOVE_SPEED;
+		isTurn = true;
+		//左方向を向かせる
+		m_targetAngleY = D3DXToRadian(90.0f);
+	}
+
+	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
+	//isTurnは各Updateの最初でfalseにして、回転させたい時にtrueにする。
+	m_Turn.Update(isTurn,m_targetAngleY);
+
+	//こいつを書かないと回転行列に乗算してくれない。
+	m_currentAngleY = m_Turn.Getm_currentAngleY();
+
+	//プレイヤーの処理の最後になるべく書いて
+	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);	
+
+	//回転行列
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f),m_currentAngleY);
+
+	C3DImage::Update();
+
+	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
 }
 
 void CPlayer::Draw(){
 	IMAGE3D* img = GetImage();
-	LPD3DXMESH mesh = img->pMesh;
+	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
 	int numVertex = mesh->GetNumVertices();
@@ -136,4 +122,47 @@ void CPlayer::Draw(){
 
 	SetUpTechnique();
 	C3DImage::Draw();
+}
+
+void CPlayer::UpdateLight(){
+	this->SetUpLight();
+}
+
+void CPlayer::ConfigLight(){
+	// ディフューズライト(キャラライト)の向き設定(ライト1～4)
+	m_lightDir[0] = D3DXVECTOR3(0.707f, 0.707f, 0.0f);
+	m_lightDir[1] = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	m_lightDir[2] = D3DXVECTOR3(1.0f, -1.0f, 0.5f);
+	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+
+	// ディフューズライト(キャラライト)の色設定(ライト1～4)
+	m_lightColor[0] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[3] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// アンビエントライト(環境光)の強さ設定
+	D3DXVECTOR4 ambientLight;
+	ambientLight = D3DXVECTOR4(0.2f, 0.0f, 0.0f, 100.0f);
+
+	// ライトの設定を反映
+	ReflectionLight(ambientLight);
+}
+
+void CPlayer::ReflectionLight(D3DXVECTOR4 ambient){
+	this->SetUpLight();
+	m_light.SetAmbientLight(ambient);
+}
+
+void CPlayer::SetUpLight(){
+	for (short num = 0; num < NUM_DIFFUSE_LIGHT; num++){
+		D3DXVECTOR4 dir;
+		dir.x = m_lightDir[num].x;
+		dir.y = m_lightDir[num].y;
+		dir.z = m_lightDir[num].z;
+		dir.w = 1.0f;
+		m_light.SetDiffuseLightDirection(num, dir);
+		m_light.SetDiffuseLightColor(num, m_lightColor[num]);
+	}
+	SINSTANCE(CRenderContext)->SetCurrentLight(&m_light);
 }
