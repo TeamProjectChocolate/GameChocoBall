@@ -19,7 +19,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
-	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("TEST3D2"), PRIORTY::PLAYER, false);
+	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
 	SINSTANCE(CObjectManager)->Intialize();
 

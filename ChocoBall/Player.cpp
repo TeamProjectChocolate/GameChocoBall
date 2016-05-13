@@ -3,7 +3,8 @@
 #include "InputManager.h"
 #include "ShadowRender.h"
 #include "RenderContext.h"
-
+#include "Enemy.h"
+#include "EnemyManager.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -36,6 +37,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	
 	this->UpdateLight();
 
 	isTurn = false;
