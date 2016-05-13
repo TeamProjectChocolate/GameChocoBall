@@ -10,6 +10,7 @@ CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
+
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);

@@ -7,6 +7,7 @@
 #include "Field.h"
 #include "ShadowRender.h"
 #include "Debri.h"
+#include "Block.h"
 
 CMainScene::CMainScene(){
 }
@@ -21,6 +22,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("TEST3D2"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
+	SINSTANCE(CObjectManager)->GenerationObject<CBlock>(_T("Block"), false);
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
