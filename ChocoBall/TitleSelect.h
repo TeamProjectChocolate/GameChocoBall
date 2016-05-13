@@ -18,5 +18,4 @@ private:
 	CDirectInput* m_Input = nullptr;
 	float t;
 	short dir;
-	bool igatarinai;
 };
