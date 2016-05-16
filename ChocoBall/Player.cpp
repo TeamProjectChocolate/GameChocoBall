@@ -5,8 +5,8 @@
 #include "RenderContext.h"
 #include "Enemy.h"
 #include "GameObject.h"
-
 #include "ObjectManager.h"
+
 CPlayer::~CPlayer(){ }
 
 
@@ -44,20 +44,20 @@ void CPlayer::Update()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
-	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("TEST3D2")));
-	i = Enemy->GetPos().x;
-	k = Enemy->GetPos().z;
-	
-	j=m_transform.position.x;
-	l=m_transform.position.z;
+	//CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
+	//i = Enemy->GetPos().x;
+	//k = Enemy->GetPos().z;
+	//
+	////j=m_transform.position.x;
+	////l=m_transform.position.z;
 
-	X = i - j;
-	Z = k - l;
+	//X = i - j;
+	//Z = k - l;
 
-	if (!isnan(X))
-	{
-		_X=X/Z;
-	}
+	//if (!isnan(X))
+	//{
+	//	_X=X/Z;
+	//}
 	
 
 	if (m_pInput->IsTriggerEscape()){

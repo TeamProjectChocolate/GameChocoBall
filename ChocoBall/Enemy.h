@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "Rigidbody.h"
+#include "islntersect.h"
+
 
 class CEnemy : public C3DImage
 {
@@ -36,6 +38,7 @@ private:
 	bool			isTurn;				//回転フラグ
 	CRigidbody		m_Rigidbody;
 	bool			flg;
-	bool            flg2;
+	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+
 };
 

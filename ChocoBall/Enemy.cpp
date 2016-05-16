@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
+#include "GameObject.h"
+#include "ObjectManager.h"
+
 
 CEnemy::~CEnemy(){ }
 
@@ -8,10 +11,8 @@ void CEnemy::Initialize()
 {
 	C3DImage::Initialize();
 	//m_transform.position = D3DXVECTOR3(-2.5f, -1.5f, -5.0f);
-	//m_transform.position = D3DXVECTOR3(-2.5f, 0.5f, -5.0f);
-	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -5.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -10.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
-	//m_transform.angle = D3DXVECTOR3(0, 0, 0);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_moveSpeed.x = 0.05f;
 	m_moveSpeed.z = 0.05f;
@@ -19,24 +20,21 @@ void CEnemy::Initialize()
 
 	m_radius = 0.1f;
 
-	SetAlive(true);
+	SetAlive(true);	//死亡フラグ
 
-	SetAlpha(1.0f);
-
-	g_currentAngleY = 0.0f;
-	g_targetAngleY = 0.0f;
-	g_turnSpeed = 0.0f;
+	SetAlpha(1.0f);	//透明度？
 
 	flg = true;
 
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
-	g_enemyMgr.AddEnemy(this);
+
+	extern CEnemyManager g_enemyMgr;
+	//g_enemyMgr.AddEnemy(this);
 }
 
 void CEnemy::Update()
 {
-
 
 	m_transform.position.x += m_moveSpeed.x;
 
@@ -47,14 +45,14 @@ void CEnemy::Update()
 			flg = false;
 			
 		}
-		else{
-			if (m_transform.position.x < -2.5)
-			{
-				m_moveSpeed.x *= -1;
-				flg = true;
-			}
+
+	}
+	else{
+		if (m_transform.position.x < -2.5)
+		{
+			m_moveSpeed.x *= -1;
+			flg = true;
 		}
-		
 	}
 	C3DImage::Update();
 
