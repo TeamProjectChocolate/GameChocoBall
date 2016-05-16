@@ -26,8 +26,6 @@ void CPlayer::Initialize()
 	SetAlpha(1.0f);
 
 	// ƒ‰ƒCƒgŠÖ˜A‚Ì‰Šú‰»
-	count = 0;
-	dir = D3DXVECTOR3(1, 1, 1);
 	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);

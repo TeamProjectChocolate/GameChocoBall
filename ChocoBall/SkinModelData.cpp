@@ -29,13 +29,7 @@ void CSkinModelData::LoadModelData(LPCSTR pFileName){
 		&m_pAnimController
 		);
 
-	if (hr != S_OK){
-		hr = false;
-	}
-	else{
-		hr = true;
-	}
-	CH_ASSERT(static_cast<bool>(hr));
+	CH_ASSERT(!FAILED(hr));
 	SetUpBoneMatrixPointers(m_frameRoot, m_frameRoot);
 }
 
