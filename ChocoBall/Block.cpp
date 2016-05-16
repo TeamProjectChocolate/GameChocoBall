@@ -78,7 +78,7 @@ void CBlock::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 	m_myMotionState = new btDefaultMotionState(groundTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_collisionShape, btVector3(0, 0, 0));
 	m_rigidBody = new btRigidBody(rbInfo);
-	m_rigidBody->setUserIndex(1);
+	//m_rigidBody->setUserIndex(1);
 	//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 	g_bulletPhysics.AddRigidBody(m_rigidBody);
 

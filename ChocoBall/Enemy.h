@@ -36,6 +36,5 @@ private:
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
 	CRigidbody		m_Rigidbody;
 	bool			flg;
-	bool            flg2;
 };
 

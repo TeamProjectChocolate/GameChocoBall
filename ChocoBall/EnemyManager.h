@@ -16,7 +16,7 @@ public:
 
 	int GetNumEnemy()
 	{
-		return numEnemy;
+		return numEnemy;	//エネミーの数を返す
 	}
 	//敵の配列の要素数をk返す
 	C3DImage* GetEnemyArray()
