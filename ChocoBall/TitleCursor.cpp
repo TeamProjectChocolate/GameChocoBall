@@ -24,10 +24,8 @@ void CTitleCursor::Initialize(){
 	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 80, 10);
-	dir = -1;
 	SetAlive(true);
 	C2DImage::SetImage();
-	t = 1.0f;
 }
 
 void CTitleCursor::Update(){
@@ -36,9 +34,6 @@ void CTitleCursor::Update(){
 		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);
 		m_transform.scale.x += 20;
 		m_transform.scale.y += 20;*/
-	}
-	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 350.0f){
-		PostQuitMessage(0);
 	}
 	if (m_Input->IsTriggerUp()){
 		m_transform.position.y = 250.0f;

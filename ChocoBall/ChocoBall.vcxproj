@@ -129,6 +129,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="SkinModelData.h" />
     <ClInclude Include="stdafx.h" />
