@@ -13,6 +13,5 @@ public:
 	void Draw()override;
 private:
 	CDirectInput* m_Input = nullptr;
-	float t;
 	short dir;
 };

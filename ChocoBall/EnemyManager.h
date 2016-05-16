@@ -7,15 +7,18 @@ public:
 	{
 		numEnemy = 0;
 	}
+	//“G‚Ì’Ç‰Á
 	void AddEnemy(C3DImage* enemy)
 	{
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
 	}
+
 	int GetNumEnemy()
 	{
 		return numEnemy;
 	}
+	//“G‚Ì”z—ñ‚Ì—v‘f”‚ğk•Ô‚·
 	C3DImage* GetEnemyArray()
 	{
 		return Enemy[20];
