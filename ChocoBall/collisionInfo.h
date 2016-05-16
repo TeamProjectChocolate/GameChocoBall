@@ -13,7 +13,7 @@
 //Wall00
 {
 	D3DXVECTOR3(4.00f, 0.00f, 26.40f),             //平行移動
-	D3DXQUATERNION(0.00, 0.01f, 0.00f, 1.00f ),    //回転
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(0.91f, 60.00f, 55.00f ),            //拡大
 },
 //Wall02

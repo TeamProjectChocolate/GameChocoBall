@@ -1,19 +1,21 @@
 #include "stdafx.h"
 #include "Enemy.h"
+#include "EnemyManager.h"
 
 CEnemy::~CEnemy(){ }
 
 void CEnemy::Initialize()
 {
 	C3DImage::Initialize();
-	//m_transform.position = D3DXVECTOR3(-2.5f, 0.0f, -5.0f);
-	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
+	//m_transform.position = D3DXVECTOR3(-2.5f, -1.5f, -5.0f);
+	//m_transform.position = D3DXVECTOR3(-2.5f, 0.5f, -5.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -5.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	//m_transform.angle = D3DXVECTOR3(0, 0, 0);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_moveSpeed.x = 0.05f;
-	m_moveSpeed.z = 0.0f;
-	m_moveSpeed.y = 0.0f;
+	m_moveSpeed.z = 0.05f;
+	m_moveSpeed.y = 0.05f;
 
 	m_radius = 0.1f;
 
@@ -29,32 +31,35 @@ void CEnemy::Initialize()
 
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
+	g_enemyMgr.AddEnemy(this);
+	
 }
 
 void CEnemy::Update()
 {
-
-	
 	m_transform.position.x += m_moveSpeed.x;
+
 	if (flg == true){
 		if (m_transform.position.x > 2.5)
 		{
-			m_moveSpeed.x *= -1;
+			m_moveSpeed.x *= -1.0;
 			flg = false;
-		}
+			
+		}	
 	}
 	else{
 		if (m_transform.position.x < -2.5)
 		{
-			m_moveSpeed.x *= -1;
+			m_moveSpeed.x *= -1.0;
 			flg = true;
 		}
 	}
-
 	C3DImage::Update();
 }
 
-void CEnemy::Draw(){
+
+void CEnemy::Draw()
+{
 	IMAGE3D* img = GetImage();
 	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;

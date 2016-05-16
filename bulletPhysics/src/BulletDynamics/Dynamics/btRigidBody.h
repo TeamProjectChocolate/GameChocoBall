@@ -406,7 +406,7 @@ public:
 		btVector3 vec = (c0 * getInvInertiaTensorWorld()).cross(r0);
 
 		return m_inverseMass + normal.dot(vec);
-
+		
 	}
 
 	SIMD_FORCE_INLINE btScalar computeAngularImpulseDenominator(const btVector3& axis) const

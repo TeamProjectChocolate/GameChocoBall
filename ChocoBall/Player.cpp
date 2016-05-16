@@ -3,18 +3,22 @@
 #include "InputManager.h"
 #include "ShadowRender.h"
 #include "RenderContext.h"
+#include "Enemy.h"
+#include "GameObject.h"
 
-
+#include "ObjectManager.h"
 CPlayer::~CPlayer(){ }
 
 
 void CPlayer::Initialize()
 {
+
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
@@ -42,9 +46,26 @@ void CPlayer::Update()
 
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
+	float			i, k, j, l, X, Z;
+	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
+	//CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY2")));
+	i = Enemy->GetPos().x;
+	k = Enemy->GetPos().z;
+	
+	j=m_transform.position.x;
+	l=m_transform.position.z;
 
-	if (m_pInput->IsTriggerCancel()){
-		m_moveSpeed.y = 5.0f;
+	X = i - j;
+	Z = k - l;
+
+	if (!isnan(X))
+	{
+		_X=X/Z;
+	}
+	
+
+	if (m_pInput->IsTriggerSpace()){
+		m_moveSpeed.y = MOVE_SPEED;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -52,7 +73,7 @@ void CPlayer::Update()
 		//180度向かせる。
 		m_targetAngleY = D3DXToRadian(180.0f);
 	}
-	if (m_pInput->IsPressDown()){
+	else if (m_pInput->IsPressDown()){
 		m_moveSpeed.z = -MOVE_SPEED;
 		isTurn = true;
 		//正面を向かせる。
@@ -76,9 +97,14 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
+	if (m_pInput->IsTriggerCancel())
+	{
+		isTurn = true;		
+		m_targetAngleY = atan(_X);
+	}
 
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-	//isTurnは各Updateの最初でfalseにして、回転させたい時にtrueにする。
+	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
 	m_Turn.Update(isTurn,m_targetAngleY);
 
 	//こいつを書かないと回転行列に乗算してくれない。
@@ -97,7 +123,7 @@ void CPlayer::Update()
 }
 
 void CPlayer::Draw(){
-	IMAGE3D* img = GetImage();
+	/*IMAGE3D* img = GetImage();
 	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
@@ -118,7 +144,7 @@ void CPlayer::Draw(){
 	}
 	float size = YMax + fabsf(YMin);
 	float center = (YMax + YMin)*0.5f;
-	pVB->Unlock();
+	pVB->Unlock();*/
 
 	SetUpTechnique();
 	C3DImage::Draw();

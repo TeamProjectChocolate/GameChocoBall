@@ -14,7 +14,7 @@ public:
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");
 	}
 
-	void Initialize()override;
+	void Initialize()override; 
 	void Update()override;
 	void Draw()override;
 	void OnDestroy();
@@ -36,5 +36,6 @@ private:
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
 	CRigidbody		m_Rigidbody;
 	bool			flg;
+	bool            flg2;
 };
 
