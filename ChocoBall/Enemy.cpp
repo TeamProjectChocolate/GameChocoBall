@@ -9,7 +9,7 @@ void CEnemy::Initialize()
 	C3DImage::Initialize();
 	//m_transform.position = D3DXVECTOR3(-2.5f, -1.5f, -5.0f);
 	//m_transform.position = D3DXVECTOR3(-2.5f, 0.5f, -5.0f);
-	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -5.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -7.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_moveSpeed.x = 0.05f;
