@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "EnemyManager.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -48,9 +49,10 @@ void CPlayer::Update()
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
 
-	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
-	i = Enemy->GetPos().x;
-	k = Enemy->GetPos().z;
+	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+
+	i = EnemyManager->GetPos().x;
+	k = EnemyManager->GetPos().z;
 	
 	j=m_transform.position.x;
 	l=m_transform.position.z;

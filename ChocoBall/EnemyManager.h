@@ -23,6 +23,10 @@ public:
 		return numEnemy;	//エネミーの数を返す
 	}
 
+	CEnemy* GetEnemy(short num){
+		return Enemy[num];
+	}
+
 	CEnemy* GetEnemyArray()
 	{
 		return Enemy[20];

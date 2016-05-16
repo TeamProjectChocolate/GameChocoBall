@@ -31,11 +31,6 @@ void CEnemy::Initialize()
 
 
 	extern CEnemyManager g_enemyMgr;
-	//g_enemyMgr.AddEnemy(this);
-
-	g_enemyMgr.AddEnemy(this);
-	
-
 }
 
 void CEnemy::Update()
