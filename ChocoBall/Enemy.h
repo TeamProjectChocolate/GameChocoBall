@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "Rigidbody.h"
@@ -36,6 +36,5 @@ private:
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
 	CRigidbody		m_Rigidbody;
 	bool			flg;
-	bool            flg2;
 };
 

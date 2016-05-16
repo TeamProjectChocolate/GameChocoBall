@@ -44,7 +44,7 @@ void CPlayer::Update()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
-	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("TEST3D2")));
+	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
 	i = Enemy->GetPos().x;
 	k = Enemy->GetPos().z;
 	

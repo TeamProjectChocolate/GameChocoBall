@@ -14,7 +14,7 @@ public:
 	}
 	int GetNumEnemy()
 	{
-		return numEnemy;
+		return numEnemy;	//エネミーの数を返す
 	}
 	C3DImage* GetEnemyArray()
 	{
