@@ -12,14 +12,17 @@ CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
+
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
+
 	m_radius = 1.0f;
 
 	SetAlive(true);
@@ -60,7 +63,7 @@ void CPlayer::Update()
 	}
 	
 
-	if (m_pInput->IsTriggerEscape()){
+	if (m_pInput->IsTriggerSpace()){
 		m_moveSpeed.y = MOVE_SPEED;
 	}
 	else if (m_pInput->IsPressUp()){
@@ -99,9 +102,8 @@ void CPlayer::Update()
 		m_targetAngleY = atan(_X);
 	}
 
-
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-	//isTurnは各Updateの最初でfalseにして、回転させたい時にtrueにする。
+	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
 	m_Turn.Update(isTurn,m_targetAngleY);
 
 	//こいつを書かないと回転行列に乗算してくれない。
@@ -120,7 +122,7 @@ void CPlayer::Update()
 }
 
 void CPlayer::Draw(){
-	IMAGE3D* img = GetImage();
+	/*IMAGE3D* img = GetImage();
 	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
@@ -141,7 +143,7 @@ void CPlayer::Draw(){
 	}
 	float size = YMax + fabsf(YMin);
 	float center = (YMax + YMin)*0.5f;
-	pVB->Unlock();
+	pVB->Unlock();*/
 
 	SetUpTechnique();
 	C3DImage::Draw();
