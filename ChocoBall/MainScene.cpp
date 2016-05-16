@@ -7,6 +7,8 @@
 #include "Field.h"
 #include "ShadowRender.h"
 #include "Debri.h"
+#include "Block.h"
+#include "BuildBlock.h"
 #include "Result.h"
 #include "Number.h"
 #include "EnemyManager.h"
@@ -29,6 +31,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
 	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
+	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 

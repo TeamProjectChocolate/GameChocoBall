@@ -17,10 +17,12 @@ public:
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
 	}
+
 	int GetNumEnemy()
 	{
 		return numEnemy;	//エネミーの数を返す
 	}
+
 	CEnemy* GetEnemyArray()
 	{
 		return Enemy[20];

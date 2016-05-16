@@ -38,6 +38,7 @@ private:
 	bool			isTurn;				//回転フラグ
 	CRigidbody		m_Rigidbody;
 	bool			flg;
+
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 };

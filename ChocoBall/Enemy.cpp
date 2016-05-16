@@ -29,8 +29,13 @@ void CEnemy::Initialize()
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
+
 	extern CEnemyManager g_enemyMgr;
 	//g_enemyMgr.AddEnemy(this);
+
+	g_enemyMgr.AddEnemy(this);
+	
+
 }
 
 void CEnemy::Update()
@@ -41,21 +46,19 @@ void CEnemy::Update()
 	if (flg == true){
 		if (m_transform.position.x > 2.5)
 		{
-			m_moveSpeed.x *= -1;
+			m_moveSpeed.x *= -1.0;
 			flg = false;
 			
-		}
-
+		}	
 	}
 	else{
 		if (m_transform.position.x < -2.5)
 		{
-			m_moveSpeed.x *= -1;
+			m_moveSpeed.x *= -1.0;
 			flg = true;
 		}
 	}
 	C3DImage::Update();
-
 }
 
 

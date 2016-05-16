@@ -17,5 +17,4 @@ public:
 private:
 	CPlayer m_Player;
 	CEnemy m_Enemy;	//“G‚Ì•Ï”B
-	//CEnemyManager m_Enemymanager;
 };
