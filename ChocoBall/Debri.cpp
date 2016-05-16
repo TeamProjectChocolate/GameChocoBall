@@ -15,7 +15,7 @@ void CDebri::Initialize()
 	m_moveSpeed.x = 0.05f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
-	
+
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	this->Build();
@@ -28,6 +28,7 @@ void CDebri::Initialize()
 
 	//int defState = m_rigidBody->getActivationState();
 	//m_rigidBody->setActivationState(defState | DISABLE_DEACTIVATION);
+
 
 
 	C3DImage::SetImage();
