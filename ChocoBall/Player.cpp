@@ -3,8 +3,10 @@
 #include "InputManager.h"
 #include "ShadowRender.h"
 #include "RenderContext.h"
+#include "Enemy.h"
+#include "GameObject.h"
 
-
+#include "ObjectManager.h"
 CPlayer::~CPlayer(){ }
 
 
@@ -18,7 +20,6 @@ void CPlayer::Initialize()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
-
 	m_radius = 1.0f;
 
 	SetAlive(true);
@@ -40,9 +41,25 @@ void CPlayer::Update()
 
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
+	float			i, k, j, l, X, Z;
+	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("TEST3D2")));
+	i = Enemy->GetPos().x;
+	k = Enemy->GetPos().z;
+	
+	j=m_transform.position.x;
+	l=m_transform.position.z;
 
-	if (m_pInput->IsTriggerCancel()){
-		m_moveSpeed.y = 5.0f;
+	X = i - j;
+	Z = k - l;
+
+	if (!isnan(X))
+	{
+		_X=X/Z;
+	}
+	
+
+	if (m_pInput->IsTriggerEscape()){
+		m_moveSpeed.y = MOVE_SPEED;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -50,7 +67,7 @@ void CPlayer::Update()
 		//180度向かせる。
 		m_targetAngleY = D3DXToRadian(180.0f);
 	}
-	if (m_pInput->IsPressDown()){
+	else if (m_pInput->IsPressDown()){
 		m_moveSpeed.z = -MOVE_SPEED;
 		isTurn = true;
 		//正面を向かせる。
@@ -74,6 +91,12 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
+	if (m_pInput->IsTriggerCancel())
+	{
+		isTurn = true;		
+		m_targetAngleY = atan(_X);
+	}
+
 
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 	//isTurnは各Updateの最初でfalseにして、回転させたい時にtrueにする。

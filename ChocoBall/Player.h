@@ -5,6 +5,8 @@
 #include "Light.h"
 #include "islntersect.h"
 #include "Turn.h"
+#include "GameManager.h"
+#include "Enemy.h"
 
 class CPlayer : public C3DImage
 {
@@ -28,11 +30,11 @@ public:
 		m_radius = radius;
 	}
 private:
-	CDirectInput* m_pInput;
-	CLight m_light;
-	D3DXVECTOR3 m_lightDir[NUM_DIFFUSE_LIGHT];
-	D3DXVECTOR4 m_lightColor[NUM_DIFFUSE_LIGHT];
-
+	CDirectInput*	m_pInput;
+	CLight			m_light;
+	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
+	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
+	float			_X;
 	D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
@@ -44,8 +46,10 @@ private:
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 	void UpdateLight();
-	CTurn			m_Turn;				//CTurnのインスタンス		
+
+	CTurn			m_Turn;				//CTurnのインスタンス
 };
+
 
 namespace tkEngine{
 	const D3DXVECTOR3 vec3Zero = { 0.0f, 0.0f, 0.0f };

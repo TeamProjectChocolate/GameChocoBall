@@ -45,5 +45,4 @@ void CTestObject2D::Update(){
 void CTestObject2D::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
-
 }
