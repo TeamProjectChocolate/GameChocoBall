@@ -5,8 +5,8 @@
 #include "RenderContext.h"
 #include "Enemy.h"
 #include "GameObject.h"
-
 #include "ObjectManager.h"
+
 CPlayer::~CPlayer(){ }
 
 
@@ -47,6 +47,7 @@ void CPlayer::Update()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
+
 	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
 	//CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY2")));
 
@@ -83,6 +84,8 @@ void CPlayer::Update()
 			}
 		}
 	}
+
+	
 
 	if (m_pInput->IsTriggerSpace()){
 		m_moveSpeed.y = MOVE_SPEED;

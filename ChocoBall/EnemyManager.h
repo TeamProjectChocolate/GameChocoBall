@@ -1,14 +1,18 @@
-#include "C3DImage.h"
+#pragma once
+#include "Enemy.h"
+#include "GameObject.h"
 
-class Enemymanage
+class CEnemyManager:public CGameObject
 {
 public:
-	Enemymanage()
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+	CEnemyManager()
 	{
 		numEnemy = 0;
 	}
-	//“G‚Ì’Ç‰Á
-	void AddEnemy(C3DImage* enemy)
+	void AddEnemy(CEnemy* enemy)
 	{
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
@@ -18,14 +22,14 @@ public:
 	{
 		return numEnemy;	//ƒGƒlƒ~[‚Ì”‚ğ•Ô‚·
 	}
-	//“G‚Ì”z—ñ‚Ì—v‘f”‚ğk•Ô‚·
-	C3DImage* GetEnemyArray()
+
+	CEnemy* GetEnemyArray()
 	{
 		return Enemy[20];
 	}
 private:
 	int		numEnemy;	//“G‚Ì”B
-	C3DImage* Enemy[20];
+	CEnemy* Enemy[20];
 };
 
-extern Enemymanage g_enemyMgr;	//“G‚Ì•Ï”B
+//extern CEnemyManager g_enemyMgr;	//“G‚Ì•Ï”B
