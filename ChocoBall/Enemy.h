@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "Rigidbody.h"

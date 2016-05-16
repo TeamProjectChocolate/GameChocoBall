@@ -8,7 +8,7 @@
 
 #define BUILD_H 3		//生成される壁の高さ
 #define BUILD_W 4		//生成される壁の幅
-#define BLOCK_H 0.8		//ブロックのたかさ
+#define BLOCK_H 1.4		//ブロックのたかさ
 #define BLOCK_W 1.4		//ブロックの幅
 
 
