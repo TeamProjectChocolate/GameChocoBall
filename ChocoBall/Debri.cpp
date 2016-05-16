@@ -4,7 +4,7 @@
 void CDebri::Initialize()
 {
 
-	m_transform.position = D3DXVECTOR3(0.0f,4.0f,0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f,5.0f,0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 1.0f), 0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	SetAlive(true);
