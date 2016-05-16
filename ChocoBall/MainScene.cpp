@@ -7,6 +7,8 @@
 #include "Field.h"
 #include "ShadowRender.h"
 #include "Debri.h"
+#include "Block.h"
+#include "BuildBlock.h"
 #include "Result.h"
 #include "Number.h"
 
@@ -21,9 +23,11 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
+	//SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
+	//SINSTANCE(CObjectManager)->GenerationObject<CBlock>(_T("Block"), false);
+	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY"), PRIORTY::PLAYER, false);
-	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY2"), PRIORTY::PLAYER, false);
-	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
+	//SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY2"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 
