@@ -32,10 +32,7 @@ private:
 	CDirectInput*	m_pInput;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
-	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];
-	short			count;
-	D3DXVECTOR3		dir;
-	
+	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
 	float			_X;
 	D3DXVECTOR3		m_position;
 	float			m_radius;

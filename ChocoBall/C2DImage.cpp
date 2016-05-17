@@ -53,6 +53,10 @@ void C2DImage::Draw()
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
 	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
+	m_pEffect->SetInt("Split_X", m_Split.x);
+	m_pEffect->SetInt("Split_Y", m_Split.y);
+	m_pEffect->SetInt("NowCol", m_Now.x);
+	m_pEffect->SetInt("NowRow", m_Now.y);
 
 	m_pEffect->SetTexture("g_Texture", m_pTexture /*テクスチャ情報*/);
 

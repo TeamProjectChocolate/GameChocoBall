@@ -8,15 +8,15 @@
 #include "ObjectManager.h"
 #include "EnemyManager.h"
 
-CPlayer::~CPlayer(){ }
 
+CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
 
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
-	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	
@@ -33,8 +33,6 @@ void CPlayer::Initialize()
 	LockOnflag = false;
 
 	// ƒ‰ƒCƒgŠÖ˜A‚Ì‰Šú‰»
-	count = 0;
-	dir = D3DXVECTOR3(1, 1, 1);
 	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);

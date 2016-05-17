@@ -28,6 +28,7 @@ void CCamera::Initialize(){
 	m_Near = 1.0f;						// どこから
 	m_Far = 1000.0f;					// どこまで描画するか
 	m_updateType = enUpdateTypeTarget;
+	m_Axis = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 }
 
 void CCamera::Update(){
@@ -58,7 +59,7 @@ void CCamera::Update(){
 		D3DXMatrixLookAtLH(&m_View, &vEye, &m_target, &m_up);			// ビューマトリックス設定
 	}
 	else if (m_updateType == enUpdateTypeDirection){
-		float t = fabsf(D3DXVec3Dot(&m_direction, &D3DXVECTOR3(0.0f, 1.0f, 0.0f)));
+		float t = fabsf(D3DXVec3Dot(&m_direction, &m_Axis));
 		if (fabsf((t - 1.0f)) < 0.00001f) {
 			//ライトの方向がほぼY軸と並行。
 			m_up = D3DXVECTOR3(1.0f, 0.0f, 0.0f);

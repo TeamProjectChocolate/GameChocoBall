@@ -1,6 +1,10 @@
 
 float4x4 World;	// ワールド変換行列宣言
 float Alpha;	// 透明度
+int Split_X;	// 画像分割数(横)
+int Split_Y;	// 画像分割数(縦)
+int NowCol;		// 現コマ数(横)
+int NowRow;		// 現コマ数(縦)
 
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler =
@@ -41,6 +45,10 @@ VS_OUTPUT vs_main(VS_INPUT In /*頂点情報(ローカル座標*/)
 
 // ピクセルシェーダ
 float4 ps_main(VS_OUTPUT In) : COLOR0{
+	In.uv.x /= Split_X;
+	In.uv.x += In.uv.x * NowCol;
+	In.uv.y /= Split_Y;
+	In.uv.y += In.uv.y * NowRow;
 	float4 color = tex2D(g_TextureSampler, In.uv);
 	color.w = Alpha;
 	return color;	// テクスチャを貼り付ける

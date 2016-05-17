@@ -42,4 +42,3 @@ private:
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 };
-
