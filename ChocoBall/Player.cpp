@@ -5,16 +5,16 @@
 #include "RenderContext.h"
 #include "Enemy.h"
 #include "GameObject.h"
-
 #include "ObjectManager.h"
-CPlayer::~CPlayer(){ }
 
+
+CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
-	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	m_moveSpeed.x = 0.0f;
@@ -42,7 +42,7 @@ void CPlayer::Update()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
-	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("TEST3D2")));
+	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
 	i = Enemy->GetPos().x;
 	k = Enemy->GetPos().z;
 	

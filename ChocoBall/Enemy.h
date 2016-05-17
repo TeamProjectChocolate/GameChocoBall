@@ -38,4 +38,3 @@ private:
 	bool			flg;
 	bool            flg2;
 };
-

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MainScene.h"
 #include "ObjectManager.h"
-#include "GameCamera.h"
+#include "CourceCamera.h"
 #include "Audio.h"
 #include "TestObject2D.h"
 #include "Field.h"
@@ -17,7 +17,7 @@ CMainScene::~CMainScene(){
 }
 
 void CMainScene::Initialize(){
-	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), PRIORTY::CONFIG,true);
+	SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T("Camera"), PRIORTY::CONFIG,true);
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
