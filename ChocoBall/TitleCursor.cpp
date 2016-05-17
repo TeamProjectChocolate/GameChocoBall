@@ -27,7 +27,6 @@ void CTitleCursor::Initialize(){
 	dir = -1;
 	SetAlive(true);
 	C2DImage::SetImage();
-	t = 1.0f;
 }
 
 void CTitleCursor::Update(){
@@ -38,16 +37,13 @@ void CTitleCursor::Update(){
 		m_transform.scale.y += 20;*/
 	}
 	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 350.0f){
+		MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}
 	if (m_Input->IsTriggerUp()){
 		m_transform.position.y = 250.0f;
 
 	}
-	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 350.0f){
-			MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
-			PostQuitMessage(0);
-		}
 	if (m_Input->IsTriggerDown()){
 		m_transform.position.y = 350.0f;
 		

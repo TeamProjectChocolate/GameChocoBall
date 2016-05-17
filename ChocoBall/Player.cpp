@@ -6,20 +6,24 @@
 #include "Enemy.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "EnemyManager.h"
 
 
 CPlayer::~CPlayer(){ }
 
 void CPlayer::Initialize()
 {
+
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
+
 	m_radius = 1.0f;
 
 	SetAlive(true);
@@ -42,23 +46,44 @@ void CPlayer::Update()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float			i, k, j, l, X, Z;
-	CEnemy* Enemy = (SINSTANCE(CObjectManager)->FindGameObject<CEnemy>(_T("ENEMY")));
-	i = Enemy->GetPos().x;
-	k = Enemy->GetPos().z;
-	
-	j=m_transform.position.x;
-	l=m_transform.position.z;
+	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 
+	i = EnemyManager->GetPos().x;
+	k = EnemyManager->GetPos().z;
+	
+	j = m_transform.position.x;
+	l = m_transform.position.z;
+
+	//敵ープレイヤーでベクトルを求める。
 	X = i - j;
 	Z = k - l;
 
+	static float fHALF_PI = fPI / 2.0f;
+
 	if (!isnan(X))
 	{
-		_X=X/Z;
+		_X = fabsf(atan(Z / X));
+		if (X >= 0.0f){
+			if (Z >= 0.0f){
+				_X = -fHALF_PI - _X;
+			}
+			else{
+				_X = -fHALF_PI + _X;
+			}
+		}
+		else if (X < 0.0f){
+			if (Z >= 0.0f){
+				_X = fHALF_PI + _X;
+			}
+			else{
+				_X = fHALF_PI - _X;
+			}
+		}
 	}
+
 	
 
-	if (m_pInput->IsTriggerEscape()){
+	if (m_pInput->IsTriggerSpace()){
 		m_moveSpeed.y = MOVE_SPEED;
 	}
 	else if (m_pInput->IsPressUp()){
@@ -91,25 +116,24 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
-	if (m_pInput->IsTriggerCancel())
+	if (m_pInput->IsPressCancel())
 	{
-		isTurn = true;		
-		m_targetAngleY = atan(_X);
+		isTurn = true;
+		m_targetAngleY = _X;
 	}
 
-
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-	//isTurnは各Updateの最初でfalseにして、回転させたい時にtrueにする。
-	m_Turn.Update(isTurn,m_targetAngleY);
+	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
+	m_Turn.Update(isTurn, m_targetAngleY);
 
 	//こいつを書かないと回転行列に乗算してくれない。
 	m_currentAngleY = m_Turn.Getm_currentAngleY();
 
 	//プレイヤーの処理の最後になるべく書いて
-	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);	
+	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
 
 	//回転行列
-	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f),m_currentAngleY);
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 
 	C3DImage::Update();
 
@@ -118,7 +142,7 @@ void CPlayer::Update()
 }
 
 void CPlayer::Draw(){
-	IMAGE3D* img = GetImage();
+	/*IMAGE3D* img = GetImage();
 	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	mesh->GetVertexBuffer(&pVB);
@@ -139,7 +163,7 @@ void CPlayer::Draw(){
 	}
 	float size = YMax + fabsf(YMin);
 	float center = (YMax + YMin)*0.5f;
-	pVB->Unlock();
+	pVB->Unlock();*/
 
 	SetUpTechnique();
 	C3DImage::Draw();

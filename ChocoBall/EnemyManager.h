@@ -1,28 +1,39 @@
-#include "C3DImage.h"
+#pragma once
+#include "Enemy.h"
+#include "GameObject.h"
 
-class Enemymanage
+class CEnemyManager:public CGameObject
 {
 public:
-	Enemymanage()
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+	CEnemyManager()
 	{
 		numEnemy = 0;
 	}
-	void AddEnemy(C3DImage* enemy)
+	void AddEnemy(CEnemy* enemy)
 	{
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
 	}
+
 	int GetNumEnemy()
 	{
-		return numEnemy;
+		return numEnemy;	//エネミーの数を返す
 	}
-	C3DImage* GetEnemyArray()
+
+	CEnemy* GetEnemy(short num){
+		return Enemy[num];
+	}
+
+	CEnemy* GetEnemyArray()
 	{
 		return Enemy[20];
 	}
 private:
 	int		numEnemy;	//敵の数。
-	C3DImage* Enemy[20];
+	CEnemy* Enemy[20];
 };
 
-extern Enemymanage g_enemyMgr;	//敵の変数。
+//extern CEnemyManager g_enemyMgr;	//敵の変数。
