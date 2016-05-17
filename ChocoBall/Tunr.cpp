@@ -12,9 +12,9 @@ void CTurn::Initialize()
 	
 }
 
+//回転処理
 void CTurn::Update(bool isTurn, float m_targetAngleY)
 {
-	//isTurn = false;
 	if (isTurn) {
 		float angleDiff = m_targetAngleY - m_currentAngleY;	//目的角度までどれだけ回せがいいのかを計算する。
 		float angleDiffAbs = fabsf(angleDiff);				//回す角度の絶対値を計算。

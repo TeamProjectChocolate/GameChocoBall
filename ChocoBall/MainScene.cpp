@@ -25,6 +25,7 @@ void CMainScene::Initialize(){
 		CEnemy* enemy = new CEnemy;
 		g_enemyMgr.AddEnemy(enemy);
 	}
+	srand((unsigned int)time(NULL));
 	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), PRIORTY::CONFIG, true);
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);

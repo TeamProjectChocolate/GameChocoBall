@@ -29,7 +29,7 @@ public:
 		m_radius = radius;
 	}
 private:
-	D3DXVECTOR3		m_position;
+	//D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//ˆÚ“®‘¬“xB
 	float			g_currentAngleY;	//Œ»İ‚Ì•ûŒü

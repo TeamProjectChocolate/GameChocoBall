@@ -6,7 +6,6 @@
 #include "islntersect.h"
 #include "Turn.h"
 #include "GameManager.h"
-#include "Enemy.h"
 
 class CPlayer : public C3DImage
 {
@@ -45,7 +44,8 @@ private:
 	float			m_targetAngleY;		//向きたい方向
 	float			m_turnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
-
+	bool            LockOnflag;			//ロックオンフラグ
+	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 	void UpdateLight();

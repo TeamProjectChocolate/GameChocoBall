@@ -16,6 +16,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <time.h>
 
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。

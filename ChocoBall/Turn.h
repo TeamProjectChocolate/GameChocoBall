@@ -12,7 +12,7 @@ public:
 	//回転処理の初期化
 	void CTurn::Initialize();		
 	//回転処理の更新
-	void CTurn::Update(bool isTurn, float currentAngleY);	
+	void CTurn::Update(bool isTurn, float currentAngleY);
 	float Getm_currentAngleY()
 	{
 		return m_currentAngleY;
@@ -24,4 +24,5 @@ private:
 	float	m_turnSpeed;		//回転速度
 	float   m_cTurnSpeed;
 	bool	isTurn;				//回転フラグ
+	bool    LockOnflag;			//ロックオンフラグ
 };

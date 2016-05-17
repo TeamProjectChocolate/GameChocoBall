@@ -19,7 +19,7 @@ void CPlayer::Initialize()
 	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
-
+	
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
@@ -30,6 +30,8 @@ void CPlayer::Initialize()
 
 	SetAlpha(1.0f);
 
+	LockOnflag = false;
+
 	// ライト関連の初期化
 	count = 0;
 	dir = D3DXVECTOR3(1, 1, 1);
@@ -37,6 +39,7 @@ void CPlayer::Initialize()
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
 	C3DImage::SetImage();
+	m_lockonEnemyIndex = 0;
 }
 
 void CPlayer::Update()
@@ -45,38 +48,28 @@ void CPlayer::Update()
 
 	isTurn = false;
 
+
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
-	float			i, k, j, l, X, Z;
-
-
-	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-
-	i = EnemyManager->GetPos().x;
-	k = EnemyManager->GetPos().z;
-	
-	j = m_transform.position.x;
-	l = m_transform.position.z;
-
-	//敵ープレイヤーでベクトルを求める。
-	X = i - j;
-	Z = k - l;
-
-	static float fHALF_PI = fPI / 2.0f;
-
-	if (!isnan(X))
-	{
-		_X = fabsf(atan(Z / X));
-		if (X >= 0.0f){
-			if (Z >= 0.0f){
+	float _X = 0.0f;
+	if (LockOnflag){
+		static float fHALF_PI = fPI / 2.0f;
+		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+		D3DXVECTOR3 dist;
+		dist = Enemy->GetPos() - m_transform.position;
+		
+		_X = fabsf(atan(dist.z / dist.x));
+		if (dist.x >= 0.0f){
+			if (dist.z >= 0.0f){
 				_X = -fHALF_PI - _X;
 			}
 			else{
 				_X = -fHALF_PI + _X;
 			}
 		}
-		else if (X < 0.0f){
-			if (Z >= 0.0f){
+		else if (dist.x < 0.0f){
+			if (dist.z >= 0.0f){
 				_X = fHALF_PI + _X;
 			}
 			else{
@@ -84,8 +77,32 @@ void CPlayer::Update()
 			}
 		}
 	}
+	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
+	{
+		LockOnflag = true;
+		float Min;
 
-	
+		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+		CEnemy* Enemy;
+		Min = 99999;	//番兵
+		//敵20体分の距離の取得
+		for (int K = 0; K < 20; K++)
+		{
+			Enemy = EnemyManager->GetEnemy(K);
+			D3DXVECTOR3 dist;
+			dist = Enemy->GetPos() - m_transform.position;
+			float len = D3DXVec3Length(&dist);
+			if (len < Min)
+			{
+				m_lockonEnemyIndex = K;
+				Min = len;
+			}
+		}
+	}
+	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
+	{
+		LockOnflag = false;
+	}
 
 	if (m_pInput->IsTriggerSpace()){
 		m_moveSpeed.y = MOVE_SPEED;
@@ -120,9 +137,7 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
-	if (m_pInput->IsPressCancel())
-	{
-		isTurn = true;
+	if (LockOnflag){
 		m_targetAngleY = _X;
 	}
 
@@ -162,7 +177,7 @@ void CPlayer::Draw(){
 	for (int i = 0; i < numVertex; i++){
 		float* pos = (float*)pData;
 		YMax = max(YMax, pos[1]);
-		YMin = min(YMin, pos[1]);
+		YMin = Minx(YMin, pos[1]);
 		pData += stride;
 	}
 	float size = YMax + fabsf(YMin);
