@@ -39,7 +39,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
-	m_pAudio->PlayCue("emiya");	// 音楽再生
+	//m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
 }
 
 void CMainScene::Update(){

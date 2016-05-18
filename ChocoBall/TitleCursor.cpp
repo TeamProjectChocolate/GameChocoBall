@@ -24,7 +24,6 @@ void CTitleCursor::Initialize(){
 	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 80, 10);
-	dir = -1;
 	SetAlive(true);
 	C2DImage::SetImage();
 }
