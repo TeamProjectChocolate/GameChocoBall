@@ -176,7 +176,7 @@ void C3DImage::NonAnimationDraw(){
 	if (container->ppTextures == nullptr){
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");
 	}
-
+	
 	UINT numPass;
 	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定

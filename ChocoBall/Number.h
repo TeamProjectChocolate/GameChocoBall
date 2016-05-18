@@ -1,6 +1,7 @@
 #pragma once
 #include "C2DImage.h"
 #include "stdafx.h"
+#include "Number.h"
 
 #define NUMBER_NUM 10
 
@@ -8,7 +9,7 @@ class CNumber :public C2DImage{
 public:
 	CNumber(){
 		strcpy(m_pFileName, "image\\Number.png");
-		m_value = 0;
+		m_value= 0;
 	}
 	~CNumber(){};
 	void Initialize()override;
@@ -18,4 +19,5 @@ public:
 	void AddValue(const int value){ m_value += value; };		// ŠO•”‚©‚çó‚¯æ‚Á‚½’l‚ğm_value‚É‰ÁZ
 private:
 	int m_value;	// ”’l
+
 };
