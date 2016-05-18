@@ -4,9 +4,29 @@
 #include "Player.h"
 
 
+namespace{
+	void VectorSmoothDamp(
+		D3DXVECTOR3& vOut, 
+		const D3DXVECTOR3& currentPos, 
+		const D3DXVECTOR3& targetPos,
+		D3DXVECTOR3& linearVelocity,
+		int smoothTime
+	)
+	{
+		D3DXVECTOR3 dist = targetPos - currentPos;
+		D3DXVECTOR3 vel = dist /= smoothTime;
+		linearVelocity = vel;
+		vOut = currentPos + linearVelocity;
+	}
+}
 void CCourceCamera::Initialize(){
 	m_courceDef.Initialize();
 	CGameCamera::Initialize();
+	m_CompCamera = false;
+	m_isFirst = true;
+	m_cameraPosSpeed.x = 0.0f;
+	m_cameraPosSpeed.y = 0.0f;
+	m_cameraPosSpeed.z = 0.0f;
 }
 
 void CCourceCamera::Update(){
@@ -14,28 +34,30 @@ void CCourceCamera::Update(){
 	CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 	D3DXVECTOR3 Target = pl->GetPos();
 
-	COURCE_BLOCK cource = m_courceDef.FindCource(Target);
-	D3DXVECTOR3 courceVec = cource.endPosition - cource.startPosition;
-	D3DXVECTOR3 Dir;
-	D3DXVec3Normalize(&Dir, &courceVec);
-	D3DXVECTOR3 pos = pl->GetPos() -  cource.startPosition;
-	float t = D3DXVec3Dot(&Dir, &pos);
-	pos = cource.startPosition + (Dir*(t-8.0f));
-	pos.y = 2.0f;
-	//D3DXVECTOR3 Distance = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos();
-	D3DXMATRIX Rota;
-	//courceVec.x *= Distance.x;
-	//courceVec.y *= Distance.y;
-	//courceVec.z *= Distance.z;
-	//float Dir = D3DXVec3Dot(&courceVec, &Distance);
-	D3DXQUATERNION quat;
-	//static float f = 0.0f;
-	//f++;
-	
-	//m_camera.SetAxis(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos());
-	m_camera.SetPos(pos);
+	m_NowCource = m_courceDef.FindCource(Target);
 	Target.y += 0.1f;
 	m_camera.SetTarget(Target);
+	D3DXVECTOR3 courceVec = m_NowCource.endPosition - m_NowCource.startPosition;
+	D3DXVECTOR3 Dir;
+	D3DXVec3Normalize(&Dir, &courceVec);
+	D3DXVECTOR3 TargetPos = pl->GetPos() -  m_NowCource.startPosition;
+	float t = D3DXVec3Dot(&Dir, &TargetPos);
+	TargetPos = m_NowCource.startPosition + (Dir*(t-8.0f));
+	TargetPos.y = 2.0f;
+
+	if (!m_isFirst){
+		VectorSmoothDamp(
+			m_NowPos,
+			m_NowPos,
+			TargetPos,
+			m_cameraPosSpeed,
+			10);
+	}
+	else{
+		m_NowPos = TargetPos;
+		m_isFirst = false;
+	}
+	m_camera.SetPos(m_NowPos);
 	//m_camera.SetTarget(target);
 	CGameCamera::Update();
 }
