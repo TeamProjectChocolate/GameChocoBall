@@ -129,6 +129,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultBack.h" />
     <ClInclude Include="ResultCursor.h" />
+    <ClInclude Include="ResultScore.h" />
     <ClInclude Include="ResultSelect.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
