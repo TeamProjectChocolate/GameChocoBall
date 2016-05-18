@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 #include "EnemyManager.h"
-
+#include "LockOn.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -36,7 +36,9 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
+
 	C3DImage::SetImage();
+
 	m_lockonEnemyIndex = 0;
 }
 
@@ -46,64 +48,12 @@ void CPlayer::Update()
 
 	isTurn = false;
 
-
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	float _X = 0.0f;
-	if (LockOnflag){
-		static float fHALF_PI = fPI / 2.0f;
-		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-		D3DXVECTOR3 dist;
-		dist = Enemy->GetPos() - m_transform.position;
-		
-		_X = fabsf(atan(dist.z / dist.x));
-		if (dist.x >= 0.0f){
-			if (dist.z >= 0.0f){
-				_X = -fHALF_PI - _X;
-			}
-			else{
-				_X = -fHALF_PI + _X;
-			}
-		}
-		else if (dist.x < 0.0f){
-			if (dist.z >= 0.0f){
-				_X = fHALF_PI + _X;
-			}
-			else{
-				_X = fHALF_PI - _X;
-			}
-		}
-	}
-	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
-	{
-		LockOnflag = true;
-		float Min;
-
-		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-		CEnemy* Enemy;
-		Min = 99999;	//番兵
-		//敵20体分の距離の取得
-		for (int K = 0; K < 20; K++)
-		{
-			Enemy = EnemyManager->GetEnemy(K);
-			D3DXVECTOR3 dist;
-			dist = Enemy->GetPos() - m_transform.position;
-			float len = D3DXVec3Length(&dist);
-			if (len < Min)
-			{
-				m_lockonEnemyIndex = K;
-				Min = len;
-			}
-		}
-	}
-	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
-	{
-		LockOnflag = false;
-	}
 
 	if (m_pInput->IsTriggerSpace()){
-		m_moveSpeed.y = MOVE_SPEED;
+		m_moveSpeed.y = 5.0f;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -135,6 +85,26 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
+
+	//ロックオン状態にする。
+	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
+	{
+		LockOnflag = true;
+		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	}
+	//ロックオン状態中の回転の計算
+	if (LockOnflag)
+	{
+		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
+	}
+
+	//ロックオン状態の解除
+	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
+	{
+		LockOnflag = false;
+	}
+
+	//ロックオン状態の時に常にプレイヤーを敵に向かせる
 	if (LockOnflag){
 		m_targetAngleY = _X;
 	}
