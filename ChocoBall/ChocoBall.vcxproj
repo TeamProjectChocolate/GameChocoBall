@@ -100,7 +100,6 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearText.h" />
-    <ClInclude Include="Cource.h" />
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
@@ -189,6 +188,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="SkinModelData.cpp" />
     <ClCompile Include="stdafx.cpp">
