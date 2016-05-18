@@ -36,7 +36,9 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
+
 	C3DImage::SetImage();
+
 	m_lockonEnemyIndex = 0;
 }
 
@@ -56,7 +58,8 @@ void CPlayer::Update()
 		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
 		D3DXVECTOR3 dist;
 		dist = Enemy->GetPos() - m_transform.position;
-		
+		Enemy->SetAlpha(0.1f);
+		//敵より手前の時の回転角度の計算
 		_X = fabsf(atan(dist.z / dist.x));
 		if (dist.x >= 0.0f){
 			if (dist.z >= 0.0f){
@@ -74,7 +77,12 @@ void CPlayer::Update()
 				_X = fHALF_PI - _X;
 			}
 		}
+		if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
+		{
+			Enemy->SetAlpha(1.0f);
+		}
 	}
+	//ロックオン状態にする。
 	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
 	{
 		LockOnflag = true;
@@ -88,22 +96,25 @@ void CPlayer::Update()
 		{
 			Enemy = EnemyManager->GetEnemy(K);
 			D3DXVECTOR3 dist;
+			//プレイヤーと敵の距離計算
 			dist = Enemy->GetPos() - m_transform.position;
 			float len = D3DXVec3Length(&dist);
 			if (len < Min)
 			{
+				//一番近い敵を確保
 				m_lockonEnemyIndex = K;
 				Min = len;
 			}
 		}
 	}
+	//ロックオン状態の解除
 	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
 	{
 		LockOnflag = false;
 	}
 
 	if (m_pInput->IsTriggerSpace()){
-		m_moveSpeed.y = MOVE_SPEED;
+		m_moveSpeed.y = 5.0f;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -135,6 +146,7 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
+	//ロックオン状態の時に常にプレイヤーを敵に向かせる
 	if (LockOnflag){
 		m_targetAngleY = _X;
 	}
