@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
+#include "GameObject.h"
+#include "ObjectManager.h"
 
 CEnemy::~CEnemy(){ }
 
 void CEnemy::Initialize()
 {
 	C3DImage::Initialize();
-	//m_transform.position = D3DXVECTOR3(-2.5f, -1.5f, -5.0f);
-	//m_transform.position = D3DXVECTOR3(-2.5f, 0.5f, -5.0f);
-	m_transform.position = D3DXVECTOR3(0.0f, 0.5f, -5.0f);
+	m_transform.position = D3DXVECTOR3(rand()%10,rand()%2,rand()%10);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_moveSpeed.x = 0.05f;
@@ -26,13 +26,15 @@ void CEnemy::Initialize()
 
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
-	g_enemyMgr.AddEnemy(this);
-	
+
+
+	extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemy::Update()
 {
-	m_transform.position.x += m_moveSpeed.x;
+
+	//m_transform.position.x += m_moveSpeed.x;
 
 	if (flg == true){
 		if (m_transform.position.x > 2.5)

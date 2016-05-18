@@ -100,6 +100,9 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearText.h" />
+    <ClInclude Include="Cource.h" />
+    <ClInclude Include="CourceCamera.h" />
+    <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -154,6 +157,8 @@
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClearText.cpp" />
+    <ClCompile Include="CourceCamera.cpp" />
+    <ClCompile Include="CourceDef.cpp" />
     <ClCompile Include="Debri.cpp" />
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />

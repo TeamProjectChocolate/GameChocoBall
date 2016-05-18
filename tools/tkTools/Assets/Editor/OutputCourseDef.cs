@@ -18,10 +18,10 @@ public class OutputCourseDef : MonoBehaviour {
             {
                 continue;
             }
-            headerTxt += string.Format("D3DXVECTOR3({0}f, {1}f, {2}f), //{3}\n", tr.position.x, tr.position.y, tr.position.z, tr.name);
+            headerTxt += string.Format("D3DXVECTOR3({0:f}f, {1:f}f, {2:f}f), //{3}\n", tr.position.x, tr.position.y, tr.position.z, tr.name);
         }
 
-        StreamWriter sw = new StreamWriter("Cource.h", false, Encoding.UTF8);
+        StreamWriter sw = new StreamWriter("C:/Github/GameChocoBall/ChocoBall/Cource.h", false, Encoding.UTF8);
         sw.Write(headerTxt);
         sw.Close();
     }

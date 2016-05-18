@@ -12,7 +12,7 @@ public:
 	virtual void Initialize()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-private:
+protected:
 	CCamera m_camera;
 };
 

@@ -4,6 +4,7 @@
 
 CInputManager* CInputManager::m_instance = nullptr;
 
+
 HRESULT WINAPI CInputManager::DI_Init(){
 	HRESULT ret = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&m_pInputObject, NULL);	// DirectInputのオブジェクト作成
 	if (FAILED(ret)){

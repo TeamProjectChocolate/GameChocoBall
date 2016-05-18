@@ -7,6 +7,7 @@ void CNumber::Initialize(){
 	m_transform.scale = D3DXVECTOR3(800, 800, 1);
 	SetAlpha(0.5f);
 	SetAlive(true);
+	m_Split.x = 10;
 	C2DImage::SetImage();
 };
 
@@ -18,6 +19,7 @@ void CNumber::Draw(){
 	string value = to_string(m_value);
 
 	if (m_pTexture != NULL){
+		m_Now.x = 0;
 		for (int idx = value.length() - 1, offset = 0; idx >= 0; idx--, offset++){
 			short width = imgInfo.Width / NUMBER_NUM;
 			char now = value[idx];
@@ -26,9 +28,9 @@ void CNumber::Draw(){
 			D3DXVECTOR2 m_texCenter(float(width - width / 2), float(rect.bottom - rect.bottom / 2));
 			D3DXVECTOR2 position(m_transform.position.x - (width * offset), m_transform.position.y);
 			memcpy(&this->m_rect, &rect, sizeof(RECT));					//•`‰æ—ÌˆæƒZƒbƒg
-			C2DImage::SetupMatrices(m_rect,position,m_texCenter);
+			C2DImage::SetupMatrices();
 			C2DImage::Draw();
-			C2DImage::Draw();
+			m_Now.x++;
 		}
 	}
 }
