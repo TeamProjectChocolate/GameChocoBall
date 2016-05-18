@@ -110,6 +110,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="islntersect.h" />
+    <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LockOn.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="ObjectManager.cpp" />

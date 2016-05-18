@@ -6,6 +6,7 @@
 #include "islntersect.h"
 #include "Turn.h"
 #include "GameManager.h"
+#include "LockOn.h"
 
 class CPlayer : public C3DImage
 {
@@ -43,6 +44,9 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
+
+	LockOn          m_LockOn;			//LockOnのインスタンス
+
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 	void UpdateLight();
