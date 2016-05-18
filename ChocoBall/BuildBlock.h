@@ -1,8 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "C3DImage.h"
-#include "BulletPhysics.h"
-#include "islntersect.h"
+#include "ObjectManager.h"
 #include "Block.h"
 #include "GameObject.h"
 
@@ -20,5 +19,5 @@ public:
 	void Draw()override;
 
 private:
-	CBlock m_block[BUILD_H][BUILD_W];
+	CBlock			m_block[BUILD_H][BUILD_W];	//•Ç‚Ì”z—ñ
 };

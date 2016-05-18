@@ -4,12 +4,20 @@
 #include "BulletPhysics.h"
 #include "Rigidbody.h"
 #include "islntersect.h"
-
+#include "ObjectManager.h"
 
 
 class CBlock : public C3DImage{
 public:
-	CBlock(){	}
+	CBlock(){ 
+		SetLife(true); 
+		m_parent = NULL;
+		m_child = NULL;
+		m_isDead = false;
+		m_eState = enState_Normal;
+		m_fallPosY = 0.0f;
+	}
+	void OnDestroy()override;
 	void Initialize(D3DXVECTOR3 pos);
 	void Update();
 	void Draw();
@@ -27,7 +35,38 @@ public:
 	bool GetLife(){
 		return m_life;
 	}
+	//親が死んだときに呼ばれる処理。
+	void OnDestroyParent();
+
+	//親を設定。
+	void SetParent(CBlock* par)
+	{
+		if (par){
+			m_parent = par;
+			par->SetChild(this);
+		}
+		else{
+			m_parent = NULL;
+		}
+	}
+	bool IsDead()
+	{
+		return m_isDead;
+	}
 private:
+	//子供を設定。
+	void SetChild(CBlock* child)
+	{
+		m_child = child;
+	}
+private:
+	enum EnState{
+		enState_Normal,	//通常状態。
+		enState_Broken,	//壊れた。
+		enState_Fall,	//落下中。
+	};
+	CBlock*			m_parent;		//親ブロック
+	CBlock*			m_child;		//子供
 	CIsIntersect	m_IsIntersect;
 	D3DXVECTOR3		m_position;
 	D3DXVECTOR3		m_moveSpeed;	//落下速度
@@ -38,4 +77,7 @@ private:
 	btDefaultMotionState* m_myMotionState;
 	bool m_life;
 	CRigidbody			m_RigitBody;
+	EnState				m_eState;	//状態。
+	float				m_fallPosY;	//落下位置。
+	bool m_isDead;
 };
