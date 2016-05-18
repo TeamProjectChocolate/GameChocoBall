@@ -78,6 +78,7 @@ void CObjectManager::Intialize(){
 			m_GameObjects[idx]->object->Initialize();
 		}
 	}
+
 }
 
 void CObjectManager::Update(){

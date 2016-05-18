@@ -99,6 +99,8 @@
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CBManager.h" />
+    <ClInclude Include="Chocoball.h" />
     <ClInclude Include="ClearText.h" />
     <ClInclude Include="Cource.h" />
     <ClInclude Include="CourceCamera.h" />
@@ -154,6 +156,8 @@
     <ClCompile Include="C2DImage.cpp" />
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CBManager.cpp" />
+    <ClCompile Include="Chocoball.cpp" />
     <ClCompile Include="ClearText.cpp" />
     <ClCompile Include="CourceCamera.cpp" />
     <ClCompile Include="CourceDef.cpp" />

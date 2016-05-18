@@ -7,10 +7,10 @@ void CBuildBlock::Initialize()
 {
 	for (int i = 0; i < BUILD_H; i++){
 		for (int j = 0; j < BUILD_W; j++){
-			D3DXVECTOR3 pos(-2.1f + j*BLOCK_W, -1.0f + i*BLOCK_H, -9.0f);
+			D3DXVECTOR3 pos(-2.5f + j*BLOCK_W, -1.0f + i*BLOCK_H, -9.0f);
 
 			m_block[i][j].Initialize(pos);
-			CGameObject::SetPos(pos);
+			//CGameObject::SetPos(pos);
 		}
 	}
 	//eŽqŠÖŒW‚Ì\’zB
