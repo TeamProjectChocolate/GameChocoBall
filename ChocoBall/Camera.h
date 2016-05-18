@@ -45,6 +45,9 @@ public:
 	{
 		m_updateType = type;
 	}
+	inline void SetAxis(D3DXVECTOR3 axis){
+		m_Axis = axis;
+	}
 	D3DXMATRIX GetView()
 	{
 		return m_View;
@@ -65,5 +68,6 @@ private:
 	float m_Far;
 	D3DXMATRIX m_View;	// ビュー変換行列
 	D3DXMATRIX m_Proj;	// 射影変換行列
+	D3DXVECTOR3 m_Axis;	// 回転軸
 };
 

@@ -15,6 +15,7 @@ void CRigidbody::Initialize(D3DXVECTOR3* m_position, D3DXVECTOR3* size)
 	D3DXMatrixIdentity(&matWorld);
 	m_life = 0.0f;
 	Build(*size, *m_position);
+	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 void CRigidbody::Update(D3DXVECTOR3* m_position)
 {

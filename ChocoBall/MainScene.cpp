@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MainScene.h"
 #include "ObjectManager.h"
-#include "GameCamera.h"
+#include "CourceCamera.h"
 #include "Audio.h"
 #include "TestObject2D.h"
 #include "Field.h"
@@ -11,6 +11,7 @@
 #include "BuildBlock.h"
 #include "Result.h"
 #include "Number.h"
+#include "EnemyManager.h"
 
 CMainScene::CMainScene(){
 }
@@ -19,15 +20,19 @@ CMainScene::~CMainScene(){
 }
 
 void CMainScene::Initialize(){
-	SINSTANCE(CObjectManager)->GenerationObject<CGameCamera>(_T("3DCamera"), PRIORTY::CONFIG,true);
+	SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T("Camera"), PRIORTY::CONFIG,true);
+	extern CEnemyManager g_enemyMgr;
+	for (short i = 0; i < 20; i++){
+		CEnemy* enemy = new CEnemy;
+		g_enemyMgr.AddEnemy(enemy);
+	}
+	srand((unsigned int)time(NULL));
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
-	//SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),false);
-	//SINSTANCE(CObjectManager)->GenerationObject<CBlock>(_T("Block"), false);
+	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
+	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
-	SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY"), PRIORTY::PLAYER, false);
-	//SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("ENEMY2"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 
