@@ -10,6 +10,8 @@ void CBlock::OnDestroy(){
 	}
 	m_isDead = true;
 }
+
+
 //e‚ªŽ€‚ñ‚¾‚Æ‚«‚ÉŒÄ‚Î‚ê‚éˆ—B
 void CBlock::OnDestroyParent()
 {
@@ -24,6 +26,7 @@ void CBlock::OnDestroyParent()
 		child = child->m_child;
 	}
 }
+
 
 void CBlock::Initialize(D3DXVECTOR3 pos)
 {
@@ -54,6 +57,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 
 
 }
+
 
 void CBlock::Update()
 {
@@ -97,11 +101,13 @@ void CBlock::Update()
 	C3DImage::Update();
 }
 
+
 void CBlock::Draw()
 {
 	SetUpTechnique();
 	C3DImage::Draw();
 }
+
 
 void CBlock::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 {

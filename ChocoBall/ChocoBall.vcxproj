@@ -101,7 +101,7 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBManager.h" />
-    <ClInclude Include="Chocoball.h" />
+    <ClInclude Include="ChocoBall.h" />
     <ClInclude Include="ClearText.h" />
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
@@ -162,7 +162,7 @@
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBManager.cpp" />
-    <ClCompile Include="Chocoball.cpp" />
+    <ClCompile Include="ChocoBall.cpp" />
     <ClCompile Include="ClearText.cpp" />
     <ClCompile Include="CourceCamera.cpp" />
     <ClCompile Include="CourceDef.cpp" />
