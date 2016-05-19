@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
+#include "RenderContext.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
 
@@ -13,6 +14,7 @@ void CEnemy::Initialize()
 	m_transform.position = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_V0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	m_moveSpeed.x = 0.05f;
 	m_moveSpeed.z = 0.05f;
 	m_moveSpeed.y = 0.05f;
@@ -42,32 +44,49 @@ void CEnemy::Initialize()
 
 void CEnemy::Update()
 {
+	isTurn = true;
+
 
 	m_transform.position += V2 * 0.05f;
+
 	m_V3 = m_transform.position - m_initPosition;
-	V3=D3DXVec3Length(&m_V3);
+	V3 = D3DXVec3Length(&m_V3);
+
+
 	if (V3 > 2.5)
 	{
 		V2 *= -1.0f;
 	}
-	/*m_transform.position.x += m_moveSpeed.x;
-
-	if (flg == true){
-		if (m_transform.position.x > 2.5)
-		{
-			m_moveSpeed.x *= -1.0;
-			flg = false;
-			
-		}	
+	//if (V2 > 0)
+	//{
+	//	isTurn = true;
+	//	//左方向を向かせる
+	//	g_targetAngleY = D3DXToRadian(180.0f);
+	//}
+	//else
+	//{
+	//	isTurn = false;
+	//	//右方向を向かせる。
+	//	g_targetAngleY = D3DXToRadian(-180.0f);
+	//}
+	V0 = D3DXVec3Dot(&m_V0, &V2);
+	g_targetAngleY=acos(V0);
+	D3DXVECTOR3 V4;
+	D3DXVec3Cross(&V4, &m_V0, &V2);
+	if (V4.y < 0)
+	{
+		g_targetAngleY *= -1.0f;
 	}
-	else{
-		if (m_transform.position.x < -2.5)
-		{
-			m_moveSpeed.x *= -1.0;
-			flg = true;
-		}
-	}*/
+	m_Turn.Update(isTurn, g_targetAngleY);
+
+	//こいつを書かないと回転行列に乗算してくれない。
+	m_currentAngleY = m_Turn.Getm_currentAngleY();
+
+	// 回転行列
+	
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 	C3DImage::Update();
+
 }
 
 
