@@ -12,6 +12,7 @@
 #include "Result.h"
 #include "Number.h"
 #include "EnemyManager.h"
+#include "CBManager.h"
 
 CMainScene::CMainScene(){
 }
@@ -33,6 +34,7 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
+	SINSTANCE(CObjectManager)->GenerationObject<CCBManager>(_T("CHOCO"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 

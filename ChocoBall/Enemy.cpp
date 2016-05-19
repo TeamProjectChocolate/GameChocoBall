@@ -96,6 +96,7 @@ void CEnemy::Draw()
 	m_Rigidbody.Draw();
 	SetUpTechnique();
 	C3DImage::Draw();
+	
 }
 
 void CEnemy::OnDestroy()

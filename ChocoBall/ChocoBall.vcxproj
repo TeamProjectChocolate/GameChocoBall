@@ -99,6 +99,8 @@
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CBManager.h" />
+    <ClInclude Include="Chocoball.h" />
     <ClInclude Include="ClearText.h" />
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
@@ -109,6 +111,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="islntersect.h" />
+    <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
@@ -156,6 +159,8 @@
     <ClCompile Include="C2DImage.cpp" />
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CBManager.cpp" />
+    <ClCompile Include="Chocoball.cpp" />
     <ClCompile Include="ClearText.cpp" />
     <ClCompile Include="CourceCamera.cpp" />
     <ClCompile Include="CourceDef.cpp" />
@@ -176,6 +181,7 @@
     <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LockOn.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="ObjectManager.cpp" />

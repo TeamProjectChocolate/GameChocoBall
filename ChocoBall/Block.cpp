@@ -27,12 +27,17 @@ void CBlock::OnDestroyParent()
 
 void CBlock::Initialize(D3DXVECTOR3 pos)
 {
-	strcpy(m_pFileName, "image/Debri.x");
+	strcpy(m_pFileName, "image/BR.x");
 	C3DImage::Initialize();
 	m_transform.position = pos; //D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
+	
+
+	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
+
+	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
 	//m_moveSpeed.x = 0.0f;
 	//m_moveSpeed.z = 0.0f;
 	//m_moveSpeed.y = 0.0f;
@@ -42,14 +47,11 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 	//SetAlive(true);
 
 	//SetAlpha(1.0f);
-
-	this->Build(D3DXVECTOR3(1.4f, 1.4f, 1.0f), m_transform.position);
-
-	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 
 	C3DImage::SetImage();
 
-	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
+
 
 }
 
@@ -118,6 +120,4 @@ void CBlock::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 	//m_rigidBody->setUserIndex(1);
 	//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 	g_bulletPhysics.AddRigidBody(m_rigidBody);
-
-
 }

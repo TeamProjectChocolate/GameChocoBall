@@ -67,13 +67,12 @@ private:
 	};
 	CBlock*			m_parent;		//親ブロック
 	CBlock*			m_child;		//子供
-	CIsIntersect	m_IsIntersect;
 	D3DXVECTOR3		m_position;
 	D3DXVECTOR3		m_moveSpeed;	//落下速度
 	float			m_radius;
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
-	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
 	btRigidBody*		m_rigidBody;		//剛体。
+	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
 	btDefaultMotionState* m_myMotionState;
 	bool m_life;
 	CRigidbody			m_RigitBody;

@@ -31,7 +31,6 @@ public:
 		m_radius = radius;
 	}
 private:
-	//D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	D3DXVECTOR3		m_initPosition;		//初期座標。
@@ -41,7 +40,8 @@ private:
 	bool			isTurn;				//回転フラグ
 	CRigidbody		m_Rigidbody;
 	bool			flg;
-	float			m_currentAngleY;	//現在の方向
+
+
 
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
