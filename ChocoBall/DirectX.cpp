@@ -240,8 +240,8 @@ void Initialize()
 	SINSTANCE(CInputManager)->CreateInput(g_hWnd);
 
 	AddScene();
-	//SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
-	SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
+	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	//SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"),PRIORTY::CONFIG,true);
 }
 

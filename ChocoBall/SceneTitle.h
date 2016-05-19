@@ -4,6 +4,7 @@
 #include "TitleSelect.h"
 #include "TitleCursor.h"
 
+class CAudio;
 class CSceneTitle :
 	public CScene
 {
@@ -17,4 +18,6 @@ private:
 	CTitleBack m_Back;
 	CTitleSelect m_Select[2];
 	CTitleCursor m_Cursor;
+
+	CAudio* m_pAudo;
 };

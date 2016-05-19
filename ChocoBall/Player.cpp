@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 #include "EnemyManager.h"
-
+#include "LockOn.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -19,6 +19,9 @@ void CPlayer::Initialize()
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+	m_Up.x = 0.0f;
+	m_Up.y = 1.0f;
+	m_Up.z = 0.0f;
 	
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
@@ -32,78 +35,43 @@ void CPlayer::Initialize()
 
 	LockOnflag = false;
 
+	m_Courcedef.Initialize();
+
 	// ライト関連の初期化
 	this->ConfigLight();
 
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
+
 	C3DImage::SetImage();
+
 	m_lockonEnemyIndex = 0;
 }
 
 void CPlayer::Update()
 {
+	
+
 	this->UpdateLight();
 
 	isTurn = false;
 
-
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
-	float _X = 0.0f;
-	if (LockOnflag){
-		static float fHALF_PI = fPI / 2.0f;
-		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-		D3DXVECTOR3 dist;
-		dist = Enemy->GetPos() - m_transform.position;
-		
-		_X = fabsf(atan(dist.z / dist.x));
-		if (dist.x >= 0.0f){
-			if (dist.z >= 0.0f){
-				_X = -fHALF_PI - _X;
-			}
-			else{
-				_X = -fHALF_PI + _X;
-			}
-		}
-		else if (dist.x < 0.0f){
-			if (dist.z >= 0.0f){
-				_X = fHALF_PI + _X;
-			}
-			else{
-				_X = fHALF_PI - _X;
-			}
-		}
-	}
-	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
-	{
-		LockOnflag = true;
-		float Min;
 
-		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-		CEnemy* Enemy;
-		Min = 99999;	//番兵
-		//敵20体分の距離の取得
-		for (int K = 0; K < 20; K++)
-		{
-			Enemy = EnemyManager->GetEnemy(K);
-			D3DXVECTOR3 dist;
-			dist = Enemy->GetPos() - m_transform.position;
-			float len = D3DXVec3Length(&dist);
-			if (len < Min)
-			{
-				m_lockonEnemyIndex = K;
-				Min = len;
-			}
-		}
-	}
-	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
-	{
-		LockOnflag = false;
-	}
+	//直行するベクトルを求める。
+	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
+	m_V1 = Cource.endPosition - Cource.startPosition;
+	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
+	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
+	D3DXVec3Normalize(&V2, &m_V2);
+	
+	//m_V3 = V1 + V2;
+	//V3 = D3DXVec3Length(&m_V3);
+	
+	float _X = 0.0f;
 
 	if (m_pInput->IsTriggerSpace()){
-		m_moveSpeed.y = MOVE_SPEED;
+		m_moveSpeed.y = 8.0f;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -135,16 +103,66 @@ void CPlayer::Update()
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
 	}
+
+	//ロックオン状態にする。
+	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
+	{
+		LockOnflag = true;
+		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	}
+	//ロックオン状態中の回転の計算
+	if (LockOnflag)
+	{
+		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
+	}
+
+	//ロックオン状態の解除
+	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
+	{
+		LockOnflag = false;
+	}
+
+	//ロックオン状態の時に常にプレイヤーを敵に向かせる
 	if (LockOnflag){
 		m_targetAngleY = _X;
+	}
+	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
+	D3DXVECTOR3 t0, t1;
+	t0 = V1 * m_moveSpeed.z;
+	t1 = V2 * -m_moveSpeed.x;
+	t0 += t1;
+	m_moveSpeed.x = t0.x;
+	m_moveSpeed.z = t0.z;
+//	m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
+//	m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
+
+	float L;
+	D3DXVECTOR3		NV2;
+	float			cos;
+	D3DXVECTOR3		Back;
+	D3DXVECTOR3     NV3;
+	Back.x = 0.0f;
+	Back.y = 0.0f;
+	Back.z = -1.0f;
+
+	D3DXVECTOR3 moveXZ = m_moveSpeed;
+	moveXZ.y = 0.0f;
+	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
+	if (L > 0)
+	{
+		D3DXVec3Normalize(&NV2, &moveXZ);
+		D3DXVec3Cross(&NV3, &NV2, &Back);
+		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
+		m_targetAngleY = acos(cos);
+		if (NV3.y > 0)
+		{
+			m_targetAngleY = m_targetAngleY*-1;
+		}
 	}
 
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-	m_Turn.Update(isTurn, m_targetAngleY);
-
-	//こいつを書かないと回転行列に乗算してくれない。
-	m_currentAngleY = m_Turn.Getm_currentAngleY();
+	m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
 
 	//プレイヤーの処理の最後になるべく書いて
 	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);

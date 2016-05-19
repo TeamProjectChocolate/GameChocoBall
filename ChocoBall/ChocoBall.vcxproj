@@ -95,12 +95,14 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BuildBlock.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletPhysics.h" />
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CBManager.h" />
+    <ClInclude Include="ChocoBall.h" />
     <ClInclude Include="ClearText.h" />
-    <ClInclude Include="Cource.h" />
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
@@ -112,6 +114,7 @@
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
+    <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
@@ -132,16 +135,19 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultBack.h" />
     <ClInclude Include="ResultCursor.h" />
+    <ClInclude Include="ResultScore.h" />
     <ClInclude Include="ResultSelect.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="SkinModelData.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestObject2D.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="TitleBack.h" />
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
@@ -152,10 +158,13 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BuildBlock.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletPhysics.cpp" />
     <ClCompile Include="C2DImage.cpp" />
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CBManager.cpp" />
+    <ClCompile Include="ChocoBall.cpp" />
     <ClCompile Include="ClearText.cpp" />
     <ClCompile Include="CourceCamera.cpp" />
     <ClCompile Include="CourceDef.cpp" />
@@ -178,6 +187,7 @@
     <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LockOn.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
@@ -191,6 +201,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="SkinModelData.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -198,6 +209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestObject2D.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="TitleBack.cpp" />
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />

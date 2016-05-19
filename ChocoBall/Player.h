@@ -6,6 +6,8 @@
 #include "islntersect.h"
 #include "Turn.h"
 #include "GameManager.h"
+#include "LockOn.h"
+#include "CourceDef.h"
 
 class CPlayer : public C3DImage
 {
@@ -36,6 +38,7 @@ private:
 	float			_X;
 	D3DXVECTOR3		m_position;
 	float			m_radius;
+	D3DXVECTOR3		m_initPosition;		//初期座標。
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	float			m_currentAngleY;	//現在の方向
 	float			m_targetAngleY;		//向きたい方向
@@ -43,11 +46,24 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
+
+	LockOn          m_LockOn;			//LockOnのインスタンス
+
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 
 	void UpdateLight();
 
 	CTurn			m_Turn;				//CTurnのインスタンス
+
+	CCourceDef		m_Courcedef;
+	//藤田
+	D3DXVECTOR3		m_V1;
+	D3DXVECTOR3		V1;
+	D3DXVECTOR3		m_V2;
+	D3DXVECTOR3		V2;
+	D3DXVECTOR3		m_V3;
+	float			V3;
+	D3DXVECTOR3		m_Up;
 };
 
 

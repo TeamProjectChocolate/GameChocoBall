@@ -1,15 +1,14 @@
 #pragma once
 #include "stdafx.h"
 #include "C3DImage.h"
-#include "BulletPhysics.h"
-#include "islntersect.h"
+#include "ObjectManager.h"
 #include "Block.h"
 #include "GameObject.h"
 
-#define BUILD_H 3		//生成される壁の高さ
-#define BUILD_W 4		//生成される壁の幅
-#define BLOCK_H 1.4		//ブロックのたかさ
-#define BLOCK_W 1.4		//ブロックの幅
+#define BUILD_H 4		//生成される壁の高さ
+#define BUILD_W 6		//生成される壁の幅
+#define BLOCK_H 1.0		//ブロックのたかさ
+#define BLOCK_W 1.0		//ブロックの幅
 
 
 class CBuildBlock : public CGameObject{
@@ -20,5 +19,5 @@ public:
 	void Draw()override;
 
 private:
-	CBlock m_block[BUILD_H][BUILD_W];
+	CBlock			m_block[BUILD_H][BUILD_W];	//壁の配列
 };

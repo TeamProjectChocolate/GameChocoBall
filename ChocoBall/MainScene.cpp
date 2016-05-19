@@ -12,6 +12,7 @@
 #include "Result.h"
 #include "Number.h"
 #include "EnemyManager.h"
+#include "CBManager.h"
 
 CMainScene::CMainScene(){
 }
@@ -33,13 +34,14 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
+	SINSTANCE(CObjectManager)->GenerationObject<CCBManager>(_T("CHOCO"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
-	m_pAudio->PlayCue("emiya");	// 音楽再生
+	//m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
 }
 
 void CMainScene::Update(){
