@@ -32,5 +32,5 @@ public:
 private:
 	D3DXVECTOR3			m_pos;
 	D3DXVECTOR3			m_Vector;		//チョコの進行方向
-	CChocoball			m_Choco[CHOCO_NUM];
+	CChocoBall			m_Choco[CHOCO_NUM];
 };

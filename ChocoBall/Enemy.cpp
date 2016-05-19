@@ -70,21 +70,21 @@ void CEnemy::Update()
 	//	g_targetAngleY = D3DXToRadian(-180.0f);
 	//}
 	V0 = D3DXVec3Dot(&m_V0, &V2);
-	g_targetAngleY=acos(V0);
+	m_eTargetAngleY=acos(V0);
 	D3DXVECTOR3 V4;
 	D3DXVec3Cross(&V4, &m_V0, &V2);
 	if (V4.y < 0)
 	{
-		g_targetAngleY *= -1.0f;
+		m_eTargetAngleY *= -1.0f;
 	}
-	m_Turn.Update(isTurn, g_targetAngleY);
+	m_Turn.Update(isTurn, m_eTargetAngleY);
 
 	//‚±‚¢‚Â‚ð‘‚©‚È‚¢‚Æ‰ñ“]s—ñ‚ÉæŽZ‚µ‚Ä‚­‚ê‚È‚¢B
-	m_currentAngleY = m_Turn.Getm_currentAngleY();
+	m_eCurrentAngleY = m_Turn.Getm_currentAngleY();
 
 	// ‰ñ“]s—ñ
 	
-	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 	C3DImage::Update();
 
 }
