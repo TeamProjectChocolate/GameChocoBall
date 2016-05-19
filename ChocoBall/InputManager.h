@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "KeyBoard.h"
+#include "GamePad.h"
 
 class CInputManager
 {
@@ -18,20 +19,24 @@ public:
 	//返り値: なし
 	//呼び出し例: SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
 	//※プログラム中で必ず最初に一回だけ呼び出してください
-	void CreateKeyBoard(HWND hWnd);
-	void Add(CDirectInput*);
-	void SetCurrentInput(CDirectInput*);
-	//void SelectInterface();
-	CDirectInput* GetInput(){
+	void CreateInput(HWND hWnd);
+	void Add(CKeyBoard*);
+	void Add(CGamePad*);
+
+	void SetCurrentInput(CInterface* Input){
+		m_currentInput = Input;
+	}
+
+	CInterface* GetCurrentInput(){
 		return m_currentInput;
 	}
 	void Update();
 	void ReleaseObject();
 private:
 	LPDIRECTINPUT8 m_pInputObject = nullptr;	// DirectInputオブジェクト
-	vector<CDirectInput*> m_Inputs;	// キーボードが複数あれば複数格納
-	CDirectInput* m_currentInput= nullptr;
-
+	vector<CInterface*> m_Inputs;	// キーボードが複数あれば複数格納
+	CInterface* m_currentInput;	// メインのインターフェース
+	CInterface* m_SubInput;	// 切り替え用インターフェース(メインがキーボードの時はゲームパッド、メインがゲームパッドのときはキーボード)
 	//vectorに登録された要素をすべて削除する関数
 	//※デストラクタにて呼び出される
 	void DeleteAll();

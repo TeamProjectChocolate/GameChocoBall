@@ -12,7 +12,7 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	CDirectInput* m_Input = nullptr;
+	CInterface* m_Input = nullptr;
 	float t;
 	short dir;
 };

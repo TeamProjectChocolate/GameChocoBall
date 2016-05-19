@@ -10,33 +10,61 @@ HRESULT WINAPI CInputManager::DI_Init(){
 		MessageBox(0, TEXT("DirectInputオブジェクトの作成に失敗しました"), NULL, MB_OK);
 		return E_FAIL;
 	}
+
 	return S_OK;
 }
 
-void CInputManager::CreateKeyBoard(HWND hWnd){
+void CInputManager::CreateInput(HWND hWnd){
 	CKeyBoard* Input;
 	Input = new CKeyBoard;
 	Input->CreateInput(hWnd, m_pInputObject);
 	Add(Input);
+
+	CGamePad* gamepad = new CGamePad;
+	gamepad->Update();
+	Add(gamepad);
+
 }
 
-void CInputManager::Add(CDirectInput* Input){
+void CInputManager::Add(CKeyBoard* Input){
+	Input->SetType(INTERFACE_TYPE::KEYBOARD);
 	m_Inputs.push_back(Input);
 	SetCurrentInput(Input);
+	m_SubInput = Input;
 }
 
-void CInputManager::SetCurrentInput(CDirectInput* Input){
-	m_currentInput = Input;
+void CInputManager::Add(CGamePad* Input){
+	Input->SetType(INTERFACE_TYPE::GAMEPAD);
+	m_Inputs.push_back(Input);
+	if (Input->GetConnected()){
+		SetCurrentInput(Input);
+	}
+	else{
+		SetCurrentInput(m_SubInput);
+		m_SubInput = Input;
+	}
 }
 
 void CInputManager::Update(){
 	m_currentInput->Update();
+	if (m_currentInput->GetType() == INTERFACE_TYPE::KEYBOARD){
+		m_SubInput->Update();
+		if (m_SubInput->GetConnected()){
+			CInterface* work = m_currentInput;
+			SetCurrentInput(m_SubInput);
+			m_SubInput = work;
+		}
+	}
+	if (!m_currentInput->GetConnected()){
+		CInterface* work = m_currentInput;
+		SetCurrentInput(m_SubInput);
+		m_SubInput = work;
+	}
 }
 
 void CInputManager::ReleaseObject(){
-	vector<CDirectInput*>::iterator itr = m_Inputs.begin();
-	for (itr; itr == m_Inputs.end();){
-		(*itr)->~CDirectInput();
+	for (vector<CInterface*>::iterator itr = m_Inputs.begin(); itr == m_Inputs.end();){
+		(*itr)->~CInterface();
 		itr = m_Inputs.erase(itr);
 	}
 	SAFE_RELEASE(m_pInputObject);

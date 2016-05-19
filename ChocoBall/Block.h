@@ -29,7 +29,6 @@ public:
 	}
 private:
 	CIsIntersect	m_IsIntersect;
-	D3DXVECTOR3		m_position;
 	D3DXVECTOR3		m_moveSpeed;	//落下速度
 	float			m_radius;
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
