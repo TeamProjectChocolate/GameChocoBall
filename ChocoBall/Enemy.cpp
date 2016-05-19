@@ -77,6 +77,12 @@ void CEnemy::Update()
 	{
 		m_eTargetAngleY *= -1.0f;
 	}
+
+	//g_currentAngleY = m_Turn.Update(isTurn, g_targetAngleY);
+
+	// ‰ñ“]s—ñ
+	
+	//SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), g_currentAngleY);
 	m_Turn.Update(isTurn, m_eTargetAngleY);
 
 	//‚±‚¢‚Â‚ğ‘‚©‚È‚¢‚Æ‰ñ“]s—ñ‚ÉæZ‚µ‚Ä‚­‚ê‚È‚¢B
