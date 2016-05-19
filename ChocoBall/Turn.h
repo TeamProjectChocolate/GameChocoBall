@@ -12,7 +12,7 @@ public:
 	//‰ñ“]ˆ—‚Ì‰Šú‰»
 	void CTurn::Initialize();		
 	//‰ñ“]ˆ—‚ÌXV
-	void CTurn::Update(bool isTurn, float currentAngleY);
+	float CTurn::Update(bool isTurn, float currentAngleY);
 	float Getm_currentAngleY()
 	{
 		return m_currentAngleY;

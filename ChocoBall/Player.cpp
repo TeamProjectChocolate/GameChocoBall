@@ -15,10 +15,14 @@ void CPlayer::Initialize()
 {
 
 	C3DImage::Initialize();
+	
 	m_pInput = SINSTANCE(CInputManager)->GetInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+	m_Up.x = 0.0f;
+	m_Up.y = 1.0f;
+	m_Up.z = 0.0f;
 	
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
@@ -32,6 +36,8 @@ void CPlayer::Initialize()
 
 	LockOnflag = false;
 
+	m_Courcedef.Initialize();
+
 	// ライト関連の初期化
 	this->ConfigLight();
 
@@ -44,16 +50,29 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	
+
 	this->UpdateLight();
 
 	isTurn = false;
 
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
+
+	//直行するベクトルを求める。
+	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
+	m_V1 = Cource.endPosition - Cource.startPosition;
+	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
+	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
+	D3DXVec3Normalize(&V2, &m_V2);
+	
+	//m_V3 = V1 + V2;
+	//V3 = D3DXVec3Length(&m_V3);
+	
 	float _X = 0.0f;
 
 	if (m_pInput->IsTriggerSpace()){
-		m_moveSpeed.y = 5.0f;
+		m_moveSpeed.y = 8.0f;
 	}
 	else if (m_pInput->IsPressUp()){
 		m_moveSpeed.z = MOVE_SPEED;
@@ -108,13 +127,43 @@ void CPlayer::Update()
 	if (LockOnflag){
 		m_targetAngleY = _X;
 	}
+	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
+	D3DXVECTOR3 t0, t1;
+	t0 = V1 * m_moveSpeed.z;
+	t1 = V2 * -m_moveSpeed.x;
+	t0 += t1;
+	m_moveSpeed.x = t0.x;
+	m_moveSpeed.z = t0.z;
+//	m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
+//	m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
+
+	float L;
+	D3DXVECTOR3		NV2;
+	float			cos;
+	D3DXVECTOR3		Back;
+	D3DXVECTOR3     NV3;
+	Back.x = 0.0f;
+	Back.y = 0.0f;
+	Back.z = -1.0f;
+
+	D3DXVECTOR3 moveXZ = m_moveSpeed;
+	moveXZ.y = 0.0f;
+	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
+	if (L > 0)
+	{
+		D3DXVec3Normalize(&NV2, &moveXZ);
+		D3DXVec3Cross(&NV3, &NV2, &Back);
+		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
+		m_targetAngleY = acos(cos);
+		if (NV3.y > 0)
+		{
+			m_targetAngleY = m_targetAngleY*-1;
+		}
+	}
 
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-	m_Turn.Update(isTurn, m_targetAngleY);
-
-	//こいつを書かないと回転行列に乗算してくれない。
-	m_currentAngleY = m_Turn.Getm_currentAngleY();
+	m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
 
 	//プレイヤーの処理の最後になるべく書いて
 	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
