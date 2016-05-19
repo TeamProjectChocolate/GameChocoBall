@@ -13,7 +13,7 @@ void CTurn::Initialize()
 }
 
 //‰ñ“]ˆ—
-void CTurn::Update(bool isTurn, float m_targetAngleY)
+float CTurn::Update(bool isTurn, float m_targetAngleY)
 {
 	if (isTurn) {
 		float angleDiff = m_targetAngleY - m_currentAngleY;	//–Ú“IŠp“x‚Ü‚Å‚Ç‚ê‚¾‚¯‰ñ‚¹‚ª‚¢‚¢‚Ì‚©‚ğŒvZ‚·‚éB
@@ -34,4 +34,5 @@ void CTurn::Update(bool isTurn, float m_targetAngleY)
 		m_turnSpeed = 0.0f;
 		m_currentAngleY = m_targetAngleY;
 	}
+	return m_currentAngleY;
 }
