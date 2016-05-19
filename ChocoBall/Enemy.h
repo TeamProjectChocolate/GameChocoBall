@@ -4,6 +4,7 @@
 #include "Rigidbody.h"
 #include "islntersect.h"
 #include "CourceDef.h"
+#include "Turn.h"
 
 
 class CEnemy : public C3DImage
@@ -39,9 +40,15 @@ private:
 	bool			isTurn;				//回転フラグ
 	CRigidbody		m_Rigidbody;
 	bool			flg;
+
+
+
+	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;
 
+	D3DXVECTOR3		m_V0;
+	float           V0;
 	D3DXVECTOR3		m_V1;
 	D3DXVECTOR3		V1;
 	D3DXVECTOR3		m_V2;
@@ -49,5 +56,6 @@ private:
 	D3DXVECTOR3		m_V3;
 	float			V3;
 	D3DXVECTOR3		m_Up;
+
 
 };
