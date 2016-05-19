@@ -95,6 +95,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BuildBlock.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletPhysics.h" />
     <ClInclude Include="C2DImage.h" />
     <ClInclude Include="C3DImage.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BuildBlock.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletPhysics.cpp" />
     <ClCompile Include="C2DImage.cpp" />
     <ClCompile Include="C3DImage.cpp" />
