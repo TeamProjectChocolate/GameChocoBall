@@ -46,12 +46,10 @@ void CEnemy::Update()
 {
 	isTurn = true;
 
-
 	m_transform.position += V2 * 0.05f;
 
 	m_V3 = m_transform.position - m_initPosition;
 	V3 = D3DXVec3Length(&m_V3);
-
 
 	if (V3 > 2.5)
 	{
@@ -80,10 +78,8 @@ void CEnemy::Update()
 	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
 
 	// ‰ñ“]s—ñ
-	
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 	C3DImage::Update();
-
 }
 
 

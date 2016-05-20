@@ -9,7 +9,6 @@ void CTurn::Initialize()
 	m_currentAngleY = 0.0f;
 	m_targetAngleY = 0.0f;
 	m_turnSpeed = 0.0f;
-	
 }
 
 //‰ñ“]ˆ—

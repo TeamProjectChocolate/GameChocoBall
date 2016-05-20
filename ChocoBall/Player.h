@@ -30,6 +30,10 @@ public:
 	{
 		m_radius = radius;
 	}
+	bool GetShotflag()
+	{
+		return Shotflag;
+	}
 private:
 	CDirectInput*	m_pInput;
 	CLight			m_light;
@@ -46,14 +50,11 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
-
 	LockOn          m_LockOn;			//LockOnのインスタンス
-
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
-
 	void UpdateLight();
-
 	CTurn			m_Turn;				//CTurnのインスタンス
+	bool			Shotflag;			//弾が発射されているのかのフラグ
 
 	CCourceDef		m_Courcedef;
 	//藤田

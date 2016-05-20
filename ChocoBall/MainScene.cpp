@@ -33,9 +33,11 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T("2DTest"), PRIORTY::OBJECT2D,false);
 	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
+	SINSTANCE(CObjectManager)->GenerationObject<Bullet>(_T("Bullet"), PRIORTY::OBJECT3D, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CCBManager>(_T("CHOCO"), false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D, false);
+	
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
