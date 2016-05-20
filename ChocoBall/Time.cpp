@@ -2,3 +2,18 @@
 #include "Time.h"
 #include <time.h>
 
+
+void CTime::Initialize()
+{
+
+}
+
+void CTime::Update()
+{
+
+}
+
+void CTime::Draw()
+{
+
+}
