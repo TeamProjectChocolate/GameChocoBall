@@ -9,6 +9,7 @@ public:
 	~CKeyBoard();
 	HRESULT CreateInput(HWND, LPDIRECTINPUT8)override;
 	void Update()override;	// キー情報更新
+	void ClearBuffer();
 	bool GetConnected()override{ return true; };
 	BYTE IsTriggerDecsion()override;// 決定ボタンが押されたら
 	BYTE IsPressDecision()override;	// 決定ボタンが長押し
@@ -16,8 +17,10 @@ public:
 	BYTE IsPressCancel()override;	// キャンセル、戻るボタンが長押し
 	BYTE IsTriggerEscape()override;	// エスケープボタンが押されたら
 	BYTE IsPressEscape()override;	// エスケープボタン長押し
-	BYTE IsTriggerShift()override;	// シフトキーが押されたら
-	BYTE IsPressShift()override;	// シフトキー長押し
+	BYTE IsTriggerLeftShift()override;	// 左シフトキーが押されたら
+	BYTE IsPressLeftShift()override;	// 左シフトキー長押し
+	BYTE IsTriggerRightShift()override;	// 右シフトキーが押されたら
+	BYTE IsPressRightShift()override;	// 右シフトキー長押し
 	BYTE IsTriggerSpace()override;	// スペースキーが押されたら
 	BYTE IsPressSpace()override;	// スペースキー長押し
 	BYTE IsTriggerUp()override;		// ↑が押されたら
@@ -32,8 +35,8 @@ private:
 	//vector<LPDIRECTINPUTDEVICE8> m_DIKBDevices;	// DirectInputキーボードデバイス(複数接続されることを考慮して配列で管理する)
 	//vector<DIDEVICEINSTANCE> m_InstPointer;	// DirectInputが自動生成するインスタンスへのポインターを格納する配列
 	//int m_DeviceCount;						// デバイスをいくつ生成できたか
-	virtual BYTE GetPrs(const UINT KeyCode)const;	// キー判定(押しっぱなし)
-	virtual BYTE GetTrg(const UINT KeyCode)const;	// キー判定(押した瞬間)
+	BYTE GetPrs(const UINT KeyCode)const;	// キー判定(押しっぱなし)
+	BYTE GetTrg(const UINT KeyCode)const;	// キー判定(押した瞬間)
 	BYTE m_KBOldBuf[256];	// 一瞬前のキーボード情報
 	BYTE m_KBNowBuf[256];	// 現在のキーボード情報
 };

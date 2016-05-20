@@ -4,6 +4,7 @@
 
 CInterface::CInterface()
 {
+	m_InputType = INTERFACE_TYPE::NONE;
 }
 
 

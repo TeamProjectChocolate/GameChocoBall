@@ -34,17 +34,11 @@ public:
 	*	コントローラーが接続されているか判定
 	*	ゲームのアップデートで必ず呼ぶ
 	*/
-	void Update()override
-	{
-		if (XInputGetState(0, &m_state) == ERROR_SUCCESS)
-		{
-			m_bConnected = true;
-		}
-		else
-		{
-			m_bConnected = false;
-		}
-	}
+	void Update()override;
+
+	// バッファの削除
+	void ClearBuffer();
+
 	/*
 	*	左スティックの傾き量　
 	*	左：マイナス、右：プラス
@@ -97,13 +91,7 @@ public:
 		}
 		return m_state.Gamepad.sThumbRY;
 	}
-	/*
-	*	ボタンが押されたか
-	*/
-	bool isButtonsDown(const int& Buttons)
-	{
-		return (m_state.Gamepad.wButtons & Buttons);
-	}
+
 	/*
 	*	左トリガーの深度
 	*  0～255
@@ -134,8 +122,10 @@ public:
 	BYTE IsPressCancel()override;	// キャンセル、戻るボタンが長押し
 	BYTE IsTriggerEscape()override;	// エスケープボタンが押されたら
 	BYTE IsPressEscape()override;	// エスケープボタン長押し
-	BYTE IsTriggerShift()override;	// シフトキーが押されたら
-	BYTE IsPressShift()override;	// シフトキー長押し
+	BYTE IsTriggerLeftShift()override;	// 左シフトキーが押されたら
+	BYTE IsPressLeftShift()override;	// 左シフトキー長押し
+	BYTE IsTriggerRightShift()override;	// 右シフトキーが押されたら
+	BYTE IsPressRightShift()override;	// 右シフトキー長押し
 	BYTE IsTriggerSpace()override;	// スペースキーが押されたら
 	BYTE IsPressSpace()override;	// スペースキー長押し
 	BYTE IsTriggerUp()override;		// ↑が押されたら
@@ -148,6 +138,12 @@ public:
 	BYTE IsPressLeft()override;		// ←が長押し
 private:
 	XINPUT_STATE m_state;	//状態
-	bool m_bConnected = false;	//コントローラー生存
+	bool m_bConnected;	//コントローラー生存
+	WORD m_GPNowBuf;
+	WORD m_GPOldBuf;
+	// ボタンが長押しされているか判定
+	bool GetPrs(const int& Buttons);
+	// ボタンが押されたか判定
+	bool GetTrg(const int& Buttons);
 };
 

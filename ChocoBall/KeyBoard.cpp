@@ -4,12 +4,13 @@
 
 CKeyBoard::CKeyBoard()
 {
+	ClearBuffer();
 }
-
 
 CKeyBoard::~CKeyBoard()
 {
 }
+
 
 HRESULT CKeyBoard::CreateInput(HWND hWnd, LPDIRECTINPUT8 InputObject){
 
@@ -45,6 +46,10 @@ void CKeyBoard::Update(){
 	}
 }
 
+void CKeyBoard::ClearBuffer(){
+	ZeroMemory(m_KBNowBuf, sizeof(m_KBNowBuf));
+	memcpy(m_KBOldBuf, m_KBNowBuf, sizeof(m_KBNowBuf));
+}
 
 BYTE CKeyBoard::GetPrs(const UINT KeyCode)const{
 	return (m_KBNowBuf[KeyCode]);
@@ -60,8 +65,10 @@ BYTE CKeyBoard::IsTriggerCancel(){ return GetTrg(DIK_BACK); }
 BYTE CKeyBoard::IsPressCancel(){ return GetPrs(DIK_BACK); }
 BYTE CKeyBoard::IsTriggerEscape(){ return GetTrg(DIK_ESCAPE); }
 BYTE CKeyBoard::IsPressEscape(){ return GetPrs(DIK_ESCAPE); }
-BYTE CKeyBoard::IsTriggerShift(){ return GetTrg(DIK_LSHIFT); }
-BYTE CKeyBoard::IsPressShift(){ return GetPrs(DIK_LSHIFT); }
+BYTE CKeyBoard::IsTriggerLeftShift(){ return GetTrg(DIK_LSHIFT); }
+BYTE CKeyBoard::IsPressLeftShift(){ return GetPrs(DIK_LSHIFT); }
+BYTE CKeyBoard::IsTriggerRightShift(){ return GetTrg(DIK_RSHIFT); }
+BYTE CKeyBoard::IsPressRightShift(){ return GetPrs(DIK_RSHIFT); }
 BYTE CKeyBoard::IsTriggerSpace(){ return GetTrg(DIK_SPACE); }
 BYTE CKeyBoard::IsPressSpace(){ return GetPrs(DIK_SPACE); }
 BYTE CKeyBoard::IsTriggerUp(){ return GetTrg(DIK_UP); }

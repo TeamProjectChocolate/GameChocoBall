@@ -31,6 +31,8 @@ void CResultCursor::Initialize(){
 }
 
 void CResultCursor::Update(){
+	SINSTANCE(CInputManager)->IsInputChanged(&m_Input);
+
 	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}

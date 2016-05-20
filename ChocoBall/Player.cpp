@@ -49,7 +49,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
-	
+	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 	this->UpdateLight();
 
@@ -85,19 +85,13 @@ void CPlayer::Update()
 		//³–Ê‚ğŒü‚©‚¹‚éB
 		m_targetAngleY = D3DXToRadian(0.0f);
 	}
-	if (m_pInput->IsPressShift() && m_pInput->IsPressRight()){
-		m_transform.angle.y -= 0.1f;
-	}
-	else if (m_pInput->IsPressRight()){
+	if (m_pInput->IsPressRight()){
 		m_moveSpeed.x = MOVE_SPEED;
 		isTurn = true;
 		//‰E•ûŒü‚ğŒü‚©‚¹‚éB
 		m_targetAngleY = D3DXToRadian(-90.0f);
 	}
-	if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
-		m_transform.angle.y += 0.1f;
-	}
-	else if (m_pInput->IsPressLeft()){
+	if (m_pInput->IsPressLeft()){
 		m_moveSpeed.x = -MOVE_SPEED;
 		isTurn = true;
 		//¶•ûŒü‚ğŒü‚©‚¹‚é

@@ -51,9 +51,11 @@ void CInputManager::Update(){
 	if (m_currentInput->GetType() == INTERFACE_TYPE::KEYBOARD){
 		m_SubInput->Update();
 		if (m_SubInput->GetConnected()){
+			static_cast<CKeyBoard*>(m_currentInput)->ClearBuffer();
 			CInterface* work = m_currentInput;
 			SetCurrentInput(m_SubInput);
 			m_SubInput = work;
+			return;
 		}
 	}
 	if (!m_currentInput->GetConnected()){

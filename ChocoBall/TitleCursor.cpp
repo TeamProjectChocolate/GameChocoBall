@@ -29,6 +29,8 @@ void CTitleCursor::Initialize(){
 }
 
 void CTitleCursor::Update(){
+	SINSTANCE(CInputManager)->IsInputChanged(&m_Input);
+
 	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);

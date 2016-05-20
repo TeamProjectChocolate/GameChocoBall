@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 
-typedef enum INTERFACE_TYPE{ KEYBOARD = 0,GAMEPAD };
+typedef enum INTERFACE_TYPE{ KEYBOARD = 0, GAMEPAD,NONE = 100 };
 
 class CInterface
 {
@@ -24,8 +24,10 @@ public:
 	virtual BYTE IsPressCancel() = 0;	// キャンセル、戻るボタンが長押し
 	virtual BYTE IsTriggerEscape() = 0;	// エスケープボタンが押されたら
 	virtual BYTE IsPressEscape() = 0;	// エスケープボタン長押し
-	virtual BYTE IsTriggerShift() = 0;	// シフトキーが押されたら
-	virtual BYTE IsPressShift() = 0;	// シフトキー長押し
+	virtual BYTE IsTriggerLeftShift() = 0;	// 左シフトキーが押されたら
+	virtual BYTE IsPressLeftShift() = 0;	// 左シフトキー長押し
+	virtual BYTE IsTriggerRightShift() = 0;	// 右シフトキーが押されたら
+	virtual BYTE IsPressRightShift() = 0;	// 右シフトキー長押し
 	virtual BYTE IsTriggerSpace() = 0;	// スペースキーが押されたら
 	virtual BYTE IsPressSpace() = 0;	// スペースキー長押し
 	virtual BYTE IsTriggerUp() = 0;		// ↑が押されたら
