@@ -45,10 +45,9 @@ VS_OUTPUT vs_main(VS_INPUT In /*頂点情報(ローカル座標*/)
 
 // ピクセルシェーダ
 float4 ps_main(VS_OUTPUT In) : COLOR0{
-	In.uv.x /= Split_X;
-	In.uv.x += In.uv.x * NowCol;
-	In.uv.y /= Split_Y;
-	In.uv.y += In.uv.y * NowRow;
+	In.color = (float4)0.0f;
+	In.uv.x = In.uv.x / Split_X * (NowCol + 1);
+	In.uv.y = In.uv.y / Split_Y * (NowRow + 1);
 	float4 color = tex2D(g_TextureSampler, In.uv);
 	color.w = Alpha;
 	return color;	// テクスチャを貼り付ける

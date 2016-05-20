@@ -60,6 +60,7 @@ private:
 		m_child = child;
 	}
 private:
+	CIsIntersect	m_IsIntersect;
 	enum EnState{
 		enState_Normal,	//’Êíó‘ÔB
 		enState_Broken,	//‰ó‚ê‚½B

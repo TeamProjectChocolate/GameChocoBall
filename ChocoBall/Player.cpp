@@ -15,9 +15,8 @@ void CPlayer::Initialize()
 {
 
 	C3DImage::Initialize();
-	
-	m_pInput = SINSTANCE(CInputManager)->GetInput();
-	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, -49.42f);
+	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
+	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	m_Up.x = 0.0f;
@@ -50,6 +49,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 	this->UpdateLight();
 
@@ -98,10 +98,7 @@ void CPlayer::Update()
 		//‰E•ûŒü‚ğŒü‚©‚¹‚éB
 		m_targetAngleY = D3DXToRadian(-90.0f);
 	}
-	if (m_pInput->IsPressShift() && m_pInput->IsPressLeft()){
-		m_transform.angle.y += 0.1f;
-	}
-	else if (m_pInput->IsPressLeft()){
+	if (m_pInput->IsPressLeft()){
 		m_moveSpeed.x = -MOVE_SPEED;
 		isTurn = true;
 		//¶•ûŒü‚ğŒü‚©‚¹‚é

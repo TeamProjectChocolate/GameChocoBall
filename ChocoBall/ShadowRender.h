@@ -7,6 +7,9 @@ class CShadowRender
 {
 	SINGLETON_DECL(CShadowRender)
 public:
+	// 影を生成するオブジェクトを登録する関数
+	// 引き数： C3DImage* C3DImageを継承したクラスのポインタ
+	// 返り値： なし
 	void Entry(C3DImage*);
 	void Initialize();
 	void Update();
