@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 #include "EnemyManager.h"
 
 #define ENEMYNUM 20
@@ -17,4 +18,5 @@ public:
 private:
 	CPlayer m_Player;
 	CEnemy m_Enemy;	//“G‚Ì•Ï”B
+	Bullet m_Bullet;
 };

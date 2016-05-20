@@ -15,7 +15,7 @@ CTestObject2D::~CTestObject2D()
 
 void CTestObject2D::Initialize(){
 	C2DImage::Initialize();
-	m_Input = SINSTANCE(CInputManager)->GetInput();
+	m_Input = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(96, 80, 1);

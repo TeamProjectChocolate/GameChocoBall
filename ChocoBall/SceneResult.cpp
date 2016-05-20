@@ -15,7 +15,7 @@ CSceneResult::~CSceneResult()
 }
 
 void CSceneResult::Initialize(){
-	m_pInput = SINSTANCE(CInputManager)->GetInput();
+	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	SINSTANCE(CObjectManager)->AddObject(&m_rBack, _T("ResultBack"), false);
 	SINSTANCE(CObjectManager)->AddObject(&m_rSelect[0], _T("Continue"), false);
 	m_rSelect[1].SetFileName(_T("image/Result.jpg"));

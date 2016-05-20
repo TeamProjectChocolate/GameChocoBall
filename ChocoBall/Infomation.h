@@ -8,7 +8,7 @@ class CSkinModelData;
 #define NUM_DIFFUSE_LIGHT 4		// 使用するディフューズライトの数
 
 #define MAX_PRIORTY 255
-enum PRIORTY{CONFIG = 0,PLAYER,OBJECT3D,OBJECT2D,LOWEST = MAX_PRIORTY};
+enum PRIORTY{CONFIG = 0,PLAYER,OBJECT3D,OBJECT3D_ALPHA,OBJECT2D,OBJECT2D_ALPHA,LOWEST = MAX_PRIORTY};
 
 // シェーダファイル格納用構造体
 typedef struct EFFECT_DATA{
@@ -20,10 +20,6 @@ typedef struct EFFECT_DATA{
 typedef struct IMAGE3D{
 	CHAR pFileName[MAX_FILENAME + 1];
 	CSkinModelData* pModel;
-	//D3DMATERIAL9* pMat;
-	//LPDIRECT3DTEXTURE9* ppTex;
-	//LPD3DXMESH pMesh;
-	//DWORD NumMaterials;
 }IMAGE3D;
 
 // 2Dモデル情報格納用構造体
