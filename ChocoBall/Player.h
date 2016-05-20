@@ -32,7 +32,7 @@ public:
 	}
 	bool GetShotflag()
 	{
-		return Shotflag;
+		return m_Shotflag;
 	}
 private:
 	CInterface*	m_pInput;
@@ -54,7 +54,7 @@ private:
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	void UpdateLight();
 	CTurn			m_Turn;				//CTurnのインスタンス
-	bool			Shotflag;			//弾が発射されているのかのフラグ
+	bool			m_Shotflag;			//弾が発射されているのかのフラグ
 
 	CCourceDef		m_Courcedef;
 	//藤田

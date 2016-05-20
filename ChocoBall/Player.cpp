@@ -33,7 +33,7 @@ void CPlayer::Initialize()
 	SetAlpha(1.0f);
 
 	LockOnflag = false;
-	Shotflag = false;
+	m_Shotflag = false;
 
 	m_Courcedef.Initialize();
 
@@ -55,9 +55,9 @@ void CPlayer::Update()
 
 	isTurn = false;
 
-	if (m_pInput->IsTriggerShift())
+	if (m_pInput->IsTriggerLeftShift())
 	{
-		Shotflag = true;
+		m_Shotflag = true;
 	}
 	if (m_pInput->IsTriggerSpace())
 	{
