@@ -182,7 +182,7 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap ) :	COLOR{
 		normal = In.normal;
 	}
 	// ディフューズライトの計算
-	/*float4*/ light = CalcDiffuseLight(normal);
+	float4 light = CalcDiffuseLight(normal);
 	// スペキュラライトを計算
 	light += CalcSpeculerLight(normal,In.WorldPos);
 	// アンビエントライトを加算
