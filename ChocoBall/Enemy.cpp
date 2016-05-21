@@ -32,9 +32,9 @@ void CEnemy::Initialize()
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	m_Courcedef.Initialize();
-
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
-	m_V1 = Cource.endPosition - Cource.startPosition;
+	
+	D3DXVECTOR3 m_V1 = Cource.endPosition - Cource.startPosition;
 	D3DXVec3Normalize(&V1, &m_V1);
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
@@ -77,12 +77,6 @@ void CEnemy::Update()
 	{
 		m_eTargetAngleY *= -1.0f;
 	}
-
-	//g_currentAngleY = m_Turn.Update(isTurn, g_targetAngleY);
-
-	// ‰ñ“]s—ñ
-	
-	//SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), g_currentAngleY);
 	m_Turn.Update(isTurn, m_eTargetAngleY);
 
 	//‚±‚¢‚Â‚ğ‘‚©‚È‚¢‚Æ‰ñ“]s—ñ‚ÉæZ‚µ‚Ä‚­‚ê‚È‚¢B

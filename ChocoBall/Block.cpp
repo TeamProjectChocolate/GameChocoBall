@@ -30,7 +30,7 @@ void CBlock::OnDestroyParent()
 
 void CBlock::Initialize(D3DXVECTOR3 pos)
 {
-	strcpy(m_pFileName, "image/BR.x");
+	strcpy(m_pFileName, "image/kyu2.x");
 	C3DImage::Initialize();
 	m_transform.position = pos; //D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);

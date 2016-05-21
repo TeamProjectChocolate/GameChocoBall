@@ -49,7 +49,7 @@ private:
 
 	D3DXVECTOR3		m_V0;
 	float           V0;
-	D3DXVECTOR3		m_V1;
+	//D3DXVECTOR3		m_V1;
 	D3DXVECTOR3		V1;
 	D3DXVECTOR3		m_V2;
 	D3DXVECTOR3		V2;
