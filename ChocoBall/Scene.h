@@ -21,7 +21,7 @@ public:
 	}
 protected:
 	CAudio* m_pAudio;
-	CDirectInput* m_pInput;
+	CInterface* m_pInput;
 private:
 	bool m_ManagerNewFlg;	// ObjectManagerƒNƒ‰ƒX‚Ånew‚³‚ê‚½‚à‚Ì‚©”»’è‚·‚é•Ï”
 };

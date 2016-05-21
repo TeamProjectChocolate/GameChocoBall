@@ -192,8 +192,12 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap ) :	COLOR{
 	color *= light;	// テクスチャのカラーとライトを乗算
 	float4 ShadowPos = In.ShadowPos;
 	float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
-	float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
-	color *= shadow_val;
+	if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
+		if (shadowMapUV.y <= 1.0f && shadowMapUV.y >= 0.0f){
+			float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
+			color *= shadow_val;
+		}
+	}
 	color.w = Alpha;
 	return color;
 }

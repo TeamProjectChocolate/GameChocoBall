@@ -79,7 +79,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			if (SINSTANCE(CInputManager)->GetInput()->IsTriggerEscape()){
+			if (SINSTANCE(CInputManager)->GetCurrentInput()->IsTriggerEscape()){
 				PostQuitMessage(0);
 			}
 			Update();
@@ -237,7 +237,7 @@ void Initialize()
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
 	g_bulletPhysics.InitPysics();			// 物理エンジンの初期化(グローバル変数はこう呼ぶ。)
   	SINSTANCE(CInputManager)->DI_Init();
-	SINSTANCE(CInputManager)->CreateKeyBoard(g_hWnd);
+	SINSTANCE(CInputManager)->CreateInput(g_hWnd);
 
 	AddScene();
 	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
