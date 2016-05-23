@@ -10,8 +10,10 @@ CEnemy::~CEnemy(){ }
 void CEnemy::Initialize()
 {
 	C3DImage::Initialize();
-	m_initPosition = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
-	m_transform.position = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
+	//m_initPosition = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
+	//m_transform.position = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
+	m_initPosition = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_V0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -20,12 +22,11 @@ void CEnemy::Initialize()
 	m_moveSpeed.y = 0.05f;
 	m_radius = 0.1f;
 
-	m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXVECTOR3		m_V2;
+	D3DXVECTOR3 m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	SetAlive(true);	//死亡フラグ
-
 	SetAlpha(1.0f);	//透明度？
-
 	flg = true;
 
 	C3DImage::SetImage();
@@ -48,8 +49,8 @@ void CEnemy::Update()
 
 	m_transform.position += V2 * 0.05f;
 
-	m_V3 = m_transform.position - m_initPosition;
-	V3 = D3DXVec3Length(&m_V3);
+	D3DXVECTOR3 m_V3 = m_transform.position - m_initPosition;
+	float V3 = D3DXVec3Length(&m_V3);
 
 	if (V3 > 2.5)
 	{
@@ -59,15 +60,14 @@ void CEnemy::Update()
 	{
 		isTurn = true;
 		//左方向を向かせる
-		g_targetAngleY = D3DXToRadian(180.0f);
+		m_eCurrentAngleY = D3DXToRadian(180.0f);
 	}
 	else
 	{
 		isTurn = false;
 		//右方向を向かせる。
-		g_targetAngleY = D3DXToRadian(-180.0f);
 	}
-	V0 = D3DXVec3Dot(&m_V0, &V2);
+	float V0 = D3DXVec3Dot(&m_V0, &V2);
 	m_eTargetAngleY=acos(V0);
 	D3DXVECTOR3 V4;
 	D3DXVec3Cross(&V4, &m_V0, &V2);
@@ -75,16 +75,16 @@ void CEnemy::Update()
 	{
 		m_eTargetAngleY *= -1.0f;
 	}
-	m_Turn.Update(isTurn, m_eTargetAngleY);
+	//m_Turn.Update(isTurn, m_eTargetAngleY);
 
 	//こいつを書かないと回転行列に乗算してくれない。
 
-	m_eCurrentAngleY = m_Turn.Getm_currentAngleY();
+	//m_eCurrentAngleY = m_Turn.Update(isTurn, m_eCurrentAngleY);
 
 	// 回転行列
 	
 
-	//m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
 
 
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);

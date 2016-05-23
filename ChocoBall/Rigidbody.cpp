@@ -1,3 +1,4 @@
+#include"stdafx.h"
 #include "Rigidbody.h"
 
 CRigidbody::CRigidbody()

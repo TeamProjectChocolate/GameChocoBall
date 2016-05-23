@@ -48,12 +48,6 @@ private:
 	CCourceDef		m_Courcedef;
 
 	D3DXVECTOR3		m_V0;
-	float           V0;
-	//D3DXVECTOR3		m_V1;
 	D3DXVECTOR3		V1;
-	D3DXVECTOR3		m_V2;
 	D3DXVECTOR3		V2;
-	D3DXVECTOR3		m_V3;
-	float			V3;
-	D3DXVECTOR3		m_Up;
 };

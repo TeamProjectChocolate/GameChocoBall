@@ -1,3 +1,4 @@
+#include"stdafx.h"
 #include "Turn.h"
 
 CTurn::~CTurn()
