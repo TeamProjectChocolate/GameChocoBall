@@ -111,6 +111,8 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="GamePad.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
     <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
@@ -177,9 +179,11 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="GraphicsDevice.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Light.cpp" />

@@ -20,7 +20,7 @@ CResultCursor::~CResultCursor()
 
 void CResultCursor::Initialize(){
 	C2DImage::Initialize();
-	m_Input = SINSTANCE(CInputManager)->GetInput();
+	m_Input = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(100, 80, 10);
@@ -31,6 +31,8 @@ void CResultCursor::Initialize(){
 }
 
 void CResultCursor::Update(){
+	SINSTANCE(CInputManager)->IsInputChanged(&m_Input);
+
 	if (m_Input->IsTriggerDecsion() && m_transform.position.y == 250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}

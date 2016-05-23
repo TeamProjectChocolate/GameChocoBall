@@ -30,8 +30,12 @@ public:
 	{
 		m_radius = radius;
 	}
+	bool GetShotflag()
+	{
+		return m_Shotflag;
+	}
 private:
-	CDirectInput*	m_pInput;
+	CInterface*	m_pInput;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
@@ -46,14 +50,11 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
-
 	LockOn          m_LockOn;			//LockOnのインスタンス
-
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
-
 	void UpdateLight();
-
 	CTurn			m_Turn;				//CTurnのインスタンス
+	bool			m_Shotflag;			//弾が発射されているのかのフラグ
 
 	CCourceDef		m_Courcedef;
 	//藤田

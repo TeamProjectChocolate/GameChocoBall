@@ -56,6 +56,4 @@ private:
 	D3DXVECTOR3		m_V3;
 	float			V3;
 	D3DXVECTOR3		m_Up;
-
-
 };

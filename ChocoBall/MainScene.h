@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 #include "EnemyManager.h"
 #include "CBManager.h"
 
@@ -18,4 +19,5 @@ public:
 private:
 	CPlayer m_Player;
 	CEnemy m_Enemy;	//“G‚Ì•Ï”B
+	Bullet m_Bullet;
 };
