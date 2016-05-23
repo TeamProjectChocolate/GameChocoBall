@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "EnemyManager.h"
+#include "CBManager.h"
 
 #define ENEMYNUM 20
 

@@ -1,4 +1,4 @@
-#include"stdafx.h"
+#include "stdafx.h"
 #include "Number.h"
 
 void CNumber::Initialize(){

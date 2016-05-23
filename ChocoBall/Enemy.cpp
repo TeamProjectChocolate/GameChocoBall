@@ -68,6 +68,8 @@ void CEnemy::Update()
 		//‰E•ûŒü‚ğŒü‚©‚¹‚éB
 	}
 	float V0 = D3DXVec3Dot(&m_V0, &V2);
+
+	V0 = D3DXVec3Dot(&m_V0, &V2);
 	m_eTargetAngleY=acos(V0);
 	D3DXVECTOR3 V4;
 	D3DXVec3Cross(&V4, &m_V0, &V2);

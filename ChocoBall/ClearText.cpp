@@ -1,4 +1,6 @@
-#include"stdafx.h"
+
+#include "stdafx.h"
+
 #include "ClearText.h"
 
 
