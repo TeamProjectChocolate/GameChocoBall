@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "EnemyManager.h"
+
 
 class LockOn
 {

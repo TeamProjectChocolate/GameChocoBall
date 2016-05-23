@@ -6,8 +6,10 @@
 #include "islntersect.h"
 #include "Turn.h"
 #include "GameManager.h"
-#include "LockOn.h"
 #include "CourceDef.h"
+#include "LockOn.h"
+
+class LockOn;
 
 class CPlayer : public C3DImage
 {
@@ -34,6 +36,10 @@ public:
 	{
 		return Shotflag;
 	}
+	void SetShotflag(bool shotflag)
+	{
+		Shotflag=shotflag;
+	}
 private:
 	CInterface*	m_pInput;
 	CLight			m_light;
@@ -55,7 +61,8 @@ private:
 	void UpdateLight();
 	CTurn			m_Turn;				//CTurnのインスタンス
 	bool			Shotflag;			//弾が発射されているのかのフラグ
-
+	bool            Jumpflag;			//ジャンプフラグ
+	bool			FrontBackflag, RightLeftflag;
 	CCourceDef		m_Courcedef;
 	//藤田
 	D3DXVECTOR3		m_V1;
