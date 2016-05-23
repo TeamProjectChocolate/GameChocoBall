@@ -32,7 +32,6 @@ void CPlayer::Initialize()
 	LockOnflag = false;
 	Shotflag = false;
 	Jumpflag = false;
-	FrontBackflag = RightLeftflag = false;
 	m_Courcedef.Initialize();
 
 	// ライト関連の初期化
@@ -55,8 +54,6 @@ void CPlayer::Update()
 	if (m_transform.position.y <= -0.7f)
 	{
 		Jumpflag = false;
-		FrontBackflag = false;
-		RightLeftflag = false;
 	}
 
 	//ゲームオーバー処理
@@ -71,7 +68,7 @@ void CPlayer::Update()
 
 	if (m_pInput->IsTriggerRightShift())
 	{
-		m_Shotflag = true;
+		Shotflag = true;
 	}
 	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
 	{
@@ -103,8 +100,6 @@ void CPlayer::Update()
 		{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.z = MOVE_SPEED;
-			
-			FrontBackflag = true;
 			//前を向かせる。
 			m_targetAngleY = D3DXToRadian(180.0f);
 		}
@@ -116,8 +111,6 @@ void CPlayer::Update()
 		if (Jumpflag == false)
 		{	//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.z = -MOVE_SPEED;
-			
-			FrontBackflag = true;
 			//後ろを向かせる。
 			m_targetAngleY = D3DXToRadian(0.0f);
 		}
@@ -132,8 +125,6 @@ void CPlayer::Update()
 		{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.x = MOVE_SPEED;
-			
-			RightLeftflag = true;
 			//右を向かせる。
 			m_targetAngleY = D3DXToRadian(-90.0f);
 		}
@@ -145,8 +136,6 @@ void CPlayer::Update()
 		{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.x = -MOVE_SPEED;
-			
-			RightLeftflag = true;
 			//左を向かせる。
 			m_targetAngleY = D3DXToRadian(90.0f);
 		}

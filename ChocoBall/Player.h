@@ -34,7 +34,7 @@ public:
 	}
 	bool GetShotflag()
 	{
-		return m_Shotflag;
+		return Shotflag;
 	}
 	void SetShotflag(bool shotflag)
 	{
@@ -62,8 +62,6 @@ private:
 	CTurn			m_Turn;				//CTurnのインスタンス
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
-	bool			FrontBackflag, RightLeftflag;
-	//bool			m_Shotflag;			//弾が発射されているのかのフラグ
 
 	CCourceDef		m_Courcedef;
 	//藤田
