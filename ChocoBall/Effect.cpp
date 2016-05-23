@@ -28,6 +28,7 @@ LPD3DXEFFECT CEffect::LoadEffect(LPCSTR pFileName){
 		NULL, NULL, D3DXSHADER_DEBUG, NULL, &(Effect->Effect), &compileErrorBuffer/*ƒGƒ‰[î•ñ‚ª“ü‚é*/);
 	if (FAILED(hr)) {
 		MessageBox(nullptr, reinterpret_cast<char*>(compileErrorBuffer->GetBufferPointer()), "error", MB_OK);
+		abort();
 		return nullptr;
 		//(SUCCEEDED(hr), "error");
 	}

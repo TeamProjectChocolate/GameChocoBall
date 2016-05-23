@@ -34,7 +34,7 @@ public:
 	}
 	bool GetShotflag()
 	{
-		return Shotflag;
+		return m_Shotflag;
 	}
 	void SetShotflag(bool shotflag)
 	{
@@ -63,6 +63,8 @@ private:
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
 	bool			FrontBackflag, RightLeftflag;
+	//bool			m_Shotflag;			//弾が発射されているのかのフラグ
+
 	CCourceDef		m_Courcedef;
 	//藤田
 	D3DXVECTOR3		m_V1;

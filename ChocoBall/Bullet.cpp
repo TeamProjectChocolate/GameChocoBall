@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Bullet.h"
 #include "Player.h"
 #include "EnemyManager.h"

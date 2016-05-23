@@ -71,7 +71,7 @@ void CPlayer::Update()
 
 	if (m_pInput->IsTriggerRightShift())
 	{
-		Shotflag = true;
+		m_Shotflag = true;
 	}
 	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
 	{
