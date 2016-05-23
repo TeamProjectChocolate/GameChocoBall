@@ -57,6 +57,8 @@ void CEnemy::Update()
 	{
 		V2 *= -1.0f;
 	}
+
+
 	//if (V2 > 0)
 	//{
 	//	isTurn = true;

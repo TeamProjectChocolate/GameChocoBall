@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
+#include "CBManager.h"
 
 #define ENEMYNUM 20
 

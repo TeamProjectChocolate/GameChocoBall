@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "LockOn.h"
 #include "Enemy.h"
 #include "EnemyManager.h"

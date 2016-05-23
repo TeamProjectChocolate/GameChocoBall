@@ -37,6 +37,7 @@ void CDebri::Initialize()
 
 void CDebri::Update()
 {
+	//m_transform.position.z += 0.5f;
 	m_Rigidbody.Update(&m_transform.position);
 	C3DImage::Update();
 }
