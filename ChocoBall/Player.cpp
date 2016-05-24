@@ -3,11 +3,8 @@
 #include "InputManager.h"
 #include "ShadowRender.h"
 #include "RenderContext.h"
-#include "Enemy.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
-//#include "EnemyManager.h"
-#include "LockOn.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -34,7 +31,7 @@ void CPlayer::Initialize()
 
 	LockOnflag = false;
 	Shotflag = false;
-
+	Jumpflag = false;
 	m_Courcedef.Initialize();
 
 	// ライト関連の初期化
@@ -53,18 +50,98 @@ void CPlayer::Update()
 
 	this->UpdateLight();
 
+	//着地しているのでフラグはfalse
+	if (m_transform.position.y <= -0.7f)
+	{
+		Jumpflag = false;
+	}
+
+	//ゲームオーバー処理
+	if (m_transform.position.y <= -10.0f)
+	{
+		PostQuitMessage(0);
+	}
+
+	float _X = 0.0f;
+	
 	isTurn = false;
 
-	//if (m_pInput->IsTriggerShift())
-	//{
-	//	Shotflag = true;
-	//}
-	if (m_pInput->IsTriggerSpace())
+
+	if (m_pInput->IsTriggerRightShift())
 	{
-		m_moveSpeed.y = 8.0f;
+		Shotflag = true;
 	}
-	m_moveSpeed.x = 0.0f;
-	m_moveSpeed.z = 0.0f;
+	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
+	{
+		Shotflag = false;
+	}
+	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
+	{
+		m_moveSpeed.y = 20.0f;
+		Jumpflag = true;
+	}
+	if (Jumpflag == false /*&& FrontBackflag == false*/)
+	{
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
+	}
+
+	/*if (Jumpflag == false && RightLeftflag == false)
+	{
+		m_moveSpeed.z = 0.0f;
+	}*/
+	short X, Y;
+	//X = Y = 0;
+	//ゲームパッドでのプレイヤーの移動。
+	//前後の動き
+	Y = m_pInput->GetStickL_Y();
+	if (Y > 0)
+	{
+		if (Jumpflag == false)
+		{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.z = MOVE_SPEED;
+			//前を向かせる。
+			m_targetAngleY = D3DXToRadian(180.0f);
+		}
+		isTurn = true;
+	}
+		
+	if (Y < 0)
+	{
+		if (Jumpflag == false)
+		{	//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.z = -MOVE_SPEED;
+			//後ろを向かせる。
+			m_targetAngleY = D3DXToRadian(0.0f);
+		}
+		isTurn = true;
+	
+	}
+	//左右の動き
+	X = m_pInput->GetStickL_X();
+	if (X > 0)
+	{
+		if (Jumpflag == false)
+		{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.x = MOVE_SPEED;
+			//右を向かせる。
+			m_targetAngleY = D3DXToRadian(-90.0f);
+		}
+		isTurn = true;
+	}
+	if (X < 0)
+	{
+		if (Jumpflag == false)
+		{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.x = -MOVE_SPEED;
+			//左を向かせる。
+			m_targetAngleY = D3DXToRadian(90.0f);
+		}
+		isTurn = true;
+	}
 
 	//直行するベクトルを求める。
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
@@ -76,42 +153,54 @@ void CPlayer::Update()
 	//m_V3 = V1 + V2;
 	//V3 = D3DXVec3Length(&m_V3);
 
-	float _X = 0.0f;
-
-
-	if (m_pInput->IsPressUp()){
-		m_moveSpeed.z = MOVE_SPEED;
-		isTurn = true;
-		//180度向かせる。
-		m_targetAngleY = D3DXToRadian(180.0f);
-	}
-	else if (m_pInput->IsPressDown()){
-		m_moveSpeed.z = -MOVE_SPEED;
-		isTurn = true;
-		//正面を向かせる。
-		m_targetAngleY = D3DXToRadian(0.0f);
+	//ゲームクリア
+	D3DXVECTOR3 Endposition;
+	Endposition = m_Courcedef.EndCource();
+	if (Endposition.x-0.5<m_transform.position.x&&Endposition.z-10<m_transform.position.z)
+	{
+		PostQuitMessage(0);
 	}
 
-	if (m_pInput->IsPressRight()){
-		m_moveSpeed.x = MOVE_SPEED;
-		isTurn = true;
-		//右方向を向かせる。
-		m_targetAngleY = D3DXToRadian(-90.0f);
-	}
-	if (m_pInput->IsPressLeft()){
-		m_moveSpeed.x = -MOVE_SPEED;
-		isTurn = true;
-		//左方向を向かせる
-		m_targetAngleY = D3DXToRadian(90.0f);
-	}
+	//キーボードでのプレイヤーの移動。
+	//if (m_pInput->IsPressUp()){
+	//	m_moveSpeed.z = MOVE_SPEED;
+	//	isTurn = true;
+	//	FrontBackflag = true;
+	//	//前を向かせる。
+	//	m_targetAngleY = D3DXToRadian(180.0f);
+	//}
+	//else if (m_pInput->IsPressDown()){
+	//	m_moveSpeed.z = -MOVE_SPEED;
+	//	isTurn = true;
+	//	FrontBackflag = true;
+	//	//後ろを向かせる。
+	//	m_targetAngleY = D3DXToRadian(0.0f);
+	//}
+
+	//if (m_pInput->IsPressRight()){
+	//	m_moveSpeed.x = MOVE_SPEED;
+	//	isTurn = true;
+	//	RightLeftflag = true;
+	//	//右方向を向かせる。
+	//	m_targetAngleY = D3DXToRadian(-90.0f);
+	//}
+	//if (m_pInput->IsPressLeft()){
+	//	m_moveSpeed.x = -MOVE_SPEED;
+	//	isTurn = true;
+	//	RightLeftflag = true;
+	//	//左方向を向かせる
+	//	m_targetAngleY = D3DXToRadian(90.0f);
+	//}
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
-	D3DXVECTOR3 t0, t1;
-	t0 = V1 * m_moveSpeed.z;
-	t1 = V2 * -m_moveSpeed.x;
-	t0 += t1;
-	m_moveSpeed.x = t0.x;
-	m_moveSpeed.z = t0.z;
+	if (!Jumpflag){
+		D3DXVECTOR3 t0, t1;
+		t0 = V1 * m_moveSpeed.z;
+		t1 = V2 * -m_moveSpeed.x;
+		t0 += t1;
+		m_moveSpeed.x = t0.x;
+		m_moveSpeed.z = t0.z;
+	}
 	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
 	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
 
@@ -140,23 +229,21 @@ void CPlayer::Update()
 	}
 
 	//ロックオン状態にする。
-	if (m_pInput->IsTriggerCancel() && LockOnflag == false)
+	if (m_pInput->IsTriggerLeftShift() && LockOnflag == false)
 	{
 		LockOnflag = true;
 		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	}
+	//ロックオン状態の解除
+	else if (m_pInput->IsTriggerLeftShift() && LockOnflag == true)
+	{
+		LockOnflag = false;
 	}
 	//ロックオン状態中の回転の計算
 	if (LockOnflag)
 	{
 		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
 	}
-
-	//ロックオン状態の解除
-	if (m_pInput->IsTriggerDecsion() && LockOnflag == true)
-	{
-		LockOnflag = false;
-	}
-
 	//ロックオン状態の時に常にプレイヤーを敵に向かせる
 	if (LockOnflag){
 		m_targetAngleY = _X;
@@ -164,7 +251,10 @@ void CPlayer::Update()
 
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-	m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
+	if (Jumpflag==false)
+	{
+		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
+	}
 
 	//プレイヤーの処理の最後になるべく書いて
 	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);

@@ -96,33 +96,33 @@ void C3DImage::AnimationUpdate(){
 }
 
 void C3DImage::Draw(){
-	DrawFrame(graphicsDevice(),m_pImage->pModel->GetFrameRoot());
+	DrawFrame(/*graphicsDevice(),*/m_pImage->pModel->GetFrameRoot());
 }
 
-void C3DImage::DrawFrame(LPDIRECT3DDEVICE9 Device,LPD3DXFRAME pFrame){
+void C3DImage::DrawFrame(/*LPDIRECT3DDEVICE9 Device,*/LPD3DXFRAME pFrame){
 	LPD3DXMESHCONTAINER pMeshContainer;
 
 	pMeshContainer = pFrame->pMeshContainer;
 	while (pMeshContainer != nullptr){
-		DrawMeshContainer(Device,pMeshContainer,pFrame);
+		DrawMeshContainer(/*Device,*/pMeshContainer/*,pFrame*/);
 		pMeshContainer = pMeshContainer->pNextMeshContainer;
 	}
 
 	if (pFrame->pFrameSibling != nullptr){
-		DrawFrame(Device, pFrame->pFrameSibling);
+		DrawFrame(/*Device,*/ pFrame->pFrameSibling);
 	}
 
 	if (pFrame->pFrameFirstChild != nullptr){
-		DrawFrame(Device, pFrame->pFrameFirstChild);
+		DrawFrame(/*Device,*/ pFrame->pFrameFirstChild);
 	}
 }
 
-void C3DImage::DrawMeshContainer(LPDIRECT3DDEVICE9 Device,LPD3DXMESHCONTAINER pMeshContainerBase,LPD3DXFRAME pFrameBase){
+void C3DImage::DrawMeshContainer(/*LPDIRECT3DDEVICE9 Device,*/LPD3DXMESHCONTAINER pMeshContainerBase/*,*//*LPD3DXFRAME pFrameBase*/){
 	D3DXMESHCONTAINER_DERIVED* pMeshContainer = static_cast<D3DXMESHCONTAINER_DERIVED*>(pMeshContainerBase);
 
 	if (pMeshContainer->pSkinInfo != nullptr){
 		// スキン情報あり
-		AnimationDraw(Device, pMeshContainer, pMeshContainerBase, pFrameBase);
+		AnimationDraw(/*Device, */pMeshContainer/*, pMeshContainerBase, pFrameBase*/);
 	}
 	else{
 		// スキン情報なし
@@ -130,17 +130,16 @@ void C3DImage::DrawMeshContainer(LPDIRECT3DDEVICE9 Device,LPD3DXMESHCONTAINER pM
 	}
 }
 
-void C3DImage::AnimationDraw(LPDIRECT3DDEVICE9 Device, D3DXMESHCONTAINER_DERIVED* pMeshContainer, LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase){
+void C3DImage::AnimationDraw(/*LPDIRECT3DDEVICE9 Device, */D3DXMESHCONTAINER_DERIVED* pMeshContainer/*, LPD3DXMESHCONTAINER pMeshContainerBase*//*, LPD3DXFRAME pFrameBase*/){
 
-	D3DXFRAME_DERIVED* pFrame = static_cast<D3DXFRAME_DERIVED*>(pFrameBase);
-	unsigned int iattrib;
+	//D3DXFRAME_DERIVED* pFrame = static_cast<D3DXFRAME_DERIVED*>(pFrameBase);
 	LPD3DXBONECOMBINATION pBoneComb;
 
-	D3DCAPS9 d3dCaps;
-	Device->GetDeviceCaps(&d3dCaps);
+	//D3DCAPS9 d3dCaps;
+	//Device->GetDeviceCaps(&d3dCaps);
 
 	pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
-	for (iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
+	for (unsigned int iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
 		for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry){
 			DWORD iMatrixIndex = pBoneComb[iattrib].BoneId[iPaletteEntry];
 			if (iMatrixIndex != UINT_MAX){

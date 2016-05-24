@@ -13,6 +13,13 @@ public:
 	void CTurn::Initialize();		
 	//‰ñ“]ˆ—‚ÌXV
 	float CTurn::Update(bool isTurn, float currentAngleY);
+
+	float Getm_currentAngleY()
+	{
+		return m_currentAngleY;
+		
+	}
+
 private:
 	float	m_currentAngleY;	//Œ»İ‚Ì•ûŒü
 	float	m_targetAngleY;		//Œü‚«‚½‚¢•ûŒü

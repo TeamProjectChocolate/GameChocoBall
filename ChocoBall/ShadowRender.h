@@ -29,6 +29,10 @@ public:
 	void SetShadowCamera(LPD3DXEFFECT effect){
 		effect->SetMatrix("LightViewProj", &(m_camera.GetView() * m_camera.GetProj()));
 	}
+	void DrawFrame(/*LPDIRECT3DDEVICE9, */LPD3DXFRAME,C3DImage*);
+	void DrawMeshContainer(/*LPDIRECT3DDEVICE9,*/ LPD3DXMESHCONTAINER,C3DImage*/*, LPD3DXFRAME*/);
+	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,C3DImage*);
+	void NonAnimationDraw(C3DImage*);
 private:
 	LPDIRECT3DSURFACE9 m_pMapZ = nullptr;			// 深度バッファ
 	LPDIRECT3DTEXTURE9 m_pShadow = nullptr;		// 影を落とすためのテクスチャ

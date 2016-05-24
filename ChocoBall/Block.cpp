@@ -53,9 +53,6 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 
 	C3DImage::SetImage();
-
-
-
 }
 
 
@@ -64,26 +61,26 @@ void CBlock::Update()
 	switch (m_eState){
 	case enState_Normal:{
 		//•¨—ƒGƒ“ƒWƒ“‚ÅŒvŽZ‚³‚ê‚½„‘Ì‚ÌˆÊ’u‚Æ‰ñ“]‚ð”½‰f‚³‚¹‚éB
-		/*const btVector3& rPos = m_rigidBody->getWorldTransform().getOrigin();
-		const btQuaternion& rRot = m_rigidBody->getWorldTransform().getRotation();
-		D3DXVECTOR3 pos(rPos.x(), rPos.y(), rPos.z());
-		D3DXQUATERNION rot(rRot.x(), rRot.y(), rRot.z(), rRot.w());
-		m_transform.position.x = rPos.x();
-		m_transform.position.y = rPos.y();
-		m_transform.position.z = rPos.z();
+		//const btVector3& rPos = m_rigidBody->getWorldTransform().getOrigin();
+		//const btQuaternion& rRot = m_rigidBody->getWorldTransform().getRotation();
+		//D3DXVECTOR3 pos(rPos.x(), rPos.y(), rPos.z());
+		//D3DXQUATERNION rot(rRot.x(), rRot.y(), rRot.z(), rRot.w());
+		//m_transform.position.x = rPos.x();
+		//m_transform.position.y = rPos.y();
+		//m_transform.position.z = rPos.z();
 		//m_box.SetPosition(pos);
 		//m_box.SetRotation(rot);
 		//m_box.UpdateWorldMatrix();
 		//m_shadowModel.SetWorldMatrix(m_box.GetWorldMatrix());
 		//ShadowMap().Entry(&m_shadowModel);
-		m_life += 1.0f / 60.0f;
-		//m_transform.position.y -= 0.05f;
+		//m_life += 1.0f / 60.0f;
+		////m_transform.position.y -= 0.05f;
 
-		btVector3 a(0.0f, 0.0f, 1.0f);
+		//btVector3 a(0.0f, 0.0f, 1.0f);
 
-		if (GetAsyncKeyState('A')){
-			m_rigidBody->setLinearVelocity(a);
-		}*/
+		//if (GetAsyncKeyState('A')){
+		//	m_rigidBody->setLinearVelocity(a);
+		//}
 		m_rigidBody->getWorldTransform().setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	}break;
 	case enState_Broken:{
