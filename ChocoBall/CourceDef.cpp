@@ -20,6 +20,7 @@ void CCourceDef::Initialize(){
 		itr->nextBlock = node;
 		m_courceNum++;
 		if (num + 2 >= arraySize){
+			m_courceEnd = itr->endPosition;
 			itr->nextBlock = nullptr;
 		}
 		else{

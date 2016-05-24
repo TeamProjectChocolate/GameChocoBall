@@ -22,21 +22,19 @@ void CEnemy::Initialize()
 	m_moveSpeed.z = 0.05f;
 	m_moveSpeed.y = 0.05f;
 	m_radius = 0.1f;
-
-	D3DXVECTOR3		m_V2;
-	D3DXVECTOR3 m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
+	m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	m_Hitflag = false;
+	m_pBullet = (SINSTANCE(CObjectManager)->FindGameObject<Bullet>(_T("Bullet")));
 	SetAlive(true);	//死亡フラグ
 	SetAlpha(1.0f);	//透明度？
 	flg = true;
-
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 	
-	D3DXVECTOR3 m_V1 = Cource.endPosition - Cource.startPosition;
+	m_V1 = Cource.endPosition - Cource.startPosition;
 	D3DXVec3Normalize(&V1, &m_V1);
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
@@ -50,60 +48,98 @@ void CEnemy::Update()
 
 	m_transform.position += V2 * 0.05f;
 
-	D3DXVECTOR3 m_V3 = m_transform.position - m_initPosition;
-	float V3 = D3DXVec3Length(&m_V3);
+	m_V3 = m_transform.position - m_initPosition;
+	V3 = D3DXVec3Length(&m_V3);
 
-	if (V3 > 2.5)
-	{
-		V2 *= -1.0f;
-	}
-	if (V2 > 0)
+	if (m_Hitflag == false)
 	{
 		isTurn = true;
-		//左方向を向かせる
-		m_eCurrentAngleY = D3DXToRadian(180.0f);
+
+		m_transform.position += V2 * 0.05f;
+
+		m_V3 = m_transform.position - m_initPosition;
+		V3 = D3DXVec3Length(&m_V3);
+
+		if (V3 > 2.5)
+		{
+			V2 *= -1.0f;
+		}
+		m_Hitflag = m_pBullet->GetHitflag();
+		//if (V2 > 0)
+		//{
+		//	isTurn = true;
+		//	//左方向を向かせる
+		//	g_targetAngleY = D3DXToRadian(180.0f);
+		//}
+		//else
+		//{
+		//	isTurn = false;
+		//	//右方向を向かせる。
+		//	g_targetAngleY = D3DXToRadian(-180.0f);
+		//}
+		V0 = D3DXVec3Dot(&m_V0, &V2);
+		m_eTargetAngleY = acos(V0);
+		D3DXVECTOR3 V4;
+		D3DXVec3Cross(&V4, &m_V0, &V2);
+		if (V4.y < 0)
+		{
+			m_eTargetAngleY *= -1.0f;
+		}
+		m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+		// 回転行列
+		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
+		C3DImage::Update();
 	}
-	else
-	{
-		isTurn = false;
-		//右方向を向かせる。
-	}
-	float V0 = D3DXVec3Dot(&m_V0, &V2);
+	//if (V2 > 0)
+	//{
+	//	isTurn = true;
+	//	//左方向を向かせる
+	//	m_eCurrentAngleY = D3DXToRadian(180.0f);
+	//}
+	//else
+	//{
+	//	isTurn = false;
+	//	//右方向を向かせる。
+	//}
+	//float V0 = D3DXVec3Dot(&m_V0, &V2);
 
-	V0 = D3DXVec3Dot(&m_V0, &V2);
-	m_eTargetAngleY=acos(V0);
-	D3DXVECTOR3 V4;
-	D3DXVec3Cross(&V4, &m_V0, &V2);
-	if (V4.y < 0)
-	{
+	//V0 = D3DXVec3Dot(&m_V0, &V2);
+	//m_eTargetAngleY=acos(V0);
+	//D3DXVECTOR3 V4;
+	//D3DXVec3Cross(&V4, &m_V0, &V2);
+	//if (V4.y < 0)
+	//{
 
-		m_eTargetAngleY *= -1.0f;
-	}
-	//m_Turn.Update(isTurn, m_eTargetAngleY);
+	//	m_eTargetAngleY *= -1.0f;
+	//}
+	////m_Turn.Update(isTurn, m_eTargetAngleY);
 
-	//こいつを書かないと回転行列に乗算してくれない。
+	////こいつを書かないと回転行列に乗算してくれない。
 
-	//m_eCurrentAngleY = m_Turn.Update(isTurn, m_eCurrentAngleY);
+	////m_eCurrentAngleY = m_Turn.Update(isTurn, m_eCurrentAngleY);
 
-	// 回転行列
+	//// 回転行列
+	//
+
+	//m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+
+
+	//SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
+
+	//C3DImage::Update();
 	
-
-	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
-
-
-	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
-
-	C3DImage::Update();
 }
 
 
 void CEnemy::Draw()
 {
-	IMAGE3D* img = GetImage();
-	m_Rigidbody.Draw();
-	SetUpTechnique();
-	C3DImage::Draw();
-	
+	if (m_Hitflag == false)
+	{
+		IMAGE3D* img = GetImage();
+		m_Rigidbody.Draw();
+		SetUpTechnique();
+		C3DImage::Draw();
+	}
 }
 
 void CEnemy::OnDestroy()

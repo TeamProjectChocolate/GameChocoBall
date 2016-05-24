@@ -47,11 +47,11 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
-	//static bool flg = true;
-	//if (flg){
-	//	SINSTANCE(CObjectManager)->GenerationObject<CResult>(_T("Clear"), 3, false);
-	//	flg = false;
-	//}
+	static bool flg = true;
+	if (flg){
+		SINSTANCE(CObjectManager)->GenerationObject<CResult>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
+		flg = false;
+	}
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }

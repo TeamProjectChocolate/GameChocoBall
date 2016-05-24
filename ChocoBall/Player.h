@@ -6,8 +6,10 @@
 #include "islntersect.h"
 #include "Turn.h"
 #include "GameManager.h"
-#include "LockOn.h"
 #include "CourceDef.h"
+#include "LockOn.h"
+
+class LockOn;
 
 class CPlayer : public C3DImage
 {
@@ -32,7 +34,11 @@ public:
 	}
 	bool GetShotflag()
 	{
-		return m_Shotflag;
+		return Shotflag;
+	}
+	void SetShotflag(bool shotflag)
+	{
+		Shotflag=shotflag;
 	}
 private:
 	CInterface*	m_pInput;
@@ -54,7 +60,8 @@ private:
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	void UpdateLight();
 	CTurn			m_Turn;				//CTurnのインスタンス
-	bool			m_Shotflag;			//弾が発射されているのかのフラグ
+	bool			Shotflag;			//弾が発射されているのかのフラグ
+	bool            Jumpflag;			//ジャンプフラグ
 
 	CCourceDef		m_Courcedef;
 	//藤田
