@@ -38,6 +38,22 @@ public:
 
 	// バッファの削除
 	void ClearBuffer();
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	左：マイナス、右：プラス
+	*/
+	float GetStickL_XFloat() override
+	{
+		return (float)GetStickL_X() / 0x7FFF;
+	}
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	下：マイナス、上：プラス
+	*/
+	float GetStickL_YFloat() override
+	{
+		return (float)GetStickL_Y() / 0x7FFF;
+	}
 
 	/*
 	*	左スティックの傾き量　
