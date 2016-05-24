@@ -66,6 +66,7 @@ void CPlayer::Update()
 	
 	isTurn = false;
 
+
 	if (m_pInput->IsTriggerRightShift())
 	{
 		Shotflag = true;

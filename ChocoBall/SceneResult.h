@@ -3,6 +3,7 @@
 #include "ResultBack.h"
 #include "ResultSelect.h"
 #include "ResultCursor.h"
+#include "Score.h"
 
 class CSceneResult : 
 	public CScene
@@ -17,4 +18,6 @@ private:
 	CResultBack m_rBack;
 	CResultSelect m_rSelect[2];
 	CResultCursor m_rCursor;
+	CScoreCalc m_Score;
+	CNumber m_Number;
 };
