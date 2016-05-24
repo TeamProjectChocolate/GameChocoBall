@@ -66,6 +66,7 @@ void CPlayer::Update()
 	
 	isTurn = false;
 
+
 	if (m_pInput->IsTriggerRightShift())
 	{
 		Shotflag = true;
@@ -89,55 +90,32 @@ void CPlayer::Update()
 	{
 		m_moveSpeed.z = 0.0f;
 	}*/
-	short X, Y;
+	
 	//X = Y = 0;
 	//ゲームパッドでのプレイヤーの移動。
 	//前後の動き
-	Y = m_pInput->GetStickL_Y();
-	if (Y > 0)
+	float X= m_pInput->GetStickL_XFloat();
+	float Y = m_pInput->GetStickL_YFloat();
+	
+	if (fabs(Y) > 0.0f)
 	{
 		if (Jumpflag == false)
 		{
 			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.z = MOVE_SPEED;
-			//前を向かせる。
-			m_targetAngleY = D3DXToRadian(180.0f);
+			m_moveSpeed.z = Y * MOVE_SPEED;
+
 		}
 		isTurn = true;
 	}
 		
-	if (Y < 0)
-	{
-		if (Jumpflag == false)
-		{	//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.z = -MOVE_SPEED;
-			//後ろを向かせる。
-			m_targetAngleY = D3DXToRadian(0.0f);
-		}
-		isTurn = true;
-	
-	}
 	//左右の動き
-	X = m_pInput->GetStickL_X();
-	if (X > 0)
+	if (fabsf(X) > 0.0f)
 	{
 		if (Jumpflag == false)
 		{
 			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.x = MOVE_SPEED;
-			//右を向かせる。
-			m_targetAngleY = D3DXToRadian(-90.0f);
-		}
-		isTurn = true;
-	}
-	if (X < 0)
-	{
-		if (Jumpflag == false)
-		{
-			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.x = -MOVE_SPEED;
-			//左を向かせる。
-			m_targetAngleY = D3DXToRadian(90.0f);
+			m_moveSpeed.x = X * MOVE_SPEED;
+
 		}
 		isTurn = true;
 	}

@@ -11,6 +11,7 @@ CResultBack::CResultBack()
 
 CResultBack::~CResultBack()
 {
+
 }
 
 void CResultBack::Initialize(){

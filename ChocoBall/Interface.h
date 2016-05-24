@@ -16,7 +16,16 @@ public:
 	void SetType(INTERFACE_TYPE type){
 		m_InputType = type;
 	}
-
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	左：マイナス、右：プラス
+	*/
+	virtual float GetStickL_XFloat() = 0;
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	下：マイナス、上：プラス
+	*/
+	virtual float GetStickL_YFloat() = 0;
 	/*
 	*	左スティックの傾き量　
 	*	左：マイナス、右：プラス
