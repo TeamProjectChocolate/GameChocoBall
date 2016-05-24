@@ -2,6 +2,8 @@
 #include "Enemy.h"
 #include "GameObject.h"
 
+#define ENEMYNUM 2
+
 class CEnemyManager:public CGameObject
 {
 public:

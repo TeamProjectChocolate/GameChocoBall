@@ -8,12 +8,13 @@
 CEnemy::~CEnemy(){ }
 
 void CEnemy::Initialize()
+
 {
 	C3DImage::Initialize();
-	//m_initPosition = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
-	//m_transform.position = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
-	m_initPosition = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
-	m_transform.position = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
+	m_initPosition = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
+	m_transform.position = D3DXVECTOR3(18.0f, -0.5f, 18.0f);
+	//m_initPosition = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
+	//m_transform.position = D3DXVECTOR3(0.0f, -0.5f, -15.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_V0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -75,6 +76,7 @@ void CEnemy::Update()
 	D3DXVec3Cross(&V4, &m_V0, &V2);
 	if (V4.y < 0)
 	{
+
 		m_eTargetAngleY *= -1.0f;
 	}
 	//m_Turn.Update(isTurn, m_eTargetAngleY);
