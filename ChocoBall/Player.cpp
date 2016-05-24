@@ -55,10 +55,10 @@ void CPlayer::Update()
 
 	isTurn = false;
 
-	if (m_pInput->IsTriggerShift())
-	{
-		Shotflag = true;
-	}
+	//if (m_pInput->IsTriggerShift())
+	//{
+	//	Shotflag = true;
+	//}
 	if (m_pInput->IsTriggerSpace())
 	{
 		m_moveSpeed.y = 8.0f;

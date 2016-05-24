@@ -10,6 +10,8 @@
 #include "Block.h"
 #include "BuildBlock.h"
 #include "Result.h"
+#include "ClearText.h"
+#include "GameOver.h"
 #include "Number.h"
 #include "EnemyManager.h"
 #include "CBManager.h"
@@ -47,11 +49,16 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
-	//static bool flg = true;
-	//if (flg){
-	//	SINSTANCE(CObjectManager)->GenerationObject<CResult>(_T("Clear"), 3, false);
-	//	flg = false;
-	//}
+	static bool flg = true;
+	if (flg){
+		SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
+		SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
+		SINSTANCE(CObjectManager)->GenerationObject<CGameOver>(_T("GameOver"), PRIORTY::OBJECT2D_ALPHA, false);
+		SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize();
+	}
+	
+		
+		flg = false;
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }
