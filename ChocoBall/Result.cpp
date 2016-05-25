@@ -4,7 +4,7 @@
 CResult::CResult(){
 	m_Text.Initialize();
 	m_Over.Initialize();
-	//SetAlive(true);
+	SetAlive(true);
 }
 
 CResult::~CResult(){

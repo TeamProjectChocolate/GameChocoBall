@@ -9,14 +9,14 @@
 #include "CourceDef.h"
 #include "LockOn.h"
 
-class LockOn;
+class CLockOn;
 
 class CPlayer : public C3DImage
 {
 public:
 	CPlayer(){
-		strcpy(m_pFileName, "image/TestPlayer.x");
-		//strcpy(m_pFileName, "image/PL_Girl_SSword.x");
+		//strcpy(m_pFileName, "image/TestPlayer.x");
+		strcpy(m_pFileName, "image/PL_Girl_SSword.x");
 	};
 	~CPlayer();
 
@@ -26,6 +26,11 @@ public:
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);
 	void SetUpLight();
+	void Move();
+	void LockOn();
+	void BehaviorCorrection();
+	void StateManaged();
+	void BulletShot();
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
@@ -40,6 +45,10 @@ public:
 	void SetShotflag(bool shotflag)
 	{
 		Shotflag=shotflag;
+	}
+	GAMEEND_ID GetGameState()
+	{
+		return m_GameState;
 	}
 private:
 	CInterface*	m_pInput;
@@ -57,12 +66,15 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
-	LockOn          m_LockOn;			//LockOnのインスタンス
+	CLockOn          m_LockOn;			//LockOnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+
 	void UpdateLight();
+
 	CTurn			m_Turn;				//CTurnのインスタンス
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
+	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
 
 	CCourceDef		m_Courcedef;
 	//藤田

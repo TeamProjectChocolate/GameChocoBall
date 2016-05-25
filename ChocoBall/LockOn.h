@@ -2,11 +2,11 @@
 #include "stdafx.h"
 
 
-class LockOn
+class CLockOn
 {
 public:
-	LockOn();
-	~LockOn();
+	CLockOn();
+	~CLockOn();
 	float LockOnRotation(float _X, D3DXVECTOR3 position, int lockonEnemyIndex);
 	int FindNearEnemy(D3DXVECTOR3 position);
 private:

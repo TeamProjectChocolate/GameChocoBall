@@ -16,6 +16,7 @@
 #include "EnemyManager.h"
 #include "CBManager.h"
 
+
 CMainScene::CMainScene(){
 }
 
@@ -24,11 +25,12 @@ CMainScene::~CMainScene(){
 
 void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T("Camera"), PRIORTY::CONFIG,true);
+	
 	extern CEnemyManager g_enemyMgr;
-	for (short i = 0; i < 20; i++){
+	/*for (short i = 0; i < 20; i++){
 		CEnemy* enemy = new CEnemy;
 		g_enemyMgr.AddEnemy(enemy);
-	}
+	}*/
 	srand((unsigned int)time(NULL));
 	SINSTANCE(CObjectManager)->GenerationObject<CField>(_T("TESTStage3D"), PRIORTY::OBJECT3D,false);
 	SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T("TEST3D"),PRIORTY::PLAYER,false);
@@ -39,26 +41,48 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"),PRIORTY::OBJECT3D, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CCBManager>(_T("CHOCO"),PRIORTY::OBJECT3D, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D_ALPHA, false);
+	//SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+	m_CLevelBuilder.Build();
 	SINSTANCE(CObjectManager)->Intialize();
 
 	SINSTANCE(CShadowRender)->Entry(SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
 	//m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
+
+	m_GameState = GAMEEND_ID::CONTINUE;
+	m_isGameContinue = true;
 }
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// 音楽更新
-	/*static bool flg = true;
+	static bool flg = true;
 	if (flg){
 		SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
 		SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
 		SINSTANCE(CObjectManager)->GenerationObject<CGameOver>(_T("GameOver"), PRIORTY::OBJECT2D_ALPHA, false);
-		SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize();
+		SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize(); flg = false;
+		flg = false;
 	}
-	
-		
-		flg = false;*/
+	m_Player = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
+	m_GameState = m_Player->GetGameState();
+
+	if (m_isGameContinue){
+		if (m_GameState == GAMEEND_ID::CLEAR)
+		{
+			SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
+			SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
+			m_isGameContinue = false;
+		}
+		else if (m_GameState == GAMEEND_ID::OVER)
+		{
+			SINSTANCE(CObjectManager)->GenerationObject<CGameOver>(_T("GameOver"), PRIORTY::OBJECT2D_ALPHA, false);
+			SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize();
+			m_isGameContinue = false;
+		}
+	}
+
+>>>>>>> c9145ca1618f072af13c447fb57921e104936683
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }
