@@ -114,6 +114,7 @@
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
+    <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="RenderContext.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="islntersect.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
+    <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LockOn.cpp" />
     <ClCompile Include="MainScene.cpp" />

@@ -12,6 +12,8 @@ class CEnemy : public C3DImage
 {
 public:
 	CEnemy(){
+		m_initPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	
 		strcpy(m_pFileName, "image/ENr.x");
 	};
 	~CEnemy();
@@ -30,6 +32,11 @@ public:
 	void Setradius(float radius)
 	{
 		m_radius = radius;
+	}
+	void SetInitPosition(D3DXVECTOR3 pos)
+	{
+		m_initPosition = pos;
+		m_transform.position = pos;
 	}
 private:
 	float			m_radius;
