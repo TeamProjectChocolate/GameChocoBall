@@ -7,6 +7,7 @@
 
 Bullet::~Bullet()
 {
+
 }
 
 void Bullet::Initialize()
@@ -24,9 +25,10 @@ void Bullet::Initialize()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 	this->Build();
+	extern CEnemyManager g_enemyMgr;
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 	m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
-	
+
 	C3DImage::SetImage();
 }
 

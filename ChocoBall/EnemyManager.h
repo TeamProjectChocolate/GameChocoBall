@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "GameObject.h"
 
-#define ENEMYNUM 2
+#define ENEMYNUM 1
 
 class CEnemyManager:public CGameObject
 {

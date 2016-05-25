@@ -51,10 +51,10 @@ void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
 	static bool flg = true;
 	if (flg){
-		SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
-		SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
-		SINSTANCE(CObjectManager)->GenerationObject<CGameOver>(_T("GameOver"), PRIORTY::OBJECT2D_ALPHA, false);
-		SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize();
+		//SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
+		//SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
+		//SINSTANCE(CObjectManager)->GenerationObject<CGameOver>(_T("GameOver"), PRIORTY::OBJECT2D_ALPHA, false);
+		//SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->Initialize();
 	}
 	
 		

@@ -8,6 +8,7 @@
 #include "LockOn.h"
 
 class CPlayer;
+class CEnemy;
 
 class Bullet : public C3DImage
 {
@@ -41,5 +42,7 @@ private:
 	LockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
+	CEnemy*			m_Enemy;
+	bool            EnemyShot;
 };
 
