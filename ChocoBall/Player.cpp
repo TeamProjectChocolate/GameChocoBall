@@ -13,7 +13,7 @@ void CPlayer::Initialize()
 
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
+	m_transform.position = D3DXVECTOR3(0.00f, 30.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	m_Up.x = 0.0f;
@@ -104,7 +104,7 @@ void CPlayer::Update()
 		{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.z = Y * MOVE_SPEED;
-
+			m_currentAnimNo = 1;
 		}
 		isTurn = true;
 	}
@@ -116,7 +116,7 @@ void CPlayer::Update()
 		{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.x = X * MOVE_SPEED;
-
+			m_currentAnimNo = 1;
 		}
 		isTurn = true;
 	}
