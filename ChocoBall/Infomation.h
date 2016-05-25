@@ -8,6 +8,7 @@ class CSkinModelData;
 #define NUM_DIFFUSE_LIGHT 4		// 使用するディフューズライトの数
 
 #define MAX_PRIORTY 255
+
 enum PRIORTY{CONFIG = 0,PLAYER,OBJECT3D,OBJECT3D_ALPHA,OBJECT2D,OBJECT2D_ALPHA,LOWEST = MAX_PRIORTY};
 
 enum GAMEEND_ID{ CONTINUE = 0,CLEAR, OVER };
@@ -24,11 +25,18 @@ typedef struct IMAGE3D{
 	CSkinModelData* pModel;
 }IMAGE3D;
 
+// 2D画像の大きさ格納用構造体
+typedef struct TEXTURE_SIZE{
+	float x;
+	float y;
+};
+
 // 2Dモデル情報格納用構造体
 typedef struct IMAGE2D{
 	CHAR pFileName[MAX_FILENAME + 1];
 	LPDIRECT3DTEXTURE9 pTex;
-	RECT rect;
+	TEXTURE_SIZE RealSize;
+	TEXTURE_SIZE UnRealSize;
 }IMAGE2D;
 
 

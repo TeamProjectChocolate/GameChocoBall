@@ -54,6 +54,7 @@ void CPlayer::Update()
 	{
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
+		m_currentAnimNo = 0;
 
 		// ライトの更新
 		this->UpdateLight();
@@ -186,6 +187,7 @@ void CPlayer::Move()
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.z = Y * MOVE_SPEED;
 			isTurn = true;
+			m_CurrentAnimNo = 1;
 		}
 	}
 
@@ -197,6 +199,7 @@ void CPlayer::Move()
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.x = X * MOVE_SPEED;
 			isTurn = true;
+			m_CurrentAnimNo = 1;
 		}
 	}
 
@@ -259,6 +262,17 @@ void CPlayer::BehaviorCorrection()
 
 	//m_V3 = V1 + V2;
 	//V3 = D3DXVec3Length(&m_V3);
+
+	//ゲームクリア
+	D3DXVECTOR3 Endposition;
+	Endposition = m_Courcedef.EndCource();
+	if (Endposition.x-0.5<m_transform.position.x&&Endposition.z-10<m_transform.position.z)
+	{
+		PostQuitMessage(0);
+	}
+
+	// アニメーション再生関数を呼び出す
+	m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
 
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
