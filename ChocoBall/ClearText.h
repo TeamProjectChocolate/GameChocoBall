@@ -12,4 +12,3 @@ public:
 	float t;
 	short dir;
 };
-

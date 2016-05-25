@@ -7,8 +7,15 @@ void CCBManager::Initialize()
 {
 	for (int i = 0; i < CHOCO_NUM; i++)
 	{
-		D3DXVECTOR3	pos(0.0f, 5.0f, -15.0f);
-		m_Choco[i].Initialize(pos/*GetPosition()*/);
+		int rate = 100.0f / (rand() % 100+1);
+		if (rand() % 2){
+			rate *= -1.0f;
+		}
+		D3DXVECTOR3	pos(0.0f, rate, -50.0f + fabsf(rate));
+		D3DXVECTOR3 Epos(0.0f, -1.0f, 0.0f);
+		SetStartPosition(pos);
+		SetEndPosition(Epos);
+		m_Choco[i].Initialize(GetStartPosition(), GetEndPosition());
 	}
 	SetAlive(true);
 }

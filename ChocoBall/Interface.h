@@ -16,6 +16,47 @@ public:
 	void SetType(INTERFACE_TYPE type){
 		m_InputType = type;
 	}
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	左：マイナス、右：プラス
+	*/
+	virtual float GetStickL_XFloat() = 0;
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	下：マイナス、上：プラス
+	*/
+	virtual float GetStickL_YFloat() = 0;
+	/*
+	*	左スティックの傾き量　
+	*	左：マイナス、右：プラス
+	*/
+	virtual SHORT GetStickL_X() = 0;
+	/*
+	*	左スティックの傾き量　
+	*	下：マイナス、上：プラス
+	*/
+	virtual SHORT GetStickL_Y() = 0;
+	/*
+	*	右スティックの傾き量　
+	*	左：マイナス、右：プラス
+	*/
+	virtual SHORT GetStickR_X() = 0;
+	/*
+	*	右スティックの傾き量　
+	*	下：マイナス、上：プラス
+	*/
+	virtual SHORT GetStickR_Y() = 0;
+	/*
+	*	左トリガーの深度
+	*  0～255
+	*/
+	virtual BYTE  GetTriggerL() = 0;
+	/*
+	*	右トリガーの深度
+	*  0～255
+	*/
+	virtual BYTE  GetTriggerR() = 0;
+
 	virtual bool GetConnected() = 0;
 
 	virtual BYTE IsTriggerDecsion() = 0;// 決定ボタンが押されたら

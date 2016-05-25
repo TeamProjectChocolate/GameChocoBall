@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "AllocateHierarchy.h"
 #include "GraphicsDevice.h"
 

@@ -14,5 +14,5 @@ public:
 	void Draw()override;
 private:
 	CClearText m_Text;
-	CGameOver m_Over;
+	CGameOver  m_Over;
 };

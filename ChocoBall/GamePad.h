@@ -38,12 +38,28 @@ public:
 
 	// バッファの削除
 	void ClearBuffer();
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	左：マイナス、右：プラス
+	*/
+	float GetStickL_XFloat() override
+	{
+		return (float)GetStickL_X() / 0x7FFF;
+	}
+	/*
+	*	左スティックの傾き量を正規化された-1.0～1.0で取得。　
+	*	下：マイナス、上：プラス
+	*/
+	float GetStickL_YFloat() override
+	{
+		return (float)GetStickL_Y() / 0x7FFF;
+	}
 
 	/*
 	*	左スティックの傾き量　
 	*	左：マイナス、右：プラス
 	*/
-	SHORT GetStickL_X()
+	SHORT GetStickL_X()override
 	{
 		if ((m_state.Gamepad.sThumbLX < INPUT_DEADZONE &&
 			m_state.Gamepad.sThumbLX > -INPUT_DEADZONE))
@@ -56,7 +72,7 @@ public:
 	*	左スティックの傾き量　
 	*	下：マイナス、上：プラス
 	*/
-	SHORT GetStickL_Y()
+	SHORT GetStickL_Y()override
 	{
 		if ((m_state.Gamepad.sThumbLY < INPUT_DEADZONE &&
 			m_state.Gamepad.sThumbLY > -INPUT_DEADZONE))
@@ -69,7 +85,7 @@ public:
 	*	右スティックの傾き量　
 	*	左：マイナス、右：プラス
 	*/
-	SHORT GetStickR_X()
+	SHORT GetStickR_X()override
 	{
 		if ((m_state.Gamepad.sThumbRX < INPUT_DEADZONE &&
 			m_state.Gamepad.sThumbRX > -INPUT_DEADZONE))
@@ -82,7 +98,7 @@ public:
 	*	右スティックの傾き量　
 	*	下：マイナス、上：プラス
 	*/
-	SHORT GetStickR_Y()
+	SHORT GetStickR_Y()override
 	{
 		if ((m_state.Gamepad.sThumbRY < INPUT_DEADZONE &&
 			m_state.Gamepad.sThumbRY > -INPUT_DEADZONE))
@@ -96,7 +112,7 @@ public:
 	*	左トリガーの深度
 	*  0～255
 	*/
-	BYTE  GetTriggerL()
+	BYTE  GetTriggerL()override
 	{
 		return m_state.Gamepad.bLeftTrigger;
 	}
@@ -104,14 +120,14 @@ public:
 	*	右トリガーの深度
 	*  0～255
 	*/
-	BYTE  GetTriggerR()
+	BYTE  GetTriggerR()override
 	{
 		return m_state.Gamepad.bRightTrigger;
 	}
 	/*
 	*	コントローラーがさされているか
 	*/
-	bool GetConnected()
+	bool GetConnected()override
 	{
 		return m_bConnected;
 	}

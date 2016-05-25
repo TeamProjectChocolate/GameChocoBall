@@ -7,23 +7,33 @@
 
 class CChocoBall : public C3DImage {
 public:
-	CChocoBall(){
-		m_collisionShape = nullptr;
-		m_rigidBody = nullptr;
-		m_myMotionState = nullptr;
-		strcpy(m_pFileName, "image/Debri.x");
-	}
+	CChocoBall(){  }
 	~CChocoBall(){}
 
-	void Initialize(D3DXVECTOR3 pos);
+	void Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos);
 	void Update();
 	void Draw();
 	void OnDestroy();
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
+
+	//現時点と目的地を渡すとベクトルをセットします。
+	//GetVector()で呼び出してください。
+	void SetVector(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos){
+		m_Vector = Epos - Spos;
+	}
+
+	//ベクトルを返すよ！
+	D3DXVECTOR3 GetVector()
+	{
+		return m_Vector;
+	}
+
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*		m_collisionShape;	//コリジョンの形状。
-	btRigidBody*			m_rigidBody;		//剛体。
+	D3DXVECTOR3				m_EndPosition;		//目的地
+	D3DXVECTOR3				m_Vector;			//進行方向を格納。
+	D3DXVECTOR3				m_Vector2;
 	btDefaultMotionState*	m_myMotionState;
 	float					m_life;
 	CRigidbody				m_Rigidbody;

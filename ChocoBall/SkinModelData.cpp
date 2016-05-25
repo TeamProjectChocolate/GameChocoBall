@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SkinModelData.h"
 #include "GraphicsDevice.h"
 #include "AllocateHierarchy.h"

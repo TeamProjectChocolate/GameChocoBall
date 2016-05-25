@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "ClearText.h"
 
 
@@ -18,6 +19,7 @@ void CClearText::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(800, 800, 100);
 	C2DImage::SetImage();
+	SetAlive(true);
 	dir = -1;
 	t = 0.0f;
 }
