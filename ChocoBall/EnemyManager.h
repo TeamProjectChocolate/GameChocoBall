@@ -19,6 +19,11 @@ public:
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
 	}
+	void DeleteEnemy(CEnemy* enemy)
+	{
+		Enemy[numEnemy] = enemy;
+		numEnemy--;
+	}
 
 	int GetNumEnemy()
 	{

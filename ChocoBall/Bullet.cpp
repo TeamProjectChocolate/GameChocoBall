@@ -40,35 +40,32 @@ void Bullet::Update()
 		m_transform.position = m_pPlayer->GetPos();
 	}
 
-	D3DXVECTOR3 V5;
-	V5 = m_transform.position - m_pPlayer->GetPos();
-	float V6 = D3DXVec3Length(&V5);
-	V6 = fabs(V6);
-	if (V6 > 50)
+
+	if (Shotflag == true)
 	{
-		Shotflag = false;
-		m_moveSpeed.z = 0.0f;
-		m_pPlayer->SetShotflag(Shotflag);
+		//プレイヤーと弾の距離が50mになると弾が自動でプレイヤーの元に戻ってくる。
+		D3DXVECTOR3 V5;
+		V5 = m_transform.position - m_pPlayer->GetPos();
+		float V6 = D3DXVec3Length(&V5);
+		V6 = fabs(V6);
+		if (V6 > 50)
+		{
+			Shotflag = false;
+			m_moveSpeed.z = 0.0f;
+			m_pPlayer->SetShotflag(Shotflag);
+		}
+
+		if (Shotflag == true)
+		{
+			m_moveSpeed.z = 50.0f;
+		}
+
+		//弾と敵との衝突判定
+		BulletEnemyCollision();
+		
+		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+		C3DImage::Update();
 	}
-	
-	if (Shotflag==true)
-	{
-		m_moveSpeed.z = 50.0f;
-	}
-	
-	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-	CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-	D3DXVECTOR3 dist;
-	dist = Enemy->GetPos() - m_transform.position;
-	float L;
-	L = D3DXVec3Length(&dist);//ベクトルの長さを計算
-	if (L<=1)
-	{
-		m_Hitflag = true;
-	}
-	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
-	C3DImage::Update();
 }
 
 void Bullet::Draw()
@@ -88,4 +85,19 @@ void Bullet::OnDestroy()
 void Bullet::Build()
 {
 	m_Rigidbody.Build(m_transform.scale, m_transform.position);
+}
+
+void Bullet::BulletEnemyCollision()
+{
+	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+	D3DXVECTOR3 dist;
+	dist = Enemy->GetPos() - m_transform.position;
+	float L;
+	L = D3DXVec3Length(&dist);//ベクトルの長さを計算
+	if (L <= 1)
+	{
+		m_Hitflag = true;
+	}
 }

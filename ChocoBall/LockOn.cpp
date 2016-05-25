@@ -4,15 +4,15 @@
 #include "EnemyManager.h"
 #include "ObjectManager.h"
 
-LockOn::LockOn()
+CLockOn::CLockOn()
 {
 }
 
-LockOn::~LockOn()
+CLockOn::~CLockOn()
 {
 }
 
-float LockOn::LockOnRotation(float _X, D3DXVECTOR3 position, int lockonEnemyIndex)
+float CLockOn::LockOnRotation(float _X, D3DXVECTOR3 position, int lockonEnemyIndex)
 {
 	static float fHALF_PI = fPI / 2.0f;
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
@@ -40,15 +40,16 @@ float LockOn::LockOnRotation(float _X, D3DXVECTOR3 position, int lockonEnemyInde
 	return _X;
 }
 
-int LockOn::FindNearEnemy(D3DXVECTOR3 position)
+int CLockOn::FindNearEnemy(D3DXVECTOR3 position)
 {
 	float Min;
 
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 	CEnemy* Enemy;
+	int NumEnemy = EnemyManager->GetNumEnemy();
 	Min = 99999;	//”Ô•º
 	//“G20‘Ì•ª‚Ì‹——£‚ÌŽæ“¾
-	for (int K = 0; K < 20; K++)
+	for (int K = 0; K < NumEnemy; K++)
 	{
 		Enemy = EnemyManager->GetEnemy(K);
 		D3DXVECTOR3 dist;

@@ -5,6 +5,7 @@
 #include "RenderContext.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "EnemyManager.h"
 
 CPlayer::~CPlayer(){ }
 
@@ -28,10 +29,13 @@ void CPlayer::Initialize()
 
 	SetAlive(true);
 	SetAlpha(1.0f);
-
+	
 	LockOnflag = false;
 	Shotflag = false;
 	Jumpflag = false;
+
+	m_GameState = GAMEEND_ID::CONTINUE;
+
 	m_Courcedef.Initialize();
 
 	// ライト関連の初期化
@@ -46,174 +50,40 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
-	m_currentAnimNo = 0;
-	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-
-	this->UpdateLight();
-
-	//着地しているのでフラグはfalse
-	if (m_transform.position.y <= -0.7f)
+	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
-		Jumpflag = false;
+		// デバイスが切り替わった場合は自動で切り替える
+		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
+		m_currentAnimNo = 0;
+
+		// ライトの更新
+		this->UpdateLight();
+
+		// メインシーンの状態を管理する処理
+		StateManaged();
+
+		// 弾発射処理
+		BulletShot();
+
+		//ゲームパッドでのプレイヤーの移動。
+		Move();
+
+		//プレイヤーの挙動をコース定義に沿ったものに補正する処理
+		BehaviorCorrection();
+
+		//ロックオン処理
+		LockOn();
+
+
+		//プレイヤーの処理の最後になるべく書いて
+		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+
+		//回転行列
+		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
+
+		C3DImage::Update();
+
 	}
-
-	//ゲームオーバー処理
-	if (m_transform.position.y <= -10.0f)
-	{
-		PostQuitMessage(0);
-	}
-
-	float _X = 0.0f;
-	
-	isTurn = false;
-
-
-	if (m_pInput->IsTriggerRightShift())
-	{
-		Shotflag = true;
-	}
-	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
-	{
-		Shotflag = false;
-	}
-	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
-	{
-		m_moveSpeed.y = 20.0f;
-		Jumpflag = true;
-	}
-	if (Jumpflag == false /*&& FrontBackflag == false*/)
-	{
-		m_moveSpeed.x = 0.0f;
-		m_moveSpeed.z = 0.0f;
-	}
-
-	/*if (Jumpflag == false && RightLeftflag == false)
-	{
-		m_moveSpeed.z = 0.0f;
-	}*/
-	
-	//X = Y = 0;
-	//ゲームパッドでのプレイヤーの移動。
-	//前後の動き
-	float X= m_pInput->GetStickL_XFloat();
-	float Y = m_pInput->GetStickL_YFloat();
-	
-	if (fabs(Y) > 0.0f)
-	{
-		if (Jumpflag == false)
-		{
-			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.z = Y * MOVE_SPEED;
-			m_currentAnimNo = 1;
-		}
-		isTurn = true;
-	}
-		
-	//左右の動き
-	if (fabsf(X) > 0.0f)
-	{
-		if (Jumpflag == false)
-		{
-			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.x = X * MOVE_SPEED;
-			m_currentAnimNo = 1;
-		}
-		isTurn = true;
-	}
-
-	//直行するベクトルを求める。
-	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
-	m_V1 = Cource.endPosition - Cource.startPosition;
-	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
-	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
-	D3DXVec3Normalize(&V2, &m_V2);
-
-	//m_V3 = V1 + V2;
-	//V3 = D3DXVec3Length(&m_V3);
-
-	//ゲームクリア
-	D3DXVECTOR3 Endposition;
-	Endposition = m_Courcedef.EndCource();
-	if (Endposition.x-0.5<m_transform.position.x&&Endposition.z-10<m_transform.position.z)
-	{
-		PostQuitMessage(0);
-	}
-
-	// アニメーション再生関数を呼び出す
-	m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
-
-
-	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
-	if (!Jumpflag){
-		D3DXVECTOR3 t0, t1;
-		t0 = V1 * m_moveSpeed.z;
-		t1 = V2 * -m_moveSpeed.x;
-		t0 += t1;
-		m_moveSpeed.x = t0.x;
-		m_moveSpeed.z = t0.z;
-	}
-	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
-	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
-
-	float L;
-	D3DXVECTOR3		NV2;
-	float			cos;
-	D3DXVECTOR3		Back;
-	D3DXVECTOR3     NV3;
-	Back.x = 0.0f;
-	Back.y = 0.0f;
-	Back.z = -1.0f;
-
-	D3DXVECTOR3 moveXZ = m_moveSpeed;
-	moveXZ.y = 0.0f;
-	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
-	if (L > 0)
-	{
-		D3DXVec3Normalize(&NV2, &moveXZ);
-		D3DXVec3Cross(&NV3, &NV2, &Back);
-		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
-		m_targetAngleY = acos(cos);
-		if (NV3.y > 0)
-		{
-			m_targetAngleY = m_targetAngleY*-1;
-		}
-	}
-
-	//ロックオン状態にする。
-	if (m_pInput->IsTriggerLeftShift() && LockOnflag == false)
-	{
-		LockOnflag = true;
-		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-	}
-	//ロックオン状態の解除
-	else if (m_pInput->IsTriggerLeftShift() && LockOnflag == true)
-	{
-		LockOnflag = false;
-	}
-	//ロックオン状態中の回転の計算
-	if (LockOnflag)
-	{
-		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
-	}
-	//ロックオン状態の時に常にプレイヤーを敵に向かせる
-	if (LockOnflag){
-		m_targetAngleY = _X;
-	}
-
-	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-	if (Jumpflag==false)
-	{
-		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
-	}
-
-	//プレイヤーの処理の最後になるべく書いて
-	m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
-
-	//回転行列
-	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
-
-	C3DImage::Update();
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
 	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
@@ -234,10 +104,10 @@ void CPlayer::Draw(){
 	YMax = -FLT_MAX;
 	YMin = FLT_MAX;
 	for (int i = 0; i < numVertex; i++){
-		float* pos = (float*)pData;
-		YMax = max(YMax, pos[1]);
-		YMin = Minx(YMin, pos[1]);
-		pData += stride;
+	float* pos = (float*)pData;
+	YMax = max(YMax, pos[1]);
+	YMin = Minx(YMin, pos[1]);
+	pData += stride;
 	}
 	float size = YMax + fabsf(YMin);
 	float center = (YMax + YMin)*0.5f;
@@ -288,4 +158,205 @@ void CPlayer::SetUpLight(){
 		m_light.SetDiffuseLightColor(num, m_lightColor[num]);
 	}
 	SINSTANCE(CRenderContext)->SetCurrentLight(&m_light);
+}
+
+void CPlayer::Move()
+{
+	isTurn = false;
+
+	//着地しているのでフラグはfalse
+	if (m_transform.position.y <= -0.7f)
+	{
+		Jumpflag = false;
+	}
+	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
+	{
+		m_moveSpeed.y = 20.0f;
+		Jumpflag = true;
+	}
+
+
+	float X = m_pInput->GetStickL_XFloat();
+	float Y = m_pInput->GetStickL_YFloat();
+
+	//前後の動き
+	if (fabs(Y) > 0.0f)
+	{
+		if (Jumpflag == false)
+		{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.z = Y * MOVE_SPEED;
+			isTurn = true;
+			m_currentAnimNo = 1;
+		}
+	}
+
+	//左右の動き
+	if (fabsf(X) > 0.0f)
+	{
+		if (Jumpflag == false)
+		{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.x = X * MOVE_SPEED;
+			isTurn = true;
+			m_currentAnimNo = 1;
+		}
+	}
+
+	if (fabsf(X) <= 0.0001f){
+		if (Jumpflag == false)
+		{
+			m_moveSpeed.x = 0.0f;
+		}
+	}
+	if (fabsf(Y) <= 0.0001f){
+		if (Jumpflag == false)
+		{
+			m_moveSpeed.z = 0.0f;
+		}
+	}
+
+	if (Jumpflag == false)
+	{
+		//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
+		//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
+		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
+	}
+}
+
+void CPlayer::LockOn()
+{
+	float _X = 0.0f;
+
+	//ロックオン状態にする。
+	if (m_pInput->IsTriggerLeftShift() && LockOnflag == false)
+	{
+		LockOnflag = true;
+		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	}
+	//ロックオン状態の解除
+	else if (m_pInput->IsTriggerLeftShift() && LockOnflag == true)
+	{
+		LockOnflag = false;
+	}
+	//ロックオン状態中の回転の計算
+	if (LockOnflag)
+	{
+		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
+	}
+	//ロックオン状態の時に常にプレイヤーを敵に向かせる
+	if (LockOnflag){
+		m_targetAngleY = _X;
+	}
+
+}
+
+void CPlayer::BehaviorCorrection()
+{
+	//直行するベクトルを求める。
+	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
+	m_V1 = Cource.endPosition - Cource.startPosition;
+	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
+	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
+	D3DXVec3Normalize(&V2, &m_V2);
+
+	//m_V3 = V1 + V2;
+	//V3 = D3DXVec3Length(&m_V3);
+
+	//ゲームクリア
+	D3DXVECTOR3 Endposition;
+	Endposition = m_Courcedef.EndCource();
+	if (Endposition.x-0.5<m_transform.position.x&&Endposition.z-10<m_transform.position.z)
+	{
+		PostQuitMessage(0);
+	}
+
+	// アニメーション再生関数を呼び出す
+	m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
+
+
+	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
+	if (!Jumpflag){
+		D3DXVECTOR3 t0, t1;
+		t0 = V1 * m_moveSpeed.z;
+		t1 = V2 * -m_moveSpeed.x;
+		t0 += t1;
+		m_moveSpeed.x = t0.x;
+		m_moveSpeed.z = t0.z;
+	}
+	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
+	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
+
+
+	//コース定義に従ったプレイヤーの回転の処理
+	float L;
+	D3DXVECTOR3		NV2;
+	float			cos;
+	D3DXVECTOR3		Back;
+	D3DXVECTOR3     NV3;
+	Back.x = 0.0f;
+	Back.y = 0.0f;
+	Back.z = -1.0f;
+
+	D3DXVECTOR3 moveXZ = m_moveSpeed;
+	moveXZ.y = 0.0f;
+	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
+	if (L > 0)
+	{
+		D3DXVec3Normalize(&NV2, &moveXZ);
+		D3DXVec3Cross(&NV3, &NV2, &Back);
+		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
+		m_targetAngleY = acos(cos);
+		if (NV3.y > 0)
+		{
+			m_targetAngleY = m_targetAngleY*-1;
+		}
+	}
+
+}
+
+void CPlayer::StateManaged()
+{
+	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+	D3DXVECTOR3 dist;
+	dist = Enemy->GetPos() - m_transform.position;
+	float R;
+	R = D3DXVec3Length(&dist);//ベクトルの長さを計算
+
+	if (R <= 1)
+	{
+		m_GameState = GAMEEND_ID::OVER;
+		return;
+	}
+
+	//ゲームオーバー処理
+	if (m_transform.position.y <= -10.0f)
+	{
+		m_GameState = GAMEEND_ID::OVER;
+		return;
+	}
+
+	//ゲームクリア
+	D3DXVECTOR3 Endposition;
+	Endposition = m_Courcedef.EndCource();
+	if (Endposition.x - 0.5 < m_transform.position.x&&Endposition.z - 10 < m_transform.position.z)
+	{
+		m_GameState = GAMEEND_ID::CLEAR;
+		return;
+	}
+}
+
+void CPlayer::BulletShot()
+{
+	if (m_pInput->IsTriggerRightShift())
+	{
+		Shotflag = true;
+	}
+	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
+	{
+		Shotflag = false;
+	}
+
 }

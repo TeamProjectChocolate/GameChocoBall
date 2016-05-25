@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Field.h"
 
-
 SCollisionInfo collisionInfoTable[] = {
 #include "collisionInfo.h"
 };

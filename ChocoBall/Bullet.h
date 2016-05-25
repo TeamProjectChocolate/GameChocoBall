@@ -21,6 +21,7 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void BulletEnemyCollision();
 	void SetUpTechnique()override
 	{
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");//Textureが無いのでセットテクニックをオーバーライド
@@ -39,7 +40,7 @@ private:
 	CIsIntersect	m_IsIntersect;	//CIsIntersectのインスタンス
 	CRigidbody      m_Rigidbody;	//CRigidbodyインスタンス	
 	float			m_radius;
-	LockOn          m_LockOn;
+	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
 	CEnemy*			m_Enemy;
