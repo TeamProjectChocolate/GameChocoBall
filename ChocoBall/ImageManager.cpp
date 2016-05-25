@@ -18,7 +18,15 @@ IMAGE2D* CImageManager::LoadTextureFile(LPCSTR pFileName){
 	D3DXCreateTextureFromFileEx(graphicsDevice(), pFileName, 0, 0, 0, 0, D3DFMT_UNKNOWN,
 		D3DPOOL_DEFAULT, D3DX_FILTER_NONE, D3DX_DEFAULT, 0xff000000, &imgInfo, NULL, &image->pTex);	//テクスチャ読込
 	RECT rec = { 0, 0, imgInfo.Width, imgInfo.Height };			//描画領域
-	memcpy(&image->rect, &rec, sizeof(RECT));					//描画領域セット
+	image->RealSize.x = imgInfo.Width;
+	image->RealSize.y = imgInfo.Height;
+	IDirect3DSurface9* surface;
+	image->pTex->GetSurfaceLevel(0, &surface);
+	D3DSURFACE_DESC desc;
+	surface->GetDesc(&desc);
+	image->UnRealSize.x = desc.Width;
+	image->UnRealSize.y = desc.Height;
+	surface->Release();
 	SINSTANCE(CImageManager)->Add2D(image);
 	return image;
 }

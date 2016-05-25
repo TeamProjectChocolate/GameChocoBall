@@ -14,7 +14,7 @@ CSkinModelData::~CSkinModelData()
 	SAFE_RELEASE(m_pAnimController);
 }
 
-void CSkinModelData::LoadModelData(LPCSTR pFileName){
+void CSkinModelData::LoadModelData(LPCSTR pFileName,CAnimation* anim){
 	CAllocateHierarchy alloc;
 
 	// モデルデータロード
@@ -31,6 +31,9 @@ void CSkinModelData::LoadModelData(LPCSTR pFileName){
 
 	CH_ASSERT(!FAILED(hr));
 	SetUpBoneMatrixPointers(m_frameRoot, m_frameRoot);
+	if (m_pAnimController != nullptr){
+		anim->Initialize(m_pAnimController);
+	}
 }
 
 void CSkinModelData::SetUpBoneMatrixPointers(LPD3DXFRAME pFrame, LPD3DXFRAME pRootFrame /*ツリー構造のもっとも根のノードを使用するので渡している*/){

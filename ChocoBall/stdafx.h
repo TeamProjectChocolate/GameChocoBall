@@ -35,6 +35,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <memory>
 
 #define SAFE_RELEASE(p)			{ if(p) { (p)->Release(); (p) = NULL; } }	//インスタンスリリース
 #define SAFE_DELETE_ARRAY(p)	{ if(p) { delete[] (p);   (p) = NULL; } }	//インスタンス配列削除
@@ -81,3 +82,5 @@ const float g_cTurnSpeed D3DXToRadian(10.0f);
 #define SINSTANCE(CLASS_NAME) CLASS_NAME::GetInstance()		// シングルトンオブジェクトのインスタンスを取得するマクロ関数(引き数：クラス名)
 
 #define CLASS_NAME(p) typeid(p).name()		//クラス名の文字列を取得するマクロ関数(引数：クラス名)
+
+#define DELTA_TIME 1.0f / 60.0f

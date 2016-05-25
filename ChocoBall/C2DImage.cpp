@@ -8,10 +8,7 @@
 
 void C2DImage::SetImage()
 {
-	IMAGE2D* Image = SINSTANCE(CImageManager)->Find2DImage(m_pFileName);
-	m_pTexture = Image->pTex;
-	m_rect = Image->rect;
-	m_texCenter = D3DXVECTOR2(FLOAT(m_rect.right / 2), FLOAT(m_rect.bottom / 2));
+	m_pImage = SINSTANCE(CImageManager)->Find2DImage(m_pFileName);
 }
 
 
@@ -58,7 +55,13 @@ void C2DImage::Draw()
 	m_pEffect->SetInt("NowCol", m_Now.x);
 	m_pEffect->SetInt("NowRow", m_Now.y);
 
-	m_pEffect->SetTexture("g_Texture", m_pTexture /*テクスチャ情報*/);
+	float ratio_X = m_pImage->RealSize.x / m_pImage->UnRealSize.x;
+	float ratio_Y = m_pImage->RealSize.y / m_pImage->UnRealSize.y;
+
+	m_pEffect->SetFloat("Ratio_X", ratio_X);
+	m_pEffect->SetFloat("Ratio_Y", ratio_Y);
+	
+	m_pEffect->SetTexture("g_Texture", m_pImage->pTex /*テクスチャ情報*/);
 
 	m_pEffect->SetFloat("Alpha", GetAlpha());
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。

@@ -19,5 +19,4 @@ public:
 	void AddValue(const int value){ m_value += value; };		// ŠO•”‚©‚çó‚¯æ‚Á‚½’l‚ğm_value‚É‰ÁZ
 private:
 	int m_value;	// ”’l
-
 };

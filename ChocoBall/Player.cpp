@@ -49,6 +49,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	m_currentAnimNo = 0;
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 	this->UpdateLight();
@@ -84,12 +85,14 @@ void CPlayer::Update()
 		isTurn = true;
 		//180度向かせる。
 		m_targetAngleY = D3DXToRadian(180.0f);
+		m_currentAnimNo = 1;
 	}
 	else if (m_pInput->IsPressDown()){
 		m_moveSpeed.z = -MOVE_SPEED;
 		isTurn = true;
 		//正面を向かせる。
 		m_targetAngleY = D3DXToRadian(0.0f);
+		m_currentAnimNo = 1;
 	}
 
 	if (m_pInput->IsPressRight()){
@@ -97,13 +100,19 @@ void CPlayer::Update()
 		isTurn = true;
 		//右方向を向かせる。
 		m_targetAngleY = D3DXToRadian(-90.0f);
+		m_currentAnimNo = 1;
 	}
 	if (m_pInput->IsPressLeft()){
 		m_moveSpeed.x = -MOVE_SPEED;
 		isTurn = true;
 		//左方向を向かせる
 		m_targetAngleY = D3DXToRadian(90.0f);
+		m_currentAnimNo = 1;
 	}
+
+	// アニメーション再生関数を呼び出す
+	m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
+
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
 	D3DXVECTOR3 t0, t1;
