@@ -3,6 +3,7 @@
 #include "Graphicsdevice.h"
 #include "GameObject.h"
 #include "SkinModelData.h"
+#include "Animation.h"
 
 extern UINT g_NumBoneMatricesMax;
 extern D3DXMATRIXA16* g_pBoneMatrices;
@@ -43,6 +44,9 @@ private:
 	void AnimationDraw(/*LPDIRECT3DDEVICE9, */D3DXMESHCONTAINER_DERIVED*/*, LPD3DXMESHCONTAINER, LPD3DXFRAME*/);
 	void NonAnimationDraw();
 protected:
+	// 3D描画用メンバ変数
 	D3DXMATRIX m_World;		// ワールド行列
 	CSkinModelData* m_pSkinModel;
+	CAnimation m_animation;
+	int m_currentAnimNo;
 };

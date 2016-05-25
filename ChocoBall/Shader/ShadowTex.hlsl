@@ -22,9 +22,9 @@ VS_OUTPUT VS_ShadowMain(VS_INPUT In, uniform bool isBone){
 	float4x4 LightViewProj;	// ライトから見たときのビュープロジェクション行列
 	LightViewProj = mul(View, Proj);
 	VS_OUTPUT Out = (VS_OUTPUT)0;
-	float4 pos = 0.0f;
 
 	if (isBone){
+		float4 pos = 0.0f;
 		// ブレンドするボーンのインデックス
 		int4 IndexVector = D3DCOLORtoUBYTE4(In.BlendIndices);
 
@@ -34,19 +34,17 @@ VS_OUTPUT VS_ShadowMain(VS_INPUT In, uniform bool isBone){
 		float LastWeight = 0.0f;
 		for (int iBone = 0; iBone < g_numBone - 1; iBone++){
 			LastWeight = LastWeight + BlendWeightsArray[iBone];
-			pos.xyz += mul(In.pos.xyz, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+			pos.xyz += mul(In.pos, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
 		}
 		LastWeight = 1.0f - LastWeight;
-		pos.xyz += (mul(In.pos.xyz, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight);
+		pos.xyz += (mul(In.pos, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight);
 
-		Out.pos = mul(float4(pos.xyz, 1.0f), View);
-		Out.pos = mul(Out.pos, Proj);
+		Out.pos = float4(pos.xyz, 1.0f);
 	}
 	else{
-		pos = mul(In.pos, World);
-		pos.w = 1.0f;
+		Out.pos = mul(In.pos, World);
 	}
-	Out.pos = mul(pos, LightViewProj);
+	Out.pos = mul(Out.pos, LightViewProj);
 	return Out;
 }
 

@@ -13,16 +13,21 @@ HRESULT C3DImage::SetImage(){
 
 	m_pImage = SINSTANCE(CImageManager)->Find3DImage(m_pFileName);
 	if (m_pImage != nullptr){
-		return S_OK;
+		if (m_pImage->pModel->GetAnimationController() != nullptr){
+			m_animation.Initialize(m_pImage->pModel->GetAnimationController());
+		}
 	}
-
-	LoadXFile();
+	else{
+		LoadXFile();
+	}
+	m_currentAnimNo = 0;
+	m_animation.PlayAnimation(m_currentAnimNo, 1.0f);
 	return S_OK;
 }
 
 HRESULT C3DImage::LoadXFile(){
 	CSkinModelData* pSkinModelData = new CSkinModelData;
-	pSkinModelData->LoadModelData(m_pFileName);
+	pSkinModelData->LoadModelData(m_pFileName,&m_animation);
 	m_pImage = new IMAGE3D;
 	m_pImage->pModel = pSkinModelData;
 	SINSTANCE(CImageManager)->Add3D(m_pFileName, pSkinModelData);
@@ -91,7 +96,8 @@ void C3DImage::AnimationUpdate(){
 	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
 
-	m_pImage->pModel->GetAnimationController()->AdvanceTime(1.0f / 60.0f, NULL);
+	m_animation.Update(DELTA_TIME);
+	//m_pImage->pModel->GetAnimationController()->AdvanceTime(1.0f / 60.0f, NULL);
 	m_pImage->pModel->UpdateBoneMatrix(&m_World);	//ボーン行列を更新。
 }
 

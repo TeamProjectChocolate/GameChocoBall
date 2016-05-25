@@ -46,6 +46,7 @@ void CPlayer::Initialize()
 
 void CPlayer::Update()
 {
+	m_currentAnimNo = 0;
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 	this->UpdateLight();
@@ -138,36 +139,9 @@ void CPlayer::Update()
 		PostQuitMessage(0);
 	}
 
-	//キーボードでのプレイヤーの移動。
-	//if (m_pInput->IsPressUp()){
-	//	m_moveSpeed.z = MOVE_SPEED;
-	//	isTurn = true;
-	//	FrontBackflag = true;
-	//	//前を向かせる。
-	//	m_targetAngleY = D3DXToRadian(180.0f);
-	//}
-	//else if (m_pInput->IsPressDown()){
-	//	m_moveSpeed.z = -MOVE_SPEED;
-	//	isTurn = true;
-	//	FrontBackflag = true;
-	//	//後ろを向かせる。
-	//	m_targetAngleY = D3DXToRadian(0.0f);
-	//}
+	// アニメーション再生関数を呼び出す
+	m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
 
-	//if (m_pInput->IsPressRight()){
-	//	m_moveSpeed.x = MOVE_SPEED;
-	//	isTurn = true;
-	//	RightLeftflag = true;
-	//	//右方向を向かせる。
-	//	m_targetAngleY = D3DXToRadian(-90.0f);
-	//}
-	//if (m_pInput->IsPressLeft()){
-	//	m_moveSpeed.x = -MOVE_SPEED;
-	//	isTurn = true;
-	//	RightLeftflag = true;
-	//	//左方向を向かせる
-	//	m_targetAngleY = D3DXToRadian(90.0f);
-	//}
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
 	if (!Jumpflag){

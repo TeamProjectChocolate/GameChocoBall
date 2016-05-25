@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "Infomation.h"
+#include "Animation.h"
 
 
 class CSkinModelData
@@ -9,7 +10,7 @@ class CSkinModelData
 public:
 	CSkinModelData();
 	~CSkinModelData();
-	void LoadModelData(LPCSTR);
+	void LoadModelData(LPCSTR,CAnimation*);
 	void SetUpBoneMatrixPointers(LPD3DXFRAME, LPD3DXFRAME);
 	void SetUpBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER,LPD3DXFRAME);
 	LPD3DXFRAME GetFrameRoot()
