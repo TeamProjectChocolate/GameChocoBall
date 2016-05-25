@@ -49,7 +49,7 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
-	static bool flg = true;
+	/*static bool flg = true;
 	if (flg){
 		SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
 		SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
@@ -58,7 +58,7 @@ void CMainScene::Update(){
 	}
 	
 		
-		flg = false;
+		flg = false;*/
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }
