@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ChocoBall.h"
+#include "CollisionType.h"
 
 void CChocoBall::Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos)
 {
@@ -10,7 +11,7 @@ void CChocoBall::Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos)
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_Rigidbody.Initialize(&m_transform.position, 0.3f);
-	
+	m_Rigidbody.SetUserIndex(CollisionType_Chocoball);
 	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
 
 	//m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
