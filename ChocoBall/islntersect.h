@@ -54,6 +54,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
+
 		D3DXVECTOR3 hitPointNormal;
 		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
 		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
@@ -88,6 +89,7 @@ public:
 	~CIsIntersect();
 	void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius);
 	void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
+	void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
 private:
 	//ここからBulletPhysicsで衝突判定を行うためのメンバ変数。
 	btGhostObject*		m_ghostObject;		//!<ゴースト。剛体の変わりになるもの。完全に物理挙動に任せたいものは剛体を使う。

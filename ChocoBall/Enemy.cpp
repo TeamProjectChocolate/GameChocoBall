@@ -19,8 +19,7 @@ void CEnemy::Initialize()
 	m_moveSpeed.y = 0.05f;
 	m_radius = 0.1f;
 	m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	m_Hitflag = false;
-	m_pBullet = (SINSTANCE(CObjectManager)->FindGameObject<Bullet>(_T("Bullet")));
+	//m_Hitflag = false;
 	SetAlive(true);	//死亡フラグ
 	SetAlpha(1.0f);	//透明度？
 	flg = true;
@@ -40,7 +39,7 @@ void CEnemy::Initialize()
 
 void CEnemy::Update()
 {
-	if (m_Hitflag == false)
+	if (GetAlive())
 	{
 		isTurn = true;
 
@@ -53,7 +52,7 @@ void CEnemy::Update()
 		{
 			V2 *= -1.0f;
 		}
-		m_Hitflag = m_pBullet->GetHitflag();
+		//m_Hitflag = m_pBullet->GetHitflag();
 		//if (V2 > 0)
 		//{
 		//	isTurn = true;
@@ -84,9 +83,9 @@ void CEnemy::Update()
 
 void CEnemy::Draw()
 {
-	if (m_Hitflag == false)
+	if (GetAlive())
 	{
-		IMAGE3D* img = GetImage();
+		//IMAGE3D* img = GetImage();
 		m_Rigidbody.Draw();
 		SetUpTechnique();
 		C3DImage::Draw();
