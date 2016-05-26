@@ -12,7 +12,7 @@ Bullet::~Bullet()
 void Bullet::Initialize()
 {
 	C3DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	SetRotation(D3DXVECTOR3(0, 0, 1), 0.0f);//íeÇ™Zé≤âÒì]Ç∑ÇÈ
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	SetAlive(true);
@@ -26,55 +26,34 @@ void Bullet::Initialize()
 	this->Build();
 	extern CEnemyManager g_enemyMgr;
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
+<<<<<<< HEAD
 	m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 
+=======
+	
+>>>>>>> 4c5d857ff8ca670bcc3d8c0bb46fb403bf0df697
 	C3DImage::SetImage();
 }
 
 void Bullet::Update()
 {
-	Shotflag = m_pPlayer->GetShotflag();
 
-	if (Shotflag == false)
-	{
-		m_transform.position = m_pPlayer->GetPos();
-	}
+	//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç¢ÇƒÇ¢ÇÈÉxÉNÉgÉãÇíeÇ…â¡éZ
+	m_transform.position.x = m_transform.position.x + m_dir.x*3.0f;
+	m_transform.position.y = m_transform.position.y + m_dir.y*3.0f;
+	m_transform.position.z = m_transform.position.z + m_dir.z*3.0f;
 
 
-	if (Shotflag == true)
-	{
-		//ÉvÉåÉCÉÑÅ[Ç∆íeÇÃãóó£Ç™50mÇ…Ç»ÇÈÇ∆íeÇ™é©ìÆÇ≈ÉvÉåÉCÉÑÅ[ÇÃå≥Ç…ñﬂÇ¡ÇƒÇ≠ÇÈÅB
-		D3DXVECTOR3 V5;
-		V5 = m_transform.position - m_pPlayer->GetPos();
-		float V6 = D3DXVec3Length(&V5);
-		V6 = fabs(V6);
-		if (V6 > 50)
-		{
-			Shotflag = false;
-			m_moveSpeed.z = 0.0f;
-			m_pPlayer->SetShotflag(Shotflag);
-		}
+	//íeÇ∆ìGÇ∆ÇÃè’ìÀîªíË
+	BulletEnemyCollision();
 
-		if (Shotflag == true)
-		{
-			m_moveSpeed.z = 50.0f;
-		}
-
-		//íeÇ∆ìGÇ∆ÇÃè’ìÀîªíË
-		BulletEnemyCollision();
-		
-		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
-		C3DImage::Update();
-	}
+	m_IsIntersect.Intersect2(&m_transform.position, &m_moveSpeed);
+	C3DImage::Update();
 }
-
 void Bullet::Draw()
 {
-	if (Shotflag)
-	{
-		SetUpTechnique();
-		C3DImage::Draw();
-	}
+	SetUpTechnique();
+	C3DImage::Draw();
 }
 
 void Bullet::OnDestroy()
@@ -99,6 +78,7 @@ void Bullet::BulletEnemyCollision()
 	if (L <= 1)
 	{
 		m_Hitflag = true;
+		Enemy->SetAlive(false);
 	}
 }
 

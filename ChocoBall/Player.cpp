@@ -17,6 +17,7 @@ void CPlayer::Initialize()
 	m_transform.position = D3DXVECTOR3(0.00f, 30.0f, -49.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	m_Up.x = 0.0f;
 	m_Up.y = 1.0f;
 	m_Up.z = 0.0f;
@@ -33,6 +34,9 @@ void CPlayer::Initialize()
 	LockOnflag = false;
 	Shotflag = false;
 	Jumpflag = false;
+	ChocoBall = false;
+	m_Hitflag = false;
+	BusterEnemyNum = 0;
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 
@@ -40,11 +44,10 @@ void CPlayer::Initialize()
 
 	// ライト関連の初期化
 	this->ConfigLight();
-
+	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
 
 	C3DImage::SetImage();
-
 	m_lockonEnemyIndex = 0;
 }
 
@@ -55,16 +58,15 @@ void CPlayer::Update()
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
-		m_currentAnimNo = 0;
+		
+
+		m_currentAnimNo = 0;		
 
 		// ライトの更新
 		this->UpdateLight();
 
 		// メインシーンの状態を管理する処理
 		StateManaged();
-
-		// 弾発射処理
-		BulletShot();
 
 		//ゲームパッドでのプレイヤーの移動。
 		Move();
@@ -78,9 +80,11 @@ void CPlayer::Update()
 		//ロックオン処理
 		LockOn();
 
-
 		//プレイヤーの処理の最後になるべく書いて
 		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+
+		// 弾発射処理
+		BulletShot();
 
 		//回転行列
 		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
@@ -90,6 +94,11 @@ void CPlayer::Update()
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
 	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		m_bullets[idx]->Update();
+	}
 }
 
 void CPlayer::Draw(){
@@ -118,6 +127,14 @@ void CPlayer::Draw(){
 
 	SetUpTechnique();
 	C3DImage::Draw();
+
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		m_bullets[idx]->Draw();
+	}
+
+	// 絶対にここで呼べよ！　絶対だぞっ！？
+	ExcuteDeleteBullets();
 }
 
 void CPlayer::UpdateLight(){
@@ -343,11 +360,53 @@ void CPlayer::BulletShot()
 {
 	if (m_pInput->IsTriggerRightShift())
 	{
-		Shotflag = true;
-	}
-	else if (m_pInput->IsTriggerDecsion() && Shotflag == true)
-	{
-		Shotflag = false;
+		//Shotflag = true;
+
+		//プレイヤーの向いているベクトルを計算
+		D3DXVec3Normalize(&RV0, &RV0);
+		D3DXMatrixRotationY(&Rot, m_currentAngleY);
+		D3DXVec3Transform(&RV1, &RV0, &Rot);
+
+		
+		Bullet* bullet = new Bullet;
+		bullet->Initialize();
+		bullet->SetPos(m_transform.position);
+		bullet->SetDir(RV1);
+		m_bullets.push_back(bullet);
 	}
 
+	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		D3DXVECTOR3 V5;
+		V5 = m_bullets[idx]->GetPos() - m_transform.position;
+		float length = D3DXVec3Length(&V5);
+		length = fabs(length);
+		if (length > 50)
+		{
+			DeleteBullet(m_bullets[idx]);
+		}
+	}
+}
+
+void CPlayer::DeleteBullet(Bullet* bullet){
+	m_Deletebullets.push_back(bullet);
+}
+
+void CPlayer::ExcuteDeleteBullets(){
+	vector<Bullet*>::iterator itr;
+	int size = m_Deletebullets.size();
+	for (int idx = 0; idx < size; idx++){
+		for (itr = m_bullets.begin(); itr != m_bullets.end();){
+			if (m_Deletebullets[idx] == *itr){
+				SAFE_DELETE(*itr);
+				itr = m_bullets.erase(itr);
+				break;
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+	m_Deletebullets.clear();
 }

@@ -5,6 +5,10 @@ SCollisionInfo collisionInfoTable[] = {
 #include "collisionInfo.h"
 };
 
+SCollisionInfo GimmickTriggerInfoTable[] = {
+#include "GimmickTriggerInfo.h"
+};
+
 CField::~CField()
 {
 }
@@ -38,6 +42,27 @@ void CField::Initialize(){
 
 			//ワールドに追加。
 			g_bulletPhysics.AddRigidBody(m_rigidBody[i]);
+		}
+
+
+		//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
+		int arraySize2 = ARRAYSIZE(GimmickTriggerInfoTable);	//配列の要素数を返す。
+		for (int i = 0; i < arraySize2; i++) {
+			SCollisionInfo& collision = GimmickTriggerInfoTable[i];
+			m_GhostShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
+			btTransform groundTransform;
+			groundTransform.setIdentity();
+			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, -collision.pos.z));
+			groundTransform.setRotation(btQuaternion(collision.rotation.x, collision.rotation.y, collision.rotation.z, collision.rotation.w));
+			
+			
+			m_ghostObject[i] = new btGhostObject();
+			m_ghostObject[i]->activate();
+			m_ghostObject[i]->setCollisionShape(m_GhostShape[i]);
+			m_ghostObject[i]->setWorldTransform(groundTransform);
+			m_ghostObject[i]->setUserIndex(10);
+			//ワールドに追加。
+			g_bulletPhysics.AddCollisionObject(m_ghostObject[i]);
 		}
 	}
 
