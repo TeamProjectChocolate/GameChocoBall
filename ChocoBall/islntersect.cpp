@@ -1,5 +1,101 @@
 #include "stdafx.h"
 #include "islntersect.h"
+#include "CBManager.h"
+#include "CollisionType.h"
+
+struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit;
+	D3DXVECTOR3 hitPos;
+
+	SweepResultGround()
+	{
+		isHit = false;
+	}
+
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player 
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
+			//無視。
+			return 0.0f;
+		}
+		D3DXVECTOR3 hitPointNormal;
+		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
+		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
+		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
+		float d = D3DXVec3Dot(&hitPointNormal, &CVec3Up);
+		if (d < 0.0f) {
+			//当たってない。
+			return 0.0f;
+		}
+		if (acosf(d) > fPI * 0.2) {
+			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
+			return 0.0f;
+		}
+		isHit = true;
+
+		hitPos.x = convexResult.m_hitPointLocal.x();
+		hitPos.y = convexResult.m_hitPointLocal.y();
+		hitPos.z = convexResult.m_hitPointLocal.z();
+		return 0.0f;
+	}
+};
+struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
+{
+	D3DXVECTOR3 hitNormalXZ;
+	bool isHit;
+	D3DXVECTOR3 hitPos;
+	SweepResultWall()
+	{
+		isHit = false;
+	}
+
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
+			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
+			if (!mgr->GetAlive()){
+				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+				mgr->Initialize();
+				g_bulletPhysics.RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
+			}
+			return 0.0f;
+		}
+
+		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball) {
+			//無視。
+			return 0.0f;
+		}
+
+		D3DXVECTOR3 hitPointNormal;
+		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
+		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
+		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
+
+		float d = D3DXVec3Dot(&hitPointNormal, &CVec3Up);
+		if (acosf(d) < fPI * 0.2) {
+			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
+			return 0.0f;
+		}
+		isHit = true;
+		//XZ平面での法線。
+		hitNormalXZ.x = hitPointNormal.x;
+		hitNormalXZ.y = 0.0f;
+		hitNormalXZ.z = hitPointNormal.z;
+		D3DXVec3Normalize(&hitNormalXZ, &hitNormalXZ);
+
+		btTransform transform = convexResult.m_hitCollisionObject->getWorldTransform();
+
+
+		hitPos.x = convexResult.m_hitPointLocal.x();
+		hitPos.y = convexResult.m_hitPointLocal.y();
+		hitPos.z = convexResult.m_hitPointLocal.z();
+		return 0.0f;
+	}
+};
 
 CIsIntersect::CIsIntersect()
 {
@@ -28,7 +124,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_myMotionState = new btDefaultMotionState(rbTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_collisionShape, btVector3(0, 0, 0));
 	m_rigidBody = new btRigidBody(rbInfo);
-	m_rigidBody->setUserIndex(0);
+	m_rigidBody->setUserIndex(CollisionType_Player);
 	//ワールドに追加。
 	g_bulletPhysics.AddRigidBody(m_rigidBody);
 }

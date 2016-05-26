@@ -27,6 +27,10 @@ public:
 	{
 		m_rigidBody->applyForce(btVector3(force.x, force.y, force.z), btVector3(1.0f, 1.0f, 1.0f));
 	}
+	void SetUserIndex(int index)
+	{
+		m_rigidBody->setUserIndex(index);
+	}
 private:
 	D3DXMATRIX matWorld, m_projMatrix;
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。

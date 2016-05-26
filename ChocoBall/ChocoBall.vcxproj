@@ -104,6 +104,7 @@
     <ClInclude Include="CBManager.h" />
     <ClInclude Include="ChocoBall.h" />
     <ClInclude Include="ClearText.h" />
+    <ClInclude Include="CollisionType.h" />
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
