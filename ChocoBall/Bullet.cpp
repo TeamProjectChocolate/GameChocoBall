@@ -101,3 +101,8 @@ void Bullet::BulletEnemyCollision()
 		m_Hitflag = true;
 	}
 }
+
+void Bullet::BulletPlayerCollision()
+{
+	
+}

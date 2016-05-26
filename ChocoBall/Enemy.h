@@ -38,7 +38,9 @@ public:
 		m_initPosition = pos;
 		m_transform.position = pos;
 	}
-private:
+private:	
+	CInterface*	m_pInput;
+
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	D3DXVECTOR3		m_initPosition;		//初期座標。
@@ -63,5 +65,4 @@ private:
 	D3DXVECTOR3 m_V3;
 	float V3;
 	D3DXVECTOR3 m_Up;
-
 };

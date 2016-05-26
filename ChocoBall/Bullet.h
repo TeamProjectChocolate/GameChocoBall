@@ -8,7 +8,7 @@
 #include "LockOn.h"
 
 class CPlayer;
-class CEnemy;
+class CEnemyManager;
 
 class Bullet : public C3DImage
 {
@@ -22,6 +22,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void BulletEnemyCollision();
+	void BulletPlayerCollision();
 	void SetUpTechnique()override
 	{
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");//Textureが無いのでセットテクニックをオーバーライド
@@ -43,7 +44,5 @@ private:
 	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
-	CEnemy*			m_Enemy;
-	bool            EnemyShot;
 };
 

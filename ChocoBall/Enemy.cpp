@@ -4,11 +4,15 @@
 #include "RenderContext.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "Player.h"
+#include "InputManager.h"
+
+
+CPlayer player;
 
 CEnemy::~CEnemy(){ }
 
 void CEnemy::Initialize()
-
 {
 	C3DImage::Initialize();
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
