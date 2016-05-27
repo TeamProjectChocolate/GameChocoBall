@@ -4,6 +4,7 @@
 #include "ObjectManager.h"
 #include "Chocoball.h"
 #include "GameObject.h"
+#include "Player.h"
 
 #define CHOCO_NUM 200		//一回に流れるチョコの数
 
@@ -44,7 +45,9 @@ public:
 	{
 		return m_posG;
 	}
-
+	//チョコボールとの衝突判定。
+	bool IsHit(D3DXVECTOR3 pos, float radius);
+	
 private:
 	D3DXVECTOR3			m_pos;			//生成される場所のポジション。
 	D3DXVECTOR3			m_posG;			//流れていく先(ゴール)のポジション。
