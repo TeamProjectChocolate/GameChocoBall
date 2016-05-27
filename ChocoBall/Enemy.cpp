@@ -34,7 +34,7 @@ void CEnemy::Initialize()
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
 
-	extern CEnemyManager g_enemyMgr;
+	//extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemy::Update()

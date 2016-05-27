@@ -28,13 +28,14 @@ void CBlock::OnDestroyParent()
 }
 
 
-void CBlock::Initialize(D3DXVECTOR3 pos)
+void CBlock::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 {
 	strcpy(m_pFileName, "image/BR.x");
 	C3DImage::Initialize();
 	m_transform.position = pos; //D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.angle = rot;
 	m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 	
 
@@ -81,7 +82,9 @@ void CBlock::Update()
 		//if (GetAsyncKeyState('A')){
 		//	m_rigidBody->setLinearVelocity(a);
 		//}
-		m_rigidBody->getWorldTransform().setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
+		btTransform& trans = m_rigidBody->getWorldTransform();
+		trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
+		trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 	}break;
 	case enState_Broken:{
 	}break;

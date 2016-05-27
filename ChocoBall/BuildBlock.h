@@ -3,6 +3,7 @@
 #include "C3DImage.h"
 #include "ObjectManager.h"
 #include "Block.h"
+#include "LevelBuilder.h"
 #include "GameObject.h"
 
 #define BUILD_H 4		//ê∂ê¨Ç≥ÇÍÇÈï«ÇÃçÇÇ≥
@@ -14,9 +15,13 @@
 class CBuildBlock : public CGameObject{
 public:
 	CBuildBlock();
-	void Initialize()override;
+	void Initialize()override
+	{
+		
+	}
 	void Update()override;
 	void Draw()override;
+	void Initialize(D3DVECTOR pos, D3DXQUATERNION rot);
 	CBlock* GetBlocks(int x,int y){
 		return &m_blocks[y][x];
 	}

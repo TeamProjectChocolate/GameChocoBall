@@ -6,6 +6,10 @@
 #include <vector>
 #include "CBManager.h"
 
+enum GimmickType{
+	GimmickType_Chocoball,
+	GimmickType_Wall,
+};
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
 	D3DXQUATERNION rot;
@@ -50,7 +54,7 @@ void CLevelBuilder::Build()
 			enemy->SetInitPosition(infoTable[i].pos);
 			g_enemyMgr.AddEnemy(enemy);
 		}
-		if (info.gimmickType == 0){
+		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;
 			m_chocoballMgrList.push_back(mgr);
@@ -64,6 +68,15 @@ void CLevelBuilder::Build()
 			back.z = -mRot.m[2][2];
 			mgr->SetStartPosition(startPos);
 			mgr->SetEndPosition(startPos + back);
+		}
+		if (info.gimmickType == GimmickType_Wall){
+			//ギミックの生成
+			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
+			buildBlock->Initialize(
+				D3DXVECTOR3(-infoTable[i].pos.x, infoTable[i].pos.y, -infoTable[i].pos.z),
+				infoTable[i].rot
+			);
+
 		}
 	}
 	//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
