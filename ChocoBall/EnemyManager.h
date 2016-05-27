@@ -21,7 +21,20 @@ public:
 	}
 	void DeleteEnemy(CEnemy* enemy)
 	{
-		Enemy[numEnemy] = enemy;
+		enemy->OnDestroy();
+		int enemyIndex = -1;
+		for (int i = 0; i < numEnemy; i++){
+			if (enemy == Enemy[i]){
+				enemyIndex = i;
+				break;
+			}
+		}
+		if (enemyIndex == -1){
+			return;
+		}
+		for (int i = enemyIndex; i < numEnemy - 1; i++){
+			Enemy[i] = Enemy[i + 1];
+		}
 		numEnemy--;
 	}
 
