@@ -60,6 +60,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 				mgr->Initialize();
 				g_bulletPhysics.RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
+				g_player->SetCBM(mgr);
 			}
 			return 0.0f;
 		}
