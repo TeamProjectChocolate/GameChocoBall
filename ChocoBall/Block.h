@@ -68,7 +68,6 @@ private:
 	};
 	CBlock*			m_parent;		//親ブロック
 	CBlock*			m_child;		//子供
-	D3DXVECTOR3		m_position;
 	D3DXVECTOR3		m_moveSpeed;	//落下速度
 	float			m_radius;
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
