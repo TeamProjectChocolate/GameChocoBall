@@ -15,6 +15,7 @@
 #include "Number.h"
 #include "EnemyManager.h"
 #include "CBManager.h"
+#include "Score.h"
 
 
 CMainScene::CMainScene(){
@@ -82,7 +83,7 @@ void CMainScene::Update(){
 		}
 	}
 
->>>>>>> c9145ca1618f072af13c447fb57921e104936683
+
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
 }
