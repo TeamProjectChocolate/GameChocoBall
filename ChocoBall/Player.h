@@ -9,9 +9,10 @@
 #include "CourceDef.h"
 #include "LockOn.h"
 #include "Bullet.h"
+#include "CBManager.h"
 
 class CLockOn;
-
+class CCBManager;
 class CPlayer : public C3DImage
 {
 public:
@@ -54,6 +55,10 @@ public:
 	{
 		return ChocoBall;
 	}
+	void SetCBM(CCBManager* CHOCO)
+	{
+		m_CBManager = CHOCO;
+	}
 private:
 	CInterface*	m_pInput;
 	CLight			m_light;
@@ -83,6 +88,7 @@ private:
 	bool            ChocoBall;			//チョコボールを流すフラグ
 	int             BusterEnemyNum;		//倒した敵の数
 
+	CCBManager*		m_CBManager;
 
 	CCourceDef		m_Courcedef;
 	D3DXVECTOR3 RV0;
@@ -104,8 +110,14 @@ private:
 	D3DXVECTOR3		m_V3;
 	float			V3;
 	D3DXVECTOR3		m_Up;
+
+	//入口
+	
+	bool			m_HitFlag;
+	
 };
 
+extern CPlayer* g_player;
 
 namespace tkEngine{
 	const D3DXVECTOR3 vec3Zero = { 0.0f, 0.0f, 0.0f };

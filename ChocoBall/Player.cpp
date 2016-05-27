@@ -7,11 +7,12 @@
 #include "ObjectManager.h"
 #include "EnemyManager.h"
 
-CPlayer::~CPlayer(){ }
+CPlayer* g_player = NULL;
+CPlayer::~CPlayer(){  }
 
 void CPlayer::Initialize()
 {
-
+	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 30.0f, -49.42f);
@@ -47,6 +48,8 @@ void CPlayer::Initialize()
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
 
+	m_CBManager =NULL;
+
 	C3DImage::SetImage();
 	m_lockonEnemyIndex = 0;
 }
@@ -55,10 +58,10 @@ void CPlayer::Update()
 {
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
+
+
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-
-		
 
 		m_currentAnimNo = 0;		
 
@@ -89,6 +92,13 @@ void CPlayer::Update()
 		//回転行列
 		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 
+		if (m_CBManager != NULL)
+		{
+			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_radius))
+			{
+				m_GameState = GAMEEND_ID::OVER;
+			}
+		}
 		C3DImage::Update();
 	}
 
