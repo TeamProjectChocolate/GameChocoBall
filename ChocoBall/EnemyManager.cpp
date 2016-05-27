@@ -20,6 +20,7 @@ void CEnemyManager::Update()
 	for (short i = 0; i < numEnemy; i++)
 	{
 		Enemy[i]->Update();
+		
 	}
 }
 
