@@ -41,9 +41,8 @@ private:
 	D3DXVECTOR3		m_moveSpeed;//移動速度。
 	bool			Shotflag;	//弾が発射されているのかのフラグ
 	CIsIntersect	m_IsIntersect;	//CIsIntersectのインスタンス
-	CRigidbody      m_Rigidbody;	//CRigidbodyインスタンス	
 	float			m_radius;
-	CLockOn          m_LockOn;
+	CLockOn          m_LockOn;\
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
 	D3DXVECTOR4 m_dir;

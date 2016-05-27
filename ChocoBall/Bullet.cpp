@@ -55,12 +55,12 @@ void Bullet::Draw()
 
 void Bullet::OnDestroy()
 {
-	m_Rigidbody.OnDestroy();
+
 }
 
 void Bullet::Build()
 {
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
+
 }
 
 void Bullet::BulletEnemyCollision()

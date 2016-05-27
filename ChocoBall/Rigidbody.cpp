@@ -53,10 +53,15 @@ void CRigidbody::Draw()
 
 void CRigidbody::OnDestroy()
 {
-	g_bulletPhysics.RemoveRigidBody(m_rigidBody);
+	if (m_rigidBody){
+		g_bulletPhysics.RemoveRigidBody(m_rigidBody);
+	}
 	delete m_myMotionState;
 	delete m_collisionShape;
 	delete m_rigidBody;
+	m_myMotionState = NULL;
+	m_collisionShape = NULL;
+	m_rigidBody = NULL;
 }
 /*!
 *@brief	ç\ízèàóùÅB
