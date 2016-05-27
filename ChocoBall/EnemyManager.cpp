@@ -19,6 +19,14 @@ void CEnemyManager::Update()
 	for (short i = 0; i < numEnemy; i++)
 	{
 		Enemy[i]->Update();
+		if (Enemy[i]->GetAlive()){
+			Enemy[i]->Update();
+		}
+		else
+		{
+			Enemy[i]->OnDestroy();
+		}
+		
 	}
 }
 
