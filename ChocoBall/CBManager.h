@@ -53,4 +53,7 @@ private:
 	D3DXVECTOR3			m_posG;			//流れていく先(ゴール)のポジション。
 	D3DXVECTOR3			m_Vector;		//チョコの進行方向。
 	CChocoBall			m_Choco[CHOCO_NUM];
+	float				m_interval;		//インターバール。
+	float				m_timer;		//タイマー。
+	int					m_numCreate;	//作成済みのチョコボールの数。
 };

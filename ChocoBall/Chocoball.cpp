@@ -4,7 +4,7 @@
 
 void CChocoBall::Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos)
 {
-	strcpy(m_pFileName, "image/kyu.x");
+	strcpy(m_pFileName, "image/ball.x");
 	C3DImage::Initialize();
 	m_transform.position = Spos; //D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	SetVector(m_transform.position, Epos);
