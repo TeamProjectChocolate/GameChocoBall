@@ -16,6 +16,11 @@ public:
 	void OnDestroy();
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 
+	D3DXVECTOR3 GetPos()
+	{
+		return m_transform.position;
+	}
+
 	//現時点と目的地を渡すとベクトルをセットします。
 	//GetVector()で呼び出してください。
 	void SetVector(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos){

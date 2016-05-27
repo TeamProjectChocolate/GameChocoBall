@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Field.h"
-
+#include "CollisionType.h"
 SCollisionInfo collisionInfoTable[] = {
 #include "collisionInfo.h"
 };
+
 
 CField::~CField()
 {
@@ -35,7 +36,7 @@ void CField::Initialize(){
 			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_groundShape[i], btVector3(0,0,0));
 			m_rigidBody[i] = new btRigidBody(rbInfo);
 			m_rigidBody[i]->activate();
-
+			m_rigidBody[i]->setUserIndex(CollisionType_Map);
 			//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 			g_bulletPhysics.AddRigidBody(m_rigidBody[i]);
 		}

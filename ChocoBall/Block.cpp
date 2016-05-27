@@ -34,9 +34,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 	C3DImage::Initialize();
 	m_transform.position = pos; //D3DXVECTOR3(0.0f, 3.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
-	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
-	
+	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	
 
 	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
 
@@ -47,7 +45,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 
 	//m_radius = 1.0f;
 
-	//SetAlive(true);
+	SetAlive(true);
 
 	//SetAlpha(1.0f);
 	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
