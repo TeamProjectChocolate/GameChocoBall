@@ -5,8 +5,6 @@
 #include "islntersect.h"
 #include "CourceDef.h"
 #include "Turn.h"
-#include "GameManager.h"
-#include "Bullet.h"
 
 class CEnemy : public C3DImage
 {
@@ -51,7 +49,7 @@ private:
 	CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
-	Bullet*         m_pBullet;
+	//Bullet*         m_pBullet;
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;

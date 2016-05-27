@@ -6,6 +6,8 @@
 #include "islntersect.h"
 #include "Rigidbody.h"
 #include "LockOn.h"
+#include "BuildBlock.h"
+#include "EnemyManager.h"
 
 //class CPlayer;
 //class CEnemyManager;
@@ -22,7 +24,8 @@ public:
 	void Update()override;
 	void Draw()override;
 	void BulletEnemyCollision();
-	void BulletPlayerCollision();
+
+	void BulletBlockCollision();
 	void SetUpTechnique()override
 	{
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");//Textureが無いのでセットテクニックをオーバーライド
@@ -47,5 +50,7 @@ private:
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
 	D3DXVECTOR4 m_dir;
+	CEnemyManager* m_pEnemyManager;
+	CBuildBlock* m_pBlockManager;
 };
 
