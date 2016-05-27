@@ -7,11 +7,8 @@
 #include "Rigidbody.h"
 #include "LockOn.h"
 
-<<<<<<< HEAD
-class CPlayer;
-class CEnemyManager;
-=======
->>>>>>> 4c5d857ff8ca670bcc3d8c0bb46fb403bf0df697
+//class CPlayer;
+//class CEnemyManager;
 
 class Bullet : public C3DImage
 {

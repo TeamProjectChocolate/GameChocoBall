@@ -26,12 +26,7 @@ void Bullet::Initialize()
 	this->Build();
 	extern CEnemyManager g_enemyMgr;
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
-<<<<<<< HEAD
-	m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
-
-=======
-	
->>>>>>> 4c5d857ff8ca670bcc3d8c0bb46fb403bf0df697
+	//m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	C3DImage::SetImage();
 }
 

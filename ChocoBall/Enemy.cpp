@@ -43,20 +43,15 @@ void CEnemy::Initialize()
 
 void CEnemy::Update()
 {
-<<<<<<< HEAD
+	//isTurn = true;
 
+	//m_transform.position += V2 * 0.05f;
 
-	isTurn = true;
+	//m_V3 = m_transform.position - m_initPosition;
+	//V3 = D3DXVec3Length(&m_V3);
 
-	m_transform.position += V2 * 0.05f;
-
-	m_V3 = m_transform.position - m_initPosition;
-	V3 = D3DXVec3Length(&m_V3);
-
-	if (m_Hitflag == false)
-=======
+	//if (m_Hitflag == false)
 	if (GetAlive())
->>>>>>> 4c5d857ff8ca670bcc3d8c0bb46fb403bf0df697
 	{
 		isTurn = true;
 
@@ -69,9 +64,7 @@ void CEnemy::Update()
 		{
 			V2 *= -1.0f;
 		}
-<<<<<<< HEAD
 		m_Hitflag = m_pBullet->GetHitflag();
-=======
 		//m_Hitflag = m_pBullet->GetHitflag();
 		//if (V2 > 0)
 		//{
@@ -85,7 +78,6 @@ void CEnemy::Update()
 		//	//‰E•ûŒü‚ðŒü‚©‚¹‚éB
 		//	g_targetAngleY = D3DXToRadian(-180.0f);
 		//}
->>>>>>> 4c5d857ff8ca670bcc3d8c0bb46fb403bf0df697
 		V0 = D3DXVec3Dot(&m_V0, &V2);
 		m_eTargetAngleY = acos(V0);
 		D3DXVECTOR3 V4;
