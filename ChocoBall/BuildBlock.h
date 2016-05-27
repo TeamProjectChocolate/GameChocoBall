@@ -17,7 +17,15 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-
+	CBlock* GetBlocks(int x,int y){
+		return &m_blocks[y][x];
+	}
+	int GetNum_Y(){
+		return BUILD_H;
+	}
+	int GetNum_X(){
+		return BUILD_W;
+	}
 private:
-	CBlock			m_block[BUILD_H][BUILD_W];	//•Ç‚Ì”z—ñ
+	CBlock			m_blocks[BUILD_H][BUILD_W];	//•Ç‚Ì”z—ñ
 };

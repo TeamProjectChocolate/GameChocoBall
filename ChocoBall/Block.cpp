@@ -47,7 +47,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos)
 
 	//m_radius = 1.0f;
 
-	//SetAlive(true);
+	SetAlive(true);
 
 	//SetAlpha(1.0f);
 	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
