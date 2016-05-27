@@ -39,45 +39,43 @@ void CEnemy::Initialize()
 
 void CEnemy::Update()
 {
-	if (GetAlive())
+	
+	isTurn = true;
+
+	m_transform.position += V2 * 0.05f;
+
+	m_V3 = m_transform.position - m_initPosition;
+	V3 = D3DXVec3Length(&m_V3);
+
+	if (V3 > 2.5)
 	{
-		isTurn = true;
-
-		m_transform.position += V2 * 0.05f;
-
-		m_V3 = m_transform.position - m_initPosition;
-		V3 = D3DXVec3Length(&m_V3);
-
-		if (V3 > 2.5)
-		{
-			V2 *= -1.0f;
-		}
-		//m_Hitflag = m_pBullet->GetHitflag();
-		//if (V2 > 0)
-		//{
-		//	isTurn = true;
-		//	//左方向を向かせる
-		//	g_targetAngleY = D3DXToRadian(180.0f);
-		//}
-		//else
-		//{
-		//	isTurn = false;
-		//	//右方向を向かせる。
-		//	g_targetAngleY = D3DXToRadian(-180.0f);
-		//}
-		V0 = D3DXVec3Dot(&m_V0, &V2);
-		m_eTargetAngleY = acos(V0);
-		D3DXVECTOR3 V4;
-		D3DXVec3Cross(&V4, &m_V0, &V2);
-		if (V4.y < 0)
-		{
-			m_eTargetAngleY *= -1.0f;
-		}
-		m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
-		// 回転行列
-		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
-		C3DImage::Update();
+		V2 *= -1.0f;
 	}
+	//m_Hitflag = m_pBullet->GetHitflag();
+	//if (V2 > 0)
+	//{
+	//	isTurn = true;
+	//	//左方向を向かせる
+	//	g_targetAngleY = D3DXToRadian(180.0f);
+	//}
+	//else
+	//{
+	//	isTurn = false;
+	//	//右方向を向かせる。
+	//	g_targetAngleY = D3DXToRadian(-180.0f);
+	//}
+	V0 = D3DXVec3Dot(&m_V0, &V2);
+	m_eTargetAngleY = acos(V0);
+	D3DXVECTOR3 V4;
+	D3DXVec3Cross(&V4, &m_V0, &V2);
+	if (V4.y < 0)
+	{
+		m_eTargetAngleY *= -1.0f;
+	}
+	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+	// 回転行列
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
+	C3DImage::Update();
 }
 
 
@@ -95,6 +93,7 @@ void CEnemy::Draw()
 void CEnemy::OnDestroy()
 {
 	m_Rigidbody.OnDestroy();
+	SetAlive(false);
 }
 
 void CEnemy::Build()

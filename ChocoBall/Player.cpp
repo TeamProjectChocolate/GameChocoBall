@@ -262,8 +262,11 @@ void CPlayer::LockOn()
 	//ロックオン状態にする。
 	if (m_pInput->IsTriggerLeftShift() && LockOnflag == false)
 	{
-		LockOnflag = true;
 		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+		if (m_lockonEnemyIndex != -1){
+			LockOnflag = true;
+		}
+		
 	}
 	//ロックオン状態の解除
 	else if (m_pInput->IsTriggerLeftShift() && LockOnflag == true)
@@ -273,7 +276,14 @@ void CPlayer::LockOn()
 	//ロックオン状態中の回転の計算
 	if (LockOnflag)
 	{
-		_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
+		if (m_lockonEnemyIndex == -1){
+			LockOnflag = false;
+		}
+		else{
+			_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
+
+
+		}
 	}
 	//ロックオン状態の時に常にプレイヤーを敵に向かせる
 	if (LockOnflag){
@@ -338,18 +348,19 @@ void CPlayer::StateManaged()
 {
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-	CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-	D3DXVECTOR3 dist;
-	dist = Enemy->GetPos() - m_transform.position;
-	float R;
-	R = D3DXVec3Length(&dist);//ベクトルの長さを計算
+	if (m_lockonEnemyIndex != -1){
+		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+		D3DXVECTOR3 dist;
+		dist = Enemy->GetPos() - m_transform.position;
+		float R;
+		R = D3DXVec3Length(&dist);//ベクトルの長さを計算
 
-	if (R <= 1)
-	{
-		m_GameState = GAMEEND_ID::OVER;
-		return;
+		if (R <= 1)
+		{
+			m_GameState = GAMEEND_ID::OVER;
+			return;
+		}
 	}
-
 	//ゲームオーバー処理
 	if (m_transform.position.y <= -10.0f)
 	{

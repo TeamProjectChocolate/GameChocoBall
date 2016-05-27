@@ -7,6 +7,7 @@ CBuildBlock::CBuildBlock(){}
 
 void CBuildBlock::Initialize(D3DVECTOR pos, D3DXQUATERNION rot)
 {
+
 	for (int i = 0; i < BUILD_H; i++){
 		for (int j = 0; j < BUILD_W; j++){
 			D3DXVECTOR4 offset(j*BLOCK_W, 0.0f, 0.0f, 1.0f);
@@ -43,6 +44,15 @@ void CBuildBlock::Update()
 			else
 			{
 				m_blocks[i][j].OnDestroy();
+			}
+		}
+	}
+	if (GetAsyncKeyState('D')){
+		for (int i = 0; i < BUILD_H; i++){
+			for (int j = 0; j < BUILD_W; j++){
+				if (!m_blocks[i][j].IsDead()){
+					m_blocks[i][j].OnDestroy();
+				}
 			}
 		}
 	}

@@ -75,7 +75,6 @@ private:
 	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
 	btDefaultMotionState* m_myMotionState;
 	bool m_life;
-	CRigidbody			m_RigitBody;
 	EnState				m_eState;	//状態。
 	float				m_fallPosY;	//落下位置。
 	bool m_isDead;

@@ -36,8 +36,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_transform.angle = rot;
-	m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
-	
+	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
 	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
 

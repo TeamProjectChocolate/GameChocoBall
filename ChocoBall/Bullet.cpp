@@ -55,27 +55,30 @@ void Bullet::Draw()
 
 void Bullet::OnDestroy()
 {
-	m_Rigidbody.OnDestroy();
+
 }
 
 void Bullet::Build()
 {
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
+
 }
 
 void Bullet::BulletEnemyCollision()
 {
-	m_lockonEnemyIndex = m_Lockon.FindNearEnemy(m_transform.position);
-	CEnemy* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
-	D3DXVECTOR3 dist;
-	dist = Enemy->GetPos() - m_transform.position;
-	float L;
-	L = D3DXVec3Length(&dist);//ベクトルの長さを計算
 
-	if (L <= 1)
-	{
-		//m_Hitflag = true;
-		Enemy->SetAlive(false);
+	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	if (m_lockonEnemyIndex != -1){
+		CEnemy* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
+		D3DXVECTOR3 dist;
+		dist = Enemy->GetPos() - m_transform.position;
+		float L;
+		L = D3DXVec3Length(&dist);//ベクトルの長さを計算
+
+		if (L <= 1)
+		{
+			//m_Hitflag = true;]
+			m_pEnemyManager->DeleteEnemy(Enemy);
+		}
 	}
 }
 

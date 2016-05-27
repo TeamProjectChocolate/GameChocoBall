@@ -6,7 +6,8 @@
 #include "LevelBuilder.h"
 #include "GameObject.h"
 
-#define BUILD_H 4		//生成される壁の高さ
+#define BUILD_H 5
+//生成される壁の高さ
 #define BUILD_W 6		//生成される壁の幅
 #define BLOCK_H 1.0		//ブロックのたかさ
 #define BLOCK_W 1.0		//ブロックの幅
