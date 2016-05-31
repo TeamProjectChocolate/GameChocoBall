@@ -9,8 +9,8 @@
 #include "BuildBlock.h"
 #include "EnemyManager.h"
 
-//class CPlayer;
-//class CEnemyManager;
+
+class  CPlayer;
 
 class Bullet : public C3DImage
 {
@@ -39,13 +39,15 @@ public:
 	void SetDir(D3DXVECTOR4 dir){
 		m_dir = dir;
 	}
+
 private:
 	D3DXVECTOR3		m_position;	//弾の座標
 	D3DXVECTOR3		m_moveSpeed;//移動速度。
 	bool			Shotflag;	//弾が発射されているのかのフラグ
 	CIsIntersect	m_IsIntersect;	//CIsIntersectのインスタンス
 	float			m_radius;
-	CLockOn          m_LockOn;\
+
+	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	bool			m_Hitflag;
 	D3DXVECTOR4 m_dir;

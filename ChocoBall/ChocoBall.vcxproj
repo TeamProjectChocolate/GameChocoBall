@@ -120,6 +120,7 @@
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="LockOn.h" />
     <ClInclude Include="Number.h" />
+    <ClInclude Include="PlayerParam.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="DirectInput.h" />
     <ClInclude Include="DirectX.h" />

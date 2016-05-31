@@ -68,6 +68,7 @@ void Bullet::Build()
 
 void Bullet::BulletEnemyCollision()
 {
+
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
 	if (m_lockonEnemyIndex != -1){
 		CEnemy* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);

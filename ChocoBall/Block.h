@@ -18,7 +18,7 @@ public:
 		m_fallPosY = 0.0f;
 	}
 	void OnDestroy()override;
-	void Initialize(D3DXVECTOR3 pos);
+	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot);
 	void Update();
 	void Draw();
 	D3DXVECTOR3 GetPos(){
