@@ -47,7 +47,7 @@ private:
 	CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
-	//Bullet*         m_pBullet;
+
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;

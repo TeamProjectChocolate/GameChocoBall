@@ -50,6 +50,16 @@ void CLevelBuilder::Build()
 			enemy->SetInitPosition(infoTable[i].pos);
 			g_enemyMgr.AddEnemy(enemy);
 		}
+		//else if (info.enemyType == 0){
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemy2* enemy2 = new CEnemy2;
+		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemy2->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemy2);
+
+		//}
 		if (info.gimmickType == 0){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;
