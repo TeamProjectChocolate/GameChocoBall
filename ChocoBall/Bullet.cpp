@@ -71,7 +71,7 @@ void Bullet::BulletEnemyCollision()
 
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
 	if (m_lockonEnemyIndex != -1){
-		CEnemy* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
+		EnemyBase* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
 		D3DXVECTOR3 dist;
 		dist = Enemy->GetPos() - m_transform.position;
 		float L;

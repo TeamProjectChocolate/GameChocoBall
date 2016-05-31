@@ -102,6 +102,7 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBManager.h" />
+    <ClInclude Include="Enemyjamp.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="ChocoBall.h" />
     <ClInclude Include="ClearText.h" />
@@ -109,8 +110,8 @@
     <ClInclude Include="CourceCamera.h" />
     <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Enemy2.h" />
+    <ClInclude Include="EnemyLR.h" />
+    <ClInclude Include="EnemyFB.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
@@ -171,7 +172,6 @@
     <ClCompile Include="C3DImage.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBManager.cpp" />
-    <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="ChocoBall.cpp" />
     <ClCompile Include="ClearText.cpp" />
     <ClCompile Include="CourceCamera.cpp" />
@@ -180,8 +180,9 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Enemy2.cpp" />
+    <ClCompile Include="EnemyLR.cpp" />
+    <ClCompile Include="EnemyFB.cpp" />
+    <ClCompile Include="Enemyjamp.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameCamera.cpp" />

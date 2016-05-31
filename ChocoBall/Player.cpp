@@ -354,7 +354,7 @@ void CPlayer::StateManaged()
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
 	if (m_lockonEnemyIndex != -1){
-		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+		EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
 		D3DXVECTOR3 dist;
 		dist = Enemy->GetPos() - m_transform.position;
 		float R;

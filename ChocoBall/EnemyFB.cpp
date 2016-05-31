@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Enemy.h"
+#include "EnemyFB.h"
 #include "EnemyManager.h"
 #include "RenderContext.h"
 #include "GameObject.h"
@@ -10,10 +10,16 @@
 extern CEnemyManager g_enemyMgr;
 extern CPlayer* g_player;
 
+CEnemyFB::CEnemyFB()
+{
+	m_initPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	strcpy(m_pFileName, "image/ENr.x");
+};
 
-CEnemy::~CEnemy(){ }
+CEnemyFB::~CEnemyFB(){ }
 
-void CEnemy::Initialize()
+void CEnemyFB::Initialize()
 {
 	C3DImage::Initialize();
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
@@ -33,43 +39,43 @@ void CEnemy::Initialize()
 
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
-	
+
 	m_V1 = Cource.endPosition - Cource.startPosition;					//スタートからゴールに向けてのベクトル
 	D3DXVec3Normalize(&V1, &m_V1);										//上で求めたベクトルの正規化
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
 
-	//extern CEnemyManager g_enemyMgr;
+	extern CEnemyManager g_enemyMgr;
 }
 
-void CEnemy::Update()
+void CEnemyFB::SetUpTechnique()
+{
+	m_pEffect->SetTechnique("TextureTec");
+}
+D3DXVECTOR3 CEnemyFB::GetPos(){
+	return m_transform.position;
+}
+void CEnemyFB::SetInitPosition(D3DXVECTOR3 pos)
+{
+	m_initPosition = pos;
+	m_transform.position = pos;
+}
+void CEnemyFB::Update()
 {
 	isTurn = true;
 
-	m_transform.position += V2 * 0.05f;
-	m_V3 = m_transform.position - m_initPosition;
-	V3 = D3DXVec3Length(&m_V3);
-	if (V3 > 2.5)
-	{
-		V2 *= -1.0f;
+	m_transform.position += V1*0.05f;
+	D3DXVECTOR3 v = m_transform.position - m_initPosition;
+	float v1 = D3DXVec3Length(&v);
+	if (v1 > 2.5){
+		V1 *= -1.0f;
 	}
-	V0 = D3DXVec3Dot(&m_V0, &V2);
-	m_eTargetAngleY = acos(V0);
-	D3DXVECTOR3 V4;
-	D3DXVec3Cross(&V4, &m_V0, &V2);
-	if (V4.y < 0)
-	{
-		m_eTargetAngleY *= -1.0f;
-	}
-	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
-	//回転行列
-	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 
 	C3DImage::Update();
 }
 
 
-void CEnemy::Draw()
+void CEnemyFB::Draw()
 {
 	if (GetAlive())
 	{
@@ -80,13 +86,13 @@ void CEnemy::Draw()
 	}
 }
 
-void CEnemy::OnDestroy()
+void CEnemyFB::OnDestroy()
 {
 	m_Rigidbody.OnDestroy();
 	SetAlive(false);
 }
 
-void CEnemy::Build()
+void CEnemyFB::Build()
 {
 	m_Rigidbody.Build(m_transform.scale, m_transform.position);
 }

@@ -7,36 +7,21 @@
 #include "Turn.h"
 #include "EnemyBase.h"
 
-class CEnemy : public EnemyBase
+class CEnemyLR : public EnemyBase
 {
 public:
-	CEnemy(){
-		m_initPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	
-		strcpy(m_pFileName, "image/ENr.x");
-	};
-	~CEnemy();
-	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("TextureTec");
-	}
-
+	CEnemyLR();
+	~CEnemyLR();
+	void SetUpTechnique()override; 
 	void Initialize()override; 
 	void Update()override;
 	void Draw()override;
 	void OnDestroy();
 	void Build();
-	D3DXVECTOR3 GetPos(){
-		return m_transform.position;
-	}
-	void Setradius(float radius)
-	{
-		m_radius = radius;
-	}
-	void SetInitPosition(D3DXVECTOR3 pos)
-	{
-		m_initPosition = pos;
-		m_transform.position = pos;
-	}
+	D3DXVECTOR3 GetPos();
+	void Setradius(float radius);
+	void SetInitPosition(D3DXVECTOR3 pos);
+
 private:	
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//à⁄ìÆë¨ìxÅB
