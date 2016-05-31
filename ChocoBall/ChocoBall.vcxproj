@@ -102,7 +102,7 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBManager.h" />
-    <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="ChocoBall.h" />
     <ClInclude Include="ClearText.h" />
     <ClInclude Include="CollisionType.h" />
@@ -110,6 +110,7 @@
     <ClInclude Include="CourceDef.h" />
     <ClInclude Include="Debri.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy2.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameManager.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameCamera.cpp" />

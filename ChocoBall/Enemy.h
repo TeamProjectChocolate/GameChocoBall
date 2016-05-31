@@ -5,8 +5,9 @@
 #include "islntersect.h"
 #include "CourceDef.h"
 #include "Turn.h"
+#include "EnemyBase.h"
 
-class CEnemy : public C3DImage
+class CEnemy : public EnemyBase
 {
 public:
 	CEnemy(){
