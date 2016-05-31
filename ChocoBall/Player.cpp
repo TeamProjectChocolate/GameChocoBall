@@ -6,16 +6,19 @@
 #include "GameObject.h"
 #include "ObjectManager.h"
 #include "EnemyManager.h"
+#include "PlayerParam.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
 
 void CPlayer::Initialize()
+
 {
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
+	//]m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -47,7 +50,7 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
-
+	
 	m_CBManager =NULL;
 
 	C3DImage::SetImage();
@@ -85,6 +88,12 @@ void CPlayer::Update()
 
 		//プレイヤーの処理の最後になるべく書いて
 		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+
+		//着地しているのでフラグはfalse
+		if (m_IsIntersect.IsHitGround())
+		{
+			Jumpflag = false;
+		}
 
 		// 弾発射処理
 		BulletShot();
@@ -194,17 +203,15 @@ void CPlayer::Move()
 {
 	isTurn = false;
 
-	//着地しているのでフラグはfalse
-	if (m_transform.position.y <= -0.7f)
-	{
-		Jumpflag = false;
-	}
+	
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
-		m_moveSpeed.y = 20.0f;
+		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
 	}
 
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
 
 	float X = m_pInput->GetStickL_XFloat();
 	float Y = m_pInput->GetStickL_YFloat();
@@ -212,29 +219,29 @@ void CPlayer::Move()
 	//前後の動き
 	if (fabs(Y) > 0.0f)
 	{
-		if (Jumpflag == false)
-		{
+		//if (Jumpflag == false)
+		//{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.z = Y * MOVE_SPEED;
 			isTurn = true;
 			m_currentAnimNo = 1;
 			
-		}
+		//}
 	}
 
 	//左右の動き
 	if (fabsf(X) > 0.0f)
 	{
-		if (Jumpflag == false)
-		{
+		//if (Jumpflag == false)
+		//{
 			//m_transform.position.z = MOVE_SPEED;
 			m_moveSpeed.x = X * MOVE_SPEED;
 			isTurn = true;
 			m_currentAnimNo = 1;
-		}
+		//}
 	}
 
-	if (fabsf(X) <= 0.0001f){
+	/*if (fabsf(X) <= 0.0001f){
 		if (Jumpflag == false)
 		{
 			m_moveSpeed.x = 0.0f;
@@ -246,13 +253,13 @@ void CPlayer::Move()
 			m_moveSpeed.z = 0.0f;
 		}
 	}
-
-	if (Jumpflag == false)
-	{
+*/
+	/*if (Jumpflag == false)
+	{*/
 		//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 		//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
 		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
-	}
+	//}
 }
 
 void CPlayer::LockOn()
@@ -305,14 +312,14 @@ void CPlayer::BehaviorCorrection()
 	//V3 = D3DXVec3Length(&m_V3);
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
-	if (!Jumpflag){
+//	if (!Jumpflag){
 		D3DXVECTOR3 t0, t1;
 		t0 = V1 * m_moveSpeed.z;
 		t1 = V2 * -m_moveSpeed.x;
 		t0 += t1;
 		m_moveSpeed.x = t0.x;
 		m_moveSpeed.z = t0.z;
-	}
+//	}
 	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
 	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
 

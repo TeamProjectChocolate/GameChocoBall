@@ -36,14 +36,17 @@ void CCBManager::Update()
 			if (createCount == 10){
 				break;
 			}
-			int rate = 100.0f / (rand() % 100 + 1);
+			float rate = 100.0f / (rand() % 100 + 1);
+			rate /= 50.0f;
 			if (rand() % 2){
 				rate *= -1.0f;
 			}
 			D3DXVECTOR3 pos(GetStartPosition());
+			pos.x += rate;
 			pos.z += fabsf(rate);
 			pos.y += rate;
 			D3DXVECTOR3 Epos(GetEndPosition());
+			Epos.x += rate;
 			Epos.z += fabsf(rate);
 			Epos.y += rate;
 			m_Choco[m_numCreate].Initialize(pos, Epos);
