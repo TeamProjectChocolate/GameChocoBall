@@ -40,8 +40,11 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
 	//SINSTANCE(CObjectManager)->GenerationObject<Bullet>(_T("Bullet"), PRIORTY::OBJECT3D, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"),PRIORTY::OBJECT3D, false);
-	
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D_ALPHA, false);
+	
+	
+	
+
 	//SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
 	m_CLevelBuilder.Build();
 	SINSTANCE(CObjectManager)->Intialize();
@@ -82,7 +85,6 @@ void CMainScene::Update(){
 			m_isGameContinue = false;
 		}
 	}
-
 
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();

@@ -26,7 +26,7 @@ void CSceneTitle::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&m_Select[1], _T("Exit"),false);
 	SINSTANCE(CObjectManager)->AddObject(&m_Cursor, _T("Cursor"),false);
 	SINSTANCE(CObjectManager)->Intialize();
-	SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Exit"))->SetPos(D3DXVECTOR3(500.0f, 350.0f, 0.0f));//Exitのポジション
+	SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Exit"))->SetPos(D3DXVECTOR3(480.0f, 350.0f, 0.0f));//Exitのポジション
 }
 
 void CSceneTitle::Update(){

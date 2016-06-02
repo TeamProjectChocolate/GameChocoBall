@@ -15,7 +15,7 @@ CClearText::~CClearText()
 
 void CClearText::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(450.0f, 400.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(450.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(800, 800, 100);
 	C2DImage::SetImage();
