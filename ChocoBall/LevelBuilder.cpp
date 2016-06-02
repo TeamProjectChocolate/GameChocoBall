@@ -6,6 +6,10 @@
 #include <vector>
 #include "CBManager.h"
 
+enum GimmickType{
+	GimmickType_Chocoball,
+	GimmickType_Wall,
+};
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
 	D3DXQUATERNION rot;
@@ -43,14 +47,35 @@ void CLevelBuilder::Build()
 		if (info.enemyType == 0){
 			//敵を生成。
 			extern CEnemyManager g_enemyMgr;
-			CEnemy* enemy = new CEnemy;
-			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+			CEnemyLR* enemylr = new CEnemyLR;
+			//CEnemyLR* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
 			infoTable[i].pos.x = infoTable[i].pos.x * -1;
 			infoTable[i].pos.z = infoTable[i].pos.z * -1;
-			enemy->SetInitPosition(infoTable[i].pos);
-			g_enemyMgr.AddEnemy(enemy);
+			enemylr->SetInitPosition(infoTable[i].pos);
+			g_enemyMgr.AddEnemy(enemylr);
 		}
-		if (info.gimmickType == 0){
+		//else if (info.enemyType == 1){
+		//	//敵を生成。
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemyFB* enemyfb = new CEnemyFB;
+		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemyfb->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemyfb);
+		//}
+		//else if (info.enemyType == 0){
+		//	//敵を生成。
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemyjamp* enemyjamp = new CEnemyjamp;
+		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemyjamp->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemyjamp);
+		//}
+
+		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;
 			m_chocoballMgrList.push_back(mgr);
@@ -65,7 +90,16 @@ void CLevelBuilder::Build()
 			mgr->SetStartPosition(startPos);
 			mgr->SetEndPosition(startPos + back);
 		}
+		if (info.gimmickType == GimmickType_Wall){
+			//ギミックの生成
+			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
+			buildBlock->Initialize(
+				D3DXVECTOR3(-infoTable[i].pos.x, infoTable[i].pos.y, -infoTable[i].pos.z),
+				infoTable[i].rot
+			);
+		}
 	}
+
 	//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
 	int arraySize2 = ARRAYSIZE(GimmickTriggerInfoTable);	//配列の要素数を返す。
 	for (int i = 0; i < arraySize2; i++) {

@@ -2,7 +2,7 @@
 #include "GraphicsDevice.h"
 #include "Scene.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "EnemyBase.h"
 #include "Bullet.h"
 #include "EnemyManager.h"
 #include "CBManager.h"
@@ -19,7 +19,7 @@ public:
 	void Draw();
 private:
 	CPlayer* m_Player;
-	CEnemy m_Enemy;	//“G‚Ì•Ï”B
+	EnemyBase m_Enemy;	//“G‚Ì•Ï”B
 	Bullet m_Bullet;
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
 	bool m_isGameContinue = true;

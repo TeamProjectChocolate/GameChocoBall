@@ -3,6 +3,8 @@
 #include "CBManager.h"
 #include "CollisionType.h"
 
+#define ORIGIN_CENTER	//定義で起点が足元。
+
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit;
@@ -100,6 +102,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 
 CIsIntersect::CIsIntersect()
 {
+	m_isHitGround = false;
 }
 
 CIsIntersect::~CIsIntersect()
@@ -113,8 +116,6 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_radius = radius;
 	//Box(立方体),sphere(球体)などで当たり範囲を決める。
 	m_collisionShape = new btSphereShape(m_radius);//ここで剛体の形状を決定
-	/*(btVector3(m_radius, m_radius, );*/
-
 
 	float mass = 0.0f;
 
@@ -129,16 +130,18 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	//ワールドに追加。
 	g_bulletPhysics.AddRigidBody(m_rigidBody);
 }
-
+bool CIsIntersect::IsHitGround()
+{
+	return m_isHitGround;
+}
 //物理エンジンを使った当たり判定処理&ジャンプ処理
 void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 {
-
 	static float deltaTime = 1.0f / 60.0f;						/************/
 	static D3DXVECTOR3 gravity(0.0f, -40.0f, 0.0f);	//重力		/*  ジ		*/
 	D3DXVECTOR3 addGravity = gravity;							/*  ャ		*/
 	addGravity *= (deltaTime);			//0.16秒事に加速		/*  ン		*/
-	*moveSpeed += (addGravity);	//落下速度					/*  プ		*/
+	*moveSpeed += (addGravity);	//落下速度						/*  プ		*/
 	D3DXVECTOR3 addPos;											/*  処		*/
 	addPos = *moveSpeed;										/*  理		*/
 	addPos *= (deltaTime);										/*			*/
@@ -199,14 +202,20 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 		btTransform start, end;
 		start.setIdentity();
 		end.setIdentity();
+#ifdef ORIGIN_CENTER
 		start.setOrigin(btVector3(position->x, position->y, position->z));
+#else
+		start.setOrigin(btVector3(position->x, position->y + m_radius, position->z));
+#endif
 		D3DXVECTOR3 newPos;
 		SweepResultGround callback;
 		if (fabsf(addPos.y) > 0.0001f) {
 			newPos = *position;
+#ifdef ORIGIN_CENTER
 			newPos.y += addPos.y;
-
-
+#else
+			newPos.y += addPos.y + m_radius;
+#endif
 			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
 
 			g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
@@ -216,7 +225,10 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 			//地面。
 			moveSpeed->y = 0.0f;
 			addPos.y = callback.hitPos.y - position->y;
+			m_isHitGround = true;
+#ifdef ORIGIN_CENTER
 			addPos.y += m_radius;
+#endif
 		}
 	}
 

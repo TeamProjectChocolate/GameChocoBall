@@ -1,8 +1,10 @@
 #include "stdafx.h"
+
 #include "Bullet.h"
 
 Bullet::~Bullet()
 {
+
 }
 
 void Bullet::Initialize()
@@ -20,8 +22,9 @@ void Bullet::Initialize()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 	this->Build();
+	extern CEnemyManager g_enemyMgr;
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
-	
+	//m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	C3DImage::SetImage();
 
 	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
@@ -65,17 +68,20 @@ void Bullet::Build()
 
 void Bullet::BulletEnemyCollision()
 {
-	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-	CEnemy* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
-	D3DXVECTOR3 dist;
-	dist = Enemy->GetPos() - m_transform.position;
-	float L;
-	L = D3DXVec3Length(&dist);//ベクトルの長さを計算
 
-	if (L <= 1)
-	{
-		//m_Hitflag = true;
-		Enemy->SetAlive(false);
+	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+	if (m_lockonEnemyIndex != -1){
+		EnemyBase* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
+		D3DXVECTOR3 dist;
+		dist = Enemy->GetPos() - m_transform.position;
+		float L;
+		L = D3DXVec3Length(&dist);//ベクトルの長さを計算
+
+		if (L <= 1)
+		{
+			//m_Hitflag = true;]
+			m_pEnemyManager->DeleteEnemy(Enemy);
+		}
 	}
 }
 
