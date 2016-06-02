@@ -91,7 +91,7 @@ private:
 
 	CCBManager*		m_CBManager;
 
-	CCourceDef	m_Courcedef;
+	CCourceDef		m_Courcedef;
 	D3DXVECTOR3 RV0;
 	D3DXMATRIX Rot;
 	D3DXVECTOR4 RV1;

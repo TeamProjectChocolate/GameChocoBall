@@ -62,7 +62,6 @@ void CPlayer::Update()
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
 
-
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
@@ -102,7 +101,7 @@ void CPlayer::Update()
 		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 
 		if (m_CBManager != NULL)
-		{
+		{	
 			//チョコボールとの衝突判定
 			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_radius))
 			{
@@ -204,7 +203,7 @@ void CPlayer::Move()
 {
 	isTurn = false;
 
-
+	
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
@@ -220,22 +219,45 @@ void CPlayer::Move()
 	//前後の動き
 	if (fabs(Y) > 0.0f)
 	{
-		m_moveSpeed.z = Y * MOVE_SPEED;
-		isTurn = true;
-		m_currentAnimNo = 1;
+		//if (Jumpflag == false)
+		//{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.z = Y * MOVE_SPEED;
+			isTurn = true;
+			m_currentAnimNo = 1;
 	}
 
 	//左右の動き
 	if (fabsf(X) > 0.0f)
 	{
-		m_moveSpeed.x = X * MOVE_SPEED;
-		isTurn = true;
-		m_currentAnimNo = 1;
+		//if (Jumpflag == false)
+		//{
+			//m_transform.position.z = MOVE_SPEED;
+			m_moveSpeed.x = X * MOVE_SPEED;
+			isTurn = true;
+			m_currentAnimNo = 1;
+		//}
 	}
 
-	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-	m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
+	/*if (fabsf(X) <= 0.0001f){
+		if (Jumpflag == false)
+		{
+			m_moveSpeed.x = 0.0f;
+		}
+	}
+	if (fabsf(Y) <= 0.0001f){
+		if (Jumpflag == false)
+		{
+			m_moveSpeed.z = 0.0f;
+		}
+	}
+*/
+	/*if (Jumpflag == false)
+	{*/
+		//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
+		//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
+		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
+	//}
 }
 
 void CPlayer::LockOn()
@@ -283,15 +305,18 @@ void CPlayer::BehaviorCorrection()
 	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &m_V2);
-
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
-
+	//	if (!Jumpflag){
 	D3DXVECTOR3 t0, t1;
 	t0 = V1 * m_moveSpeed.z;
 	t1 = V2 * -m_moveSpeed.x;
 	t0 += t1;
 	m_moveSpeed.x = t0.x;
 	m_moveSpeed.z = t0.z;
+	//	}
+	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
+	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
+
 
 	//コース定義に従ったプレイヤーの回転の処理
 	float L;
@@ -302,22 +327,6 @@ void CPlayer::BehaviorCorrection()
 	Back.x = 0.0f;
 	Back.y = 0.0f;
 	Back.z = -1.0f;
-
-	D3DXVECTOR3 moveXZ = m_moveSpeed;
-	moveXZ.y = 0.0f;
-	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
-	if (L > 0)
-	{
-		D3DXVec3Normalize(&NV2, &moveXZ);
-		D3DXVec3Cross(&NV3, &NV2, &Back);
-		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
-		m_targetAngleY = acos(cos);
-		if (NV3.y > 0)
-		{
-			m_targetAngleY = m_targetAngleY*-1;
-		}
-	}
-
 }
 
 void CPlayer::StateManaged()
@@ -325,7 +334,7 @@ void CPlayer::StateManaged()
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
 	if (m_lockonEnemyIndex != -1){
-		CEnemy* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+		EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
 		D3DXVECTOR3 dist;
 		dist = Enemy->GetPos() - m_transform.position;
 		float R;
@@ -347,46 +356,10 @@ void CPlayer::StateManaged()
 	//ゲームクリア
 	D3DXVECTOR3 Endposition;
 	Endposition = m_Courcedef.EndCource();
-	D3DXVECTOR3 StageEndPosition;
-	StageEndPosition = Endposition - m_transform.position;
-	float Kyori = D3DXVec3Length(&StageEndPosition);
-	if (Kyori < 2)
+	if (Endposition.x - 0.5 < m_transform.position.x&&Endposition.z - 10 < m_transform.position.z)
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;
-	}
-}
-
-void CPlayer::BulletShot()
-{
-	if (m_pInput->IsTriggerRightShift())
-	{
-		//Shotflag = true;
-
-		//プレイヤーの向いているベクトルを計算
-		D3DXVec3Normalize(&RV0, &RV0);
-		D3DXMatrixRotationY(&Rot, m_currentAngleY);
-		D3DXVec3Transform(&RV1, &RV0, &Rot);
-
-		
-		Bullet* bullet = new Bullet;
-		bullet->Initialize();
-		bullet->SetPos(m_transform.position);
-		bullet->SetDir(RV1);
-		m_bullets.push_back(bullet);
-	}
-
-	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
-	int size = m_bullets.size();
-	for (int idx = 0; idx < size; idx++){
-		D3DXVECTOR3 V5;
-		V5 = m_bullets[idx]->GetPos() - m_transform.position;
-		float length = D3DXVec3Length(&V5);
-		length = fabs(length);
-		if (length > 50)
-		{
-			DeleteBullet(m_bullets[idx]);
-		}
 	}
 }
 

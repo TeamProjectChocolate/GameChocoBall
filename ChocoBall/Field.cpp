@@ -3,7 +3,6 @@
 #include "CollisionType.h"
 
 //ステージ切り替えで必要
-
 SCollisionInfo collisionInfoTable[] = {
 #include "collisionInfo.h"
 };

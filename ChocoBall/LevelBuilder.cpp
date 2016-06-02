@@ -48,12 +48,12 @@ static int GimmickInfoTableSizeArray[] = {
 	ARRAYSIZE(GimmickTriggerInfoTable)
 };
 
-
 CLevelBuilder::CLevelBuilder()
 {
 	memset(m_ghostObject, 0, sizeof(m_ghostObject));//ghostobject‚Ì”z—ñ‚ğ0‚©‚çƒƒ‚ƒŠ•ª‰Šú‰»
 	m_IsStage = STAGE_ID::STAGE_NONE;
 }
+
 CLevelBuilder::~CLevelBuilder()
 {
 	for (int i = 0; i < MaxCollision; i++){

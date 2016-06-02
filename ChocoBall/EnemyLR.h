@@ -5,33 +5,24 @@
 #include "islntersect.h"
 #include "CourceDef.h"
 #include "Turn.h"
-#include "GameManager.h"
-#include "Bullet.h"
+#include "EnemyBase.h"
 
-class CEnemy : public C3DImage
+class CEnemyLR : public EnemyBase
 {
 public:
-	CEnemy(){
-		strcpy(m_pFileName, "image/ENr.x");
-	};
-	~CEnemy();
-	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("TextureTec");
-	}
-
+	CEnemyLR();
+	~CEnemyLR();
+	void SetUpTechnique()override; 
 	void Initialize()override; 
 	void Update()override;
 	void Draw()override;
 	void OnDestroy();
 	void Build();
-	D3DXVECTOR3 GetPos(){
-		return m_transform.position;
-	}
-	void Setradius(float radius)
-	{
-		m_radius = radius;
-	}
-private:
+	D3DXVECTOR3 GetPos();
+	void Setradius(float radius);
+	void SetInitPosition(D3DXVECTOR3 pos);
+
+private:	
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	D3DXVECTOR3		m_initPosition;		//初期座標。
@@ -42,18 +33,18 @@ private:
 	CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
-	Bullet*         m_pBullet;
+
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;
 
 	D3DXVECTOR3		m_V0;
-	float           V0;
-	D3DXVECTOR3		m_V1;
+	float V0;
 	D3DXVECTOR3		V1;
-	D3DXVECTOR3		m_V2;
+	D3DXVECTOR3 m_V1;
 	D3DXVECTOR3		V2;
-	D3DXVECTOR3		m_V3;
-	float			V3;
-	D3DXVECTOR3		m_Up;
+	D3DXVECTOR3		m_V2;
+	D3DXVECTOR3 m_V3;
+	float V3;
+	D3DXVECTOR3 m_Up;
 };
