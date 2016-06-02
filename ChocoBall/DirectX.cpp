@@ -15,6 +15,7 @@
 #include "SceneTitle.h"
 #include "SceneResult.h"
 #include "BulletPhysics.h"
+#include "StageManager.h"
 
 
 #define MAX_LOADSTRING 100
@@ -235,9 +236,13 @@ void Initialize()
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
+	CStageManager::CreateInstance();		// シングルトンクラス:ステージ管理クラスのインスタンスを生成
 	g_bulletPhysics.InitPysics();			// 物理エンジンの初期化(グローバル変数はこう呼ぶ。)
   	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateInput(g_hWnd);
+	CAudio* pAudio = new CAudio;
+	pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");
+	SINSTANCE(CStageManager)->SetAudio(pAudio);
 
 	AddScene();
 	//SINSTANCE(CGameManager)->ChangeScene(_T("Title"));

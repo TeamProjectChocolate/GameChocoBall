@@ -40,6 +40,18 @@ void CObjectManager::DeleteGameObject(LPCSTR ObjectName){
 	MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
 }
 
+void CObjectManager::DeleteGameObject(CGameObject* pObject){
+	int size = m_GameObjects.size();
+	for (int idx = 0; idx < size; idx++){
+		if (m_GameObjects[idx]->object == pObject){
+			m_GameObjects[idx]->object->OnDestroy();
+			m_DeleteObjects.push_back(m_GameObjects[idx]->object);
+			return;
+		}
+	}
+	MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
+}
+
 void CObjectManager::CleanManager(){
 	int size = m_GameObjects.size();
 	for (int idx = 0; idx < size; idx++){

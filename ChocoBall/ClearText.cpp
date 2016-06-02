@@ -22,12 +22,16 @@ void CClearText::Initialize(){
 	SetAlive(true);
 	dir = -1;
 	t = 0.0f;
+	m_IsEnd = false;
 }
 
 void CClearText::Update(){
 	if (t <= 1.0f)
 	{
 		dir = 1;
+	}
+	else{
+		m_IsEnd = true;
 	}
 	t += 0.015f * dir;
 	SetAlpha(t);

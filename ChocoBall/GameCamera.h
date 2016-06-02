@@ -12,7 +12,18 @@ public:
 	virtual void Initialize()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-protected:
+	D3DXMATRIX GetCameraRotation(){
+		return m_camera.GetCameraRotation();
+	}
+	D3DXMATRIX GetProj(){
+		return m_camera.GetProj();
+	}
+	D3DXMATRIX GetView(){
+		return m_camera.GetView();
+	}
+	CCamera* GetCamera(){
+		return &m_camera;
+	}
 	CCamera m_camera;
 };
 

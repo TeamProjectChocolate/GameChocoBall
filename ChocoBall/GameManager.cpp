@@ -33,9 +33,22 @@ CScene* CGameManager::FindScene(LPCSTR SceneName){
 }
 
 void CGameManager::ChangeScene(LPCSTR SceneName){
+	CH_ASSERT(strlen(SceneName) <= SCENENAME_MAX);
+	strcpy(m_NextSceneName, SceneName);
+}
+
+void CGameManager::SetNextScene(){
+	if (!strcmp(m_NowSceneName, m_NextSceneName)){
+		return;
+	}
 	SINSTANCE(CObjectManager)->CleanManager();
-	m_NowScene = FindScene(SceneName);
-	Initialize();
+	m_NowScene = FindScene(m_NextSceneName);
+	if (m_NowScene == nullptr){
+		MessageBox(nullptr, _T("ƒV[ƒ“‚ª“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"), _T("error"), MB_OK);
+		abort();
+	}
+	m_NowScene->Initialize();
+	strcpy(m_NowSceneName, m_NextSceneName);
 }
 
 void CGameManager::Initialize(){

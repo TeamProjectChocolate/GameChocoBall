@@ -1,0 +1,54 @@
+#pragma once
+
+#include "C2DImage.h"
+#include "CourceCamera.h"
+#include "Primitive.h"
+#include "Random.h"
+
+class CRandom;
+class CCourceCamera;
+struct SParticleEmitParameter;
+
+
+class CParticle:public C2DImage
+{
+public:
+	CParticle();
+	~CParticle();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+	void SetupMatrices()override;
+	void InitParticle(CRandom&, CCamera&, const SParticleEmitParameter*, const D3DXVECTOR3&);
+	// パーティクルに力を加える関数
+	void ApplyFource(const D3DXVECTOR3& applyFource){
+		this->m_applyFource = applyFource;
+	}
+	bool GetIsDead(){
+		return m_isDead;
+	}
+	void SetFileName(LPCSTR name){
+		CH_ASSERT(strlen(name) <= MAX_FILENAME);
+		strcpy(m_pFileName, name);
+	}
+private:
+	CPrimitive m_Primitive;
+	CCamera* m_camera;
+	CRandom* m_random;
+	float m_life;
+	float m_timer;
+	PARTICLE_DATA m_ParticleData;
+	float m_rotateZ;
+	D3DXVECTOR3 m_addVelocityRandomMargin;	// 速度の積分のときのランダム幅
+	bool m_isDead;		// 死亡フラグ
+	bool m_isFade;		// 死ぬときにフェードアウトするかのフラグ
+	float m_fadeTime;		// フェードの時間
+	EMIT_STATE m_state;	// 状態
+	float m_initAlpha;	// 初期アルファ
+	bool m_isBillboard;	// ビルボードかどうかのフラグ
+	D3DXVECTOR3 m_applyFource;	// 外部から加わる力
+	float m_brightness;		// 輝度。ブルームが有効なら強くすると光があふれる
+	int m_alphaBlendMode;		// 半透明合成、1加算合成
+	float m_deltaTime;
+};
+

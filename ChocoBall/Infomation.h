@@ -11,6 +11,8 @@ class CSkinModelData;
 
 enum PRIORTY{CONFIG = 0,PLAYER,OBJECT3D,OBJECT3D_ALPHA,OBJECT2D,OBJECT2D_ALPHA,LOWEST = MAX_PRIORTY};
 
+enum GAMEEND_ID{ CONTINUE = 0,CLEAR, OVER };
+
 // シェーダファイル格納用構造体
 typedef struct EFFECT_DATA{
 	CHAR pFileName[MAX_FILENAME + 1];
@@ -64,6 +66,8 @@ typedef struct D3DXMESHCONTAINER_DERIVED : public D3DXMESHCONTAINER {
 	bool UseSoftwareVP;
 	DWORD iAttributeSW;
 };
+
+enum STAGE_ID{ FIRST = 0,MAX,STAGE_NONE = 999};
 
 #define WINDOW_WIDTH 960
 #define WINDOW_HEIGHT 540

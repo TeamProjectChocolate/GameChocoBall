@@ -70,6 +70,13 @@ void CCamera::Update(){
 		D3DXVECTOR3 target = vEye + m_direction;
 		D3DXMatrixLookAtLH(&m_View, &vEye, &target, &m_up);
 	}
+	// ƒJƒƒ‰‚Ì‰ñ“]s—ñ‚ÌZo
+	D3DXMatrixIdentity(&m_Rota);
+	D3DXMatrixInverse(&m_Rota, nullptr, &m_View);
+	m_Rota.m[3][0] = 0.0f;
+	m_Rota.m[3][1] = 0.0f;
+	m_Rota.m[3][2] = 0.0f;
+	m_Rota.m[3][3] = 1.0f;
 }
 
 void CCamera::SetCamera(LPD3DXEFFECT effect){

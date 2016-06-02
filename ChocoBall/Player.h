@@ -8,15 +8,18 @@
 #include "GameManager.h"
 #include "CourceDef.h"
 #include "LockOn.h"
+#include "Bullet.h"
+#include "CBManager.h"
 
-class LockOn;
-
+class CLockOn;
+class CCBManager;
 class CPlayer : public C3DImage
 {
 public:
 	CPlayer(){
-		strcpy(m_pFileName, "image/TestPlayer.x");
+		//strcpy(m_pFileName, "image/TestPlayer.x");
 		//strcpy(m_pFileName, "image/PL_Girl_SSword.x");
+		strcpy(m_pFileName, "image/Player.X");
 	};
 	~CPlayer();
 
@@ -26,6 +29,14 @@ public:
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);
 	void SetUpLight();
+	void Move();
+	void LockOn();
+	void BehaviorCorrection();
+	void StateManaged();
+	void BulletShot();
+
+	void DeleteBullet(Bullet*);
+	void ExcuteDeleteBullets();
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
@@ -37,9 +48,17 @@ public:
 	{
 		return Shotflag;
 	}
-	void SetShotflag(bool shotflag)
+	GAMEEND_ID GetGameState()
 	{
-		Shotflag=shotflag;
+		return m_GameState;
+	}
+	bool GetChocoBall()
+	{
+		return ChocoBall;
+	}
+	void SetCBM(CCBManager* CHOCO)
+	{
+		m_CBManager = CHOCO;
 	}
 private:
 	CInterface*	m_pInput;
@@ -57,14 +76,33 @@ private:
 	bool			isTurn;				//回転フラグ
 	bool            LockOnflag;			//ロックオンフラグ
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
-	LockOn          m_LockOn;			//LockOnのインスタンス
+	CLockOn         m_LockOn;			//LockOnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
+
 	void UpdateLight();
+
 	CTurn			m_Turn;				//CTurnのインスタンス
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
+	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
+	bool			m_Hitflag;
+	bool            ChocoBall;			//チョコボールを流すフラグ
+	int             BusterEnemyNum;		//倒した敵の数
 
-	CCourceDef		m_Courcedef;
+	CCBManager*		m_CBManager;
+
+	CCourceDef	m_Courcedef;
+	D3DXVECTOR3 RV0;
+	D3DXMATRIX Rot;
+	D3DXVECTOR4 RV1;
+
+	// 弾の配列
+	vector<Bullet*> m_bullets;
+	vector<Bullet*> m_Deletebullets;	// 削除リスト
+
+
+
+
 	//藤田
 	D3DXVECTOR3		m_V1;
 	D3DXVECTOR3		V1;
@@ -73,8 +111,14 @@ private:
 	D3DXVECTOR3		m_V3;
 	float			V3;
 	D3DXVECTOR3		m_Up;
+
+	//入口
+	
+	bool			m_HitFlag;
+	
 };
 
+extern CPlayer* g_player;
 
 namespace tkEngine{
 	const D3DXVECTOR3 vec3Zero = { 0.0f, 0.0f, 0.0f };
