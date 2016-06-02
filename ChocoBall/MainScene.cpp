@@ -15,6 +15,7 @@
 #include "Number.h"
 #include "EnemyManager.h"
 #include "CBManager.h"
+#include "Score.h"
 
 
 CMainScene::CMainScene(){
@@ -38,9 +39,12 @@ void CMainScene::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&g_enemyMgr,_T("EnemyManager"), PRIORTY::PLAYER, false);
 	//SINSTANCE(CObjectManager)->GenerationObject<CDebri>(_T("Debri"),PRIORTY::OBJECT3D,false);
 	//SINSTANCE(CObjectManager)->GenerationObject<Bullet>(_T("Bullet"), PRIORTY::OBJECT3D, false);
-	
-	
+	SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"),PRIORTY::OBJECT3D, false);
 	SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D_ALPHA, false);
+	
+	
+	
+
 	//SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
 	m_CLevelBuilder.Build();
 	SINSTANCE(CObjectManager)->Intialize();
@@ -56,7 +60,6 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
-
 	m_Player = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_GameState = m_Player->GetGameState();
 

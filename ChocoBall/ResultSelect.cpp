@@ -19,7 +19,7 @@ CResultSelect::~CResultSelect()
 
 void CResultSelect::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(500.0f, 250.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(480.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(80, 45, 0);
 	SetAlive(true);
