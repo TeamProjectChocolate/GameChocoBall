@@ -76,9 +76,9 @@ void CLevelBuilder::Build()
 				D3DXVECTOR3(-infoTable[i].pos.x, infoTable[i].pos.y, -infoTable[i].pos.z),
 				infoTable[i].rot
 			);
-
 		}
 	}
+
 	//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
 	int arraySize2 = ARRAYSIZE(GimmickTriggerInfoTable);	//配列の要素数を返す。
 	for (int i = 0; i < arraySize2; i++) {
