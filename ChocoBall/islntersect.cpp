@@ -3,7 +3,7 @@
 #include "CBManager.h"
 #include "CollisionType.h"
 
-//#define ORIGIN_CENTER	//定義で起点が足元。
+#define ORIGIN_CENTER	//定義で起点が足元。
 
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {
@@ -116,8 +116,6 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_radius = radius;
 	//Box(立方体),sphere(球体)などで当たり範囲を決める。
 	m_collisionShape = new btSphereShape(m_radius);//ここで剛体の形状を決定
-	/*(btVector3(m_radius, m_radius, );*/
-
 
 	float mass = 0.0f;
 
