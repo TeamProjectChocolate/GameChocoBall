@@ -6,6 +6,7 @@ CEnemyManager g_enemyMgr;	//“G‚Ì•Ï”B
 
 void CEnemyManager::Initialize()
 {
+
 	for (short i = 0; i < numEnemy; i++)
 	{
 		Enemy[i]->Initialize();

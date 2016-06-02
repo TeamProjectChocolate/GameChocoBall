@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LockOn.h"
-#include "Enemy.h"
+#include "EnemyBase.h"
 #include "EnemyManager.h"
 #include "ObjectManager.h"
 
@@ -16,7 +16,7 @@ float CLockOn::LockOnRotation(float _X, D3DXVECTOR3 position, int lockonEnemyInd
 {
 	static float fHALF_PI = fPI / 2.0f;
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-	CEnemy* Enemy = EnemyManager->GetEnemy(lockonEnemyIndex);
+	EnemyBase* Enemy = EnemyManager->GetEnemy(lockonEnemyIndex);
 	D3DXVECTOR3 dist;
 	dist = Enemy->GetPos() - position;
 	//“G‚æ‚èŽè‘O‚ÌŽž‚Ì‰ñ“]Šp“x‚ÌŒvŽZ
@@ -45,7 +45,7 @@ int CLockOn::FindNearEnemy(D3DXVECTOR3 position)
 	float Min;
 
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-	CEnemy* Enemy;
+	EnemyBase* Enemy;
 	m_lockonEnemyIndex = -1;
 	int NumEnemy = EnemyManager->GetNumEnemy();
 	Min = 99999;	//”Ô•º

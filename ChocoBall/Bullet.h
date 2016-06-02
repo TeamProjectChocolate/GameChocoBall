@@ -9,6 +9,7 @@
 #include "BuildBlock.h"
 #include "EnemyManager.h"
 
+
 class  CPlayer;
 
 class Bullet : public C3DImage
@@ -23,6 +24,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void BulletEnemyCollision();
+
 	void BulletBlockCollision();
 	void SetUpTechnique()override
 	{

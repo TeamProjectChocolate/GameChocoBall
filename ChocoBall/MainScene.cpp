@@ -56,6 +56,7 @@ void CMainScene::Initialize(){
 
 void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
+
 	m_Player = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_GameState = m_Player->GetGameState();
 

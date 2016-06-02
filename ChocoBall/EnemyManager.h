@@ -1,6 +1,9 @@
 #pragma once
-#include "Enemy.h"
+#include "EnemyLR.h"
+#include "EnemyFB.h"
+#include "Enemyjamp.h"
 #include "GameObject.h"
+
 
 class CEnemyManager:public CGameObject
 {
@@ -12,12 +15,12 @@ public:
 	{
 		numEnemy = 0;
 	}
-	void AddEnemy(CEnemy* enemy)
+	void AddEnemy(EnemyBase* enemy)
 	{
 		Enemy[numEnemy] = enemy;
 		numEnemy++;
 	}
-	void DeleteEnemy(CEnemy* enemy)
+	void DeleteEnemy(EnemyBase* enemy)
 	{
 		enemy->OnDestroy();
 		int enemyIndex = -1;
@@ -40,17 +43,17 @@ public:
 	{
 		return numEnemy;	//エネミーの数を返す
 	}
-	CEnemy* GetEnemy(short num){
+	EnemyBase* GetEnemy(short num){
 		return Enemy[num];
 	}
 
-	CEnemy* GetEnemyArray()
+	EnemyBase* GetEnemyArray()
 	{
 		return Enemy[20];
 	}
 private:
 	int		numEnemy;	//敵の数。
-	CEnemy* Enemy[20];
+	EnemyBase* Enemy[20];
 };
 
 //extern CEnemyManager g_enemyMgr;	//敵の変数。
