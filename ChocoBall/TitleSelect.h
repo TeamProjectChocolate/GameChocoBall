@@ -15,7 +15,8 @@ public:
 	void Draw()override;
 private:
 	CTitleCursor* m_cursor;	//カーソル。
-	CDirectInput* m_Input = nullptr;
+	//CDirectInput* m_Input = nullptr;
+	CInterface*	m_pInput;
 	float t;
 	short dir;
 };

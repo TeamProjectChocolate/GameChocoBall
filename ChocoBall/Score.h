@@ -1,28 +1,26 @@
 #pragma once
 #include "Number.h"
+#include "Bullet.h"
+#include "Number.h"
 
 #define TIMEBONUS 10
 #define ENEMY_BONUS 20
 
 class CScoreCalc
 {
-	int m_enemycounter = 0;
-	int m_timecounter = 0;
-	int m_totalscore = 0;
 public:
 	CScoreCalc();
 	~CScoreCalc();
-	void Draw();
+	void kasan();
+private:
 
-	
-	void SetEnemyCounter(int enemy)
-	{
-		m_enemycounter = enemy;
+
+
+	/*(){
+		m_value++;
 	}
-	void SetTotalScore(int score)
-	{
-		m_totalscore = score;
-	}
+*/
+
 //public:
 //
 //

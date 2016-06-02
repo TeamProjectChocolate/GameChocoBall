@@ -23,13 +23,16 @@ void CSceneResult::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&m_rCursor, _T("ResultCursor"), false); 
 	SINSTANCE(CObjectManager)->AddObject(&m_Number, _T("ResultNumber"), false);
 	SINSTANCE(CObjectManager)->Intialize();
-	SINSTANCE(CObjectManager)->FindGameObject<CResultSelect>(_T("GoTitle"))->SetPos(D3DXVECTOR3(500.0f, 350.0f, 0.0f));//Exitのポジション
+	SINSTANCE(CObjectManager)->FindGameObject<CResultSelect>(_T("GoTitle"))->SetPos(D3DXVECTOR3(480.0f, 350.0f, 0.0f));//Exitのポジション
 }
 
 void CSceneResult::Update(){
 	SINSTANCE(CObjectManager)->Update();
+	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));
+	if (true){
+		pNumber->AddValue(1);
+	}
 }
-
 void CSceneResult::Draw(){
 	SINSTANCE(CObjectManager)->Draw();
 }
