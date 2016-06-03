@@ -327,6 +327,22 @@ void CPlayer::BehaviorCorrection()
 	Back.x = 0.0f;
 	Back.y = 0.0f;
 	Back.z = -1.0f;
+
+	D3DXVECTOR3 moveXZ = m_moveSpeed;
+	moveXZ.y = 0.0f;
+	L = D3DXVec3Length(&moveXZ);//m_moveSpeedのベクトルの大きさを返す、√の計算もしてくれる。
+	if (L > 0)
+	{
+		D3DXVec3Normalize(&NV2, &moveXZ);
+		D3DXVec3Cross(&NV3, &NV2, &Back);
+		cos = D3DXVec3Dot(&NV2, &Back);///2つの3Dベクトルの上方向の内積を求める→V1とV2のなす角のcosθが見つかる。
+		m_targetAngleY = acos(cos);
+		if (NV3.y > 0)
+		{
+			m_targetAngleY = m_targetAngleY*-1;
+		}
+	}
+
 }
 
 void CPlayer::StateManaged()
@@ -360,6 +376,39 @@ void CPlayer::StateManaged()
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;
+	}
+}
+
+void CPlayer::BulletShot()
+{
+	if (m_pInput->IsTriggerRightShift())
+	{
+		//Shotflag = true;
+
+		//プレイヤーの向いているベクトルを計算
+		D3DXVec3Normalize(&RV0, &RV0);
+		D3DXMatrixRotationY(&Rot, m_currentAngleY);
+		D3DXVec3Transform(&RV1, &RV0, &Rot);
+
+
+		Bullet* bullet = new Bullet;
+		bullet->Initialize();
+		bullet->SetPos(m_transform.position);
+		bullet->SetDir(RV1);
+		m_bullets.push_back(bullet);
+	}
+
+	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		D3DXVECTOR3 V5;
+		V5 = m_bullets[idx]->GetPos() - m_transform.position;
+		float length = D3DXVec3Length(&V5);
+		length = fabs(length);
+		if (length > 50)
+		{
+			DeleteBullet(m_bullets[idx]);
+		}
 	}
 }
 

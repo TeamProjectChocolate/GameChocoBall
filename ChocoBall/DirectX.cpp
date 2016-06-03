@@ -84,7 +84,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 				PostQuitMessage(0);
 			}
 			Update();
-			Draw();
+			Draw();	
+			SINSTANCE(CGameManager)->SetNextScene();
+			SINSTANCE(CShadowRender)->ExcuteDeleteObjects();
 			SINSTANCE(CObjectManager)->ExcuteDeleteObjects();
 		}
 
@@ -237,7 +239,6 @@ void Initialize()
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
 	CStageManager::CreateInstance();		// シングルトンクラス:ステージ管理クラスのインスタンスを生成
-	g_bulletPhysics.InitPysics();			// 物理エンジンの初期化(グローバル変数はこう呼ぶ。)
   	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateInput(g_hWnd);
 	CAudio* pAudio = new CAudio;
@@ -245,9 +246,8 @@ void Initialize()
 	SINSTANCE(CStageManager)->SetAudio(pAudio);
 
 	AddScene();
-	//SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
-	SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
-	SINSTANCE(CObjectManager)->AddObject(&g_bulletPhysics, _T("BulletPhysics"),PRIORTY::CONFIG,true);
+	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	SINSTANCE(CGameManager)->SetNextScene();
 }
 
 void Update()

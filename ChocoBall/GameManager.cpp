@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameManager.h"
 #include "ObjectManager.h"
-
+#include "ShadowRender.h"
 
 CGameManager* CGameManager::m_instance = nullptr;
 
@@ -41,6 +41,7 @@ void CGameManager::SetNextScene(){
 	if (!strcmp(m_NowSceneName, m_NextSceneName)){
 		return;
 	}
+	SINSTANCE(CShadowRender)->CleanManager();
 	SINSTANCE(CObjectManager)->CleanManager();
 	m_NowScene = FindScene(m_NextSceneName);
 	if (m_NowScene == nullptr){

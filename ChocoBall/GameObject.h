@@ -12,6 +12,7 @@ public:
 		m_OriginalInit = false;
 		m_ManagerNewFlg = false;
 		m_alpha = 1.0f;
+		m_alive = false;
 	};
 	~CGameObject();
 	virtual void OnDestroy(){};		// ObjectManagerƒNƒ‰ƒX‚ÌDeleteGameObjectŠÖ”‚ªŒÄ‚Î‚ê‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”

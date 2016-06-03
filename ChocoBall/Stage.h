@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "SceneResult.h"
 
-
 class CStage
 {
 public:
@@ -30,3 +29,4 @@ private:
 	bool m_isGameContinue = true;
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
 };
+

@@ -6,7 +6,6 @@
 #include "GameOver.h"
 #include "StageManager.h"
 
-
 CStage::CStage()
 {
 	m_pPlayer = nullptr;
@@ -20,19 +19,38 @@ CStage::~CStage()
 void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 {
 	m_Stage_ID = NowId;
-	GENERATION_OBJECT_DATA* ObjectDataArray = StageArray[m_Stage_ID];
+	LPCSTR* ObjectDataArray = StageArray[m_Stage_ID];
 	int size = StageObjectNumArray[m_Stage_ID];
 
 	for (int idx = 0; idx < size; idx++){
-		SINSTANCE(CObjectManager)->AddObject(
+	/*	SINSTANCE(CObjectManager)->AddObject(
 				ObjectDataArray[idx].pObject,
 				ObjectDataArray[idx].ObjectName,
 				ObjectDataArray[idx].priorty,
 				ObjectDataArray[idx].IsCommon
-			);
+			);*/
+		if (strcmp(ObjectDataArray[idx], "TESTStage3D") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CField>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT3D, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "BulletPhysics") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CBulletPhysics>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "2DTest") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "Number") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "Camera") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "EnemyManager") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CEnemyManager>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+		}
 	}
-
-
 
 	SINSTANCE(CObjectManager)->Intialize();
 	m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
@@ -46,7 +64,6 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 	m_isGameContinue = true;
-
 }
 
 void CStage::Update()

@@ -85,12 +85,15 @@ void CObjectManager::ExcuteDeleteObjects(){
 
 void CObjectManager::Intialize(){
 	int size = m_GameObjects.size();
-	for (int idx = 0; idx < size; idx++){
-		if (!(m_GameObjects[idx]->object->GetOriginal())){
-			m_GameObjects[idx]->object->Initialize();
+	for (int priorty = 0; priorty <= MAX_PRIORTY; priorty++){
+		for (int idx = 0; idx < size; idx++){
+			if (m_GameObjects[idx]->priority == priorty){
+				if (!(m_GameObjects[idx]->object->GetOriginal())){
+					m_GameObjects[idx]->object->Initialize();
+				}
+			}
 		}
 	}
-
 }
 
 void CObjectManager::Update(){

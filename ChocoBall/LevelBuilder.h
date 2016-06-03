@@ -1,5 +1,6 @@
 #pragma once
 #include "BulletPhysics.h"
+#include "EnemyBase.h"
 #define MaxCollision 100
 
 class CCBManager;

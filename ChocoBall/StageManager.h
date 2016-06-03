@@ -7,24 +7,6 @@
 #include "EnemyManager.h"
 
 
-typedef struct STAGE_DATA{
-	CHAR StageName[MAX_FILENAME];
-	CStage* Stage;
-}STAGE_DATA;
-
-typedef struct GENERATION_OBJECT_DATA{
-	CHAR ObjectName[MAX_FILENAME];
-	PRIORTY priorty;
-	bool IsCommon;
-	CGameObject* pObject;
-public:
-	template<class T>
-	static T* GenerationObject(){
-		T* Obj = new T;
-		return Obj;
-	}
-};
-
 class CStageManager
 {
 private:
@@ -60,26 +42,27 @@ private:
 	STAGE_ID m_NowStage;
 	STAGE_ID m_NextStage;
 
-	CStage m_Stage;
+	CStage* m_pStage = nullptr;
 
 	CAudio* m_pAudio;
 	//※デストラクタにて呼び出される
 	void DeleteAll();
+	
 };
 
-// ステージ1で使用するオブジェクトの登録情報格納用構造体配列
-static GENERATION_OBJECT_DATA StageGameObject_1[] = {
-	{ "TESTStage3D", PRIORTY::OBJECT3D, false, GENERATION_OBJECT_DATA::GenerationObject<CField>() },
-	{ "2DTest", PRIORTY::OBJECT2D_ALPHA, false, GENERATION_OBJECT_DATA::GenerationObject<CTestObject2D>() },
-	{ "Number", PRIORTY::OBJECT2D_ALPHA,false,GENERATION_OBJECT_DATA::GenerationObject<CNumber>()},
-	{ "Camera" ,PRIORTY::CONFIG,true,GENERATION_OBJECT_DATA::GenerationObject<CCourceCamera>()},
-	{ "EnemyManager" ,PRIORTY::PLAYER,false,GENERATION_OBJECT_DATA::GenerationObject<CEnemyManager>()},
-	{ "TEST3D", PRIORTY::PLAYER, false, GENERATION_OBJECT_DATA::GenerationObject<CPlayer>() }
+	// ステージ1で使用するオブジェクトの定義配列
+static LPCSTR StageGameObject_1[] = {
+	{ "BulletPhysics" },
+	{ "TESTStage3D" },
+	{ "2DTest" },
+	{ "Number" },
+	{ "Camera" },
+	{ "EnemyManager" },
+	{ "TEST3D" }
 };
-
 
 // ステージを追加したらここにステージで使用するオブジェクト配列のポインタをステージの順番どおりに格納してください
-static GENERATION_OBJECT_DATA* StageArray[] = {
+static LPCSTR* StageArray[] = {
 	StageGameObject_1
 };
 

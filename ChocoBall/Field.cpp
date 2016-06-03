@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Field.h"
 #include "CollisionType.h"
+#include "ObjectManager.h"
 
 //ステージ切り替えで必要
 SCollisionInfo collisionInfoTable[] = {
@@ -40,7 +41,7 @@ void CField::Initialize(){
 			m_rigidBody[i]->activate();
 			m_rigidBody[i]->setUserIndex(CollisionType_Map);
 			//ワールドに追加。
-			g_bulletPhysics.AddRigidBody(m_rigidBody[i]);
+			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody[i]);
 		}
 	}
 

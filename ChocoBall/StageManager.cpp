@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "StageManager.h"
 #include "GameManager.h"
+#include "ShadowRender.h"
 
 
 CStageManager* CStageManager::m_instance = nullptr;
+
 
 void CStageManager::Initialize()
 {
@@ -14,12 +16,12 @@ void CStageManager::Initialize()
 
 void CStageManager::Update()
 {
-	m_Stage.Update();
+	m_pStage->Update();
 }
 
 void CStageManager::Draw()
 {
-	m_Stage.Draw();
+	m_pStage->Draw();
 	SetNextStage();
 }
 
@@ -31,6 +33,10 @@ void CStageManager::SetNextStage(){
 	if (m_ContinueStage >= STAGE_ID::MAX && m_ContinueStage != STAGE_ID::STAGE_NONE){
 		// ÅŒã‚Ü‚ÅƒNƒŠƒA‚µ‚Ä‚¢‚½‚ç‚±‚Ìˆ—‚ð’Ê‚é
 		m_IsContinue = false;
+		SINSTANCE(CShadowRender)->CleanManager();
+		SINSTANCE(CObjectManager)->CleanManager();
+		SAFE_DELETE(m_pStage);
+		m_pStage = new CStage;
 		SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
 		return;
 	}
@@ -42,17 +48,15 @@ void CStageManager::SetNextStage(){
 		else{
 			m_NowStage = m_NextStage;
 		}
-		m_Stage.Initialize(m_pAudio,m_NowStage);
+		SINSTANCE(CShadowRender)->CleanManager();
+		SINSTANCE(CObjectManager)->CleanManager();
+		SAFE_DELETE(m_pStage);
+		m_pStage = new CStage;
+		m_pStage->Initialize(m_pAudio,m_NowStage);
 		m_ContinueStage = m_NowStage;
 	}
 }
 
 void CStageManager::DeleteAll(){
-	int size = ARRAYSIZE(StageObjectNumArray);
-	for (int idx = 0; idx < size; idx++){
-		int size2 = StageObjectNumArray[idx];
-		for (int idx2 = 0; idx2 < size2; idx2++){
-			SAFE_DELETE(StageGameObject_1[idx2].pObject);
-		}
-	}
 }
+

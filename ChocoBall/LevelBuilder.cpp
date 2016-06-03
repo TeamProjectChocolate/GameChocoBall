@@ -5,6 +5,7 @@
 #include "CollisionType.h"
 #include <vector>
 #include "CBManager.h"
+#include "EnemyLR.h"
 
 enum GimmickType{
 	GimmickType_Chocoball,
@@ -58,7 +59,7 @@ CLevelBuilder::~CLevelBuilder()
 {
 	for (int i = 0; i < MaxCollision; i++){
 		if (m_ghostObject[i]){
-			g_bulletPhysics.RemoveCollisionObject(m_ghostObject[i]);
+			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_ghostObject[i]);
 		}
 	}
 	for (auto cb : m_chocoballMgrList){
@@ -75,7 +76,7 @@ void CLevelBuilder::Build()
 		if (info.enemyType == 0){
 			//敵を生成。
 			extern CEnemyManager g_enemyMgr;
-			CEnemy* enemy = new CEnemy;
+			CEnemyLR* enemy = new CEnemyLR;
 			enemy->Initialize();
 			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
 			infoTable[i].pos.x = infoTable[i].pos.x * -1;
@@ -127,6 +128,6 @@ void CLevelBuilder::Build()
 		m_ghostObject[i]->setUserIndex(CollisionType_ChocoballTrigger);
 		m_ghostObject[i]->setUserPointer(m_chocoballMgrList[i]);
 		//ワールドに追加。
-		g_bulletPhysics.AddCollisionObject(m_ghostObject[i]);
+		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddCollisionObject(m_ghostObject[i]);
 	}
 }

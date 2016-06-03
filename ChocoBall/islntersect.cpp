@@ -63,7 +63,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 			if (!mgr->GetAlive()){
 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 				mgr->Initialize();
-				g_bulletPhysics.RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
+				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
 				g_player->SetCBM(mgr);
 			}
 			return 0.0f;
@@ -132,8 +132,9 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_rigidBody = new btRigidBody(rbInfo);
 	m_rigidBody->setUserIndex(CollisionType_Player);
 	//ワールドに追加。
-	g_bulletPhysics.AddRigidBody(m_rigidBody);
+	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody);
 }
+
 bool CIsIntersect::IsHitGround()
 {
 	return m_isHitGround;
@@ -167,7 +168,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 			if (D3DXVec3Length(&addPosXZ) > 0.0001f) {
 				newPos = (*position + addPosXZ);
 				end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
-				g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
+				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->ConvexSweepTest(m_collisionShape, start, end, callback);
 			}
 			if (callback.isHit) {
 				//当たった。
@@ -223,7 +224,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 #endif
 			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
 
-			g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
+			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->ConvexSweepTest(m_collisionShape, start, end, callback);
 		}
 		if (callback.isHit) {
 			//当たった。
@@ -272,7 +273,7 @@ void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 			if (D3DXVec3Length(&addPosXZ) > 0.0001f) {
 				newPos = (*position + addPosXZ);
 				end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
-				g_bulletPhysics.ConvexSweepTest(m_collisionShape, start, end, callback);
+				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->ConvexSweepTest(m_collisionShape, start, end, callback);
 			}
 			if (callback.isHit) {
 				//当たった。
