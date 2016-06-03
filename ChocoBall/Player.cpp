@@ -7,6 +7,7 @@
 #include "ObjectManager.h"
 #include "EnemyManager.h"
 #include "PlayerParam.h"
+#include "ParticleEmitter.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -54,7 +55,21 @@ void CPlayer::Initialize()
 	m_CBManager =NULL;
 
 	C3DImage::SetImage();
-	m_lockonEnemyIndex = 0;
+	m_lockonEnemyIndex = 0;	
+	m_pEmitter = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterTEST"),
+		PARTICLE_TYPE::FIRE,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	);
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterPORIGON"),
+		PARTICLE_TYPE::PORIGON,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+		);
+
+
 }
 
 void CPlayer::Update()
@@ -109,6 +124,9 @@ void CPlayer::Update()
 			}
 		}
 		C3DImage::Update();
+
+		// 自分の周囲にパーティクル発生
+		m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);

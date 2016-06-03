@@ -13,6 +13,7 @@
 
 class CLockOn;
 class CCBManager;
+class CParticleEmitter;
 class CPlayer : public C3DImage
 {
 public:
@@ -20,6 +21,7 @@ public:
 		//strcpy(m_pFileName, "image/TestPlayer.x");
 		//strcpy(m_pFileName, "image/PL_Girl_SSword.x");
 		strcpy(m_pFileName, "image/Player.X");
+		m_pEmitter = nullptr;
 	};
 	~CPlayer();
 
@@ -62,6 +64,7 @@ public:
 	}
 private:
 	CInterface*	m_pInput;
+	CParticleEmitter* m_pEmitter;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	

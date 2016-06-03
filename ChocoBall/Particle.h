@@ -9,12 +9,20 @@ class CRandom;
 class CCourceCamera;
 struct SParticleEmitParameter;
 
-
 class CParticle:public C2DImage
 {
 public:
 	CParticle();
 	~CParticle();
+	void SetUpTechnique()override{
+		if (m_alphaBlendMode == 0){
+			m_pEffect->SetTechnique("BasicTec");
+		}
+		else{
+			m_pEffect->SetTechnique("ColorTexPrimAdd");
+		}
+	}
+
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

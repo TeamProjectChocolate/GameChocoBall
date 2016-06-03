@@ -9,7 +9,8 @@
 CStage::CStage()
 {
 	m_pPlayer = nullptr;
-	m_pAudio = nullptr;
+	m_pAudio = nullptr; 
+	m_pEmitter = nullptr;
 }
 
 CStage::~CStage()
@@ -23,12 +24,6 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	int size = StageObjectNumArray[m_Stage_ID];
 
 	for (int idx = 0; idx < size; idx++){
-	/*	SINSTANCE(CObjectManager)->AddObject(
-				ObjectDataArray[idx].pObject,
-				ObjectDataArray[idx].ObjectName,
-				ObjectDataArray[idx].priorty,
-				ObjectDataArray[idx].IsCommon
-			);*/
 		if (strcmp(ObjectDataArray[idx], "TESTStage3D") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CField>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT3D, false);
 		}
@@ -53,7 +48,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	}
 
 	SINSTANCE(CObjectManager)->Intialize();
-	m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
+	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
 	m_CLevelBuilder.SetIsStage(m_Stage_ID);
 	m_CLevelBuilder.Build();
@@ -89,8 +84,6 @@ void CStage::Update()
 		}
 	}
 	else{
-		// クリアテキストやゲームオーバーテキストが完了したか？
-		// ※処理を作ったら必ずこのif文をアクティブ化すること
 		if (m_GameState == GAMEEND_ID::CLEAR){
 			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd()){
 				SINSTANCE(CGameManager)->ChangeScene(_T("Result"));

@@ -4,6 +4,7 @@
 #include "ObjectManager.h"
 #include "GameManager.h"
 #include "Audio.h"
+#include "ParticleEmitter.h"
 
 
 CSceneTitle::CSceneTitle()

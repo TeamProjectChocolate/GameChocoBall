@@ -30,15 +30,17 @@ void CStageManager::ChangeStage(STAGE_ID id){
 }
 
 void CStageManager::SetNextStage(){
-	if (m_ContinueStage >= STAGE_ID::MAX && m_ContinueStage != STAGE_ID::STAGE_NONE){
-		// 最後までクリアしていたらこの処理を通る
-		m_IsContinue = false;
-		SINSTANCE(CShadowRender)->CleanManager();
-		SINSTANCE(CObjectManager)->CleanManager();
-		SAFE_DELETE(m_pStage);
-		m_pStage = new CStage;
-		SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
-		return;
+	if (m_IsContinue){
+		if (m_ContinueStage >= STAGE_ID::MAX && m_ContinueStage != STAGE_ID::STAGE_NONE){
+			// 最後までクリアしていたらこの処理を通る
+			m_IsContinue = false;
+			SINSTANCE(CShadowRender)->CleanManager();
+			SINSTANCE(CObjectManager)->CleanManager();
+			SAFE_DELETE(m_pStage);
+			m_pStage = new CStage;
+			SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+			return;
+		}
 	}
 
 	if (m_NowStage != m_NextStage){

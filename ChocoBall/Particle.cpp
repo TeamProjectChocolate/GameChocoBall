@@ -34,17 +34,26 @@ void CParticle::Update(){
 	m_applyFource = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	m_ParticleData.position += addPos;
+
 }
 
 void CParticle::Draw(){
 	SetupMatrices();
 	SetUpTechnique();
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
-
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, false);
 
+	switch (m_alphaBlendMode){
+	case 0:
+		(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		break;
+	case 1:
+		(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+		(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		break;
+	}
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
 
 
@@ -70,9 +79,8 @@ void CParticle::Draw(){
 	m_pEffect->SetFloat("Ratio_Y", ratio_Y);
 
 	m_pEffect->SetTexture("g_Texture", m_pImage->pTex /*テクスチャ情報*/);
-
+	m_pEffect->SetFloat("g_brightness", m_brightness);
 	m_pEffect->SetFloat("Alpha", GetAlpha());
-	//m_pEffect->SetFloat("g_brightness", m_brightness);
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 
 	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
@@ -80,6 +88,7 @@ void CParticle::Draw(){
 	m_pEffect->EndPass();
 	m_pEffect->End();
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, true);
 }
 
 void CParticle::SetupMatrices(){
@@ -117,7 +126,7 @@ void CParticle::SetupMatrices(){
 		break;
 	case EMIT_STATE::FADEOUT:{
 		float t = m_timer / m_fadeTime;
-		m_timer = m_deltaTime;
+		m_timer += m_deltaTime;
 		SetAlpha(m_initAlpha + (-m_initAlpha)*t);
 		if (GetAlpha() <= 0.0f){
 			SetAlpha(0.0f);
@@ -148,7 +157,7 @@ void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEm
 	}
 
 	SShapeVertex_PT vp[] = {
-		{ -halfW, halfH, 0.0f, 1.0f, uv.z, uv.y },
+		{ -halfW, halfH, 0.0f, 1.0f, uv.x, uv.y },
 		{ halfW, halfH, 0.0f, 1.0f, uv.z, uv.y },
 		{ -halfW, -halfH, 0.0f, 1.0f, uv.x, uv.w },
 		{ halfW, -halfH, 0.0f, 1.0f, uv.z, uv.w }
@@ -189,7 +198,7 @@ void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEm
 	SetAlpha(m_initAlpha);
 	m_fadeTime = param->fadeTime;
 	m_isBillboard = param->isBillboard;
-	//m_brightness = param.brightness;
+	m_brightness = param->brightness;
 	m_alphaBlendMode = param->alphaBlendMode;
 	m_rotateZ = fPI * 2.0f * static_cast<float>(random.GetRandDouble());
 	m_deltaTime = 1.0f / 60.0f;
