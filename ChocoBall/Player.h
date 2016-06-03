@@ -18,8 +18,6 @@ class CPlayer : public C3DImage
 {
 public:
 	CPlayer(){
-		//strcpy(m_pFileName, "image/TestPlayer.x");
-		//strcpy(m_pFileName, "image/PL_Girl_SSword.x");
 		strcpy(m_pFileName, "image/Player.X");
 		m_pEmitter = nullptr;
 	};

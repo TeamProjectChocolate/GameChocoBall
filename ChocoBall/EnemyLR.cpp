@@ -72,6 +72,7 @@ void CEnemyLR::Update()
 	{
 		V2 *= -1.0f;
 	}
+
 	V0 = D3DXVec3Dot(&m_V0, &V2);
 	m_eTargetAngleY = acos(V0);
 	D3DXVECTOR3 V4;

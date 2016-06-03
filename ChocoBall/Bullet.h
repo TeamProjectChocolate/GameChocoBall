@@ -17,7 +17,7 @@ class Bullet : public C3DImage
 public:
 	Bullet()
 	{
-		strcpy(m_pFileName, "image/kyu.x");
+		strcpy(m_pFileName, "image/ball.x");
 	};
 	~Bullet();
 	void Initialize()override;

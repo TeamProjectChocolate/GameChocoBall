@@ -100,6 +100,16 @@ void CPlayer::Update()
 		//ロックオン処理
 		LockOn();
 
+		if (m_CBManager != NULL)
+		{
+			//チョコボールに当たってゲームオーバー
+			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_radius))
+			{
+				//m_moveSpeed = m_CBManager->GetPos();
+				//m_GameState = GAMEEND_ID::OVER;
+			}
+		}
+
 		//プレイヤーの処理の最後になるべく書いて
 		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
 
@@ -139,29 +149,7 @@ void CPlayer::Update()
 }
 
 void CPlayer::Draw(){
-	/*IMAGE3D* img = GetImage();
-	LPD3DXMESH mesh = img->pModel->GetFrameRoot()->pMeshContainer->MeshData.pMesh;
-	LPDIRECT3DVERTEXBUFFER9 pVB;
-	mesh->GetVertexBuffer(&pVB);
-	int numVertex = mesh->GetNumVertices();
-	D3DVERTEXBUFFER_DESC desc;
-	pVB->GetDesc(&desc);
-	int stride = desc.Size / numVertex;
-	char* pData;
-	pVB->Lock(0, 0, (void**)&pData, D3DLOCK_DISCARD);
-	float YMax, YMin;
-	YMax = -FLT_MAX;
-	YMin = FLT_MAX;
-	for (int i = 0; i < numVertex; i++){
-	float* pos = (float*)pData;
-	YMax = max(YMax, pos[1]);
-	YMin = Minx(YMin, pos[1]);
-	pData += stride;
-	}
-	float size = YMax + fabsf(YMin);
-	float center = (YMax + YMin)*0.5f;
-	pVB->Unlock();*/
-
+	
 	SetUpTechnique();
 	C3DImage::Draw();
 
@@ -221,7 +209,7 @@ void CPlayer::Move()
 {
 	isTurn = false;
 
-	
+
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
@@ -237,9 +225,7 @@ void CPlayer::Move()
 	//前後の動き
 	if (fabs(Y) > 0.0f)
 	{
-		//if (Jumpflag == false)
-		//{
-			//m_transform.position.z = MOVE_SPEED;
+
 			m_moveSpeed.z = Y * MOVE_SPEED;
 			isTurn = true;
 			m_currentAnimNo = 1;
@@ -248,34 +234,13 @@ void CPlayer::Move()
 	//左右の動き
 	if (fabsf(X) > 0.0f)
 	{
-		//if (Jumpflag == false)
-		//{
-			//m_transform.position.z = MOVE_SPEED;
-			m_moveSpeed.x = X * MOVE_SPEED;
-			isTurn = true;
-			m_currentAnimNo = 1;
-		//}
+		m_moveSpeed.x = X * MOVE_SPEED;
+		isTurn = true;
+		m_currentAnimNo = 1;
 	}
-
-	/*if (fabsf(X) <= 0.0001f){
-		if (Jumpflag == false)
-		{
-			m_moveSpeed.x = 0.0f;
-		}
-	}
-	if (fabsf(Y) <= 0.0001f){
-		if (Jumpflag == false)
-		{
-			m_moveSpeed.z = 0.0f;
-		}
-	}
-*/
-	/*if (Jumpflag == false)
-	{*/
-		//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
-		//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
-		m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
-	//}
+	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
+	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
+	m_currentAngleY = m_Turn.Update(isTurn, m_targetAngleY);
 }
 
 void CPlayer::LockOn()
@@ -323,18 +288,14 @@ void CPlayer::BehaviorCorrection()
 	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &m_V2);
+
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
-	//	if (!Jumpflag){
 	D3DXVECTOR3 t0, t1;
 	t0 = V1 * m_moveSpeed.z;
 	t1 = V2 * -m_moveSpeed.x;
 	t0 += t1;
 	m_moveSpeed.x = t0.x;
 	m_moveSpeed.z = t0.z;
-	//	}
-	//m_moveSpeed.x = m_moveSpeed.x * -m_V3.x;
-	//m_moveSpeed.z = m_moveSpeed.z * m_V3.z;
-
 
 	//コース定義に従ったプレイヤーの回転の処理
 	float L;

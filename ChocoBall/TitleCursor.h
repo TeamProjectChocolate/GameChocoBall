@@ -11,7 +11,9 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void Move();
 private:
-	CInterface* m_Input = nullptr;
+	
+	CInterface*	m_pInput;
 	short dir;
 };

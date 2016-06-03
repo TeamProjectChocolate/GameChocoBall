@@ -5,6 +5,9 @@
 #include "ResultCursor.h"
 #include "Score.h"
 
+#define TIMEBONUS 10
+#define ENEMY_BONUS 20
+
 class CSceneResult : 
 	public CScene
 {
@@ -17,6 +20,8 @@ public:
 	bool GetIsEnd(){
 		return m_IsEnd;
 	}
+	void SetTime(const int time){ m_time = time; };
+	void SetEnemyCounter(const int enemycounter){ m_enemycounter = enemycounter; };
 private:
 	CResultBack m_rBack;
 	CResultSelect m_rSelect[2];
@@ -24,4 +29,6 @@ private:
 	CScoreCalc m_Score;
 	CNumber m_Number;
 	bool m_IsEnd;
+	int m_time;
+	int m_enemycounter;
 };

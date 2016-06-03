@@ -15,7 +15,7 @@
 #include "EnemyManager.h"
 #include "CBManager.h"
 #include "StageManager.h"
-
+#include "Score.h"
 
 
 CMainScene::CMainScene(){
