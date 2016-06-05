@@ -56,6 +56,9 @@ public:
 	{
 		return m_Proj;
 	}
+	D3DXMATRIX GetCameraRotation(){
+		return m_Rota;
+	}
 private:
 	D3DXVECTOR3 m_position;
 	D3DXVECTOR3 m_target;
@@ -69,5 +72,6 @@ private:
 	D3DXMATRIX m_View;	// ビュー変換行列
 	D3DXMATRIX m_Proj;	// 射影変換行列
 	D3DXVECTOR3 m_Axis;	// 回転軸
+	D3DXMATRIX m_Rota;	// カメラの回転行列
 };
 

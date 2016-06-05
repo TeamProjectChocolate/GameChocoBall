@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Rigidbody.h"
+#include "Objectmanager.h"
 
 CRigidbody::CRigidbody()
 {
@@ -54,7 +55,7 @@ void CRigidbody::Draw()
 void CRigidbody::OnDestroy()
 {
 	if (m_rigidBody){
-		g_bulletPhysics.RemoveRigidBody(m_rigidBody);
+		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveRigidBody(m_rigidBody);
 	}
 	delete m_myMotionState;
 	delete m_collisionShape;
@@ -83,7 +84,7 @@ void CRigidbody::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 	m_rigidBody = new btRigidBody(rbInfo);
 	m_rigidBody->setUserIndex(1);
 	//ワールドに追加。
-	g_bulletPhysics.AddRigidBody(m_rigidBody);
+	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody);
 
 }
 /*!
@@ -106,6 +107,6 @@ void CRigidbody::Build(float radius, const D3DXVECTOR3& pos)
 	m_rigidBody = new btRigidBody(rbInfo);
 	m_rigidBody->setUserIndex(1);
 	//ワールドに追加。
-	g_bulletPhysics.AddRigidBody(m_rigidBody);
+	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody);
 
 }

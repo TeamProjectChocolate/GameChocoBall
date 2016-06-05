@@ -1,3 +1,4 @@
+#pragma once
 #include "xact3.h"
 
 typedef struct AUDIO_SET{

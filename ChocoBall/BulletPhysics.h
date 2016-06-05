@@ -17,9 +17,9 @@ class CBulletPhysics : public CGameObject
 
 public:
 	
-	void Initialize(){};
+	void Initialize()override;
 	void Update() override;
-	void Draw(){};
+	void Draw()override{};
 
 	/*!
 	* @brief	コンストラクタ。
@@ -91,4 +91,3 @@ public:
 	}
 };
 
-extern CBulletPhysics g_bulletPhysics;	//bulletPhysics型のグローバル変数

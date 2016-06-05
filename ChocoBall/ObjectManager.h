@@ -21,7 +21,7 @@ public:
 	template<class T>
 	//指定したオブジェクトを自動生成する関数(優先度を指定したい場合)
 	//引き数: LPCSTR型 インスタンスの名前 
-	//		  short型 更新優先度(0が最小、数字が大きいほど優先度が低い)
+	//		  PRIORTY型 更新優先度(0が最小、数字が大きいほど優先度が低い)
 	//		  bool型 常駐フラグ指定(trueならシーン切り替え時に削除されない)
 	//返り値: T*型 生成したクラスのオブジェクトを返却
 	//呼び出し例: SINSTANCE(CObjectManager)->GenerationObject<生成したいクラス名>(_T("インスタンスの名前"),0,false);
@@ -113,6 +113,16 @@ public:
 	//※オブジェクトの削除は必ずこの関数を呼び出して行うこと
 	//※関数が重いため多用しないこと
 	void DeleteGameObject(LPCSTR);
+
+	//Objectmanagerクラスに登録されているGameObjectのインスタンスを一件削除する関数
+	//※ここでは削除リストにプールされるだけで、削除自体はCObjectManagerクラスのExcuteDeleteObjects関数にて行われる
+	//引き数: CGameObject*型 削除したいオブジェクトのポインタ
+	//返り値: なし
+	//呼び出し例: SINSTANCE(CObjectManager)->DeleteGameObject(_T("インスタンスの名前"));
+	//※オブジェクトのインスタンスはCObjectManagerクラスの外部でdeleteしないこと
+	//※オブジェクトの削除は必ずこの関数を呼び出して行うこと
+	//※関数が重いため多用しないこと
+	void DeleteGameObject(CGameObject*);
 
 	//削除リストに登録されている、常駐GameObject以外を削除リストにすべてプールする関数
 	//引き数: なし

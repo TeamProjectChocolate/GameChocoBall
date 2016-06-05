@@ -158,6 +158,41 @@ void CShadowRender::NonAnimationDraw(C3DImage* pObject){
 	}
 }
 
+void CShadowRender::DeleteObject(CGameObject* pObject){
+	int size = m_ShadowObjects.size();
+	for (int idx = 0; idx < size; idx++){
+		if (m_ShadowObjects[idx] == pObject){
+			m_DeleteObjects.push_back(m_ShadowObjects[idx]);
+			return;
+		}
+	}
+	MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
+}
+
+void CShadowRender::CleanManager(){
+	int size = m_ShadowObjects.size();
+	for (int idx = 0; idx < size; idx++){
+		m_DeleteObjects.push_back(m_ShadowObjects[idx]);
+	}
+}
+
+void CShadowRender::ExcuteDeleteObjects(){
+	vector<C3DImage*>::iterator itr;
+	int size = m_DeleteObjects.size();
+	for (int idx = 0; idx < size; idx++){
+		for (itr = m_ShadowObjects.begin(); itr != m_ShadowObjects.end();){
+			if (m_DeleteObjects[idx] == (*itr)){
+				itr = m_ShadowObjects.erase(itr);
+				break;
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+	m_DeleteObjects.clear();
+}
+
 void CShadowRender::DeleteAll(){
 	m_ShadowObjects.clear();
 }

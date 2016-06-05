@@ -21,12 +21,6 @@ void CGameCamera::Initialize(){
 }
 
 void CGameCamera::Update(){
-#if 0
-	CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
-	m_camera.SetTarget(pl->GetPos() + D3DXVECTOR3(0.0f,1.0f,0.0f));
-	m_camera.SetPos(pl->GetPos() + D3DXVECTOR3(0.0f,0.0f,-7.0f));
-#else
-#endif
 	m_camera.Update();
 }
 
