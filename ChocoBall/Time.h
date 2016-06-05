@@ -7,8 +7,6 @@
 class CTime :public C2DImage{
 public:
 	CTime(){
-		strcpy(m_pFileName, "image\\Number.png");
-
 	}
 	~CTime(){};
 	void Initialize()override;
@@ -19,5 +17,5 @@ public:
 		m_time = time;
 	}
 private:
-	float m_time;	// ”’l
+	int m_time;	// ”’l
 };

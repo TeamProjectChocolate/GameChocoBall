@@ -10,7 +10,7 @@ void CNumber::Initialize(){
 	SetAlive(true);
 	m_Split.x = 10;
 	C2DImage::SetImage();
-	m_value = 100;
+	m_value = 0;
 };
 
 void CNumber::Update(){

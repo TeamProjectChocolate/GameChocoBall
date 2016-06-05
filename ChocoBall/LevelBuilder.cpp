@@ -44,16 +44,16 @@ void CLevelBuilder::Build()
 	int tableSize = ARRAYSIZE(infoTable);
 	for (int i = 0; i < tableSize; i++){
 		const SEnemyAndGimmickInfo& info = infoTable[i];
-		if (info.enemyType == 0){
-			//敵を生成。
-			extern CEnemyManager g_enemyMgr;
-			CEnemyLR* enemylr = new CEnemyLR;
-			//CEnemyLR* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			infoTable[i].pos.x = infoTable[i].pos.x * -1;
-			infoTable[i].pos.z = infoTable[i].pos.z * -1;
-			enemylr->SetInitPosition(infoTable[i].pos);
-			g_enemyMgr.AddEnemy(enemylr);
-		}
+		//if (info.enemyType == 0){
+		//	//敵を生成。
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemyLR* enemylr = new CEnemyLR;
+		//	//CEnemyLR* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemylr->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemylr);
+		//}
 		//else if (info.enemyType == 1){
 		//	//敵を生成。
 		//	extern CEnemyManager g_enemyMgr;
@@ -74,7 +74,16 @@ void CLevelBuilder::Build()
 		//	enemyjamp->SetInitPosition(infoTable[i].pos);
 		//	g_enemyMgr.AddEnemy(enemyjamp);
 		//}
-
+		if (info.enemyType == 0){
+			//敵を生成。
+			extern CEnemyManager g_enemyMgr;
+			CEnemy* enemylr = new CEnemy;
+			//CEnemyLR* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+			infoTable[i].pos.x = infoTable[i].pos.x * -1;
+			infoTable[i].pos.z = infoTable[i].pos.z * -1;
+			enemylr->SetInitPosition(infoTable[i].pos);
+			g_enemyMgr.AddEnemy(enemylr);
+		}
 		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;

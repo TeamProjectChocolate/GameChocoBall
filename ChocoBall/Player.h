@@ -60,6 +60,10 @@ public:
 	{
 		m_CBManager = CHOCO;
 	}
+	int GetBusterEnemyNum()
+	{
+		return BusterEnemyNum;
+	}
 private:
 	CInterface*	m_pInput;
 	CLight			m_light;
@@ -87,7 +91,7 @@ private:
 	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
 	bool			m_Hitflag;
 	bool            ChocoBall;			//ƒ`ƒ‡ƒRƒ{[ƒ‹‚ğ—¬‚·ƒtƒ‰ƒO
-	int             BusterEnemyNum;		//“|‚µ‚½“G‚Ì”
+	int             BusterEnemyNum;		//“|‚µ‚½“G‚Ì”‚ª‘‚¦‚Ä‚È‚¢‚Ì‚ÅC³‚ğ‹‚Ş
 
 	CCBManager*		m_CBManager;
 

@@ -62,7 +62,7 @@ void CMainScene::Update(){
 	m_pAudio->Run();		// ‰¹ŠyXV
 	m_Player = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_GameState = m_Player->GetGameState();
-
+	m_score.Update();
 	if (m_isGameContinue){
 		if (m_GameState == GAMEEND_ID::CLEAR)
 		{
@@ -80,6 +80,7 @@ void CMainScene::Update(){
 
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
+
 }
 
 void CMainScene::Draw(){

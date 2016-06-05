@@ -5,8 +5,7 @@
 #include "ResultCursor.h"
 #include "Score.h"
 
-#define TIMEBONUS 10
-#define ENEMY_BONUS 20
+
 
 class CSceneResult : 
 	public CScene
@@ -27,4 +26,5 @@ private:
 	CNumber m_Number;
 	int m_time;
 	int m_enemycounter;
+	int score;
 };

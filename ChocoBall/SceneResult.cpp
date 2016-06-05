@@ -3,10 +3,13 @@
 #include "InputManager.h"
 #include "ObjectManager.h"
 #include "GameManager.h"
-
+#include "Player.h"
+CPlayer player;
 
 CSceneResult::CSceneResult()
 {
+	m_enemycounter = 0;
+	m_time = 0;
 }
 
 
@@ -28,10 +31,11 @@ void CSceneResult::Initialize(){
 
 void CSceneResult::Update(){
 	SINSTANCE(CObjectManager)->Update();
-	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));
-	if (true){
-		pNumber->AddValue(1);
-	}
+	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));	
+	score = ENEMY_BONUS * player.GetBusterEnemyNum();
+
+	
+		pNumber->SetValue(score);
 }
 void CSceneResult::Draw(){
 	SINSTANCE(CObjectManager)->Draw();
