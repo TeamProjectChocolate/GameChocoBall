@@ -4,7 +4,6 @@
 #include "Enemyjamp.h"
 #include "GameObject.h"
 
-
 class CEnemyManager:public CGameObject
 {
 public:
