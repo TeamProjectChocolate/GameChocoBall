@@ -102,11 +102,7 @@
     <ClInclude Include="C3DImage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBManager.h" />
-<<<<<<< HEAD
     <ClInclude Include="Enemy.h" />
-=======
-    <ClInclude Include="collisionInfo.h" />
->>>>>>> c96368b97302cfceec2c659162ccab012c4bcd76
     <ClInclude Include="Enemyjamp.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="ChocoBall.h" />
