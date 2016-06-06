@@ -122,16 +122,18 @@ VS_OUTPUT AnimationVertex(VS_INPUT In){
 	float3 normal = 0.0f;
 	for (int iBone = 0; iBone < g_numBone - 1; iBone++){
 		LastWeight = LastWeight + BlendWeightsArray[iBone];
-		pos.xyz += mul(In.pos, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
+		pos += mul(In.pos, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
 		normal += mul(In.normal, g_WorldMatrixArray[IndexArray[iBone]]) * BlendWeightsArray[iBone];
 	}
 	LastWeight = 1.0f - LastWeight;
 	pos += (mul(In.pos, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight);
 	normal += mul(In.normal, g_WorldMatrixArray[IndexArray[g_numBone - 1]]) * LastWeight;
 
-	Out.pos = mul(float4(pos.xyz, 1.0f), View);
+	Out.WorldPos = float4(pos.xyz, 1.0f);
+	Out.pos = mul(Out.WorldPos, View);
 	Out.pos = mul(Out.pos, Proj);
-	Out.normal = normalize(normal);
+	Out.normal = mul(normalize(normal),Rota);
+	Out.color = In.color;
 	Out.uv = In.uv;
 	return Out;
 }

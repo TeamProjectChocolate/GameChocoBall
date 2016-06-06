@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "BulletPhysics.h"
 
-CBulletPhysics g_bulletPhysics;	//bulletPhysics
 /*!
 * @brief	初期化。
 */
-void CBulletPhysics::InitPysics()
+void CBulletPhysics::Initialize()
 {
 	//とりあえず初期化はこれをコピペすればおｋ
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
