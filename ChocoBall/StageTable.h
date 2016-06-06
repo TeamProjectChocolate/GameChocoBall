@@ -2,6 +2,8 @@
 #include "stdafx.h"
 
 
+//enum ENEMY_TYPE{SIDE_MOVE = 0,FRONTandBACK,JUMP,DEFAULT = 999};
+
 enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
@@ -106,3 +108,20 @@ static SCollisionInfo* collisionInfoTableArray[] = {
 static int collisionInfoTableSizeArray[] = {
 	ARRAYSIZE(collisionInfoTable_1)
 };
+
+
+
+//// ステージ1で使用するエネミーのデータ
+//static ENEMY_TYPE StageEnemys_1[] = {
+//	ENEMY_TYPE::SIDE_MOVE
+//};
+//
+//// ステージで使用するエネミー配列のポインタを格納する配列
+//static ENEMY_TYPE* StageEnemysArray[] = {
+//	StageEnemys_1
+//};
+//
+//// ステージで使用するエネミー配列の要素数を格納する配列
+//static int StageEnemysNumArray[] = {
+//	ARRAYSIZE(StageEnemys_1)
+//};

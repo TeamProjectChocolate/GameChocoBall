@@ -2,8 +2,6 @@
 #include "EnemyManager.h"
 #include "ShadowRender.h"
 
-CEnemyManager g_enemyMgr;	//“G‚Ì•Ï”B
-
 void CEnemyManager::Initialize()
 {
 
