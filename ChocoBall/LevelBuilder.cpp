@@ -32,7 +32,8 @@ void CLevelBuilder::Build()
 	int tableSize = InfoTableSizeArray[StageID];
 	SEnemyAndGimmickInfo* pInfo = infoTableArray[StageID];
 	for (int i = 0; i < tableSize; i++){
-		const SEnemyAndGimmickInfo& info = pInfo[i];
+
+		const SEnemyAndGimmickInfo& info = infoTable[i];
 		if (info.enemyType == 0){
 			//敵を生成。
 			extern CEnemyManager g_enemyMgr;
@@ -44,6 +45,27 @@ void CLevelBuilder::Build()
 			enemy->SetInitPosition(pInfo[i].pos);
 			g_enemyMgr.AddEnemy(enemy);
 		}
+		//else if (info.enemyType == 1){
+		//	//敵を生成。
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemyFB* enemyfb = new CEnemyFB;
+		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemyfb->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemyfb);
+		//}
+		//else if (info.enemyType == 2){
+		//	//敵を生成。
+		//	extern CEnemyManager g_enemyMgr;
+		//	CEnemyjamp* enemyjamp = new CEnemyjamp;
+		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
+		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
+		//	enemyjamp->SetInitPosition(infoTable[i].pos);
+		//	g_enemyMgr.AddEnemy(enemyjamp);
+		//}
+
 		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;

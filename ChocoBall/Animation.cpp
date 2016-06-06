@@ -84,7 +84,13 @@ void CAnimation::PlayAnimation(int animationSetIndex, float interpolateTime){
 		}
 	}
 }
-
+// アニメーション再生速度を設定
+void CAnimation::SetAnimSpeed(float speed)
+{
+	if (m_pAnimController){
+		m_pAnimController->SetTrackSpeed(m_currentTrackNo, speed);
+	}
+}
 void CAnimation::Update(float deltaTime){
 	if (m_pAnimController){
 		m_pAnimController->AdvanceTime(deltaTime, nullptr);

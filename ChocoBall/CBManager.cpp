@@ -68,16 +68,33 @@ void CCBManager::Draw()
 	}
 }
 
-bool CCBManager::IsHit(D3DXVECTOR3 pos, float radius)
+bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 {
 	for (int i = 0; i < m_numCreate; i++){
-		D3DXVECTOR3 dist;
-		dist = m_Choco[i].GetPos() - pos;
-		float Length;
-		Length = D3DXVec3LengthSq(&dist);
-		if (Length <= radius * radius){
+		//プレイヤーを内包する箱の最大値と最小値を求める。
+		D3DXVECTOR3 MaxSize;//最大値
+		D3DXVECTOR3 MinSize;//最小値
+		const static float Sphereradius = 1.0f;//チョコボールの半径
+		size *= 0.5f;
+		MaxSize.x = pos.x + size.x + Sphereradius;
+		MaxSize.y = pos.y + size.y + Sphereradius;
+		MaxSize.z = pos.z + size.z + Sphereradius;
+
+		MinSize.x = pos.x - size.x - Sphereradius;
+		MinSize.y = pos.y - size.y - Sphereradius;
+		MinSize.z = pos.z - size.z - Sphereradius;
+		D3DXVECTOR3 chocoPos = m_Choco[i].GetPos();
+		//プレイヤーにチョコボールの半径分を足した箱内に入っている弾との当たり判定を調べる。
+		if (MinSize.x < chocoPos.x&&
+			MinSize.y < chocoPos.y&&
+			MinSize.z < chocoPos.z&&
+			chocoPos.x < MaxSize.x&&
+			chocoPos.y < MaxSize.y&&
+			chocoPos.z < MaxSize.z)
+		{
 			return TRUE;
 		}
+	
 	}
 	return FALSE;
 }

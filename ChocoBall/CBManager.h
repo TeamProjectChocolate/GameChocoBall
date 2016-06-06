@@ -46,7 +46,7 @@ public:
 		return m_posG;
 	}
 	//チョコボールとの衝突判定。
-	bool IsHit(D3DXVECTOR3 pos, float radius);
+	bool IsHit(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	
 private:
 	D3DXVECTOR3			m_pos;			//生成される場所のポジション。

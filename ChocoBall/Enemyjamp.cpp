@@ -28,8 +28,8 @@ void CEnemyjamp::Initialize()
 {
 	C3DImage::Initialize();
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
+
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_V0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	m_moveSpeed.x = 0.00f;
 	m_moveSpeed.z = 0.00f;
 	m_moveSpeed.y = 12.00f;
@@ -43,11 +43,6 @@ void CEnemyjamp::Initialize()
 
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
-
-	m_V1 = Cource.endPosition - Cource.startPosition;					//スタートからゴールに向けてのベクトル
-	D3DXVec3Normalize(&V1, &m_V1);										//上で求めたベクトルの正規化
-	D3DXVec3Cross(&m_V2, &V1, &m_Up);
-	D3DXVec3Normalize(&V2, &m_V2);
 
 	extern CEnemyManager g_enemyMgr;
 }
