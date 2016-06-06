@@ -11,4 +11,9 @@ public:
 	CScoreCalc();
 	~CScoreCalc();
 	void kasan();
+	void Update();
+private:
+	int score;
+	CPlayer* m_player;
+	CNumber* m_number;
 };

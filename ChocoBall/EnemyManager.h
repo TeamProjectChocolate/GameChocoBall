@@ -1,10 +1,8 @@
 #pragma once
-#include "Enemy.h"
 #include "EnemyLR.h"
 #include "EnemyFB.h"
 #include "Enemyjamp.h"
 #include "GameObject.h"
-
 
 class CEnemyManager:public CGameObject
 {
