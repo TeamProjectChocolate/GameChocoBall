@@ -18,7 +18,7 @@ void CPlayer::Initialize()
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
-	//]m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
+	//m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -32,6 +32,8 @@ void CPlayer::Initialize()
 
 	m_radius = 1.0f;
 
+	deadTimer = 0.0f;
+
 	SetAlive(true);
 	SetAlpha(1.0f);
 	
@@ -39,8 +41,12 @@ void CPlayer::Initialize()
 	Shotflag = false;
 	Jumpflag = false;
 	ChocoBall = false;
-	m_Hitflag = false;
+	
+	GamaOverFlag = false;
 	BusterEnemyNum = 0;
+	m_size.x = 1.0f;
+	m_size.y = 2.0f;
+	m_size.z = 1.0f;
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 
@@ -49,12 +55,13 @@ void CPlayer::Initialize()
 	// ライト関連の初期化
 	this->ConfigLight();
 	
-	m_IsIntersect.CollisitionInitialize(&m_transform.position,m_radius);
+	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 	
 	m_CBManager =NULL;
 
 	C3DImage::SetImage();
 	m_lockonEnemyIndex = 0;
+	deadTimer = 0.0f;
 }
 
 void CPlayer::Update()
@@ -88,30 +95,37 @@ void CPlayer::Update()
 
 		if (m_CBManager != NULL)
 		{
-			//チョコボールに当たってゲームオーバー
-			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_radius))
+			//チョコボールに当たっているかの処理
+			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_size))
 			{
-				//m_moveSpeed = m_CBManager->GetPos();
-				//m_GameState = GAMEEND_ID::OVER;
+				//チョコボールに当たったらの処理
+				ChocoHit();
 			}
 		}
 
-		//プレイヤーの処理の最後になるべく書いて
-		m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
-
-		//着地しているのでフラグはfalse
-		if (m_IsIntersect.IsHitGround())
+		if (GamaOverFlag==false)//ゲームオーバーになっていない時の処理
 		{
-			Jumpflag = false;
+			
+			//プレイヤーの処理の最後になるべく書いて
+			m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+
+			//着地しているのでフラグはfalse
+			if (m_IsIntersect.IsHitGround())
+			{
+				Jumpflag = false;
+			}
+
+			// 弾発射処理
+			BulletShot();
+
+			//回転行列
+			SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 		}
-
-		// 弾発射処理
-		BulletShot();
-
-		//回転行列
-		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
-
-		
+		else if (GamaOverFlag == true)
+		{
+			//ゲームオーバー状態でのチョコボールに流される処理
+			RollingPlayer();
+		}
 		C3DImage::Update();
 	}
 
@@ -202,9 +216,9 @@ void CPlayer::Move()
 	if (fabs(Y) > 0.0f)
 	{
 
-			m_moveSpeed.z = Y * MOVE_SPEED;
-			isTurn = true;
-			m_currentAnimNo = 1;
+		m_moveSpeed.z = Y * MOVE_SPEED;
+		isTurn = true;
+		m_currentAnimNo = 1;
 	}
 
 	//左右の動き
@@ -245,8 +259,6 @@ void CPlayer::LockOn()
 		}
 		else{
 			_X = m_LockOn.LockOnRotation(_X, m_transform.position, m_lockonEnemyIndex);
-
-
 		}
 	}
 	//ロックオン状態の時に常にプレイヤーを敵に向かせる
@@ -328,7 +340,10 @@ void CPlayer::StateManaged()
 	//ゲームクリア
 	D3DXVECTOR3 Endposition;
 	Endposition = m_Courcedef.EndCource();
-	if (Endposition.x - 0.5 < m_transform.position.x&&Endposition.z - 10 < m_transform.position.z)
+	D3DXVECTOR3 StageEndPosition;
+	StageEndPosition = Endposition - m_transform.position;
+	float Kyori = D3DXVec3Length(&StageEndPosition);
+	if (Kyori < 2)
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;
@@ -388,4 +403,38 @@ void CPlayer::ExcuteDeleteBullets(){
 		}
 	}
 	m_Deletebullets.clear();
+}
+
+void CPlayer::ChocoHit()
+{
+	GamaOverFlag = true;
+	btRigidBody* rb = m_IsIntersect.GetRigidBody();//プレイヤーの剛体を取得
+	m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。
+	rb->setMassProps(1.0f, btVector3(0.1f, 0.1f, 0.1f));//第一引数は質量、第二引数は回転のしやすさ
+	//rb->applyForce(btVector3(0.0f, 100.0f, 0.0f), btVector3(1.0f, 1.0f, 1.0f));//チョコボールに当たって吹っ飛ぶ力を設定
+	m_animation.SetAnimSpeed(2.0f);//アニメーション再生速度を設定
+}
+
+void CPlayer::RollingPlayer()
+{
+	btRigidBody* rb = m_IsIntersect.GetRigidBody();//プレイヤーの剛体を取得
+
+	//物理エンジンで計算した移動をプレイヤーに反映
+	btVector3 pos = rb->getWorldTransform().getOrigin();
+	m_transform.position.x = pos.x();
+	m_transform.position.y = pos.y();
+	m_transform.position.z = pos.z();
+
+	//物理エンジンで計算した回転をプレイヤーに反映
+	btQuaternion rot = rb->getWorldTransform().getRotation();
+	m_transform.angle.x = rot.x();
+	m_transform.angle.y = rot.y();
+	m_transform.angle.z = rot.z();
+	m_transform.angle.w = rot.w();
+
+	//ゲームオーバーになるまでの待機時間の設定
+	deadTimer += 1.0 / 60.0f;
+	if (deadTimer >= 2.0f){
+		m_GameState = GAMEEND_ID::OVER;
+	}
 }

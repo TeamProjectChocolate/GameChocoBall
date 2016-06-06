@@ -34,6 +34,8 @@ public:
 	void BehaviorCorrection();
 	void StateManaged();
 	void BulletShot();
+	void ChocoHit();
+	void RollingPlayer();
 
 	void DeleteBullet(Bullet*);
 	void ExcuteDeleteBullets();
@@ -60,6 +62,7 @@ public:
 	{
 		m_CBManager = CHOCO;
 	}
+	
 private:
 	CInterface*	m_pInput;
 	CLight			m_light;
@@ -85,9 +88,12 @@ private:
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
 	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
-	bool			m_Hitflag;
+	bool            GamaOverFlag;		//ゲームオーバ
 	bool            ChocoBall;			//チョコボールを流すフラグ
+	float			deadTimer;			//ゲームオーバーまでの待機時間
 	int             BusterEnemyNum;		//倒した敵の数
+
+	D3DXVECTOR3		m_size;	//プレイヤーを内包するバウンディングボックスのサイズ。
 
 	CCBManager*		m_CBManager;
 
