@@ -246,9 +246,6 @@
     <ClInclude Include="StageTable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GimmickTriggerInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
