@@ -6,48 +6,8 @@
 #include <vector>
 #include "CBManager.h"
 #include "EnemyLR.h"
+#include "StageTable.h"
 
-enum GimmickType{
-	GimmickType_Chocoball,
-	GimmickType_Wall,
-};
-struct SEnemyAndGimmickInfo{
-	D3DXVECTOR3 pos;
-	D3DXQUATERNION rot;
-	D3DXVECTOR3 scale;
-	int enemyType;
-	int gimmickType;
-};
-//ステージ切り替えで必要
-
-// ステージ1
-static SEnemyAndGimmickInfo infoTable[] = {
-#include "EnemyGimmickInfo.h"
-};
-
-
-static SEnemyAndGimmickInfo* infoTableArray[] = {
-	infoTable
-};
-
-static int InfoTableSizeArray[] = {
-	ARRAYSIZE(infoTable)
-};
-//ステージ切り替えで必要
-
-// ステージ1
-static SCollisionInfo GimmickTriggerInfoTable[] = {
-#include "GimmickTriggerInfo.h"
-};
-
-
-static SCollisionInfo* GimmickinfoTableArray[] = {
-	GimmickTriggerInfoTable
-};
-
-static int GimmickInfoTableSizeArray[] = {
-	ARRAYSIZE(GimmickTriggerInfoTable)
-};
 
 CLevelBuilder::CLevelBuilder()
 {
@@ -73,16 +33,17 @@ void CLevelBuilder::Build()
 	SEnemyAndGimmickInfo* pInfo = infoTableArray[StageID];
 	for (int i = 0; i < tableSize; i++){
 
-		const SEnemyAndGimmickInfo& info = infoTable[i];
+		const SEnemyAndGimmickInfo& info = pInfo[i];
 		if (info.enemyType == 0){
 			//敵を生成。
 			extern CEnemyManager g_enemyMgr;
-			CEnemyLR* enemylr = new CEnemyLR;
-			//CEnemyLR* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			infoTable[i].pos.x = infoTable[i].pos.x * -1;
-			infoTable[i].pos.z = infoTable[i].pos.z * -1;
-			enemylr->SetInitPosition(infoTable[i].pos);
-			g_enemyMgr.AddEnemy(enemylr);
+			CEnemyLR* enemy = new CEnemyLR;
+			enemy->Initialize();
+			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
+			pInfo[i].pos.x = pInfo[i].pos.x * -1;
+			pInfo[i].pos.z = pInfo[i].pos.z * -1;
+			enemy->SetInitPosition(pInfo[i].pos);
+			g_enemyMgr.AddEnemy(enemy);
 		}
 		//else if (info.enemyType == 1){
 		//	//敵を生成。
@@ -109,8 +70,8 @@ void CLevelBuilder::Build()
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;
 			m_chocoballMgrList.push_back(mgr);
-			D3DXVECTOR3 startPos(-infoTable[i].pos.x, infoTable[i].pos.y, -infoTable[i].pos.z);
-			D3DXQUATERNION rot(infoTable[i].rot.x, infoTable[i].rot.y, infoTable[i].rot.z, infoTable[i].rot.w);
+			D3DXVECTOR3 startPos(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z);
+			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
 			D3DXMATRIX mRot;
 			D3DXMatrixRotationQuaternion(&mRot, &rot);
 			D3DXVECTOR3 back;
@@ -124,8 +85,8 @@ void CLevelBuilder::Build()
 			//ギミックの生成
 			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
 			buildBlock->Initialize(
-				D3DXVECTOR3(-infoTable[i].pos.x, infoTable[i].pos.y, -infoTable[i].pos.z),
-				infoTable[i].rot
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
 			);
 		}
 	}

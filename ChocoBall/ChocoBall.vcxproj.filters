@@ -192,9 +192,6 @@
     <ClInclude Include="LockOn.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ResultScore.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -246,6 +243,7 @@
     <ClInclude Include="ParticleParameterTable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="collisionInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -253,6 +251,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="EnemyGimmickInfo.h">
+=======
+    <ClInclude Include="StageTable.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GimmickTriggerInfo.h">
+>>>>>>> 3a955a6069ad02752f1572e080ddf39dbd06cabd
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

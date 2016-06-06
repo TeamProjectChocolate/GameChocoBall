@@ -3,6 +3,8 @@
 #include "Audio.h"
 #include "Player.h"
 #include "SceneResult.h"
+#include "Score.h"
+
 
 class CStage
 {
@@ -12,6 +14,7 @@ public:
  	virtual void Initialize(CAudio*,STAGE_ID);
 	virtual void Update();
 	virtual void Draw();
+	void ActivateObjects();
 	CAudio* GetAudio(){
 		if (m_pAudio == nullptr){
 			return nullptr;
@@ -29,5 +32,6 @@ private:
 	CLevelBuilder m_CLevelBuilder;
 	bool m_isGameContinue = true;
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
+	CScoreCalc m_score;
 };
 

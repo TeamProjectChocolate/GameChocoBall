@@ -2,11 +2,7 @@
 #include "Field.h"
 #include "CollisionType.h"
 #include "ObjectManager.h"
-
-//ステージ切り替えで必要
-SCollisionInfo collisionInfoTable[] = {
-#include "collisionInfo.h"
-};
+#include "StageTable.h"
 
 
 CField::~CField()
@@ -24,9 +20,10 @@ void CField::Initialize(){
 	//剛体を初期化。
 	{
 		//この引数に渡すのはボックスのhalfsizeなので、0.5倍する。
-		int arraySize = ARRAYSIZE(collisionInfoTable);	//配列の要素数を返す。
+		SCollisionInfo* Table = collisionInfoTableArray[m_StageID];
+		int arraySize = collisionInfoTableSizeArray[m_StageID];	//配列の要素数を返す。
 		for (int i = 0; i < arraySize; i++) {
-			SCollisionInfo& collision = collisionInfoTable[i];
+			SCollisionInfo& collision = Table[i];
 			m_groundShape[i] = new btBoxShape(btVector3(collision.scale.x*0.5f, collision.scale.y*0.5f, collision.scale.z*0.5f));
 			btTransform groundTransform;
 			groundTransform.setIdentity();

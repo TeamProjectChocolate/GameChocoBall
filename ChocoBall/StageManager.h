@@ -49,23 +49,3 @@ private:
 	void DeleteAll();
 	
 };
-
-	// ステージ1で使用するオブジェクトの定義配列
-static LPCSTR StageGameObject_1[] = {
-	{ "BulletPhysics" },
-	{ "TESTStage3D" },
-	{ "2DTest" },
-	{ "Number" },
-	{ "Camera" },
-	{ "EnemyManager" },
-	{ "TEST3D" }
-};
-
-// ステージを追加したらここにステージで使用するオブジェクト配列のポインタをステージの順番どおりに格納してください
-static LPCSTR* StageArray[] = {
-	StageGameObject_1
-};
-
-static int StageObjectNumArray[] = {
-	ARRAYSIZE(StageGameObject_1)
-};
