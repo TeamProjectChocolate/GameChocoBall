@@ -7,7 +7,6 @@
 #include "EnemyManager.h"
 #include "CBManager.h"
 #include "LevelBuilder.h"
-#include "Score.h"
 
 #define ENEMYNUM 20
 
@@ -25,5 +24,4 @@ private:
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
 	bool m_isGameContinue = true;
 	CLevelBuilder m_CLevelBuilder;
-	CScoreCalc m_score;
 };

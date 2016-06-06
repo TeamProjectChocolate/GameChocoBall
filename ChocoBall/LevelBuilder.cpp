@@ -33,7 +33,7 @@ void CLevelBuilder::Build()
 	SEnemyAndGimmickInfo* pInfo = infoTableArray[StageID];
 	for (int i = 0; i < tableSize; i++){
 
-		const SEnemyAndGimmickInfo& info = infoTable[i];
+		const SEnemyAndGimmickInfo& info = pInfo[i];
 		if (info.enemyType == 0){
 			//“G‚ð¶¬B
 			extern CEnemyManager g_enemyMgr;

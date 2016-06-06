@@ -149,7 +149,6 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultBack.h" />
     <ClInclude Include="ResultCursor.h" />
-    <ClInclude Include="ResultScore.h" />
     <ClInclude Include="ResultSelect.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
@@ -190,7 +189,6 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyLR.cpp" />
     <ClCompile Include="EnemyFB.cpp" />
     <ClCompile Include="Enemyjamp.cpp" />
