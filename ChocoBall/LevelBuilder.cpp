@@ -17,12 +17,14 @@ CLevelBuilder::CLevelBuilder()
 
 CLevelBuilder::~CLevelBuilder()
 {
+	CObjectManager* objMgr = SINSTANCE(CObjectManager);
 	for (int i = 0; i < MaxCollision; i++){
 		if (m_ghostObject[i]){
-			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_ghostObject[i]);
+			objMgr->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_ghostObject[i]);
 		}
 	}
 	for (auto cb : m_chocoballMgrList){
+		objMgr->DeleteGameObjectImmediate(cb);
 		delete cb;
 	}
 }

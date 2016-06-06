@@ -123,7 +123,8 @@ public:
 	//※オブジェクトの削除は必ずこの関数を呼び出して行うこと
 	//※関数が重いため多用しないこと
 	void DeleteGameObject(CGameObject*);
-
+	//こちらは即時デリート。
+	void DeleteGameObjectImmediate(CGameObject*);
 	//削除リストに登録されている、常駐GameObject以外を削除リストにすべてプールする関数
 	//引き数: なし
 	//返り値: なし
