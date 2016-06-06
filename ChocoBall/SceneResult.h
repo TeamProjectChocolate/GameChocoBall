@@ -17,6 +17,9 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	bool GetIsEnd(){
+		return m_IsEnd;
+	}
 	void SetTime(const int time){ m_time = time; };
 	void SetEnemyCounter(const int enemycounter){ m_enemycounter = enemycounter; };
 private:
@@ -25,6 +28,7 @@ private:
 	CResultCursor m_rCursor;
 	CScoreCalc m_Score;
 	CNumber m_Number;
+	bool m_IsEnd;
 	int m_time;
 	int m_enemycounter;
 };

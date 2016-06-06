@@ -7,11 +7,15 @@ int NowCol;		// 現コマ数(横)
 int NowRow;		// 現コマ数(縦)
 float Ratio_X;	// 元の画像サイズから生成された画像サイズを割った比率(横)
 float Ratio_Y;	// 元の画像サイズから生成された画像サイズを割った比率(縦)
+float g_brightness;
 
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler =
 sampler_state{
 	Texture = g_Texture;
+	MipFilter = NONE;
+	MinFilter = NONE;
+	MagFilter = NONE;
 	AddressU = Wrap;
 	AddressV = Wrap;
 };
@@ -61,9 +65,24 @@ float4 ps_main(VS_OUTPUT In) : COLOR0{
 	return color;	// テクスチャを貼り付ける
 };
 
+float4 ps_mainAdd(VS_OUTPUT In) :COLOR{
+	In.color = (float4)0.0f;
+	float4 color = tex2D(g_TextureSampler, In.uv);
+	color.xyz *= Alpha;
+	return float4(color.xyz,color.w * 1.0f / g_brightness);
+};
+
 technique BasicTec{
 	pass p0{
 		VertexShader = compile vs_2_0 vs_main();	// 頂点シェーダ
 		PixelShader = compile ps_2_0 ps_main();		// ピクセルシェーダ
+	}
+}
+
+// 加算合成用テクニック
+technique ColorTexPrimAdd{
+	pass p0{
+		VertexShader = compile vs_2_0 vs_main();	// 頂点シェーダ
+		PixelShader = compile ps_2_0 ps_mainAdd();		// ピクセルシェーダ
 	}
 }

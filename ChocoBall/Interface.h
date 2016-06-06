@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 
-typedef enum INTERFACE_TYPE{ KEYBOARD = 0, GAMEPAD,NONE = 100 };
+typedef enum INTERFACE_TYPE{ KEYBOARD = 0, GAMEPAD,INTERFACE_NONE = 100 };
 
 class CInterface
 {

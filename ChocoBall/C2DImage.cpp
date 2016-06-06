@@ -49,7 +49,7 @@ void C2DImage::Draw()
 
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
-	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &mWorld/*設定したい行列へのポインタ*/);
+	m_pEffect->SetMatrix("World", &mWorld);
 	m_pEffect->SetInt("Split_X", m_Split.x);
 	m_pEffect->SetInt("Split_Y", m_Split.y);
 	m_pEffect->SetInt("NowCol", m_Now.x);
@@ -64,6 +64,7 @@ void C2DImage::Draw()
 	m_pEffect->SetTexture("g_Texture", m_pImage->pTex /*テクスチャ情報*/);
 
 	m_pEffect->SetFloat("Alpha", GetAlpha());
+	//m_pEffect->SetFloat("g_brightness", m_brightness);
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 
 	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
@@ -95,23 +96,23 @@ void C2DImage::SetupMatrices()
 	mWorld = matScale * matRota * matTrans;
 }
 
-void C2DImage::SetupMatrices(RECT rec, D3DXVECTOR2 pos, D3DXVECTOR2 center){
-	D3DXVECTOR3 Scale;
-	Scale.x = m_transform.scale.x / 10 / WINDOW_WIDTH;
-	Scale.y = m_transform.scale.y / WINDOW_HEIGHT;
-	D3DXVECTOR3 Transform;
-	Transform.x = pos.x / WINDOW_WIDTH;
-	Transform.y = pos.y / WINDOW_HEIGHT;
-	Transform.x = -1.0f + Transform.x * 2.0f;
-	Transform.y = 1.0f - Transform.y * 2.0f;
-
-	D3DXMATRIX matScale;
-	D3DXMATRIX matTrans;
-	D3DXMATRIX matRota;
-	D3DXMatrixIdentity(&this->mWorld);	//ワールド行列初期化
-	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
-	D3DXMatrixRotationQuaternion(&matRota, &m_transform.angle);
-	//D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
-	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
-	mWorld = matScale * matRota * matTrans;
-}
+//void C2DImage::SetupMatrices(RECT rec, D3DXVECTOR2 pos, D3DXVECTOR2 center){
+//	D3DXVECTOR3 Scale;
+//	Scale.x = m_transform.scale.x / 10 / WINDOW_WIDTH;
+//	Scale.y = m_transform.scale.y / WINDOW_HEIGHT;
+//	D3DXVECTOR3 Transform;
+//	Transform.x = pos.x / WINDOW_WIDTH;
+//	Transform.y = pos.y / WINDOW_HEIGHT;
+//	Transform.x = -1.0f + Transform.x * 2.0f;
+//	Transform.y = 1.0f - Transform.y * 2.0f;
+//
+//	D3DXMATRIX matScale;
+//	D3DXMATRIX matTrans;
+//	D3DXMATRIX matRota;
+//	D3DXMatrixIdentity(&this->mWorld);	//ワールド行列初期化
+//	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
+//	D3DXMatrixRotationQuaternion(&matRota, &m_transform.angle);
+//	//D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
+//	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
+//	mWorld = matScale * matRota * matTrans;
+//}

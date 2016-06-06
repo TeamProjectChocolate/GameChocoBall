@@ -61,7 +61,7 @@ public:
 	//呼び出し例: SINSTANCE(CGameManager)->ChangeScene(_T("インスタンスの名前"));
 	//※関数が重いため多用しないこと
 	void ChangeScene(LPCSTR);
-
+	void SetNextScene();
 	void Update();
 	void Draw();
 
@@ -70,6 +70,8 @@ private:
 	CScene* m_NowScene = nullptr;
 	void Initialize();
 	void Add(SCENE_DATA*);
+	char m_NowSceneName[SCENENAME_MAX + 1];
+	char m_NextSceneName[SCENENAME_MAX + 1];
 
 	//vectorに登録された要素をすべて削除する関数
 	//※デストラクタにて呼び出される

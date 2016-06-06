@@ -12,6 +12,7 @@ public:
 		m_OriginalInit = false;
 		m_ManagerNewFlg = false;
 		m_alpha = 1.0f;
+		m_alive = false;
 	};
 	~CGameObject();
 	virtual void OnDestroy(){};		// ObjectManagerクラスのDeleteGameObject関数が呼ばれたときに呼び出される関数
@@ -58,6 +59,12 @@ public:
 	bool GetCommon(){
 		return m_common;
 	}
+	void SetIsStage(STAGE_ID stage){
+		m_IsStage = stage;
+	}
+	STAGE_ID GetIsStage(){
+		return m_IsStage;
+	}
 protected:
 	CHAR m_pFileName[MAX_FILENAME + 1];		// 読み込むファイルの名前を格納する
 	TRANSEFORM m_transform; // オブジェクトの座標、回転、大きさ情報
@@ -70,5 +77,6 @@ private:
 	bool m_alive;			// 生存フラグ(trueなら生存、falseなら死亡)
 	float m_alpha;			// オブジェクトの透明度(デフォルトは1、透明度を指定したい場合は継承先で任意の値を設定してください)
 	bool m_common;			// 常駐フラグ(trueならシーン切り替えで削除されない)
+	STAGE_ID m_IsStage;		// このオブジェクトがどのステージで使用されるか(MainScene以外で使用する場合は必ずALLを入れる事)
 };
 

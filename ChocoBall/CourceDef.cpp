@@ -2,6 +2,7 @@
 #include "CourceDef.h"
 
 void CCourceDef::Initialize(){
+	m_courceNum = 0;
 	static D3DXVECTOR3 courcepos[] = {
 		#include "Cource.h"
 	};
@@ -30,7 +31,7 @@ void CCourceDef::Initialize(){
 }
 
 COURCE_BLOCK CCourceDef::FindCource(D3DXVECTOR3 pos){
-	float Min = FLT_MAX;
+    float Min = FLT_MAX;
 	COURCE_BLOCK ret;
 	COURCE_BLOCK* itr = &m_cource;
 	for (int num = 0; num < m_courceNum; num++){

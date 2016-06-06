@@ -23,12 +23,18 @@ void CSceneResult::Initialize(){
 	SINSTANCE(CObjectManager)->AddObject(&m_rCursor, _T("ResultCursor"), false); 
 	SINSTANCE(CObjectManager)->AddObject(&m_Number, _T("ResultNumber"), false);
 	SINSTANCE(CObjectManager)->Intialize();
-	SINSTANCE(CObjectManager)->FindGameObject<CResultSelect>(_T("GoTitle"))->SetPos(D3DXVECTOR3(480.0f, 350.0f, 0.0f));//Exitのポジション
+	SINSTANCE(CObjectManager)->FindGameObject<CResultSelect>(_T("GoTitle"))->SetPos(D3DXVECTOR3(500.0f, 350.0f, 0.0f));//Exitのポジション
+	m_IsEnd = false;
 }
 
 void CSceneResult::Update(){
 	SINSTANCE(CObjectManager)->Update();
+	// リザルト画面終了のお知らせ
+	// 後できちんとif文を追加してねっ！
+	m_IsEnd = true;
+
 	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));
+	// 後できちんと条件式を追加する
 	if (true){
 		pNumber->AddValue(1);
 	}

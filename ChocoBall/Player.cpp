@@ -7,6 +7,7 @@
 #include "ObjectManager.h"
 #include "EnemyManager.h"
 #include "PlayerParam.h"
+#include "ParticleEmitter.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -17,8 +18,8 @@ void CPlayer::Initialize()
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
-	//]m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
+	//m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
+	m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -54,14 +55,27 @@ void CPlayer::Initialize()
 	m_CBManager =NULL;
 
 	C3DImage::SetImage();
-	m_lockonEnemyIndex = 0;
+	m_lockonEnemyIndex = 0;	
+	m_pEmitter = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterTEST"),
+		PARTICLE_TYPE::FIRE,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	);
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterPORIGON"),
+		PARTICLE_TYPE::PORIGON,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+		);
+
+
 }
 
 void CPlayer::Update()
 {
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
-
 
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
@@ -111,8 +125,18 @@ void CPlayer::Update()
 		//回転行列
 		SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 
-		
+		if (m_CBManager != NULL)
+		{	
+			//チョコボールとの衝突判定
+			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_radius))
+			{
+				m_GameState = GAMEEND_ID::OVER;
+			}
+		}
 		C3DImage::Update();
+
+		// 自分の周囲にパーティクル発生
+		m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
@@ -265,7 +289,6 @@ void CPlayer::BehaviorCorrection()
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &m_V2);
 
-
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
 	D3DXVECTOR3 t0, t1;
 	t0 = V1 * m_moveSpeed.z;
@@ -346,7 +369,7 @@ void CPlayer::BulletShot()
 		D3DXMatrixRotationY(&Rot, m_currentAngleY);
 		D3DXVec3Transform(&RV1, &RV0, &Rot);
 
-		
+
 		Bullet* bullet = new Bullet;
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);

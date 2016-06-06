@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Block.h"
 #include "ShadowRender.h"
+#include "BulletPhysics.h"
 
 void CBlock::OnDestroy(){
-	g_bulletPhysics.RemoveRigidBody(m_rigidBody);
+	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveRigidBody(m_rigidBody);
 	//子供に死亡したことを通知。
 	if (m_child){
 		m_child->OnDestroyParent();
@@ -124,5 +125,5 @@ void CBlock::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 	m_rigidBody = new btRigidBody(rbInfo);
 	//m_rigidBody->setUserIndex(1);
 	//ワールドに追加。
-	g_bulletPhysics.AddRigidBody(m_rigidBody);
+	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody);
 }
