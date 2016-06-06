@@ -30,6 +30,8 @@ public:
 	//		　 float型 補完時間
 	void PlayAnimation(int, float);
 
+	// アニメーション再生速度を設定
+	void SetAnimSpeed(float speed);
 #if 0
 	// アニメーションのブレンディング再生
 	// 引き数: int型 再生したいアニメーションのインデックス

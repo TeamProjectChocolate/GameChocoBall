@@ -119,7 +119,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	//Box(立方体),sphere(球体)などで当たり範囲を決める。
 	m_collisionShape = new btSphereShape(m_radius);//ここで剛体の形状を決定
 
-	float mass = 0.0f;
+	float mass = 0.1f;
 
 	btTransform rbTransform;
 	rbTransform.setIdentity();
@@ -227,11 +227,24 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 		if (callback.isHit) {
 			//当たった。
 			//地面。
+			D3DXVECTOR3 Circle;
+			float x = 0.0f;
+			float offset = 0.0f;	//押し戻す量。
+			Circle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			
+			Circle = *position;
+			Circle.y = callback.hitPos.y;//円の中心
+			D3DXVECTOR3 v = Circle - callback.hitPos;
+			x = D3DXVec3Length(&v);//物体の角とプレイヤーの間の横幅の距離が求まる。
+
+			offset = sqrt(m_radius*m_radius - x*x);//yの平方根を求める。
+		
 			moveSpeed->y = 0.0f;
 			addPos.y = callback.hitPos.y - position->y;
 			m_isHitGround = true;
 #ifdef ORIGIN_CENTER
-			addPos.y += m_radius;
+			addPos.y += offset/*m_radius*/;
+			
 #endif
 		}
 	}
