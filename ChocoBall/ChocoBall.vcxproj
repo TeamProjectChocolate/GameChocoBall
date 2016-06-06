@@ -104,6 +104,7 @@
     <ClInclude Include="CBManager.h" />
     <ClInclude Include="collisionInfo.h" />
     <ClInclude Include="EnemyGimmickInfo.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemyjamp.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="ChocoBall.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyLR.cpp" />
     <ClCompile Include="EnemyFB.cpp" />
     <ClCompile Include="Enemyjamp.cpp" />

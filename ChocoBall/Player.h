@@ -62,7 +62,10 @@ public:
 	{
 		m_CBManager = CHOCO;
 	}
-	
+	int GetBusterEnemyNum()
+	{
+		return BusterEnemyNum;
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -91,8 +94,10 @@ private:
 	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
 	bool            GamaOverFlag;		//ゲームオーバ
 	bool            ChocoBall;			//チョコボールを流すフラグ
+
 	float			deadTimer;			//ゲームオーバーまでの待機時間
 	int             BusterEnemyNum;		//倒した敵の数
+
 
 	D3DXVECTOR3		m_size;	//プレイヤーを内包するバウンディングボックスのサイズ。
 

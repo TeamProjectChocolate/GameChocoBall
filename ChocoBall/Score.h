@@ -11,5 +11,4 @@ public:
 	CScoreCalc();
 	~CScoreCalc();
 	void kasan();
-private:
 };
