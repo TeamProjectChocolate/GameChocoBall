@@ -42,8 +42,6 @@ void CEnemyFB::Initialize()
 
 	m_V1 = Cource.endPosition - Cource.startPosition;					//スタートからゴールに向けてのベクトル
 	D3DXVec3Normalize(&V1, &m_V1);										//上で求めたベクトルの正規化
-	D3DXVec3Cross(&m_V2, &V1, &m_Up);
-	D3DXVec3Normalize(&V2, &m_V2);
 
 	extern CEnemyManager g_enemyMgr;
 }
@@ -71,6 +69,21 @@ void CEnemyFB::Update()
 		V1 *= -1.0f;
 	}
 
+	m_eTargetAngleY = acos(V0);
+
+	D3DXVECTOR3 V4;
+	D3DXVec3Cross(&V4, &m_V0, &V1);
+	if (V4.y < 0)
+	{
+		m_eTargetAngleY *= -1.0f;
+	}
+
+
+	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+	//回転行列
+	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
+
+	
 	C3DImage::Update();
 }
 

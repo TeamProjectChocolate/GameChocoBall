@@ -137,6 +137,8 @@ bool CIsIntersect::IsHitGround()
 //物理エンジンを使った当たり判定処理&ジャンプ処理
 void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 {
+	//m_isHitGround = false;
+
 	static float deltaTime = 1.0f / 60.0f;						/************/
 	static D3DXVECTOR3 gravity(0.0f, -40.0f, 0.0f);	//重力		/*  ジ		*/
 	D3DXVECTOR3 addGravity = gravity;							/*  ャ		*/
