@@ -4,11 +4,6 @@
 
 #define MaxCollision 100
 
-struct SCollisionInfo {
-	D3DXVECTOR3 pos;
-	D3DXQUATERNION rotation;
-	D3DXVECTOR3 scale;
-};
 
 class CField :
 	public C3DImage
@@ -28,12 +23,15 @@ public:
 	void SetUpTechnique()override{
 		m_pEffect->SetTechnique("ShadowTec");
 	}
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
 	
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btBoxShape*	m_groundShape[MaxCollision];	//地面のコリジョン形状。
 	btRigidBody*		m_rigidBody[MaxCollision];	//剛体。
 	btDefaultMotionState* m_myMotionState;
-	
+	STAGE_ID m_StageID;
 };
 

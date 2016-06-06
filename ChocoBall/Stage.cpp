@@ -5,6 +5,7 @@
 #include "ClearText.h"
 #include "GameOver.h"
 #include "StageManager.h"
+#include "StageTable.h"
 
 CStage::CStage()
 {
@@ -20,32 +21,8 @@ CStage::~CStage()
 void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 {
 	m_Stage_ID = NowId;
-	LPCSTR* ObjectDataArray = StageArray[m_Stage_ID];
-	int size = StageObjectNumArray[m_Stage_ID];
 
-	for (int idx = 0; idx < size; idx++){
-		if (strcmp(ObjectDataArray[idx], "TESTStage3D") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CField>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT3D, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "BulletPhysics") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CBulletPhysics>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "2DTest") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "Number") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "Camera") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "EnemyManager") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CEnemyManager>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
-		}
-	}
+	ActivateObjects();
 
 	SINSTANCE(CObjectManager)->Intialize();
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
@@ -104,4 +81,35 @@ void CStage::Draw()
 {
 	SINSTANCE(CShadowRender)->Draw();
 	SINSTANCE(CObjectManager)->Draw();
+}
+
+
+// ステージで使用するオブジェクトの情報を配列に追加したらここのif文を追加すること
+void CStage::ActivateObjects(){
+	LPCSTR* ObjectDataArray = StageArray[m_Stage_ID];
+	int size = StageObjectNumArray[m_Stage_ID];
+
+	for (int idx = 0; idx < size; idx++){
+		if (strcmp(ObjectDataArray[idx], "TESTStage3D") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CField>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT3D, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "BulletPhysics") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CBulletPhysics>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "2DTest") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "Number") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "Camera") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "EnemyManager") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CEnemyManager>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+		}
+	}
 }

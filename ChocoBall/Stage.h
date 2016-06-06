@@ -12,6 +12,7 @@ public:
  	virtual void Initialize(CAudio*,STAGE_ID);
 	virtual void Update();
 	virtual void Draw();
+	void ActivateObjects();
 	CAudio* GetAudio(){
 		if (m_pAudio == nullptr){
 			return nullptr;
