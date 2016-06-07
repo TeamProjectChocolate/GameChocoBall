@@ -46,7 +46,6 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 
 void MoveFloor::Update()
 {
-
 	btTransform& trans = m_rigidBody->getWorldTransform();
 	trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
