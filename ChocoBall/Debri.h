@@ -9,7 +9,7 @@ class CDebri : public C3DImage {
 public:
 	CDebri(){
 		m_collisionShape = nullptr;
-		m_rigidBody = nullptr;
+		//m_rigidBody = nullptr;
 		m_myMotionState = nullptr;
 		strcpy(m_pFileName, "image/Debri.x");
 	}
@@ -23,11 +23,11 @@ public:
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
 	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
-	btRigidBody*		m_rigidBody;		//剛体。
+	//btRigidBody*		m_rigidBody;		//剛体。
 	btDefaultMotionState* m_myMotionState;
 	float m_life;
-	CRigidbody m_Rigidbody;
-	CIsIntersect m_IsIntersect;
+	//CRigidbody m_Rigidbody;
+	//CIsIntersect m_IsIntersect;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 };
