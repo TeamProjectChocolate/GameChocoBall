@@ -171,7 +171,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 			if (callback.isHit) {
 				//“–‚½‚Á‚½B
 				//•ÇB
-				addPos.x = callback.hitPos.x - position->x;
+ 				addPos.x = callback.hitPos.x - position->x;
 				addPos.z = callback.hitPos.z - position->z;
 
 				D3DXVECTOR3 t;
