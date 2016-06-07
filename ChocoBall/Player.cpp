@@ -377,7 +377,6 @@ void CPlayer::BulletShot()
 {
 	if (m_pInput->IsTriggerRightShift())
 	{
-		//Shotflag = true;
 
 		//プレイヤーの向いているベクトルを計算
 		D3DXVec3Normalize(&RV0, &RV0);

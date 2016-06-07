@@ -69,6 +69,9 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
+	CCourceDef GetCourceDef(){
+		return m_Courcedef;
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;

@@ -22,7 +22,6 @@ void CStageManager::Update()
 void CStageManager::Draw()
 {
 	m_pStage->Draw();
-	SetNextStage();
 }
 
 void CStageManager::ChangeStage(STAGE_ID id){
@@ -39,6 +38,7 @@ void CStageManager::SetNextStage(){
 			SAFE_DELETE(m_pStage);
 			m_pStage = new CStage;
 			SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+			SINSTANCE(CGameManager)->SetNextScene();
 			return;
 		}
 	}
@@ -48,7 +48,7 @@ void CStageManager::SetNextStage(){
 			m_NowStage = m_ContinueStage;
 		}
 		else{
-			m_NowStage = m_NextStage;
+			m_NowStage = STAGE_ID::FIRST/*m_NextStage*/;
 		}
 		SINSTANCE(CShadowRender)->CleanManager();
 		SINSTANCE(CObjectManager)->CleanManager();

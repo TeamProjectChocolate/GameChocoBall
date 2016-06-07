@@ -44,7 +44,8 @@ void CCourceCamera::Update(){
 	D3DXVECTOR3 TargetPos = pl->GetPos() -  m_NowCource.startPosition;
 	float t = D3DXVec3Dot(&Dir, &TargetPos);
 	TargetPos = m_NowCource.startPosition + (Dir*(t-8.0f));
-	TargetPos.y = 2.0f;
+	TargetPos.y += 2.5f;
+	//TargetPos.y = 2.0f;
 
 	if (!m_isFirst){
 		VectorSmoothDamp(
