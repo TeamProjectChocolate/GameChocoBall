@@ -36,14 +36,12 @@ void CResultCursor::Update(){
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 250.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
-		SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
-	}
 	
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
 		MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}
+
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	float Y = m_pInput->GetStickL_YFloat();
 	if (Y>0){

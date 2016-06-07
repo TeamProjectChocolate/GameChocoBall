@@ -8,6 +8,7 @@
 #include "EnemyManager.h"
 #include "PlayerParam.h"
 #include "ParticleEmitter.h"
+#include "MoveFloor.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -15,6 +16,7 @@ CPlayer::~CPlayer(){  }
 void CPlayer::Initialize()
 
 {
+	parent = NULL;
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
@@ -23,9 +25,9 @@ void CPlayer::Initialize()
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	m_Up.x = 0.0f;
-	m_Up.y = 1.0f;
-	m_Up.z = 0.0f;
+
+	localPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
@@ -51,6 +53,7 @@ void CPlayer::Initialize()
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 
+	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
 
 	// ライト関連の初期化
@@ -79,11 +82,54 @@ void CPlayer::Initialize()
 
 }
 
+void CPlayer::SetParent(MoveFloor* parent)
+{
+	//親が設定されたので、ワールド座標を求めるために。一旦Updateを呼び出す。
+	
+	if (parent != NULL){
+		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
+		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
+		D3DXMatrixInverse(&mParentWorldInv, NULL, &mParentWorldInv);
+		D3DXVECTOR4 pos;
+		D3DXVec3Transform(&pos, &m_transform.position, &mParentWorldInv);
+		localPosition.x = pos.x;
+		localPosition.y = pos.y;
+		localPosition.z = pos.z;
+		this->parent = parent;
+	}
+	else if (this->parent != NULL){
+		
+		D3DXMATRIX mParentWorld = this->parent->GetWorldMatrix();
+		D3DXVECTOR4 pos;
+		D3DXVec3Transform(&pos, &localPosition, &mParentWorld);
+		localPosition.x = pos.x;
+		localPosition.y = pos.y;
+		localPosition.z = pos.z;
+
+		m_transform.position.x = pos.x;
+		m_transform.position.y = pos.y;
+		m_transform.position.z = pos.z;
+		this->parent = parent;
+	}
+}
+
 void CPlayer::Update()
 {
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
+		//親がいるときの処理
+		if (parent)
+		{
+			D3DXMATRIX mParentWorld = parent->GetWorldMatrix();
+			//親のワールド行列を乗算して、ローカル座標をワールド座標に変換する
 
+			D3DXVECTOR4 pos;
+			D3DXVec3Transform(&pos, &localPosition, &mParentWorld);
+			m_transform.position.x = pos.x + parent->GetMoveSpeed().x;
+			m_transform.position.y = pos.y + parent->GetMoveSpeed().y;
+			m_transform.position.z = pos.z + parent->GetMoveSpeed().z;
+		}
+		
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
@@ -288,12 +334,20 @@ void CPlayer::LockOn()
 
 void CPlayer::BehaviorCorrection()
 {
+	D3DXVECTOR3		V1;
+	D3DXVECTOR3		V2;
+	D3DXVECTOR3		Up;
+
+	Up.x = 0.0f;
+	Up.y = 1.0f;
+	Up.z = 0.0f;
+
 	//直行するベクトルを求める。
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
-	m_V1 = Cource.endPosition - Cource.startPosition;
-	D3DXVec3Normalize(&V1, &m_V1);//3D ベクトルを正規化したベクトルを返す。
-	D3DXVec3Cross(&m_V2, &V1, &m_Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
-	D3DXVec3Normalize(&V2, &m_V2);
+	V1 = Cource.endPosition - Cource.startPosition;
+	D3DXVec3Normalize(&V1, &V1);//3D ベクトルを正規化したベクトルを返す。
+	D3DXVec3Cross(&V2, &V1,&Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
+	D3DXVec3Normalize(&V2, &V2);
 
 	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
 	D3DXVECTOR3 t0, t1;
@@ -371,7 +425,6 @@ void CPlayer::BulletShot()
 {
 	if (m_pInput->IsTriggerRightShift())
 	{
-		//Shotflag = true;
 
 		//プレイヤーの向いているベクトルを計算
 		D3DXVec3Normalize(&RV0, &RV0);
@@ -455,3 +508,4 @@ void CPlayer::RollingPlayer()
 		m_GameState = GAMEEND_ID::OVER;
 	}
 }
+

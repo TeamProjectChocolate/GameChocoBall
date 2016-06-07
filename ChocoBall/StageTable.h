@@ -2,9 +2,12 @@
 #include "stdafx.h"
 
 
+//enum ENEMY_TYPE{SIDE_MOVE = 0,FRONTandBACK,JUMP,DEFAULT = 999};
+
 enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
+	GimmickType_FallFloor,
 };
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
@@ -20,6 +23,12 @@ struct SCollisionInfo {
 };
 
 
+
+// フィールドのXファイル名
+// ※上から順にステージ1,2,3……
+static LPCSTR FieldNameArray[] = {
+	"image/SUTE2_01.x"
+};
 
 
 // ステージ1で使用するオブジェクトの定義配列

@@ -8,8 +8,6 @@
 #include "Player.h"
 #include "InputManager.h"
 
-extern CEnemyManager g_enemyMgr;
-extern CPlayer* g_player;
 
 CEnemyFB::CEnemyFB()
 {
@@ -44,7 +42,6 @@ void CEnemyFB::Initialize()
 	m_V1 = Cource.endPosition - Cource.startPosition;					//スタートからゴールに向けてのベクトル
 	D3DXVec3Normalize(&V1, &m_V1);										//上で求めたベクトルの正規化
 
-	extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemyFB::SetUpTechnique()

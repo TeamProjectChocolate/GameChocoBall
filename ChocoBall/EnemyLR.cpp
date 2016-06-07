@@ -6,8 +6,6 @@
 #include "Player.h"
 #include "InputManager.h"
 
-extern CEnemyManager g_enemyMgr;
-extern CPlayer* g_player;
 
 CEnemyLR::CEnemyLR()
 {
@@ -50,6 +48,7 @@ void CEnemyLR::Initialize()
 	C3DImage::SetImage();
 	//m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
+	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 	
@@ -57,8 +56,6 @@ void CEnemyLR::Initialize()
 	D3DXVec3Normalize(&V1, &m_V1);										//è„Ç≈ãÅÇﬂÇΩÉxÉNÉgÉãÇÃê≥ãKâª
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
-
-	//extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemyLR::Update()
