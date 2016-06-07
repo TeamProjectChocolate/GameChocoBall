@@ -32,9 +32,6 @@ public:
 		if (enemyIndex == -1){
 			return;
 		}
-		//else{
-		//	//SAFE_DELETE(Enemy[enemyIndex]);
-		//}
 		for (int i = enemyIndex; i < numEnemy - 1; i++){
 			Enemy[i] = Enemy[i + 1];
 		}
