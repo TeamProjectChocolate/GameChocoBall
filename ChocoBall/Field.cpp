@@ -36,7 +36,7 @@ void CField::Initialize(){
 			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_groundShape[i], btVector3(0,0,0));
 			m_rigidBody[i] = new btRigidBody(rbInfo);
 			m_rigidBody[i]->activate();
-			m_rigidBody[i]->setUserIndex(CollisionType_Map);
+			//m_rigidBody[i]->setUserIndex(CollisionType_Map);
 			//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody[i]);
 		}

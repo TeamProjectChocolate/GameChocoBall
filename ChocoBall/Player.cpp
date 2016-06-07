@@ -19,7 +19,7 @@ void CPlayer::Initialize()
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
-	//m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
+	//m_transform.position = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
