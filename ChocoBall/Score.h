@@ -6,11 +6,11 @@
 #define TIMEBONUS 10
 #define ENEMY_BONUS 20
 
-class CScoreCalc
+class CScore
 {
 public:
-	CScoreCalc();
-	~CScoreCalc();
+	CScore();
+	~CScore();
 	void Update();
 
 private:
