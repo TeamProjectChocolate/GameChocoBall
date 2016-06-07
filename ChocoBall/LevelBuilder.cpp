@@ -7,6 +7,8 @@
 #include "CBManager.h"
 #include "EnemyLR.h"
 #include "StageTable.h"
+#include "FallFloor.h"
+#include "MoveFloor.h"
 
 
 CLevelBuilder::CLevelBuilder()
@@ -87,6 +89,21 @@ void CLevelBuilder::Build()
 			//ギミックの生成
 			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
 			buildBlock->Initialize(
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
+			);
+		}
+		if (info.gimmickType == GimmickType_Wall){
+			//落ちる床だよ。つかって
+			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
+			fallfloor->Initialize(
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
+			);
+		}
+		if (info.gimmickType == GimmickType_Wall){
+			MoveFloor* movefloor = SINSTANCE(CObjectManager)->GenerationObject<MoveFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			movefloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot
 			);

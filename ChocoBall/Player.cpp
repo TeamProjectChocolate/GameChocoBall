@@ -8,6 +8,7 @@
 #include "EnemyManager.h"
 #include "PlayerParam.h"
 #include "ParticleEmitter.h"
+#include "MoveFloor.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -15,6 +16,7 @@ CPlayer::~CPlayer(){  }
 void CPlayer::Initialize()
 
 {
+	parent = NULL;
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
@@ -23,6 +25,7 @@ void CPlayer::Initialize()
 	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	localPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_Up.x = 0.0f;
 	m_Up.y = 1.0f;
 	m_Up.z = 0.0f;
@@ -79,11 +82,56 @@ void CPlayer::Initialize()
 
 }
 
+void CPlayer::SetParent(MoveFloor* parent)
+{
+	//親が設定されたので、ワールド座標を求めるために。一旦Updateを呼び出す。
+	Update();
+
+	
+	if (parent != NULL){
+		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
+		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
+		D3DXMatrixInverse(&mParentWorldInv, NULL, &mParentWorldInv);
+		D3DXVECTOR4 pos;
+		D3DXVec3Transform(&pos, &m_transform.position, &mParentWorldInv);
+		localPosition.x = pos.x;
+		localPosition.y = pos.y;
+		localPosition.z = pos.z;
+		this->parent = parent;
+	}
+	else if (this->parent != NULL){
+		
+		D3DXMATRIX mParentWorld = this->parent->GetWorldMatrix();
+		D3DXVECTOR4 pos;
+		D3DXVec3Transform(&pos, &localPosition, &mParentWorld);
+		localPosition.x = pos.x;
+		localPosition.y = pos.y;
+		localPosition.z = pos.z;
+
+		m_transform.position.x = pos.x;
+		m_transform.position.y = pos.y;
+		m_transform.position.z = pos.z;
+		this->parent = parent;
+	}
+}
+
 void CPlayer::Update()
 {
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
+		//親がいるときの処理
+		if (parent)
+		{
+			D3DXMATRIX mParentWorld = parent->GetWorldMatrix();
+			//親のワールド行列を乗算して、ローカル座標をワールド座標に変換する
 
+			D3DXVECTOR4 pos;
+			D3DXVec3Transform(&pos, &localPosition, &mParentWorld);
+			m_transform.position.x = pos.x + parent->GetMoveSpeed().x;
+			m_transform.position.y = pos.y + parent->GetMoveSpeed().y;
+			m_transform.position.z = pos.z + parent->GetMoveSpeed().z;
+		}
+		
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
@@ -455,3 +503,4 @@ void CPlayer::RollingPlayer()
 		m_GameState = GAMEEND_ID::OVER;
 	}
 }
+
