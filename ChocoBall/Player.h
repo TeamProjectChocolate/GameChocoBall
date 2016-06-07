@@ -14,6 +14,7 @@
 class CLockOn;
 class CCBManager;
 class CParticleEmitter;
+class MoveFloor;
 class CPlayer : public C3DImage
 {
 public:
@@ -66,12 +67,18 @@ public:
 	{
 		return BusterEnemyNum;
 	}
+
+	//親をきめるやつ
+	void SetParent(MoveFloor* parent);
+	
+
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
 	CCourceDef GetCourceDef(){
 		return m_Courcedef;
 	}
+
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -79,7 +86,6 @@ private:
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
 	float			_X;
-	D3DXVECTOR3		m_position;
 	float			m_radius;
 	D3DXVECTOR3		m_initPosition;		//初期座標。
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
@@ -122,6 +128,10 @@ private:
 	//入口
 	
 	bool			m_HitFlag;
+	MoveFloor*		parent;
+	D3DXVECTOR3		localPosition;
+	
+
 	STAGE_ID m_StageID;
 };
 
