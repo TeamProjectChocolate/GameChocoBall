@@ -12,9 +12,6 @@
 
 
 
-extern CEnemyManager g_enemyMgr;
-extern CPlayer* g_player;
-
 CEnemyjamp::CEnemyjamp()
 {
 	m_initPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -44,7 +41,6 @@ void CEnemyjamp::Initialize()
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 
-	extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemyjamp::SetUpTechnique()

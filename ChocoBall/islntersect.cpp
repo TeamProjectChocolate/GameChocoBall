@@ -61,7 +61,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
 			if (!mgr->GetAlive()){
-				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+ 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 				mgr->Initialize();
 				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
 				g_player->SetCBM(mgr);

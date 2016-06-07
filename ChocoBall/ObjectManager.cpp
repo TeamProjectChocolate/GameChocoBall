@@ -45,6 +45,19 @@ void CObjectManager::DeleteGameObject(CGameObject* pObject){
 	m_DeleteObjects.push_back(pObject);
 }
 
+void CObjectManager::DeleteGameObjectImmediate(CGameObject* pObject)
+{
+	pObject->OnDestroy();
+	vector<OBJECT_DATA*>::iterator itr;
+	for (itr = m_GameObjects.begin(); itr != m_GameObjects.end(); itr++){
+		if (!(*itr)->object->GetManagerNewFlg()){
+			if (pObject == (*itr)->object){
+				m_GameObjects.erase(itr);
+				break;
+			}
+		}
+	}
+}
 void CObjectManager::CleanManager(){
 	int size = m_GameObjects.size();
 	for (int idx = 0; idx < size; idx++){

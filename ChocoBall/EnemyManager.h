@@ -5,17 +5,21 @@
 #include "Enemyjamp.h"
 #include "GameObject.h"
 
-
 class CEnemyManager:public CGameObject
 {
 public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void DeleteAll();
 	CEnemyManager()
 	{
 		numEnemy = 0;
 	}
+	~CEnemyManager(){
+		this->DeleteAll();
+	}
+
 	void AddEnemy(EnemyBase* enemy)
 	{
 		Enemy[numEnemy] = enemy;
@@ -33,6 +37,10 @@ public:
 		}
 		if (enemyIndex == -1){
 			return;
+		}
+		else{
+			SAFE_DELETE(Enemy[enemyIndex]);
+			Enemy[enemyIndex] = nullptr;
 		}
 		for (int i = enemyIndex; i < numEnemy - 1; i++){
 			Enemy[i] = Enemy[i + 1];
@@ -52,9 +60,12 @@ public:
 	{
 		return Enemy[20];
 	}
+
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
 private:
 	int		numEnemy;	//“G‚Ì”B
 	EnemyBase* Enemy[20];
+	STAGE_ID m_StageID;
 };
-
-//extern CEnemyManager g_enemyMgr;	//“G‚Ì•Ï”B

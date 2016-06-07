@@ -10,7 +10,6 @@ CParticle::CParticle()
 	m_applyFource = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
-
 CParticle::~CParticle()
 {
 }
@@ -42,7 +41,8 @@ void CParticle::Draw(){
 	SetUpTechnique();
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, false);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, true);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	switch (m_alphaBlendMode){
 	case 0:
@@ -88,7 +88,7 @@ void CParticle::Draw(){
 	m_pEffect->EndPass();
 	m_pEffect->End();
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, true);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
 void CParticle::SetupMatrices(){
