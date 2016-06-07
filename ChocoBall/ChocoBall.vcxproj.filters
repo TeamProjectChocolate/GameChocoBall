@@ -68,8 +68,6 @@
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
     <ClCompile Include="Tunr.cpp" />
-    <ClCompile Include="FallFloor.cpp" />
-    <ClCompile Include="MoveFloor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllocateHierarchy.h" />
@@ -151,8 +149,7 @@
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
     <ClInclude Include="Turn.h" />
-    <ClInclude Include="FallFloor.h" />
-    <ClInclude Include="MoveFloor.h" />
+    <ClInclude Include="Cource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

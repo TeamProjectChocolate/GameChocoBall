@@ -71,6 +71,14 @@ public:
 	//親をきめるやつ
 	void SetParent(MoveFloor* parent);
 	
+
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
+	CCourceDef GetCourceDef(){
+		return m_Courcedef;
+	}
+
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -117,23 +125,14 @@ private:
 	vector<Bullet*> m_Deletebullets;	// 削除リスト
 
 
-
-
-	//藤田
-	D3DXVECTOR3		m_V1;
-	D3DXVECTOR3		V1;
-	D3DXVECTOR3		m_V2;
-	D3DXVECTOR3		V2;
-	D3DXVECTOR3		m_V3;
-	float			V3;
-	D3DXVECTOR3		m_Up;
-
 	//入口
 	
 	bool			m_HitFlag;
 	MoveFloor*		parent;
 	D3DXVECTOR3		localPosition;
 	
+
+	STAGE_ID m_StageID;
 };
 
 extern CPlayer* g_player;

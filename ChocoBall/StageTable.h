@@ -2,6 +2,8 @@
 #include "stdafx.h"
 
 
+//enum ENEMY_TYPE{SIDE_MOVE = 0,FRONTandBACK,JUMP,DEFAULT = 999};
+
 enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,

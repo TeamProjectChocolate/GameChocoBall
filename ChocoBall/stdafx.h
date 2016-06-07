@@ -47,7 +47,7 @@ using namespace std;
 #define SINGLETON_DECL(CLASS_NAME)				\
 private:										\
 	CLASS_NAME(){}								\
-	~CLASS_NAME(){	DeleteAll();	}				\
+	~CLASS_NAME(){ DeleteAll(); SAFE_DELETE(m_instance); }				\
 	static CLASS_NAME* m_instance;				\
 public:											\
 	static CLASS_NAME*	GetInstance()			\

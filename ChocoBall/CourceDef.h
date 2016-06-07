@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "Infomation.h"
 
 typedef struct COURCE_BLOCK{
 	D3DXVECTOR3 startPosition;
@@ -17,8 +18,25 @@ public:
 	D3DXVECTOR3 EndCource(){
 		return m_courceEnd;
 	}
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
 private:
 	COURCE_BLOCK m_cource;
 	int m_courceNum;
 	D3DXVECTOR3 m_courceEnd;
+	STAGE_ID m_StageID;
+};
+
+// ステージ1のコース定義
+static D3DXVECTOR3 CourceDefine_1[] = {
+#include "Cource.h"
+};
+
+static D3DXVECTOR3* CourceDefineArray[] = {
+	CourceDefine_1
+};
+
+static int CourceDefineNumArray[] = {
+	ARRAYSIZE(CourceDefine_1)
 };
