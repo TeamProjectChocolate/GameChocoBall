@@ -29,9 +29,9 @@ void CSceneResult::Initialize(){
 
 void CSceneResult::Update(){
 	SINSTANCE(CObjectManager)->Update();
-	// リザルト画面終了のお知らせ
-	// 後できちんとif文を追加してねっ！
-	m_IsEnd = true;
+	//// リザルト画面終了のお知らせ
+	//// 後できちんとif文を追加してねっ！
+	//m_IsEnd = true;
 
 	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));
 	// 後できちんと条件式を追加する

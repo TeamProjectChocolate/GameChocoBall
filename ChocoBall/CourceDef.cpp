@@ -3,15 +3,12 @@
 
 void CCourceDef::Initialize(){
 	m_courceNum = 0;
-	static D3DXVECTOR3 courcepos[] = {
-		#include "Cource.h"
-	};
-
-	int arraySize = ARRAYSIZE(courcepos);
+	D3DXVECTOR3* CourceDef = CourceDefineArray[m_StageID];
+	int arraySize =CourceDefineNumArray[m_StageID];
 	COURCE_BLOCK* itr = &m_cource;
 	for(int num = 0; num + 1 < arraySize; num++){
-		itr->startPosition = courcepos[num];
-		itr->endPosition = courcepos[num + 1];
+		itr->startPosition = CourceDef[num];
+		itr->endPosition = CourceDef[num + 1];
 		itr->startPosition.x *= -1.0f;
 		itr->startPosition.z *= -1.0f;
 		itr->endPosition.x *= -1.0f;

@@ -33,40 +33,35 @@ void CLevelBuilder::Build()
 	int StageID = static_cast<int>(m_IsStage);
 	int tableSize = InfoTableSizeArray[StageID];
 	SEnemyAndGimmickInfo* pInfo = infoTableArray[StageID];
+	CEnemyManager* enemyMgr = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
 	for (int i = 0; i < tableSize; i++){
 
-		const SEnemyAndGimmickInfo& info = pInfo[i];
+		SEnemyAndGimmickInfo info = pInfo[i];
 		if (info.enemyType == 0){
 			//敵を生成。
-			extern CEnemyManager g_enemyMgr;
 			CEnemyLR* enemy = new CEnemyLR;
 			enemy->Initialize();
-			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			pInfo[i].pos.x = pInfo[i].pos.x * -1;
-			pInfo[i].pos.z = pInfo[i].pos.z * -1;
-			enemy->SetInitPosition(pInfo[i].pos);
-			g_enemyMgr.AddEnemy(enemy);
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemy->SetInitPosition(info.pos);
+			enemyMgr->AddEnemy(enemy);
 		}
-		//else if (info.enemyType == 1){
-		//	//敵を生成。
-		//	extern CEnemyManager g_enemyMgr;
-		//	CEnemyFB* enemyfb = new CEnemyFB;
-		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
-		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
-		//	enemyfb->SetInitPosition(infoTable[i].pos);
-		//	g_enemyMgr.AddEnemy(enemyfb);
-		//}
-		//else if (info.enemyType == 2){
-		//	//敵を生成。
-		//	extern CEnemyManager g_enemyMgr;
-		//	CEnemyjamp* enemyjamp = new CEnemyjamp;
-		//	//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-		//	infoTable[i].pos.x = infoTable[i].pos.x * -1;
-		//	infoTable[i].pos.z = infoTable[i].pos.z * -1;
-		//	enemyjamp->SetInitPosition(infoTable[i].pos);
-		//	g_enemyMgr.AddEnemy(enemyjamp);
-		//}
+		else if (info.enemyType == 1){
+			//敵を生成。
+			CEnemyFB* enemyfb = new CEnemyFB;
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemyfb->SetInitPosition(info.pos);
+			enemyMgr->AddEnemy(enemyfb);
+		}
+		else if (info.enemyType == 2){
+			//敵を生成。
+			CEnemyjamp* enemyjamp = new CEnemyjamp;
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemyjamp->SetInitPosition(info.pos);
+			enemyMgr->AddEnemy(enemyjamp);
+		}
 
 		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。

@@ -68,7 +68,6 @@
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
     <ClCompile Include="Tunr.cpp" />
-    <ClCompile Include="Kabe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllocateHierarchy.h" />
@@ -150,7 +149,7 @@
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
     <ClInclude Include="Turn.h" />
-    <ClInclude Include="Kabe.h" />
+    <ClInclude Include="Cource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />
