@@ -23,6 +23,12 @@ struct SCollisionInfo {
 
 
 
+// フィールドのXファイル名
+// ※上から順にステージ1,2,3……
+static LPCSTR FieldNameArray[] = {
+	"image/SUTE2_01.x"
+};
+
 
 // ステージ1で使用するオブジェクトの定義配列
 // ※新しいステージを作ったら同じ書き方で新しい配列を追加してください

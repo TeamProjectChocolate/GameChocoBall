@@ -15,7 +15,8 @@ void CField::Initialize(){
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXToRadian(90.0f));
 	//m_transform.angle = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	
+
+	strcpy(m_pFileName,FieldNameArray[m_StageID]);
 
 	//„‘Ì‚ğ‰Šú‰»B
 	{
