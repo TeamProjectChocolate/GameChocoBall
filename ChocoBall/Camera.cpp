@@ -77,9 +77,13 @@ void CCamera::Update(){
 	m_Rota.m[3][1] = 0.0f;
 	m_Rota.m[3][2] = 0.0f;
 	m_Rota.m[3][3] = 1.0f;
+
+	D3DXMatrixIdentity(&m_RotaInv);
+	D3DXMatrixInverse(&m_RotaInv, nullptr, &m_Rota);
 }
 
 void CCamera::SetCamera(LPD3DXEFFECT effect){
 	effect->SetMatrix("Proj"/*エフェクトファイル内の変数名*/, &m_Proj/*設定したい行列へのポインタ*/);
 	effect->SetMatrix("View"/*エフェクトファイル内の変数名*/, &m_View/*設定したい行列へのポインタ*/);
+	effect->SetMatrix("g_CameraRotaInverse", &m_RotaInv);
 }

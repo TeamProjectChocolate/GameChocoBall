@@ -27,6 +27,9 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapFresnelTec");
+	}
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);
 	void SetUpLight();
