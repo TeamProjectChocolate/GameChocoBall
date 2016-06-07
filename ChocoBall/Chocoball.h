@@ -13,6 +13,9 @@ public:
 	void Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos);
 	void Update();
 	void Draw();
+	virtual void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+	}
 	void OnDestroy();
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 
