@@ -5,5 +5,9 @@
 class EnemyBase : public C3DImage
 {
 public:
-private:
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
+protected:
+	STAGE_ID m_StageID;
 };

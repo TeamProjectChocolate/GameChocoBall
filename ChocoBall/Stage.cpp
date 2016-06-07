@@ -24,27 +24,12 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	ActivateObjects();
 
-	//CEnemyManager* pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
-	//ENEMY_TYPE* enemys = StageEnemysArray[m_Stage_ID];
-	//int size = StageEnemysNumArray[m_Stage_ID];
-	//for (int idx = 0; idx < size; idx++){
-	//	if (enemys[idx] == ENEMY_TYPE::SIDE_MOVE){
-	//		CEnemyLR* pEnemyLR = new CEnemyLR;
-	//		pEnemyManager->AddEnemy(pEnemyLR);
-	//	}
-	//	else if (enemys[idx] == ENEMY_TYPE::FRONTandBACK){
-	//		CEnemyFB* pEnemyFB = new CEnemyFB;
-	//		pEnemyManager->AddEnemy(pEnemyFB);
-	//	}
-	//	else if (enemys[idx] == ENEMY_TYPE::JUMP){
-	//		CEnemyjamp* pEnemyJUMP = new CEnemyjamp;
-	//		pEnemyManager->AddEnemy(pEnemyJUMP);
-	//		break;
-	//	}
-	//}
+	CCourceCamera* pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
+	pCamera->SetStageID(m_Stage_ID);
 
+	CEnemyManager* pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
+	pEnemyManager->SetStageID(m_Stage_ID);
 	SINSTANCE(CObjectManager)->Intialize();
-
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
 	m_CLevelBuilder.SetIsStage(m_Stage_ID);

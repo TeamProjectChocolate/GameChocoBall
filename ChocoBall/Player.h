@@ -66,6 +66,9 @@ public:
 	{
 		return BusterEnemyNum;
 	}
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -113,21 +116,10 @@ private:
 	vector<Bullet*> m_Deletebullets;	// íœƒŠƒXƒg
 
 
-
-
-	//“¡“c
-	D3DXVECTOR3		m_V1;
-	D3DXVECTOR3		V1;
-	D3DXVECTOR3		m_V2;
-	D3DXVECTOR3		V2;
-	D3DXVECTOR3		m_V3;
-	float			V3;
-	D3DXVECTOR3		m_Up;
-
 	//“üŒû
 	
 	bool			m_HitFlag;
-	
+	STAGE_ID m_StageID;
 };
 
 extern CPlayer* g_player;

@@ -20,6 +20,7 @@ namespace{
 	}
 }
 void CCourceCamera::Initialize(){
+	m_courceDef.SetStageID(m_StageID);
 	m_courceDef.Initialize();
 	CGameCamera::Initialize();
 	m_CompCamera = false;

@@ -36,33 +36,30 @@ void CLevelBuilder::Build()
 	CEnemyManager* enemyMgr = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
 	for (int i = 0; i < tableSize; i++){
 
-		const SEnemyAndGimmickInfo& info = pInfo[i];
+		SEnemyAndGimmickInfo info = pInfo[i];
 		if (info.enemyType == 0){
 			//“G‚ð¶¬B
 			CEnemyLR* enemy = new CEnemyLR;
 			enemy->Initialize();
-			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			pInfo[i].pos.x = pInfo[i].pos.x * -1;
-			pInfo[i].pos.z = pInfo[i].pos.z * -1;
-			enemy->SetInitPosition(pInfo[i].pos);
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemy->SetInitPosition(info.pos);
 			enemyMgr->AddEnemy(enemy);
 		}
 		else if (info.enemyType == 1){
 			//“G‚ð¶¬B
 			CEnemyFB* enemyfb = new CEnemyFB;
-			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			pInfo[i].pos.x = pInfo[i].pos.x * -1;
-			pInfo[i].pos.z = pInfo[i].pos.z * -1;
-			enemyfb->SetInitPosition(pInfo[i].pos);
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemyfb->SetInitPosition(info.pos);
 			enemyMgr->AddEnemy(enemyfb);
 		}
 		else if (info.enemyType == 2){
 			//“G‚ð¶¬B
 			CEnemyjamp* enemyjamp = new CEnemyjamp;
-			//CEnemy* enemy = SINSTANCE(CObjectManager)->GenerationObject<CEnemy>(_T("Enemy"), PRIORTY::OBJECT3D, false);
-			pInfo[i].pos.x = pInfo[i].pos.x * -1;
-			pInfo[i].pos.z = pInfo[i].pos.z * -1;
-			enemyjamp->SetInitPosition(pInfo[i].pos);
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemyjamp->SetInitPosition(info.pos);
 			enemyMgr->AddEnemy(enemyjamp);
 		}
 
