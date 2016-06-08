@@ -4,21 +4,17 @@ using UnityEditor;
 using System.IO;
 using System.Text;
 
-public class OutputCollitionInfo : EditorWindow
+public class PlayerPositionInfo : MonoBehaviour
 {
 
-    //[MenuItem("Window/コリジョン 出力")]
-    public static void ShowWindow(string mystring)
+    public static void ShowWindow(string mystring3)
     {
-		GameObject collision = GameObject.Find("Collision");
-        Transform[] collisions = collision.GetComponentsInChildren<Transform>();
+        GameObject Player = GameObject.Find("Player");
+        Transform[] Players = Player.GetComponents<Transform>();
         string headerTxt = "";
-        foreach (Transform tr in collisions)
+        foreach (Transform tr in Players)
         {
-            if(tr.gameObject == collision)
-            {
-                continue;
-            }
+            if (tr.gameObject == Player)
             headerTxt += string.Format("//{0}\n", tr.name);
             headerTxt += "{\n";
             headerTxt += string.Format("\tD3DXVECTOR3({0:f}f, {1:f}f, {2:f}f),             //平行移動\n", tr.position.x, tr.position.y, tr.position.z);
@@ -26,15 +22,9 @@ public class OutputCollitionInfo : EditorWindow
             headerTxt += string.Format("\tD3DXVECTOR3({0:f}f, {1:f}f, {2:f}f ),            //拡大\n", tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z);
             headerTxt += "},\n";
         }
-      
-        StreamWriter sw = new StreamWriter("C:/Github/GameChocoBall/ChocoBall/collisionInfo"+mystring+".h", false, Encoding.UTF8);
+
+        StreamWriter sw = new StreamWriter("C:/Github/GameChocoBall/ChocoBall/PlayerPositionInfo"+mystring3+".h", false, Encoding.UTF8);
         sw.Write(headerTxt);
         sw.Close();
     }
-
-    void OnGUI()
-    {
-        
-    }
-
 }

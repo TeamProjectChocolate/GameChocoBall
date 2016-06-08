@@ -46,7 +46,7 @@ void CEnemyLR::Initialize()
 	SetAlpha(1.0f);	//ìßñæìxÅH
 	flg = true;
 	C3DImage::SetImage();
-	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
+	//m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
