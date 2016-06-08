@@ -7,6 +7,8 @@
 #include "CBManager.h"
 #include "EnemyLR.h"
 #include "StageTable.h"
+#include "FallFloor.h"
+#include "MoveFloor.h"
 
 
 CLevelBuilder::CLevelBuilder()
@@ -44,22 +46,27 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
+			enemy->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemy);
 		}
 		else if (info.enemyType == 1){
 			//“G‚ð¶¬B
 			CEnemyFB* enemyfb = new CEnemyFB;
+			enemyfb->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
-			enemyfb->SetInitPosition(info.pos);
+			enemyfb->SetInitPosition(info.pos);	
+			enemyfb->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyfb);
 		}
 		else if (info.enemyType == 2){
 			//“G‚ð¶¬B
 			CEnemyjamp* enemyjamp = new CEnemyjamp;
+			enemyjamp->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyjamp->SetInitPosition(info.pos);
+			enemyjamp->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyjamp);
 		}
 
@@ -82,6 +89,21 @@ void CLevelBuilder::Build()
 			//ƒMƒ~ƒbƒN‚Ì¶¬
 			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
 			buildBlock->Initialize(
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
+			);
+		}
+		if (info.gimmickType == GimmickType_Wall){
+			//—Ž‚¿‚é°‚¾‚æB‚Â‚©‚Á‚Ä
+			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
+			fallfloor->Initialize(
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
+			);
+		}
+		if (info.gimmickType == GimmickType_Wall){
+			MoveFloor* movefloor = SINSTANCE(CObjectManager)->GenerationObject<MoveFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			movefloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot
 			);

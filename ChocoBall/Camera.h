@@ -73,5 +73,6 @@ private:
 	D3DXMATRIX m_Proj;	// 射影変換行列
 	D3DXVECTOR3 m_Axis;	// 回転軸
 	D3DXMATRIX m_Rota;	// カメラの回転行列
+	D3DXMATRIX m_RotaInv;	// カメラの回転行列の逆行列
 };
 

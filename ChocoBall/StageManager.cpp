@@ -48,7 +48,7 @@ void CStageManager::SetNextStage(){
 			m_NowStage = m_ContinueStage;
 		}
 		else{
-			m_NowStage = STAGE_ID::FIRST/*m_NextStage*/;
+			m_NowStage = m_NextStage;
 		}
 		SINSTANCE(CShadowRender)->CleanManager();
 		SINSTANCE(CObjectManager)->CleanManager();

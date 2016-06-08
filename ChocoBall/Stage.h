@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "SceneResult.h"
 #include "Score.h"
+#include "CourceCamera.h"
+#include "EnemyManager.h"
 
 
 class CStage
@@ -33,5 +35,7 @@ private:
 	bool m_isGameContinue = true;
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
 	CScoreCalc m_score;
+	CCourceCamera* m_pCamera;
+	CEnemyManager* m_pEnemyManager;
 };
 
