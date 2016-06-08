@@ -25,15 +25,17 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	ActivateObjects();
 
-	CCourceCamera* pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
-	pCamera->SetStageID(m_Stage_ID);
+	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
+	m_pCamera->SetStageID(m_Stage_ID);
 
-	CEnemyManager* pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
-	pEnemyManager->SetStageID(m_Stage_ID);
+	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
+	m_pEnemyManager->SetStageID(m_Stage_ID);
+
+	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+	m_pPlayer->SetStageID(m_Stage_ID);
 
 	SINSTANCE(CObjectManager)->Intialize();
 
-	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
 	CCourceDef cource = m_pPlayer->GetCourceDef();
 	COURCE_BLOCK block = cource.FindCource(cource.EndCource());
@@ -42,8 +44,8 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	D3DXVec3Cross(&workVec, &workVec, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	D3DXVec3Normalize(&workVec, &workVec);
 
-	CParticleEmitter::EmitterCreate(_T("GoarParticle_Left"), PARTICLE_TYPE::PORIGON, block.endPosition - (workVec * 2.0f), pCamera->GetCamera());
-	CParticleEmitter::EmitterCreate(_T("GoarParticle_Right"), PARTICLE_TYPE::PORIGON, block.endPosition + (workVec * 2.0f), pCamera->GetCamera());
+	CParticleEmitter::EmitterCreate(_T("GoarParticle_Left"), PARTICLE_TYPE::PORIGON, block.endPosition - (workVec * 2.0f), m_pCamera->GetCamera());
+	CParticleEmitter::EmitterCreate(_T("GoarParticle_Right"), PARTICLE_TYPE::PORIGON, block.endPosition + (workVec * 2.0f), m_pCamera->GetCamera());
 
 	m_CLevelBuilder.SetIsStage(m_Stage_ID);
 	m_CLevelBuilder.Build();

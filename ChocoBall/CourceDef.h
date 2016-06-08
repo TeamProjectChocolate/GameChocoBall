@@ -32,11 +32,16 @@ private:
 static D3DXVECTOR3 CourceDefine_1[] = {
 #include "Cource.h"
 };
+static D3DXVECTOR3 CourceDefine_2[] = {
+#include "CourceDefStage2.h"
+};
 
 static D3DXVECTOR3* CourceDefineArray[] = {
-	CourceDefine_1
+	CourceDefine_1,
+	CourceDefine_2
 };
 
 static int CourceDefineNumArray[] = {
-	ARRAYSIZE(CourceDefine_1)
+	ARRAYSIZE(CourceDefine_1),
+	ARRAYSIZE(CourceDefine_2)
 };

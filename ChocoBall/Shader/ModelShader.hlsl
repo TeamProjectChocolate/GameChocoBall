@@ -18,6 +18,8 @@ float4 ambientLight;							// 環境光
 float4x3 g_WorldMatrixArray[MAX_MATRICES]:WORLDMATRIXARRAY;
 float g_numBone;		// 骨の数
 
+float4x4 g_CameraRotaInverse;	// カメラの回転行列の逆行列
+
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler = 
 sampler_state{
@@ -196,8 +198,10 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap ) :	COLOR{
 	float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
 	if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
 		if (shadowMapUV.y <= 1.0f && shadowMapUV.y >= 0.0f){
-			float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
-			color *= shadow_val;
+			if (dot(float3(0.0f, 1.0f, 0.0f), normal) >= 0.1f){
+				float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
+				color *= shadow_val;
+			}
 		}
 	}
 	color.w = Alpha;
@@ -276,6 +280,49 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	return color;
 }
 
+float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
+	float3 normal;		// 法線マップに書き込まれている法線
+	if (hasNormalMap){
+		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
+		// -1.0～1.0の範囲に調整する
+		normal = (normal * 2.0f) - 1.0f;
+
+		float3 biNormal;	// 従ベクトル(ポリゴンに沿うベクトル、三次元空間では軸が三つ必要なため、法線と接ベクトルと従ベクトルを使用する)
+		biNormal = normalize(cross(In.tangent, In.normal));	// 接ベクトルとポリゴンから出る法線の外積を求め、従ベクトルを求める
+
+		float4x4 TangentSpaceMatrix;	// ポリゴンのローカル座標(ポリゴンを中心とした三軸の向き)を格納した行列
+		TangentSpaceMatrix[0] = float4(In.tangent, 0.0f);	// 接ベクトル
+		TangentSpaceMatrix[1] = float4(biNormal, 0.0f);		// 
+		TangentSpaceMatrix[2] = float4(In.normal, 0.0f);	// 
+		TangentSpaceMatrix[3] = float4(0.0f, 0.0f, 0.0f, 1.0f);	// 
+
+		// ポリゴンの基底軸(ワールド座標から見たポリゴンの軸の向き)と法線マップから得た値を使ってワールド座標での法線を求める
+		normal = TangentSpaceMatrix[0] * normal.x + TangentSpaceMatrix[1] * normal.y + TangentSpaceMatrix[2] * normal.z;
+	}
+	else{
+		normal = In.normal;
+	}
+
+	// ディフューズライトの計算
+	float4 light = CalcDiffuseLight(normal);
+	// スペキュラライトを計算
+	light += CalcSpeculerLight(normal, In.WorldPos);
+	// アンビエントライトを加算
+	light.xyz += ambientLight;
+
+	// ファーライティングを計算
+	// 法線をカメラ座標系に変換する
+	float3 normalInCamera = mul(normal, g_CameraRotaInverse);
+	float fresnel = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
+	fresnel = pow(fresnel, 3.5f);
+
+	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
+	color *= light;	// テクスチャのカラーとライトを乗算
+	color += fresnel;
+	color.w = Alpha;
+	return color;
+}
+
 technique ShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
@@ -324,3 +371,10 @@ technique NotNormalMapBasicTec{
 		PixelShader = compile ps_3_0 NoWorkingPixelShader(false);
 	}
 };
+
+technique NotNormalMapFresnelTec{
+	pass p0{
+		VertexShader = compile vs_3_0 AnimationVertex();
+		PixelShader = compile ps_3_0 FresnelShader(false);
+	}
+}

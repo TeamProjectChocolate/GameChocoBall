@@ -15,7 +15,8 @@ void CField::Initialize(){
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXToRadian(90.0f));
 	//m_transform.angle = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	
+
+	strcpy(m_pFileName,FieldNameArray[m_StageID]);
 
 	//剛体を初期化。
 	{
@@ -36,7 +37,7 @@ void CField::Initialize(){
 			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_groundShape[i], btVector3(0,0,0));
 			m_rigidBody[i] = new btRigidBody(rbInfo);
 			m_rigidBody[i]->activate();
-			m_rigidBody[i]->setUserIndex(CollisionType_Map);
+			//m_rigidBody[i]->setUserIndex(CollisionType_Map);
 			//ワールドに追加。
 			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody[i]);
 		}

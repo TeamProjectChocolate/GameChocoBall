@@ -11,10 +11,12 @@ class FallingFloor : public C3DImage{
 public:
 	FallingFloor(){}
 	~FallingFloor(){}
-
 	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot);
 	void Update()override;
 	void Draw()override;
+	virtual void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+	}
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 	void SetPos(D3DXVECTOR3 pos){
 		position = pos;

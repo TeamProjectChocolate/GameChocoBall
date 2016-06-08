@@ -46,22 +46,27 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
+			enemy->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemy);
 		}
 		else if (info.enemyType == 1){
 			//“G‚ð¶¬B
 			CEnemyFB* enemyfb = new CEnemyFB;
+			enemyfb->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
-			enemyfb->SetInitPosition(info.pos);
+			enemyfb->SetInitPosition(info.pos);	
+			enemyfb->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyfb);
 		}
 		else if (info.enemyType == 2){
 			//“G‚ð¶¬B
 			CEnemyjamp* enemyjamp = new CEnemyjamp;
+			enemyjamp->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyjamp->SetInitPosition(info.pos);
+			enemyjamp->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyjamp);
 		}
 

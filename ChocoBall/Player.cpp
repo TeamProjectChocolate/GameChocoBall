@@ -9,6 +9,7 @@
 #include "PlayerParam.h"
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
+#include "StageTable.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -20,10 +21,14 @@ void CPlayer::Initialize()
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	m_transform.position = D3DXVECTOR3(0.00f, 0.0f, -49.42f);
-	//m_transform.position = D3DXVECTOR3(10.00f, 0.0f, 10.42f);
-	SetRotation(D3DXVECTOR3(0, 1, 0), 0.1f);
-	m_transform.scale = D3DXVECTOR3(1.0f,1.0f,1.0f);
+	m_transform.position = PlayerTransformArray[m_StageID].pos;
+	m_transform.angle = PlayerTransformArray[m_StageID].rotation;
+	m_transform.scale = PlayerTransformArray[m_StageID].scale;
+
+	// Unityから出力したポジション情報を最適化
+	m_transform.position.x *= -1.0f;
+	m_transform.position.z *= -1.0f;
+
 	RV0 = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 
 	localPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -85,7 +90,6 @@ void CPlayer::Initialize()
 void CPlayer::SetParent(MoveFloor* parent)
 {
 	//親が設定されたので、ワールド座標を求めるために。一旦Updateを呼び出す。
-	
 
 	
 	if (parent != NULL){
