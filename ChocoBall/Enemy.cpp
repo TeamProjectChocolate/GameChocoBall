@@ -84,7 +84,7 @@ void CEnemy::Update()
 	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
 	//回転行列
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
-
+	GetShotflag();
 	C3DImage::Update();
 }
 
@@ -110,4 +110,37 @@ void CEnemy::Build()
 {
 	m_Rigidbody.Build(m_transform.scale, m_transform.position);
 }
+void CEnemy::EnemyBulletShot()
+{
+	if (m_pInput->IsTriggerRightShift())
+	{
+		//プレイヤーの向いているベクトルを計算
+		D3DXVec3Normalize(&RV0, &RV0);
+		D3DXMatrixRotationY(&Rot, m_currentAngleY);
+		D3DXVec3Transform(&RV1, &RV0, &Rot);
 
+
+		Bullet* bullet = new Bullet;
+		bullet->Initialize();
+		bullet->SetPos(m_transform.position);
+		//	bullet->SetDir(RV1);
+		m_bullets.push_back(bullet);
+	}
+
+	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		D3DXVECTOR3 V5;
+		V5 = m_bullets[idx]->GetPos() - m_transform.position;
+		float length = D3DXVec3Length(&V5);
+		length = fabs(length);
+		if (length > 50)
+		{
+			EnemyDeleteBullet(m_bullets[idx]);
+		}
+	}
+}
+
+void CEnemy::EnemyDeleteBullet(Bullet* bullet){
+	m_Deletebullets.push_back(bullet);
+}

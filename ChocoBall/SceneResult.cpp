@@ -34,10 +34,7 @@ void CSceneResult::Update(){
 	//m_IsEnd = true;
 
 	CNumber* pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("ResultNumber"));
-	// Œã‚Å‚«‚¿‚ñ‚ÆðŒŽ®‚ð’Ç‰Á‚·‚é
-	if (true){
-		pNumber->AddValue(1);
-	}
+	pNumber->SetAlive(score);
 }
 void CSceneResult::Draw(){
 	SINSTANCE(CObjectManager)->Draw();

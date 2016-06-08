@@ -6,7 +6,9 @@
 #include "CourceDef.h"
 #include "Turn.h"
 #include "EnemyBase.h"
+#include "DirectInput.h"
 
+class Bullet;
 class CEnemy : public EnemyBase
 {
 public:
@@ -21,8 +23,15 @@ public:
 	D3DXVECTOR3 GetPos();
 	void Setradius(float radius);
 	void SetInitPosition(D3DXVECTOR3 pos);
-
+	void EnemyBulletShot();
+	void EnemyDeleteBullet(Bullet* bullet);
+	bool GetShotflag()
+	{
+		return Enemyshotflag;
+	}
+	
 private:
+	CInterface*	m_pInput;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	D3DXVECTOR3		m_initPosition;		//初期座標。
@@ -33,10 +42,18 @@ private:
 	CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
+	bool			Enemyshotflag;			//弾が発射されているのかのフラグ
+	float			m_currentAngleY;	//現在の方向
 
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;
+	vector<Bullet*> m_bullets;
+	vector<Bullet*> m_Deletebullets;	// 削除リスト
+	D3DXVECTOR3 RV0;
+	D3DXMATRIX Rot;
+	D3DXVECTOR4 RV1;
+
 
 	D3DXVECTOR3		m_V0;
 	float V0;
