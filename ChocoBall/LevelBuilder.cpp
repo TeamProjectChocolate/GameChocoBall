@@ -88,7 +88,7 @@ void CLevelBuilder::Build()
 				pInfo[i].rot
 			);
 		}
-		if (info.gimmickType == GimmickType_Wall){
+		if (info.gimmickType == GimmickType_FallFloor){
 			//—Ž‚¿‚é°‚¾‚æB‚Â‚©‚Á‚Ä
 			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
 			fallfloor->Initialize(

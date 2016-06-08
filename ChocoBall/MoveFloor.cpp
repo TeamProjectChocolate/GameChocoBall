@@ -52,7 +52,7 @@ void MoveFloor::Update()
 	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
-	m_transform.position.z -= 0.01;
+	m_transform.position.z += 0.1;
 
 	C3DImage::Update();
 
