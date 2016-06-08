@@ -78,30 +78,32 @@ void Bullet::BulletEnemyCollision()
 
 		if (L <= 1)
 		{
-			//m_Hitflag = true;]
+			//m_Hitflag = true;
 			m_pEnemyManager->DeleteEnemy(Enemy);
 		}
 	}
 }
 
 void Bullet::BulletBlockCollision(){
-	int max_X = m_pBlockManager->GetNum_X();
-	int max_Y = m_pBlockManager->GetNum_Y();
+	if (m_pBlockManager){
+		int max_X = m_pBlockManager->GetNum_X();
+		int max_Y = m_pBlockManager->GetNum_Y();
 
-	D3DXVECTOR3 dist;
-	for (int idx_Y = 0; idx_Y < max_Y; idx_Y++){
-		for (int idx_X = 0; idx_X < max_X; idx_X++){
-			CBlock* pBlock;
-			pBlock = m_pBlockManager->GetBlocks(idx_X,idx_Y);
+		D3DXVECTOR3 dist;
+		for (int idx_Y = 0; idx_Y < max_Y; idx_Y++){
+			for (int idx_X = 0; idx_X < max_X; idx_X++){
+				CBlock* pBlock;
+				pBlock = m_pBlockManager->GetBlocks(idx_X, idx_Y);
 
-			dist = pBlock->GetPos() - m_transform.position;
-			float L;
-			L = D3DXVec3Length(&dist);//ベクトルの長さを計算
-			if (L <= 1.2f)
-			{
-				pBlock->SetAlive(false);
+				dist = pBlock->GetPos() - m_transform.position;
+				float L;
+				L = D3DXVec3Length(&dist);//ベクトルの長さを計算
+				if (L <= 1.2f)
+				{
+					pBlock->SetAlive(false);
+				}
+
 			}
-
 		}
 	}
 }

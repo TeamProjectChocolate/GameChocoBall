@@ -98,7 +98,7 @@ public:
 				return (T*)m_GameObjects[idx]->object;
 			}
 		}
-		MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
+		//MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
 		return nullptr;
 	}
 
