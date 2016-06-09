@@ -58,11 +58,17 @@ void CEnemy::Initialize()
 	D3DXVec3Cross(&m_V2, &V1, &m_Up);
 	D3DXVec3Normalize(&V2, &m_V2);
 
+	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	//extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemy::Update()
 {
+
+	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
+
+
 	isTurn = true;
 
 	m_transform.position += V2 * 0.05f;
@@ -84,7 +90,7 @@ void CEnemy::Update()
 	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
 	//回転行列
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
-	GetShotflag();
+	EnemyBulletShot();
 	C3DImage::Update();
 }
 
@@ -98,6 +104,12 @@ void CEnemy::Draw()
 		SetUpTechnique();
 		C3DImage::Draw();
 	}
+
+	int size = m_bullets.size();
+	for (int idx = 0; idx < size; idx++){
+		m_bullets[idx]->Draw();
+	}
+	ExcuteDeleteBullets();
 }
 
 void CEnemy::OnDestroy()
@@ -114,33 +126,63 @@ void CEnemy::EnemyBulletShot()
 {
 	if (m_pInput->IsTriggerRightShift())
 	{
-		//プレイヤーの向いているベクトルを計算
-		D3DXVec3Normalize(&RV0, &RV0);
-		D3DXMatrixRotationY(&Rot, m_currentAngleY);
-		D3DXVec3Transform(&RV1, &RV0, &Rot);
+
+		//エネミーの向きベクトルを計算
+		D3DXVECTOR3 EnemyToPlayerVec = m_pPlayer->GetPos() - m_transform.position;
+		if (50.0f >= D3DXVec3Length(&EnemyToPlayerVec)){
+			D3DXVec3Normalize(&EnemyToPlayerVec, &EnemyToPlayerVec);
+		}
+		//D3DXMatrixRotationY(&Rot, m_currentAngleY);
+		//D3DXVec3Transform(&RV1, &RV0, &Rot);
 
 
-		Bullet* bullet = new Bullet;
+		CEnemyBullet* bullet = new CEnemyBullet;
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);
-		//	bullet->SetDir(RV1);
+		D3DXVECTOR4 work;
+		work.x = EnemyToPlayerVec.x;
+		work.y = EnemyToPlayerVec.y;
+		work.z = EnemyToPlayerVec.z;
+		work.w = 0.0f;
+		bullet->SetDir(work);
 		m_bullets.push_back(bullet);
 	}
 
-	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	//エネミーと弾の距離が30mになると弾が自動でDeleteする。
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		length = fabs(length);
-		if (length > 50)
+		if (length > 50.0f)
 		{
 			EnemyDeleteBullet(m_bullets[idx]);
+		}
+		else{
+			m_bullets[idx]->Update();
 		}
 	}
 }
 
-void CEnemy::EnemyDeleteBullet(Bullet* bullet){
+void CEnemy::EnemyDeleteBullet(CEnemyBullet* bullet){
 	m_Deletebullets.push_back(bullet);
+}
+
+void CEnemy::ExcuteDeleteBullets(){
+	vector<CEnemyBullet*>::iterator itr;
+	int size = m_Deletebullets.size();
+	for (int idx = 0; idx < size; idx++){
+		for (itr = m_bullets.begin(); itr != m_bullets.end();){
+			if (m_Deletebullets[idx] == *itr){
+				SAFE_DELETE(*itr);
+				itr = m_bullets.erase(itr);
+				break;
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+	m_Deletebullets.clear();
 }

@@ -437,7 +437,7 @@ void CPlayer::BulletShot()
 		D3DXVec3Transform(&RV1, &RV0, &Rot);
 
 
-		Bullet* bullet = new Bullet;
+		CPlayerBullet* bullet = new CPlayerBullet;
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);
 		bullet->SetDir(RV1);
@@ -458,12 +458,12 @@ void CPlayer::BulletShot()
 	}
 }
 
-void CPlayer::DeleteBullet(Bullet* bullet){
+void CPlayer::DeleteBullet(CPlayerBullet* bullet){
 	m_Deletebullets.push_back(bullet);
 }
 
 void CPlayer::ExcuteDeleteBullets(){
-	vector<Bullet*>::iterator itr;
+	vector<CPlayerBullet*>::iterator itr;
 	int size = m_Deletebullets.size();
 	for (int idx = 0; idx < size; idx++){
 		for (itr = m_bullets.begin(); itr != m_bullets.end();){

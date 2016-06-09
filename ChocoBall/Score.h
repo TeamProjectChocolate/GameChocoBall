@@ -1,6 +1,6 @@
 #pragma once
 #include "Number.h"
-#include "Bullet.h"
+#include "Player.h"
 
 #define TIMEBONUS 10
 #define ENEMY_BONUS 20

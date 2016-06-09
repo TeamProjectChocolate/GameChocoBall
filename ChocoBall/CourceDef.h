@@ -30,7 +30,7 @@ private:
 
 // ステージ1のコース定義
 static D3DXVECTOR3 CourceDefine_1[] = {
-#include "Cource.h"
+#include "CourceDefStage1.h"
 };
 static D3DXVECTOR3 CourceDefine_2[] = {
 #include "CourceDefStage2.h"

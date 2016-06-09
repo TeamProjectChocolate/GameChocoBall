@@ -8,13 +8,14 @@
 #include "GameManager.h"
 #include "CourceDef.h"
 #include "LockOn.h"
-#include "Bullet.h"
+#include "PlayerBullet.h"
 #include "CBManager.h"
 
 class CLockOn;
 class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
+
 class CPlayer : public C3DImage
 {
 public:
@@ -41,7 +42,7 @@ public:
 	void ChocoHit();
 	void RollingPlayer();
 
-	void DeleteBullet(Bullet*);
+	void DeleteBullet(CPlayerBullet*);
 	void ExcuteDeleteBullets();
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
@@ -124,8 +125,8 @@ private:
 	D3DXVECTOR4 RV1;
 
 	// 弾の配列
-	vector<Bullet*> m_bullets;
-	vector<Bullet*> m_Deletebullets;	// 削除リスト
+	vector<CPlayerBullet*> m_bullets;
+	vector<CPlayerBullet*> m_Deletebullets;	// 削除リスト
 
 
 	//入口
