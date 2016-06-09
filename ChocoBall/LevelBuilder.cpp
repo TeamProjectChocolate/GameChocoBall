@@ -73,6 +73,16 @@ void CLevelBuilder::Build()
 			enemyMgr->AddEnemy(enemyjamp);
 			SINSTANCE(CShadowRender)->Entry(enemyjamp);
 		}
+		else if (info.enemyType == 3){
+			//敵を生成。
+			CEnemy* enemy = new CEnemy;
+			enemy->Initialize();
+			info.pos.x = pInfo[i].pos.x * -1;
+			info.pos.z = pInfo[i].pos.z * -1;
+			enemy->SetInitPosition(info.pos);
+			enemy->SetStageID(m_IsStage);
+			enemyMgr->AddEnemy(enemy);
+		}
 
 		if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。

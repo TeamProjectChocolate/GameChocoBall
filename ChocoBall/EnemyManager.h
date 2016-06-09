@@ -1,4 +1,5 @@
 #pragma once
+#include "Enemy.h"
 #include "EnemyLR.h"
 #include "EnemyFB.h"
 #include "Enemyjamp.h"
