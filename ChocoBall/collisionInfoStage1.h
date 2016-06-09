@@ -12,7 +12,7 @@
 },
 //Wall02 (1)
 {
-	D3DXVECTOR3(-22.40f, 0.00f, -18.20f),             //平行移動
+	D3DXVECTOR3(-22.24f, 0.00f, -18.36f),             //平行移動
 	D3DXQUATERNION(0.00, -0.92f, 0.00f, 0.38f ),    //回転
 	D3DXVECTOR3(0.90f, 60.00f, 52.50f ),            //拡大
 },
@@ -30,9 +30,9 @@
 },
 //Groud01
 {
-	D3DXVECTOR3(5.50f, -2.37f, 2.30f),             //平行移動
-	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.92f ),    //回転
-	D3DXVECTOR3(149.37f, 1.00f, 113.97f ),            //拡大
+	D3DXVECTOR3(-13.50f, -2.37f, 6.20f),             //平行移動
+	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.93f ),    //回転
+	D3DXVECTOR3(45.11f, 1.00f, 94.34f ),            //拡大
 },
 //Cube
 {
@@ -55,7 +55,7 @@
 //BoxTest
 {
 	D3DXVECTOR3(0.04f, -1.27f, 40.24f),             //平行移動
-	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXQUATERNION(0.00, -0.01f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(6.28f, 2.11f, 2.00f ),            //拡大
 },
 //BoxTest
@@ -72,7 +72,13 @@
 },
 //BoxTest (2)
 {
-	D3DXVECTOR3(0.04f, -1.27f, 6.54f),             //平行移動
-	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(0.04f, -1.29f, 6.68f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, -0.01f, 1.00f ),    //回転
 	D3DXVECTOR3(6.28f, 2.11f, 2.00f ),            //拡大
+},
+//slop
+{
+	D3DXVECTOR3(0.00f, -0.05f, 28.32f),             //平行移動
+	D3DXQUATERNION(0.10, 0.00f, 0.00f, 0.99f ),    //回転
+	D3DXVECTOR3(7.00f, 0.50f, 20.00f ),            //拡大
 },

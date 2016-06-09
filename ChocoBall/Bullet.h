@@ -9,6 +9,8 @@
 #include "BuildBlock.h"
 #include "EnemyManager.h"
 
+#define BULLET_LENG 20.0f
+
 
 class  CPlayer;
 
@@ -39,7 +41,10 @@ public:
 	void SetDir(D3DXVECTOR4 dir){
 		m_dir = dir;
 	}
-
+	void SetBulletSpeed(float Speed)
+	{
+		m_Speed = Speed;
+	}
 private:
 	D3DXVECTOR3		m_position;	//弾の座標
 	D3DXVECTOR3		m_moveSpeed;//移動速度。
@@ -53,5 +58,6 @@ private:
 	D3DXVECTOR4 m_dir;
 	CEnemyManager* m_pEnemyManager;
 	CBuildBlock* m_pBlockManager;
+	float m_Speed;//弾のスピード
 };
 

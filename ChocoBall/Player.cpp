@@ -92,6 +92,7 @@ void CPlayer::SetParent(MoveFloor* parent)
 	//親が設定されたので、ワールド座標を求めるために。一旦Updateを呼び出す。
 	
 	if (parent != NULL){
+		Update();
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
 		D3DXMatrixInverse(&mParentWorldInv, NULL, &mParentWorldInv);
@@ -441,17 +442,18 @@ void CPlayer::BulletShot()
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);
 		bullet->SetDir(RV1);
+		bullet->SetBulletSpeed(3.0f);
 		m_bullets.push_back(bullet);
 	}
 
-	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	//プレイヤーと弾の距離が20mになると弾が自動でDeleteする。
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		length = fabs(length);
-		if (length > 50)
+		if (length > BULLET_LENG)
 		{
 			DeleteBullet(m_bullets[idx]);
 		}
