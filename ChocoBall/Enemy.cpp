@@ -132,9 +132,6 @@ void CEnemy::EnemyBulletShot()
 		if (50.0f >= D3DXVec3Length(&EnemyToPlayerVec)){
 			D3DXVec3Normalize(&EnemyToPlayerVec, &EnemyToPlayerVec);
 		}
-		//D3DXMatrixRotationY(&Rot, m_currentAngleY);
-		//D3DXVec3Transform(&RV1, &RV0, &Rot);
-
 
 		CEnemyBullet* bullet = new CEnemyBullet;
 		bullet->Initialize();
@@ -145,6 +142,7 @@ void CEnemy::EnemyBulletShot()
 		work.z = EnemyToPlayerVec.z;
 		work.w = 0.0f;
 		bullet->SetDir(work);
+		bullet->SetBulletSpeed(1.0f);//“G‚Ì’e‚Ì‘¬“x
 		m_bullets.push_back(bullet);
 	}
 
