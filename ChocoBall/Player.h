@@ -134,7 +134,6 @@ private:
 	MoveFloor*		parent;
 	D3DXVECTOR3		localPosition;
 	
-
 	STAGE_ID m_StageID;
 };
 

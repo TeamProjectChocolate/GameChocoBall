@@ -441,17 +441,18 @@ void CPlayer::BulletShot()
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);
 		bullet->SetDir(RV1);
+		bullet->SetBulletSpeed(3.0f);
 		m_bullets.push_back(bullet);
 	}
 
-	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	//プレイヤーと弾の距離が20mになると弾が自動でDeleteする。
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		length = fabs(length);
-		if (length > 50)
+		if (length > BULLET_LENG)
 		{
 			DeleteBullet(m_bullets[idx]);
 		}

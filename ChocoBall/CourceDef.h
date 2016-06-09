@@ -28,6 +28,8 @@ private:
 	STAGE_ID m_StageID;
 };
 
+
+
 // ステージ1のコース定義
 static D3DXVECTOR3 CourceDefine_1[] = {
 #include "Cource.h"

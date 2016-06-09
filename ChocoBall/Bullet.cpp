@@ -29,15 +29,15 @@ void Bullet::Initialize()
 	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
 
 	m_pBlockManager = SINSTANCE(CObjectManager)->FindGameObject<CBuildBlock>(_T("B_Block"));
+	
 }
 
 void Bullet::Update()
 {
-
 	//プレイヤーの向いているベクトルを弾に加算
-	m_transform.position.x = m_transform.position.x + m_dir.x*3.0f;
-	m_transform.position.y = m_transform.position.y + m_dir.y*3.0f;
-	m_transform.position.z = m_transform.position.z + m_dir.z*3.0f;
+	m_transform.position.x = m_transform.position.x + m_dir.x*m_Speed;
+	m_transform.position.y = m_transform.position.y + m_dir.y*m_Speed;
+	m_transform.position.z = m_transform.position.z + m_dir.z*m_Speed;
 
 
 	//弾と敵との衝突判定
