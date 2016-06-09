@@ -44,10 +44,6 @@ void CEnemyFB::Initialize()
 
 }
 
-void CEnemyFB::SetUpTechnique()
-{
-	m_pEffect->SetTechnique("TextureTec");
-}
 D3DXVECTOR3 CEnemyFB::GetPos(){
 	return m_transform.position;
 }

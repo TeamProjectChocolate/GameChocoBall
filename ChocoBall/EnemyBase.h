@@ -5,6 +5,9 @@
 class EnemyBase : public C3DImage
 {
 public:
+	void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
+	}
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}

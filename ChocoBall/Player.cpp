@@ -72,18 +72,18 @@ void CPlayer::Initialize()
 
 	deadTimer = 0.0f;
 	m_lockonEnemyIndex = 0;	
-	m_pEmitter = CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterTEST"),
-		PARTICLE_TYPE::FIRE,
-		m_transform.position,
-		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	);
-	CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterPORIGON"),
-		PARTICLE_TYPE::PORIGON,
-		m_transform.position,
-		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-		);
+	//m_pEmitter = CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterTEST"),
+	//	PARTICLE_TYPE::FIRE,
+	//	m_transform.position,
+	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	//);
+	//CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterPORIGON"),
+	//	PARTICLE_TYPE::PORIGON,
+	//	m_transform.position,
+	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	//	);
 
 }
 
@@ -195,7 +195,7 @@ void CPlayer::Update()
 		C3DImage::Update();
 
 		// 自分の周囲にパーティクル発生
-		m_pEmitter->SetEmitPos(m_transform.position);
+		//m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
@@ -233,14 +233,14 @@ void CPlayer::ConfigLight(){
 	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 	// ディフューズライト(キャラライト)の色設定(ライト1～4)
-	m_lightColor[0] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[1] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[2] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[3] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
 	// アンビエントライト(環境光)の強さ設定
 	D3DXVECTOR4 ambientLight;
-	ambientLight = D3DXVECTOR4(0.2f, 0.0f, 0.0f, 100.0f);
+	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 100.0f);
 
 	// ライトの設定を反映
 	ReflectionLight(ambientLight);

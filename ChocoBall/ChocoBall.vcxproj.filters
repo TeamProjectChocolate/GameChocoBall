@@ -68,6 +68,8 @@
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
     <ClCompile Include="Tunr.cpp" />
+    <ClCompile Include="FallFloor.cpp" />
+    <ClCompile Include="MoveFloor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllocateHierarchy.h" />
@@ -83,7 +85,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBManager.h" />
     <ClInclude Include="collisionInfo.h" />
-    <ClInclude Include="EnemyGimmickInfo.h" />
     <ClInclude Include="Enemyjamp.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="ChocoBall.h" />
@@ -99,7 +100,6 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GamePad.h" />
-    <ClInclude Include="GimmickTriggerInfo.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
     <ClInclude Include="LevelBuilder.h" />
@@ -149,7 +149,8 @@
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
     <ClInclude Include="Turn.h" />
-    <ClInclude Include="Cource.h" />
+    <ClInclude Include="FallFloor.h" />
+    <ClInclude Include="MoveFloor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

@@ -43,10 +43,6 @@ void CEnemyjamp::Initialize()
 
 }
 
-void CEnemyjamp::SetUpTechnique()
-{
-	m_pEffect->SetTechnique("TextureTec");
-}
 D3DXVECTOR3 CEnemyjamp::GetPos(){
 	return m_transform.position;
 }

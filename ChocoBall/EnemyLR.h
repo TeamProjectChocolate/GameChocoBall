@@ -12,7 +12,6 @@ class CEnemyLR : public EnemyBase
 public:
 	CEnemyLR();
 	~CEnemyLR();
-	void SetUpTechnique()override; 
 	void Initialize()override; 
 	void Update()override;
 	void Draw()override;
