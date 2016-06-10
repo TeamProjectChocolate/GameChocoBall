@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "EnemyBullet.h"
 #include "Bullet.h"
-
 #include"Player.h"
 
 extern CPlayer* g_player;
