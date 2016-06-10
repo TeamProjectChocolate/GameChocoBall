@@ -41,7 +41,7 @@ private:
 	float			m_eTargetAngleY;		//Œü‚«‚½‚¢•ûŒü
 	float			m_eTurnSpeed;		//‰ñ“]‘¬“x
 	bool			isTurn;				//‰ñ“]ƒtƒ‰ƒO
-	CRigidbody		m_Rigidbody;
+	//CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
 	bool			Enemyshotflag;			//’e‚ª”­ŽË‚³‚ê‚Ä‚¢‚é‚Ì‚©‚Ìƒtƒ‰ƒO
