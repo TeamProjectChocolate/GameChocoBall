@@ -15,7 +15,6 @@ class CEnemy : public EnemyBase
 public:
 	CEnemy();
 	~CEnemy();
-	void SetUpTechnique()override;
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

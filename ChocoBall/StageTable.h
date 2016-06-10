@@ -6,6 +6,7 @@ enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
 	GimmickType_FallFloor,
+	GimmickType_MoveFloor
 };
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
