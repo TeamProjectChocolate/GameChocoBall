@@ -22,11 +22,11 @@ namespace{
 void CCourceCamera::Initialize(){
 	m_courceDef.SetStageID(m_StageID);
 	m_courceDef.Initialize();
-	D3DXVECTOR3 Target = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos();
-	COURCE_BLOCK StartBlock = m_courceDef.FindCource(Target);
+	//D3DXVECTOR3 Target = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos();
+	//COURCE_BLOCK StartBlock = m_courceDef.FindCource(Target);
 	CGameCamera::Initialize();
-	Target.y += 0.1f;
-	m_camera.SetTarget(Target);
+	//Target.y += 0.1f;
+	//m_camera.SetTarget(Target);
 	m_CompCamera = false;
 	m_isFirst = true;
 	m_cameraPosSpeed.x = 0.0f;
@@ -59,8 +59,8 @@ void CCourceCamera::Update(){
 			10);
 	}
 	else{
-		m_NowPos = m_NowCource.startPosition/*TargetPos*/;
-		m_NowPos.y += 2.5f;
+		m_NowPos = /*m_NowCource.startPosition*/TargetPos;
+		//m_NowPos.y += 2.5f;
 		m_isFirst = false;
 	}
 	m_camera.SetPos(m_NowPos);
