@@ -34,6 +34,8 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 	m_pPlayer->SetStageID(m_Stage_ID);
 
+	SINSTANCE(CObjectManager)->FindGameObject<CField>(_T("TESTStage3D"))->SetStageID(m_Stage_ID);
+
 	SINSTANCE(CObjectManager)->Intialize();
 
 

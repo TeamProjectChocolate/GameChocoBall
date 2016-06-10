@@ -45,6 +45,7 @@ void CEnemy::Initialize()
 	flg = true;
 	C3DImage::SetImage();
 
+	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 

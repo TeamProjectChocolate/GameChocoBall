@@ -38,6 +38,7 @@ void CEnemyjamp::Initialize()
 	C3DImage::SetImage();
 	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
+	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 

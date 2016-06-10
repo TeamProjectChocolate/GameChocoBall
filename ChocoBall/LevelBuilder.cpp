@@ -43,44 +43,44 @@ void CLevelBuilder::Build()
 		if (info.enemyType == 0){
 			//“G‚ð¶¬B
 			CEnemyLR* enemy = new CEnemyLR;
+			enemy->SetStageID(m_IsStage);
 			enemy->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
-			enemy->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemy);
 			SINSTANCE(CShadowRender)->Entry(enemy);
 		}
 		else if (info.enemyType == 1){
 			//“G‚ð¶¬B
 			CEnemyFB* enemyfb = new CEnemyFB;
+			enemyfb->SetStageID(m_IsStage);
 			enemyfb->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyfb->SetInitPosition(info.pos);	
-			enemyfb->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyfb);
 			SINSTANCE(CShadowRender)->Entry(enemyfb);
 		}
 		else if (info.enemyType == 2){
 			//“G‚ð¶¬B
-			CEnemyjamp* enemyjamp = new CEnemyjamp;
+			CEnemyjamp* enemyjamp = new CEnemyjamp;	
+			enemyjamp->SetStageID(m_IsStage);
 			enemyjamp->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyjamp->SetInitPosition(info.pos);
-			enemyjamp->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemyjamp);
 			SINSTANCE(CShadowRender)->Entry(enemyjamp);
 		}
 		else if (info.enemyType == 3){
 			//“G‚ð¶¬B
 			CEnemy* enemy = new CEnemy;
+			enemy->SetStageID(m_IsStage);
 			enemy->Initialize();
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
-			enemy->SetStageID(m_IsStage);
 			enemyMgr->AddEnemy(enemy);
 		}
 
