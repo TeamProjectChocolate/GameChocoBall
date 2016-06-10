@@ -26,6 +26,9 @@ public:
 	D3DXVECTOR3 GetPos(){
 		return m_bullet.GetPos();
 	}
+	void SetBulletSpeed(float s){
+		m_bullet.SetBulletSpeed(s);
+	}
 private:
 	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
