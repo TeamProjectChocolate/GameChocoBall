@@ -15,9 +15,6 @@ CEnemyLR::CEnemyLR()
 };
 
 CEnemyLR::~CEnemyLR(){ }
-void CEnemyLR::SetUpTechnique(){
-	m_pEffect->SetTechnique("TextureTec");
-}
 D3DXVECTOR3 CEnemyLR::GetPos(){
 	return m_transform.position;
 }

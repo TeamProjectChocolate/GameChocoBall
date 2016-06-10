@@ -4,6 +4,7 @@
 #include "EnemyFB.h"
 #include "Enemyjamp.h"
 #include "GameObject.h"
+#include "ShadowRender.h"
 
 class CEnemyManager:public CGameObject
 {
@@ -39,13 +40,22 @@ public:
 			return;
 		}
 		else{
-			SAFE_DELETE(Enemy[enemyIndex]);
-			Enemy[enemyIndex] = nullptr;
+			m_DeleteObjects.push_back(Enemy[enemyIndex]);
+			SINSTANCE(CShadowRender)->DeleteObject(Enemy[enemyIndex]);
 		}
 		for (int i = enemyIndex; i < numEnemy - 1; i++){
 			Enemy[i] = Enemy[i + 1];
 		}
-		numEnemy--;
+	}
+
+	void ExcuteDeleteObjects(){
+		int size = m_DeleteObjects.size();
+		for (int idx = 0; idx < size;idx++){
+			SAFE_DELETE(m_DeleteObjects[idx]);
+			m_DeleteObjects[idx] = nullptr;
+			numEnemy--;
+		}
+		m_DeleteObjects.clear();
 	}
 
 	int GetNumEnemy()
@@ -68,4 +78,5 @@ private:
 	int		numEnemy;	//“G‚Ì”B
 	EnemyBase* Enemy[20];
 	STAGE_ID m_StageID;
+	vector<EnemyBase*> m_DeleteObjects;
 };

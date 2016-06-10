@@ -156,7 +156,7 @@ void C3DImage::AnimationDraw(/*LPDIRECT3DDEVICE9 Device, */D3DXMESHCONTAINER_DER
 				);
 			}
 		}
-		m_pEffect->SetTechnique("NotNormalMapAnimationTec");
+		//m_pEffect->SetTechnique("NotNormalMapAnimationTec");
 		m_pEffect->Begin(0, D3DXFX_DONOTSAVESTATE);
 		m_pEffect->BeginPass(0);
 
