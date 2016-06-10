@@ -95,7 +95,7 @@ void CEnemy::Draw()
 	if (GetAlive())
 	{
 		//IMAGE3D* img = GetImage();
-		m_Rigidbody.Draw();
+		//m_Rigidbody.Draw();
 		SetUpTechnique();
 		C3DImage::Draw();
 	}
@@ -109,13 +109,13 @@ void CEnemy::Draw()
 
 void CEnemy::OnDestroy()
 {
-	m_Rigidbody.OnDestroy();
+	//m_Rigidbody.OnDestroy();
 	SetAlive(false);
 }
 
 void CEnemy::Build()
 {
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
+	//m_Rigidbody.Build(m_transform.scale, m_transform.position);
 }
 void CEnemy::EnemyBulletShot()
 {
