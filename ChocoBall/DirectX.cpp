@@ -238,6 +238,7 @@ void Initialize()
 	CObjectManager::CreateInstance();		// シングルトンクラス:オブジェクト管理クラスのインスタンスを生成
 	CInputManager::CreateInstance();		// シングルトンクラス:入力インタフェース管理クラスのインスタンスを生成
 	CRenderContext::CreateInstance();		// シングルトンクラス:現在設定中カメラの管理クラスのインスタンスを生成
+	//SINSTANCE(CRenderContext)->CreateRenderingTerget();
 	CStageManager::CreateInstance();		// シングルトンクラス:ステージ管理クラスのインスタンスを生成
   	SINSTANCE(CInputManager)->DI_Init();
 	SINSTANCE(CInputManager)->CreateInput(g_hWnd);

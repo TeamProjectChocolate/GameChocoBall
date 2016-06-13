@@ -6,6 +6,7 @@ enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
 	GimmickType_FallFloor,
+	GimmickType_MoveFloor
 };
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
@@ -26,7 +27,7 @@ struct SCollisionInfo {
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
-	"image/SUTE2_01.x"
+	"image/StageModel_Ookawa.x"
 };
 
 

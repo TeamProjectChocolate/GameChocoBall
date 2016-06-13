@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Draw();
 	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
 	}
 	void OnDestroy();
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);

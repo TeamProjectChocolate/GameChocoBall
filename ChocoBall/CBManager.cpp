@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Chocoball.h"
 #include "CBManager.h"
+#include "ShadowRender.h"
 
 
 void CCBManager::Initialize()
@@ -50,6 +51,7 @@ void CCBManager::Update()
 			Epos.z += fabsf(rate);
 			Epos.y += rate;
 			m_Choco[m_numCreate].Initialize(pos, Epos);
+			SINSTANCE(CShadowRender)->Entry(&m_Choco[m_numCreate]);
 			createCount++;
 			m_numCreate++;
 		}

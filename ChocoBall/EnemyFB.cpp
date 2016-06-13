@@ -34,7 +34,7 @@ void CEnemyFB::Initialize()
 	SetAlpha(1.0f);	//“§–¾“xH
 	flg = true;
 	C3DImage::SetImage();
-	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
+	//m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
@@ -44,10 +44,6 @@ void CEnemyFB::Initialize()
 
 }
 
-void CEnemyFB::SetUpTechnique()
-{
-	m_pEffect->SetTechnique("TextureTec");
-}
 D3DXVECTOR3 CEnemyFB::GetPos(){
 	return m_transform.position;
 }

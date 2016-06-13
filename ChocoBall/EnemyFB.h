@@ -12,8 +12,6 @@ class CEnemyFB : public EnemyBase
 public:
 	CEnemyFB();
 	~CEnemyFB();
-	void SetUpTechnique()override;
-
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

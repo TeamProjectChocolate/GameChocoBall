@@ -18,9 +18,6 @@ CEnemy::CEnemy()
 };
 
 CEnemy::~CEnemy(){ }
-void CEnemy::SetUpTechnique(){
-	m_pEffect->SetTechnique("TextureTec");
-}
 D3DXVECTOR3 CEnemy::GetPos(){
 	return m_transform.position;
 }
@@ -44,13 +41,12 @@ void CEnemy::Initialize()
 	m_moveSpeed.y = 0.05f;
 	m_radius = 0.1f;
 	m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	//m_Hitflag = false;
 	SetAlive(true);	//死亡フラグ
 	SetAlpha(1.0f);	//透明度？
 	flg = true;
 	C3DImage::SetImage();
-	//m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
+	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
 
@@ -61,7 +57,6 @@ void CEnemy::Initialize()
 
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	//extern CEnemyManager g_enemyMgr;
 }
 
 void CEnemy::Update()
@@ -83,7 +78,7 @@ void CEnemy::Draw()
 	if (GetAlive())
 	{
 		//IMAGE3D* img = GetImage();
-		m_Rigidbody.Draw();
+		//m_Rigidbody.Draw();
 		SetUpTechnique();
 		C3DImage::Draw();
 	}
@@ -97,13 +92,13 @@ void CEnemy::Draw()
 
 void CEnemy::OnDestroy()
 {
-	m_Rigidbody.OnDestroy();
+	//m_Rigidbody.OnDestroy();
 	SetAlive(false);
 }
 
 void CEnemy::Build()
 {
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
+	//m_Rigidbody.Build(m_transform.scale, m_transform.position);
 }
 void CEnemy::EnemyBulletShot()
 {

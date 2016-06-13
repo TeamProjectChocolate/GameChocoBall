@@ -38,7 +38,7 @@ private:
 	bool			Shotflag;	//弾が発射されているのかのフラグ
 	CIsIntersect	m_IsIntersect;	//CIsIntersectのインスタンス
 	float			m_radius;
-	D3DXVECTOR4 m_dir;
+	D3DXVECTOR4		m_dir;
 
 	float m_Speed;//弾のスピード
 };

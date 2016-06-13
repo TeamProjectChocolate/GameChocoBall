@@ -23,7 +23,11 @@ namespace{
 void CCourceCamera::Initialize(){
 	m_courceDef.SetStageID(m_StageID);
 	m_courceDef.Initialize();
+	//D3DXVECTOR3 Target = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos();
+	//COURCE_BLOCK StartBlock = m_courceDef.FindCource(Target);
 	CGameCamera::Initialize();
+	//Target.y += 0.1f;
+	//m_camera.SetTarget(Target);
 	m_CompCamera = false;
 	m_isFirst = true;
 	m_cameraPosSpeed.x = 0.0f;
@@ -85,7 +89,6 @@ void CCourceCamera::ClearCamera(){
 		D3DXVec3Normalize(&Dir, &courceVec);
 		D3DXVECTOR3 TargetPos = m_NowCource.startPosition;
 		TargetPos.y += 2.5f;
-
 		VectorSmoothDamp(
 			m_NowPos,
 			m_NowPos,
