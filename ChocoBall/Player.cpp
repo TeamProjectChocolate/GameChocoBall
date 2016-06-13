@@ -489,7 +489,7 @@ void CPlayer::ChocoHit()
 	m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。
 	rb->setMassProps(1.0f, btVector3(0.1f, 0.1f, 0.1f));//第一引数は質量、第二引数は回転のしやすさ
 	//rb->applyForce(btVector3(0.0f, 100.0f, 0.0f), btVector3(1.0f, 1.0f, 1.0f));//チョコボールに当たって吹っ飛ぶ力を設定
-	m_animation.SetAnimSpeed(2.0f);//アニメーション再生速度を設定
+	m_animation.SetAnimSpeed(1.0f);//アニメーション再生速度を設定
 }
 
 void CPlayer::RollingPlayer()

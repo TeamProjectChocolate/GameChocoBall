@@ -32,7 +32,6 @@ void CStageManager::SetNextStage(){
 	if (m_IsContinue){
 		if (m_ContinueStage >= STAGE_ID::MAX && m_ContinueStage != STAGE_ID::STAGE_NONE){
 			// ÅŒã‚Ü‚ÅƒNƒŠƒA‚µ‚Ä‚¢‚½‚ç‚±‚Ìˆ—‚ð’Ê‚é
-			m_IsContinue = false;
 			SINSTANCE(CShadowRender)->CleanManager();
 			SINSTANCE(CObjectManager)->CleanManager();
 			SAFE_DELETE(m_pStage);
