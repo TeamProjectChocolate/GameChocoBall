@@ -50,10 +50,13 @@ void MoveFloor::Update()
 	trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 
+
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
-	m_transform.position.z += 0.1;
+	m_transform.position.z += 0.05;
+
 
 	C3DImage::Update();
+
 
 	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
