@@ -27,13 +27,14 @@ struct SCollisionInfo {
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
-	"image/SUTE2_01.x"
+	"image/StageModel_Ookawa.x"
 };
 
 
 // ステージ1で使用するオブジェクトの定義配列
 // ※新しいステージを作ったら同じ書き方で新しい配列を追加してください
 // ※オブジェクトの名前は、同じステージの中でなければ被っても構いません
+// ※下の配列に新しい名前のオブジェクトを追加したらStage.cppのActivateObjects関数にif文を追加してください
 static LPCSTR StageGameObject_1[] = {
 	{ "BulletPhysics" },// すべてのステージにこれが必要です
 	{ "TESTStage3D" },// すべてのステージにこれが必要です
@@ -42,7 +43,6 @@ static LPCSTR StageGameObject_1[] = {
 	{ "EnemyManager" },// すべてのステージにこれが必要です
 	{ "TEST3D" },// すべてのステージにこれが必要です
 	{ "2DTest" },
-
 };
 static LPCSTR StageGameObject_2[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です

@@ -4,19 +4,19 @@
 #include "Number.h"
 
 
-CScoreCalc::CScoreCalc()
+CScore::CScore()
 {
 	//m_player = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	m_player = NULL;
 	m_number = NULL;
 }
 
-CScoreCalc::~CScoreCalc()
+CScore::~CScore()
 {
 
 }
 
-void CScoreCalc::Update()
+void CScore::Update()
 {	
 	if (m_player == NULL)
 	{

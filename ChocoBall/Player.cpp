@@ -72,18 +72,18 @@ void CPlayer::Initialize()
 
 	deadTimer = 0.0f;
 	m_lockonEnemyIndex = 0;	
-	m_pEmitter = CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterTEST"),
-		PARTICLE_TYPE::FIRE,
-		m_transform.position,
-		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	);
-	CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterPORIGON"),
-		PARTICLE_TYPE::PORIGON,
-		m_transform.position,
-		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-		);
+	//m_pEmitter = CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterTEST"),
+	//	PARTICLE_TYPE::FIRE,
+	//	m_transform.position,
+	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	//);
+	//CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterPORIGON"),
+	//	PARTICLE_TYPE::PORIGON,
+	//	m_transform.position,
+	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
+	//	);
 
 }
 
@@ -93,7 +93,6 @@ void CPlayer::SetParent(MoveFloor* parent)
 
 	
 	if (parent != NULL){
-		
 		Update();
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
@@ -198,7 +197,7 @@ void CPlayer::Update()
 		C3DImage::Update();
 
 		// 自分の周囲にパーティクル発生
-		m_pEmitter->SetEmitPos(m_transform.position);
+		//m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
@@ -236,14 +235,14 @@ void CPlayer::ConfigLight(){
 	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 	// ディフューズライト(キャラライト)の色設定(ライト1～4)
-	m_lightColor[0] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[1] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[2] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_lightColor[3] = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
 	// アンビエントライト(環境光)の強さ設定
 	D3DXVECTOR4 ambientLight;
-	ambientLight = D3DXVECTOR4(0.2f, 0.0f, 0.0f, 100.0f);
+	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 100.0f);
 
 	// ライトの設定を反映
 	ReflectionLight(ambientLight);
@@ -422,7 +421,7 @@ void CPlayer::StateManaged()
 	D3DXVECTOR3 StageEndPosition;
 	StageEndPosition = Endposition - m_transform.position;
 	float Kyori = D3DXVec3Length(&StageEndPosition);
-	if (Kyori < 2)
+	if (Kyori < 5)
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;
@@ -440,33 +439,34 @@ void CPlayer::BulletShot()
 		D3DXVec3Transform(&RV1, &RV0, &Rot);
 
 
-		Bullet* bullet = new Bullet;
+		CPlayerBullet* bullet = new CPlayerBullet;
 		bullet->Initialize();
 		bullet->SetPos(m_transform.position);
 		bullet->SetDir(RV1);
+		bullet->SetBulletSpeed(3.0f);
 		m_bullets.push_back(bullet);
 	}
 
-	//プレイヤーと弾の距離が50mになると弾が自動でDeleteする。
+	//プレイヤーと弾の距離が20mになると弾が自動でDeleteする。
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		length = fabs(length);
-		if (length > 50)
+		if (length > BULLET_LENG)
 		{
 			DeleteBullet(m_bullets[idx]);
 		}
 	}
 }
 
-void CPlayer::DeleteBullet(Bullet* bullet){
+void CPlayer::DeleteBullet(CPlayerBullet* bullet){
 	m_Deletebullets.push_back(bullet);
 }
 
 void CPlayer::ExcuteDeleteBullets(){
-	vector<Bullet*>::iterator itr;
+	vector<CPlayerBullet*>::iterator itr;
 	int size = m_Deletebullets.size();
 	for (int idx = 0; idx < size; idx++){
 		for (itr = m_bullets.begin(); itr != m_bullets.end();){

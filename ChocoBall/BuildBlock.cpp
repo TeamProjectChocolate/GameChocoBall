@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BuildBlock.h"
+#include "ShadowRender.h"
 
 CBuildBlock::CBuildBlock(){}
 
@@ -20,6 +21,7 @@ void CBuildBlock::Initialize(D3DVECTOR pos, D3DXQUATERNION rot)
 			_pos.z = pos.z + offset.z;
 
 			m_blocks[i][j].Initialize(_pos, rot);
+			SINSTANCE(CShadowRender)->Entry(&m_blocks[i][j]);
 		}
 	}
 	//親子関係の構築。

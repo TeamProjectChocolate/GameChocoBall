@@ -4,12 +4,12 @@
 
 void CEnemyManager::Initialize()
 {
-	for (short i = 0; i < numEnemy; i++)
-	{
-		Enemy[i]->SetStageID(m_StageID);
-		Enemy[i]->Initialize();
-		SINSTANCE(CShadowRender)->Entry(Enemy[i]);
-	}
+	//for (short i = 0; i < numEnemy; i++)
+	//{
+	//	Enemy[i]->SetStageID(m_StageID);
+	//	Enemy[i]->Initialize();
+	//	SINSTANCE(CShadowRender)->Entry(Enemy[i]);
+	//}
 	SetAlive(true);
 }
 
@@ -38,7 +38,7 @@ void CEnemyManager::Draw()
 }
 
 void CEnemyManager::DeleteAll(){
-	for (int i = 0; i < 20; i++){
+	for (int i = 0; i < numEnemy; i++){
 		SAFE_DELETE(Enemy[i]);
 		Enemy[i] = nullptr;
 	}

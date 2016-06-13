@@ -260,7 +260,7 @@ void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 {
 
 	static float deltaTime = 1.0f / 60.0f;						/************/
-	static D3DXVECTOR3 gravity(0.0f, -40.0f, 0.0f);	//重力		/*  ジ		*/
+	static D3DXVECTOR3 gravity(0.0f, 0.0f, 0.0f);	//重力		/*  ジ		*/
 	D3DXVECTOR3 addGravity = gravity;							/*  ャ		*/
 	addGravity *= (deltaTime);			//0.16秒事に加速		/*  ン		*/
 	*moveSpeed += (addGravity);	//落下速度						/*  プ		*/

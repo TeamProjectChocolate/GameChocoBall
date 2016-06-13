@@ -77,6 +77,7 @@ void CObjectManager::ExcuteDeleteObjects(){
 				if ((*itr)->object->GetManagerNewFlg()){
 					SAFE_DELETE((*itr)->object);
 					SAFE_DELETE((*itr));
+					//‚È‚ñ‚¶‚ð•ø—i‚·
 				}
 				itr = m_GameObjects.erase(itr);	
 				break;

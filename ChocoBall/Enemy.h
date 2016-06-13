@@ -6,13 +6,16 @@
 #include "CourceDef.h"
 #include "Turn.h"
 #include "EnemyBase.h"
+#include "DirectInput.h"
+#include "EnemyBullet.h"
 
-class CEnemyLR : public EnemyBase
+
+class CEnemy : public EnemyBase
 {
 public:
-	CEnemyLR();
-	~CEnemyLR();
-	void Initialize()override; 
+	CEnemy();
+	~CEnemy();
+	void Initialize()override;
 	void Update()override;
 	void Draw()override;
 	void OnDestroy();
@@ -20,8 +23,17 @@ public:
 	D3DXVECTOR3 GetPos();
 	void Setradius(float radius);
 	void SetInitPosition(D3DXVECTOR3 pos);
+	void EnemyBulletShot();
+	void EnemyDeleteBullet(CEnemyBullet* bullet);
+	void ExcuteDeleteBullets();
 
-private:	
+	bool GetShotflag()
+	{
+		return Enemyshotflag;
+	}
+	
+private:
+	CInterface*	m_pInput;
 	float			m_radius;
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	D3DXVECTOR3		m_initPosition;		//初期座標。
@@ -29,13 +41,23 @@ private:
 	float			m_eTargetAngleY;		//向きたい方向
 	float			m_eTurnSpeed;		//回転速度
 	bool			isTurn;				//回転フラグ
-	CRigidbody		m_Rigidbody;
+	//CRigidbody		m_Rigidbody;
 	bool			flg;
 	bool			m_Hitflag;
+	bool			Enemyshotflag;			//弾が発射されているのかのフラグ
+	float			m_currentAngleY;	//現在の方向
 
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;
+	vector<CEnemyBullet*> m_bullets;
+	vector<CEnemyBullet*> m_Deletebullets;	// 削除リスト
+	D3DXVECTOR3 RV0;
+	D3DXMATRIX Rot;
+	D3DXVECTOR4 RV1;
+
+	CPlayer* m_pPlayer;
+
 
 	D3DXVECTOR3		m_V0;
 	float V0;

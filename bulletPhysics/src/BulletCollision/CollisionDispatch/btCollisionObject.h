@@ -474,6 +474,7 @@ public:
 
 	int	getUserIndex() const
 	{
+		
 		return m_userIndex;
 	}
 	///users can point to their objects, userPointer is not used by Bullet

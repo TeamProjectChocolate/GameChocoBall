@@ -134,7 +134,7 @@ VS_OUTPUT AnimationVertex(VS_INPUT In){
 	Out.WorldPos = float4(pos.xyz, 1.0f);
 	Out.pos = mul(Out.WorldPos, View);
 	Out.pos = mul(Out.pos, Proj);
-	Out.normal = mul(normalize(normal),Rota);
+	Out.normal = normal;// mul(normalize(normal), Rota);
 	Out.color = In.color;
 	Out.uv = In.uv;
 	return Out;
@@ -314,7 +314,7 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	// 法線をカメラ座標系に変換する
 	float3 normalInCamera = mul(normal, g_CameraRotaInverse);
 	float fresnel = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
-	fresnel = pow(fresnel, 3.5f);
+	fresnel = pow(fresnel, 1.5f);
 
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
@@ -372,9 +372,16 @@ technique NotNormalMapBasicTec{
 	}
 };
 
-technique NotNormalMapFresnelTec{
+technique NotNormalMapAnimationFresnelTec{
 	pass p0{
 		VertexShader = compile vs_3_0 AnimationVertex();
+		PixelShader = compile ps_3_0 FresnelShader(false);
+	}
+}
+
+technique NotNormalMapNonAnimationFresnelTec{
+	pass p0{
+		VertexShader = compile vs_3_0 BasicTransform();
 		PixelShader = compile ps_3_0 FresnelShader(false);
 	}
 }

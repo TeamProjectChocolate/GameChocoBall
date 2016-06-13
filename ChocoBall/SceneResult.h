@@ -25,7 +25,7 @@ private:
 	CResultBack m_rBack;
 	CResultSelect m_rSelect[2];
 	CResultCursor m_rCursor;
-	CScoreCalc m_Score;
+	CScore m_Score;
 	CNumber m_Number;
 	bool m_IsEnd;
 	int m_time;
