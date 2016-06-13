@@ -420,7 +420,7 @@ void CPlayer::StateManaged()
 	D3DXVECTOR3 StageEndPosition;
 	StageEndPosition = Endposition - m_transform.position;
 	float Kyori = D3DXVec3Length(&StageEndPosition);
-	if (Kyori < 2)
+	if (Kyori < 5)
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;

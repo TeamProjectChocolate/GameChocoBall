@@ -29,7 +29,7 @@ void CField::Initialize(){
 			btTransform groundTransform;
 			groundTransform.setIdentity();
 			groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, -collision.pos.z));
-			groundTransform.setRotation(btQuaternion(collision.rotation.x, collision.rotation.y, collision.rotation.z, collision.rotation.w));
+			groundTransform.setRotation(btQuaternion(-collision.rotation.x, collision.rotation.y, -collision.rotation.z, collision.rotation.w));
 			float mass = 0.0f;
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
