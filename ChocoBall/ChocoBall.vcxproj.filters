@@ -499,9 +499,4 @@
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="TransformedShader.hlsl">
-      <Filter>ソース ファイル</Filter>
-    </FxCompile>
-  </ItemGroup>
 </Project>

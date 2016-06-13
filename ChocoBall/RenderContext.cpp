@@ -42,9 +42,10 @@ void CRenderContext::CreateRenderingTerget(){
 	m_pMapZ = nullptr;
 	m_pTexture = nullptr;
 	m_pOriginalSurf = nullptr;
-	m_bufferSize_Width = 720;
-	m_bufferSize_Width = 1970;
+	m_bufferSize_Width = WINDOW_WIDTH * 2;
+	m_bufferSize_Height = WINDOW_HEIGHT * 2;
 
+	
 	// レンダリングターゲット生成
 	(*graphicsDevice()).CreateDepthStencilSurface(m_bufferSize_Width, m_bufferSize_Height, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0, TRUE, &m_pMapZ, NULL);
 	(*graphicsDevice()).CreateTexture(m_bufferSize_Width, m_bufferSize_Height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTexture, NULL);
