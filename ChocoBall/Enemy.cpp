@@ -128,7 +128,7 @@ void CEnemy::EnemyBulletShot()
 			work.z = EnemyToPlayerVec.z;
 			work.w = 0.0f;
 			bullet->SetDir(work);
-			bullet->SetBulletSpeed(0.3f);//“G‚Ì’e‚Ì‘¬“x
+			bullet->SetBulletSpeed(0.05f);//“G‚Ì’e‚Ì‘¬“x
 			m_bullets.push_back(bullet);
 		}
 	}

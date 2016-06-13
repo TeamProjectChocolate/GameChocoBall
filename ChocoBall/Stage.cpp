@@ -84,7 +84,7 @@ void CStage::Update()
 	}
 	else{
 		if (m_GameState == GAMEEND_ID::CLEAR){
-			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd() && m_pCamera->GetIsEnd()){
+			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd()/* && m_pCamera->GetIsEnd()*/){
 				SINSTANCE(CStageManager)->SetContinueStage(static_cast<STAGE_ID>(m_Stage_ID + 1));
 				SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 			}
