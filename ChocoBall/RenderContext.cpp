@@ -97,4 +97,3 @@ void CRenderContext::SetRenderingBuffer(){
 	m_pEffect->EndPass();
 	m_pEffect->End();
 }
-
