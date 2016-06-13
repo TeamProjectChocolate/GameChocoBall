@@ -11,10 +11,12 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit;
 	D3DXVECTOR3 hitPos;
-
+	D3DXVECTOR3 startPos;
+	float fMin;
 	SweepResultGround()
 	{
 		isHit = false;
+		fMin = FLT_MAX;
 	}
 
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
@@ -39,10 +41,17 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			return 0.0f;
 		}
 		isHit = true;
-
-		hitPos.x = convexResult.m_hitPointLocal.x();
-		hitPos.y = convexResult.m_hitPointLocal.y();
-		hitPos.z = convexResult.m_hitPointLocal.z();
+		D3DXVECTOR3 hitPosTmp;
+		hitPosTmp.x = convexResult.m_hitPointLocal.x();
+		hitPosTmp.y = convexResult.m_hitPointLocal.y();
+		hitPosTmp.z = convexResult.m_hitPointLocal.z();
+		D3DXVECTOR3 diff;
+		diff = hitPosTmp - startPos;
+		float len = D3DXVec3Length(&diff);
+		if (len < fMin){
+			hitPos = hitPosTmp;
+			fMin = len;
+		}
 		return 0.0f;
 	}
 };
@@ -105,6 +114,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 CIsIntersect::CIsIntersect()
 {
 	m_isHitGround = false;
+	m_Jumpflag = false;
 }
 
 CIsIntersect::~CIsIntersect()
@@ -138,9 +148,10 @@ bool CIsIntersect::IsHitGround()
 	return m_isHitGround;
 }
 //物理エンジンを使った当たり判定処理&ジャンプ処理
-void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
+void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool Jumpflag)
 {
 	m_isHitGround = false;
+	m_Jumpflag = Jumpflag;
 	static float deltaTime = 1.0f / 60.0f;						/************/
 	static D3DXVECTOR3 gravity(0.0f, -40.0f, 0.0f);	//重力		/*  ジ		*/
 	D3DXVECTOR3 addGravity = gravity;							/*  ャ		*/
@@ -213,6 +224,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 #endif
 		D3DXVECTOR3 newPos;
 		SweepResultGround callback;
+		callback.startPos = *position;
 		if (fabsf(addPos.y) > 0.0001f) {
 			newPos = *position;
 #ifdef ORIGIN_CENTER
@@ -220,7 +232,14 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 #else
 			newPos.y += addPos.y + m_radius;
 #endif
-			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
+			if (m_Jumpflag)
+			{
+				end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
+			}
+			else
+			{
+				end.setOrigin(btVector3(newPos.x, newPos.y - 1.0f, newPos.z));
+			}
 
 			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->ConvexSweepTest(m_collisionShape, start, end, callback);
 		}

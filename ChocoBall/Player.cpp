@@ -173,7 +173,7 @@ void CPlayer::Update()
 		{
 			
 			//プレイヤーの処理の最後になるべく書いて
-			m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed);
+			m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed, Jumpflag);
 
 			//着地しているのでフラグはfalse
 			if (m_IsIntersect.IsHitGround())
