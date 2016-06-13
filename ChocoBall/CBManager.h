@@ -6,7 +6,7 @@
 #include "GameObject.h"
 #include "Player.h"
 
-#define CHOCO_NUM 200		//一回に流れるチョコの数
+#define CHOCO_NUM 2		//一回に流れるチョコの数 @todo チョコボールの数を減らす
 
 
 //Chocoballを管理するクラス

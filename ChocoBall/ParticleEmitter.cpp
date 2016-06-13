@@ -26,6 +26,7 @@ void CParticleEmitter::Initialize(){
 }
 
 void CParticleEmitter::Update(){
+#if 0 //@todo デバッグのため
 	if (m_timer >= m_param->intervalTime){
 		//char num[10];
 		//_itoa(m_count, num,10);
@@ -47,6 +48,7 @@ void CParticleEmitter::Update(){
 			itr++;
 		}
 	}
+#endif
 }
 
 void CParticleEmitter::Draw(){

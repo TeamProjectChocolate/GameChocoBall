@@ -47,6 +47,7 @@ public:
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
 	}
+	void EnemyBulletHit( D3DXVECTOR3 moveDir );
 	void Setradius(float radius)
 	{
 		m_radius = radius;
@@ -83,6 +84,14 @@ public:
 		return m_Courcedef;
 	}
 
+	bool GetGameover()
+	{
+		return GamaOverFlag;
+	}
+	void RequestGameOver()
+	{
+		m_GameState = GAMEEND_ID::OVER;
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;

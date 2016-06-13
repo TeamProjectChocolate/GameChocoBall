@@ -11,6 +11,7 @@ extern CPlayer* g_player;
 
 CEnemy::CEnemy()
 {
+	time = 0;
 	m_initPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	strcpy(m_pFileName, "image/ENr.x");
@@ -48,7 +49,7 @@ void CEnemy::Initialize()
 	SetAlpha(1.0f);	//透明度？
 	flg = true;
 	C3DImage::SetImage();
-	m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
+	//m_Rigidbody.Initialize(&m_transform.position, &m_transform.scale);
 
 	m_Courcedef.Initialize();
 	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_initPosition);
@@ -69,25 +70,7 @@ void CEnemy::Update()
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 
-	isTurn = true;
-
-	m_transform.position += V2 * 0.05f;
-	m_V3 = m_transform.position - m_initPosition;
-	V3 = D3DXVec3Length(&m_V3);
-	if (V3 > 2.5)
-	{
-		V2 *= -1.0f;
-	}
-
-	V0 = D3DXVec3Dot(&m_V0, &V2);
-	m_eTargetAngleY = acos(V0);
-	D3DXVECTOR3 V4;
-	D3DXVec3Cross(&V4, &m_V0, &V2);
-	if (V4.y < 0)
-	{
-		m_eTargetAngleY *= -1.0f;
-	}
-	m_eCurrentAngleY = m_Turn.Update(isTurn, m_eTargetAngleY);
+	
 	//回転行列
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 	EnemyBulletShot();
@@ -124,26 +107,35 @@ void CEnemy::Build()
 }
 void CEnemy::EnemyBulletShot()
 {
-	if (m_pInput->IsTriggerRightShift())
+	D3DXVECTOR3 dist;
+	dist = g_player->GetPos() - this->m_transform.position;
+	float E;
+	E = D3DXVec3Length(&dist);//ベクトルの長さを計算
+	time++;
+
+	if (E <= 10)
 	{
+		if (time >= 180)
+		{
+			time = 0;
+			//エネミーの向きベクトルを計算
+			D3DXVECTOR3 EnemyToPlayerVec = m_pPlayer->GetPos() - m_transform.position;
+			if (50.0f >= D3DXVec3Length(&EnemyToPlayerVec)){
+				D3DXVec3Normalize(&EnemyToPlayerVec, &EnemyToPlayerVec);
+			}
 
-		//エネミーの向きベクトルを計算
-		D3DXVECTOR3 EnemyToPlayerVec = m_pPlayer->GetPos() - m_transform.position;
-		if (50.0f >= D3DXVec3Length(&EnemyToPlayerVec)){
-			D3DXVec3Normalize(&EnemyToPlayerVec, &EnemyToPlayerVec);
+			CEnemyBullet* bullet = new CEnemyBullet;
+			bullet->Initialize();
+			bullet->SetPos(m_transform.position);
+			D3DXVECTOR4 work;
+			work.x = EnemyToPlayerVec.x;
+			work.y = EnemyToPlayerVec.y;
+			work.z = EnemyToPlayerVec.z;
+			work.w = 0.0f;
+			bullet->SetDir(work);
+			bullet->SetBulletSpeed(0.3f);//敵の弾の速度
+			m_bullets.push_back(bullet);
 		}
-
-		CEnemyBullet* bullet = new CEnemyBullet;
-		bullet->Initialize();
-		bullet->SetPos(m_transform.position);
-		D3DXVECTOR4 work;
-		work.x = EnemyToPlayerVec.x;
-		work.y = EnemyToPlayerVec.y;
-		work.z = EnemyToPlayerVec.z;
-		work.w = 0.0f;
-		bullet->SetDir(work);
-		bullet->SetBulletSpeed(1.0f);//敵の弾の速度
-		m_bullets.push_back(bullet);
 	}
 
 	//エネミーと弾の距離が30mになると弾が自動でDeleteする。
@@ -153,7 +145,7 @@ void CEnemy::EnemyBulletShot()
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		length = fabs(length);
-		if (length > 50.0f)
+		if (length > 10.0f)
 		{
 			EnemyDeleteBullet(m_bullets[idx]);
 		}

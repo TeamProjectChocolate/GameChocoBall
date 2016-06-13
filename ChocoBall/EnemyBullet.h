@@ -17,18 +17,19 @@ public:
 	void Build();
 	void BulletPlayerCollision();
 	void SetDir(D3DXVECTOR4 dir){
-		m_bullet.SetDir(dir);
+		m_enemybullet.SetDir(dir);
 	}
 	void SetPos(D3DXVECTOR3 pos){
-		m_bullet.SetPos(pos);
+		m_enemybullet.SetPos(pos);
 	}
 	D3DXVECTOR3 GetPos(){
-		return m_bullet.GetPos();
+		return m_enemybullet.GetPos();
 	}
 	void SetBulletSpeed(float s){
-		m_bullet.SetBulletSpeed(s);
+		m_enemybullet.SetBulletSpeed(s);
 	}
+	
 private:
-	Bullet m_bullet;
+	Bullet m_enemybullet;
 };
 

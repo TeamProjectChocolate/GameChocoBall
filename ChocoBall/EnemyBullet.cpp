@@ -17,35 +17,42 @@ CEnemyBullet::~CEnemyBullet()
 }
 
 void CEnemyBullet::Initialize(){
-	m_bullet.Initialize();
+	m_enemybullet.Initialize();
 }
 
 void CEnemyBullet::Update(){
-	m_bullet.Update();
+	m_enemybullet.Update();
 	BulletPlayerCollision();
 }
 
 void CEnemyBullet::Draw(){
-	m_bullet.Draw();
+	m_enemybullet.Draw();
 }
 
 void CEnemyBullet::OnDestroy(){
-	m_bullet.OnDestroy();
+	m_enemybullet.OnDestroy();
 }
 
 void CEnemyBullet::Build(){
-	m_bullet.Build();
+	m_enemybullet.Build();
 }
 
 void CEnemyBullet::BulletPlayerCollision(){
 		D3DXVECTOR3 dist;
-		dist = g_player->GetPos() - m_bullet.GetPos();
-		float L;
-		L = D3DXVec3Length(&dist);//ベクトルの長さを計算
-
-		if (L <= 1)
+		dist = g_player->GetPos() - m_enemybullet.GetPos();
+		float E;
+		E = D3DXVec3Length(&dist);//ベクトルの長さを計算
+		if (E <= 1)
 		{
-			//ゲームオーバーつけてねノボリン！
+			//ゲームオーバーつけてねノボリン
+			if (!g_player->GetGameover())
+			{
+				dist /= E;
+				g_player->EnemyBulletHit(dist);
+			//	g_player->RollingPlayer();
+			//	g_player->RequestGameOver();
+			}
+			
 		}
 	
 }
