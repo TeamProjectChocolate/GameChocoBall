@@ -65,6 +65,7 @@ void CStage::Update()
 	m_pAudio->Run();		// 音楽更新
 	m_GameState = m_pPlayer->GetGameState();
 	m_score.Update();
+	m_pCamera->SetGameState(m_GameState);
 	if (m_isGameContinue){
 		if (m_GameState == GAMEEND_ID::CLEAR)
 		{
@@ -83,7 +84,7 @@ void CStage::Update()
 	}
 	else{
 		if (m_GameState == GAMEEND_ID::CLEAR){
-			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd()){
+			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd()/* && m_pCamera->GetIsEnd()*/){
 				SINSTANCE(CStageManager)->SetContinueStage(static_cast<STAGE_ID>(m_Stage_ID + 1));
 				m_pAudio->StopCue(Stage_BGM[m_Stage_ID]);	// 音楽ストップ
 				SINSTANCE(CGameManager)->ChangeScene(_T("Result"));

@@ -47,9 +47,10 @@ public class OutputEnemyGimmick : MonoBehaviour {
                 headerTxt += string.Format("\tD3DXVECTOR3({0:f}f, {1:f}f, {2:f}f ),            //拡大\n", tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z);
                 headerTxt += string.Format("\t{0},//エネミータイプ\n", tr.GetComponent<EnemyGimmick>().enemyType);
                 headerTxt += string.Format("\t{0},//ギミックタイプ\n", tr.GetComponent<EnemyGimmick>().gimmickType);
+                headerTxt += string.Format("\t{0:f}f,//最大移動量\n", tr.GetComponent<EnemyGimmick>().MaxMove);
                 headerTxt += "},\n";
             }
-            //Debug.Log(tr.name);
+           
         }
 
         sw = new StreamWriter("C:/Github/GameChocoBall/ChocoBall/EnemyGimmickInfo"+mystring2+".h", false, Encoding.UTF8);

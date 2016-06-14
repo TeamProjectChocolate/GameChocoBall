@@ -12,8 +12,15 @@ public:
 	void Update()override;
 	void Draw()override;
 	void CourceTurn(D3DXVECTOR3&,D3DXVECTOR3&,float,float);
+	void ClearCamera();
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
+	}
+	void SetGameState(GAMEEND_ID id){
+		m_GameState = id;
+	}
+	bool GetIsEnd(){
+		return m_IsEnd;
 	}
 private:
 	CCourceDef m_courceDef;
@@ -25,5 +32,7 @@ private:
 	bool m_isFirst;
 	STAGE_ID m_StageID;
 	bool m_TurnFlg;
+	GAMEEND_ID m_GameState;
+	bool m_IsEnd;
 };
 

@@ -44,6 +44,7 @@ private:
 	bool			m_Hitflag;
 	bool			Enemyshotflag;			//弾が発射されているのかのフラグ
 	float			m_currentAngleY;	//現在の方向
+	int				time;
 
 	CTurn			m_Turn;				//CTurnのインスタンス
 	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス

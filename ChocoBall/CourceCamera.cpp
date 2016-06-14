@@ -2,6 +2,7 @@
 #include "CourceCamera.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Infomation.h"
 
 
 namespace{
@@ -32,44 +33,80 @@ void CCourceCamera::Initialize(){
 	m_PrevCource.blockNo = -1;
 	m_CurrentCource.blockNo = 0;
 	m_TurnFlg = false;
+	m_IsEnd = false;
 }
 
 void CCourceCamera::Update(){
 
-	CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
-	D3DXVECTOR3 Target = pl->GetPos();
+	if (m_GameState == GAMEEND_ID::CONTINUE){
+		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+		D3DXVECTOR3 Target = pl->GetPos();
+		m_CurrentCource = m_courceDef.FindCource(Target);
+		m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
 
-	m_CurrentCource = m_courceDef.FindCource(Target);
-	m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
+		Target.y += 0.1f;
+		m_camera.SetTarget(Target);
 
-	Target.y += 0.1f;
-	m_camera.SetTarget(Target);
+		D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
+		D3DXVECTOR3 Dir;
+		D3DXVec3Normalize(&Dir, &courceVec);
+		D3DXVECTOR3 TargetPos = pl->GetPos() - m_CurrentCource.startPosition;
 
-	D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
-	D3DXVECTOR3 Dir;
-	D3DXVec3Normalize(&Dir, &courceVec);
-	D3DXVECTOR3 TargetPos = pl->GetPos() -  m_CurrentCource.startPosition;
+		CourceTurn(Dir, TargetPos, D3DXToRadian(140.0f), 1.5f);
 
-	CourceTurn(Dir,TargetPos,D3DXToRadian(140.0f),1.5f);
+		TargetPos.y = Target.y + 2.5f;
 
-	TargetPos.y = Target.y + 2.5f;
+		if (!m_isFirst){
+			VectorSmoothDamp(
+				m_NowPos,
+				m_NowPos,
+				TargetPos,
+				m_cameraPosSpeed,
+				10);
+		}
+		else{
+			m_NowPos = TargetPos;
+			m_isFirst = false;
+		}
+		m_camera.SetPos(m_NowPos);
 
-	if (!m_isFirst){
+		//m_camera.SetTarget(target);
+	}
+	else if (m_GameState == GAMEEND_ID::CLEAR){
+		ClearCamera();
+	}
+	CGameCamera::Update();
+}
+
+void CCourceCamera::Draw(){
+	CGameCamera::Draw();
+}
+
+void CCourceCamera::ClearCamera(){
+	D3DXVECTOR3 courceVec = m_NowCource.startPosition - m_NowPos;
+
+	float length = D3DXVec3Length(&courceVec);
+	if (1.0f <= length){
+		D3DXVECTOR3 Dir;
+		D3DXVec3Normalize(&Dir, &courceVec);
+		D3DXVECTOR3 TargetPos = m_NowCource.startPosition;
+		TargetPos.y += 2.5f;
 		VectorSmoothDamp(
 			m_NowPos,
 			m_NowPos,
 			TargetPos,
 			m_cameraPosSpeed,
-			10);
+			30);
+		m_camera.SetPos(m_NowPos);
 	}
 	else{
-		m_NowPos = /*m_NowCource.startPosition*/TargetPos;
-		//m_NowPos.y += 2.5f;
-		m_isFirst = false;
+		m_IsEnd = true;
 	}
-	m_camera.SetPos(m_NowPos);
-	//m_camera.SetTarget(target);
-	CGameCamera::Update();
+	if (m_IsEnd){
+		return;
+	}
+	m_IsEnd = false;
+
 }
 
 void CCourceCamera::Draw(){
