@@ -138,7 +138,6 @@ void CLevelBuilder::Build()
 		groundTransform.setOrigin(btVector3(-collision.pos.x, collision.pos.y, -collision.pos.z));
 		groundTransform.setRotation(btQuaternion(collision.rotation.x, collision.rotation.y, collision.rotation.z, collision.rotation.w));
 
-
 		m_ghostObject[i] = new btGhostObject();
 		m_ghostObject[i]->activate();
 		m_ghostObject[i]->setCollisionShape(m_GhostShape[i]);

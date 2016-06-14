@@ -11,8 +11,15 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void ClearCamera();
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
+	}
+	void SetGameState(GAMEEND_ID id){
+		m_GameState = id;
+	}
+	bool GetIsEnd(){
+		return m_IsEnd;
 	}
 private:
 	CCourceDef m_courceDef;
@@ -23,5 +30,7 @@ private:
 	D3DXVECTOR3 m_cameraPosSpeed;	//ƒJƒƒ‰‚ÌˆÚ“®‘¬“xB
 	bool m_isFirst;
 	STAGE_ID m_StageID;
+	GAMEEND_ID m_GameState;
+	bool m_IsEnd;
 };
 

@@ -8,7 +8,7 @@ public:
 	CIsIntersect();
 	~CIsIntersect();
 	void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius);
-	void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
+	void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed, bool Jumpflag);
 	void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
 	bool IsHitGround();
 	btRigidBody* GetRigidBody()
@@ -29,4 +29,5 @@ private:
 	float			m_radius;			//半径
 	D3DXVECTOR3		m_moveSpeed;		//移動速度。
 	bool			m_isHitGround;		//地面に当たった？
+	bool			m_Jumpflag;			//ジャンプフラグ
 };
