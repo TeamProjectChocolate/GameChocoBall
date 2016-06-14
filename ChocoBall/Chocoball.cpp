@@ -12,7 +12,6 @@ void CChocoBall::Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos)
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_Rigidbody.Initialize(&m_transform.position, 0.3f);
 	m_Rigidbody.SetUserIndex(CollisionType_Chocoball);
-	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
 
 	//m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
 	m_moveSpeed.x = 0.05f;
@@ -70,8 +69,4 @@ void CChocoBall::Draw()
 void CChocoBall::OnDestroy()
 {
 	m_Rigidbody.OnDestroy();
-}
-
-void CChocoBall::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
-{
 }

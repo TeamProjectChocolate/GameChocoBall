@@ -94,6 +94,7 @@ void CPlayer::SetParent(MoveFloor* parent)
 	
 	if (parent != NULL){
 		Update();
+		
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
 		D3DXMatrixInverse(&mParentWorldInv, NULL, &mParentWorldInv);
