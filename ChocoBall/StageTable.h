@@ -6,7 +6,15 @@ enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
 	GimmickType_FallFloor,
-	GimmickType_MoveFloor
+	GimmickType_MoveFloor,
+	GimmickType_UpFloor
+};
+
+enum EnemyType{
+	EnemyType_LR,
+	EnemyType_FB,
+	EnemyType_JUMP,
+	EnemyType_BULLET
 };
 struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 pos;
@@ -14,6 +22,7 @@ struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 scale;
 	int enemyType;
 	int gimmickType;
+	float MaxMove;
 };
 struct SCollisionInfo {
 	D3DXVECTOR3 pos;
@@ -29,6 +38,15 @@ static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
 	"image/StageModel_Ookawa.x"
 };
+
+
+
+// フィールドで使用するBGM
+static LPCSTR Stage_BGM[] = {
+	"ChariotsOfFireBGM",
+	"22-emiya[1]"
+};
+
 
 
 // ステージ1で使用するオブジェクトの定義配列

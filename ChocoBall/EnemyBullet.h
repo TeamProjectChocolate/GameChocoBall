@@ -2,8 +2,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-class CPlayer;
-
 
 class CEnemyBullet
 {

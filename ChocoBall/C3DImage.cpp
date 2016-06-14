@@ -40,11 +40,17 @@ void C3DImage::Initialize(){
 
 void C3DImage::Update(){
 	UpdateFrame(graphicsDevice(), m_pImage->pModel->GetFrameRoot());
+	m_animation.Update(DELTA_TIME);
 }
 
 void C3DImage::UpdateFrame(LPDIRECT3DDEVICE9 Device, LPD3DXFRAME pFrame){
-	LPD3DXMESHCONTAINER pMeshContainer;
 
+	AnimationUpdate();
+	/*UpdateFrameMatrices()
+	LPD3DXMESHCONTAINER pMeshContainer;
+	if (pFrame &&  pFrame->Name && strcmp(pFrame->Name, "_face") == 0){
+		printf("joge");
+	}
 	pMeshContainer = pFrame->pMeshContainer;
 	if (pMeshContainer != nullptr){
 		if (pMeshContainer->pSkinInfo != nullptr){
@@ -61,7 +67,7 @@ void C3DImage::UpdateFrame(LPDIRECT3DDEVICE9 Device, LPD3DXFRAME pFrame){
 
 	if (pFrame->pFrameFirstChild != nullptr){
 		UpdateFrame(Device, pFrame->pFrameFirstChild);
-	}
+	}*/
 }
 
 void C3DImage::NonAnimationUpdate(){
@@ -78,6 +84,9 @@ void C3DImage::NonAnimationUpdate(){
 
 	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
+	if (m_pImage->pModel){
+		m_pImage->pModel->UpdateBoneMatrix(&m_World);	//ボーン行列を更新。
+	}
 
 }
 
@@ -96,54 +105,52 @@ void C3DImage::AnimationUpdate(){
 	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
 
-	m_animation.Update(DELTA_TIME);
-	//m_pImage->pModel->GetAnimationController()->AdvanceTime(1.0f / 60.0f, NULL);
-	m_pImage->pModel->UpdateBoneMatrix(&m_World);	//ボーン行列を更新。
+	
+	if (m_pImage->pModel){
+		m_pImage->pModel->UpdateBoneMatrix(&m_World);	//ボーン行列を更新。
+	}
 }
 
 void C3DImage::Draw(){
-	DrawFrame(/*graphicsDevice(),*/m_pImage->pModel->GetFrameRoot());
+	DrawFrame(m_pImage->pModel->GetFrameRoot());
 }
 
-void C3DImage::DrawFrame(/*LPDIRECT3DDEVICE9 Device,*/LPD3DXFRAME pFrame){
+void C3DImage::DrawFrame(LPD3DXFRAME pFrame){
 	LPD3DXMESHCONTAINER pMeshContainer;
 
 	pMeshContainer = pFrame->pMeshContainer;
 	while (pMeshContainer != nullptr){
-		DrawMeshContainer(/*Device,*/pMeshContainer/*,pFrame*/);
+		DrawMeshContainer(pMeshContainer,pFrame);
 		pMeshContainer = pMeshContainer->pNextMeshContainer;
 	}
 
 	if (pFrame->pFrameSibling != nullptr){
-		DrawFrame(/*Device,*/ pFrame->pFrameSibling);
+		DrawFrame(pFrame->pFrameSibling);
 	}
 
 	if (pFrame->pFrameFirstChild != nullptr){
-		DrawFrame(/*Device,*/ pFrame->pFrameFirstChild);
+		DrawFrame(pFrame->pFrameFirstChild);
 	}
 }
 
-void C3DImage::DrawMeshContainer(/*LPDIRECT3DDEVICE9 Device,*/LPD3DXMESHCONTAINER pMeshContainerBase/*,*//*LPD3DXFRAME pFrameBase*/){
+void C3DImage::DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase,LPD3DXFRAME pFrameBase){
+	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 	D3DXMESHCONTAINER_DERIVED* pMeshContainer = static_cast<D3DXMESHCONTAINER_DERIVED*>(pMeshContainerBase);
 
 	if (pMeshContainer->pSkinInfo != nullptr){
 		// スキン情報あり
-		AnimationDraw(/*Device, */pMeshContainer/*, pMeshContainerBase, pFrameBase*/);
+		AnimationDraw(pMeshContainer,pFrame);
 	}
 	else{
 		// スキン情報なし
-		NonAnimationDraw();
+		NonAnimationDraw(pFrame);
 	}
 }
 
-void C3DImage::AnimationDraw(/*LPDIRECT3DDEVICE9 Device, */D3DXMESHCONTAINER_DERIVED* pMeshContainer/*, LPD3DXMESHCONTAINER pMeshContainerBase*//*, LPD3DXFRAME pFrameBase*/){
+void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame){
 
-	//D3DXFRAME_DERIVED* pFrame = static_cast<D3DXFRAME_DERIVED*>(pFrameBase);
 	LPD3DXBONECOMBINATION pBoneComb;
-
-	//D3DCAPS9 d3dCaps;
-	//Device->GetDeviceCaps(&d3dCaps);
-
+	SetUpTechniqueAnimation();
 	pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
 	for (unsigned int iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
 		for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry){
@@ -156,7 +163,6 @@ void C3DImage::AnimationDraw(/*LPDIRECT3DDEVICE9 Device, */D3DXMESHCONTAINER_DER
 				);
 			}
 		}
-		//m_pEffect->SetTechnique("NotNormalMapAnimationTec");
 		m_pEffect->Begin(0, D3DXFX_DONOTSAVESTATE);
 		m_pEffect->BeginPass(0);
 
@@ -176,7 +182,20 @@ void C3DImage::AnimationDraw(/*LPDIRECT3DDEVICE9 Device, */D3DXMESHCONTAINER_DER
 
 }
 
-void C3DImage::NonAnimationDraw(){
+void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
+
+	D3DXMATRIX World;
+	if (pFrame != nullptr){
+		if (m_UseBorn){
+			World = pFrame->CombinedTransformationMatrix;
+		}
+		else{
+			World = m_World;
+		}
+	}
+
+	SetUpTechnique();
+
 	D3DXMESHCONTAINER_DERIVED* container = m_pImage->pModel->GetContainer();
 	if (container->ppTextures == nullptr){
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");
@@ -207,7 +226,7 @@ void C3DImage::NonAnimationDraw(){
 
 
 	m_pEffect->SetMatrix("Rota", &m_Rota);
-	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &m_World/*設定したい行列へのポインタ*/);
+	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &World/*設定したい行列へのポインタ*/);
 
 	m_pEffect->SetFloat("Alpha", GetAlpha());
 

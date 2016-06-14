@@ -32,6 +32,14 @@ public:
 
 	// アニメーション再生速度を設定
 	void SetAnimSpeed(float speed);
+
+	//アニメーションの終了タイムを設定する関数
+	//引き数:int型 アニメーションインデックス
+	//      :double型 アニメーションの終了タイム
+	//※-1.0を指定するとデフォルトの終了時間が設定されます
+	void SetAnimationEndtime(int animationIndex, double endTime){
+		m_animationEndTime[animationIndex] = endTime;
+	}
 #if 0
 	// アニメーションのブレンディング再生
 	// 引き数: int型 再生したいアニメーションのインデックス
@@ -54,5 +62,7 @@ private:
 	bool m_isInterpolate;		    // 補間中かのフラグ
 	float m_interpolateEndTime;		// 補間終了時間
 	float m_interpolateTime;		// 補間時間
+	unique_ptr<double[]> m_animationEndTime;	// アニメーションの終了タイム。デフォルト値は-1。指定しない場合はID3DXAnimationSetのアニメーション終了タイムが優先される。
+	float m_localAnimationTime;	// ローカルアニメーションタイム
 };
 

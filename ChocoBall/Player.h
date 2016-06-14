@@ -29,7 +29,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
+		m_pEffect->SetTechnique("NotNormalMapTextureTec");
 	}
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);
@@ -153,3 +153,7 @@ namespace tkEngine{
 	const D3DXVECTOR3 vec3AxisY = { 0.0f, 1.0f, 0.0f };
 	const D3DXVECTOR3 vec3AxisZ = { 0.0f, 0.0f, 1.0f };
 }
+
+static double AnimationTime[] = {
+	-1.0
+};

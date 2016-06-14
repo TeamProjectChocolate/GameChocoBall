@@ -16,3 +16,9 @@
 	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.92f ),    //回転
 	D3DXVECTOR3(2.40f, 10.00f, 14.00f ),            //拡大
 },
+//GimmickTrigger
+{
+	D3DXVECTOR3(-27.28f, 23.30f, 58.54f),             //平行移動
+	D3DXQUATERNION(0.08, 0.46f, -0.07f, 0.88f ),    //回転
+	D3DXVECTOR3(7.80f, 5.77f, 1.00f ),            //拡大
+},

@@ -1,13 +1,11 @@
 #pragma once
 #include "stdafx.h"
-#include "C3DImage.h"
-#include "Rigidbody.h"
 #include "islntersect.h"
 #include "CourceDef.h"
 #include "Turn.h"
 #include "EnemyBase.h"
-#include "DirectInput.h"
 #include "EnemyBullet.h"
+#include "Player.h"
 
 
 class CEnemy : public EnemyBase
