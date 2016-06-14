@@ -180,7 +180,10 @@ void CPlayer::Update()
 			{
 				Jumpflag = false;
 			}
-
+			else
+			{
+				Jumpflag = true;
+			}
 			// ’e”­Ëˆ—
 			BulletShot();
 
