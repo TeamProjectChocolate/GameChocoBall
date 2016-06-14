@@ -246,6 +246,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 		if (callback.isHit) {
 			//当たった。
 			//地面。
+			
 			D3DXVECTOR3 Circle;
 			float x = 0.0f;
 			float offset = 0.0f;	//押し戻す量。
@@ -266,6 +267,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 			
 #endif
 		}
+		
 	}
 
 	*position += addPos;

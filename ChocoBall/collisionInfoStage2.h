@@ -6,9 +6,9 @@
 },
 //Ground_01
 {
-	D3DXVECTOR3(-8.99f, 4.88f, -21.73f),             //平行移動
-	D3DXQUATERNION(0.24f, 0.36f, -0.10f, 0.90f ),    //回転
-	D3DXVECTOR3(8.00f, 0.69f, 21.13f ),            //拡大
+	D3DXVECTOR3(-8.98f, 4.89f, -21.72f),             //平行移動
+	D3DXQUATERNION(-0.24f, -0.36f, 0.10f, -0.90f ),    //回転
+	D3DXVECTOR3(8.00f, 0.69f, 21.12f ),            //拡大
 },
 //Ground_02
 {
