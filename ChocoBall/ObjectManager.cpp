@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ObjectManager.h"
 #include "C2DImage.h"
+#include "Player.h"
 
 CObjectManager* CObjectManager::m_instance = nullptr;
 

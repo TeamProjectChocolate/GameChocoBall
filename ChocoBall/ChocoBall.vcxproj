@@ -124,6 +124,7 @@
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
+    <ClInclude Include="JetGimmick.h" />
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="LockOn.h" />
     <ClInclude Include="MoveFloor.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="TitleCursor.h" />
     <ClInclude Include="TitleSelect.h" />
     <ClInclude Include="Turn.h" />
+    <ClInclude Include="UpFloor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllocateHierarchy.cpp" />
@@ -212,6 +214,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="islntersect.cpp" />
+    <ClCompile Include="JetGimmick.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -250,6 +253,7 @@
     <ClCompile Include="TitleCursor.cpp" />
     <ClCompile Include="TitleSelect.cpp" />
     <ClCompile Include="Tunr.cpp" />
+    <ClCompile Include="UpFloor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

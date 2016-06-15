@@ -64,7 +64,9 @@ public:
 	void SetNextScene();
 	void Update();
 	void Draw();
-
+	LPCSTR GetScene(){
+		return m_NowSceneName;
+	}
 private:
 	vector<SCENE_DATA*> m_Scenes;
 	CScene* m_NowScene = nullptr;

@@ -7,7 +7,7 @@
 
 CTitleSelect::CTitleSelect()
 {
-	strcpy(m_pFileName, "image/start.png");
+	strcpy(m_pFileName, "image/ƒ^ƒCƒgƒ‹NewGame.png");
 }
 
 
@@ -18,9 +18,9 @@ CTitleSelect::~CTitleSelect()
 
 void CTitleSelect::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(480.0f, 250.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(580.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(80, 45, 0);
+	m_transform.scale = D3DXVECTOR3(800, 450, 0);
 	SetAlive(true);
 	dir = -1;
 	C2DImage::SetImage();

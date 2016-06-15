@@ -234,10 +234,12 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 #endif
 			if (m_Jumpflag)
 			{
+				//ジャンプ中
 				end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
 			}
 			else
 			{
+				//ジャンプ中以外は地面にプレイヤーをくっ付ける
 				end.setOrigin(btVector3(newPos.x, newPos.y - 1.0f, newPos.z));
 			}
 

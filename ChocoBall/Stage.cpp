@@ -56,7 +56,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
 	m_pAudio = pAudio;
-	//m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
+	m_pAudio->PlayCue(Stage_BGM[m_Stage_ID]);	// 音楽再生
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 	m_isGameContinue = true;
@@ -88,11 +88,13 @@ void CStage::Update()
 		if (m_GameState == GAMEEND_ID::CLEAR){
 			if (SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->GetIsEnd()/* && m_pCamera->GetIsEnd()*/){
 				SINSTANCE(CStageManager)->SetContinueStage(static_cast<STAGE_ID>(m_Stage_ID + 1));
+				m_pAudio->StopCue(Stage_BGM[m_Stage_ID]);	// 音楽ストップ
 				SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 			}
 		}
 		else if (m_GameState == GAMEEND_ID::OVER){
 			if (SINSTANCE(CObjectManager)->FindGameObject<CGameOver>(_T("GameOver"))->GetIsEnd()){
+				m_pAudio->StopCue(Stage_BGM[m_Stage_ID]);	// 音楽ストップ
 				SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 			}
 		}
