@@ -5,7 +5,7 @@ using System.Collections;
 public class EnemyGimmick : MonoBehaviour {
     public int enemyType = -1;
     public int gimmickType = -1;
-    public int MaxMove = 0;
+    //public int MaxMove = 0;
     public GimmickTypeText GimmickTypeText;
     public EnemyTypeText EnemyTypeText;
     // Use this for initialization
