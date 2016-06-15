@@ -84,7 +84,6 @@ void CCourceCamera::Draw(){
 
 void CCourceCamera::ClearCamera(){
 	D3DXVECTOR3 courceVec = m_CurrentCource.startPosition - m_NowPos;
-	
 	float length = D3DXVec3Length(&courceVec);
 	if (1.0f <= length){
 		D3DXVECTOR3 Dir;
@@ -108,10 +107,6 @@ void CCourceCamera::ClearCamera(){
 	m_IsEnd = false;
 
 }
-
-//void CCourceCamera::Draw(){
-//	CGameCamera::Draw();
-//}
 
 void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){
 #if 0
