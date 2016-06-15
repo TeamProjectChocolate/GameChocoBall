@@ -19,7 +19,7 @@ CSceneTitle::~CSceneTitle()
 void CSceneTitle::Initialize(){
 	m_pAudio = new CAudio;
 	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
-	m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
+	m_pAudio->PlayCue("Modern");	// 音楽再生
 	//m_pInput = SINSTANCE(CInputManager)->GetInput();
 	SINSTANCE(CObjectManager)->AddObject(&m_Back, _T("TitleBack"),false);
 	SINSTANCE(CObjectManager)->AddObject(&m_Select[0], _T("Start"),false);

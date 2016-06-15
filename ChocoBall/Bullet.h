@@ -21,7 +21,7 @@ public:
 	void Draw()override;
 	void SetUpTechnique()override
 	{
-		m_pEffect->SetTechnique("NormalMapBasicTec");//Textureが無いのでセットテクニックをオーバーライド
+		m_pEffect->SetTechnique("NotNormalMapBasicTec");//Textureが無いのでセットテクニックをオーバーライド
 	};
 	void OnDestroy();
 	void Build();
