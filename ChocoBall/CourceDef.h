@@ -38,22 +38,22 @@ static D3DXVECTOR3 CourceDefine_1[] = {
 //static D3DXVECTOR3 CourceDefine_2[] = {
 //#include "CourceDefStage2.h"
 //};
-//static D3DXVECTOR3 CourceDefine_3[] = {
-//#include "CourceDefStage3.h"
-//};
+static D3DXVECTOR3 CourceDefine_3[] = {
+#include "CourceDefStage3.h"
+};
 static D3DXVECTOR3 CourceDefine_4[] = {
-#include "CourceDefFinalStage.h"
+#include "CourceDefStageFinal.h"
 };
 static D3DXVECTOR3* CourceDefineArray[] = {
 	CourceDefine_1,
 	//CourceDefine_2,
-	//CourceDefine_3,
+	CourceDefine_3,
 	CourceDefine_4
 };
 
 static int CourceDefineNumArray[] = {
 	ARRAYSIZE(CourceDefine_1),
 	//ARRAYSIZE(CourceDefine_2),
-	//ARRAYSIZE(CourceDefine_3),
+	ARRAYSIZE(CourceDefine_3),
 	ARRAYSIZE(CourceDefine_4)
 };

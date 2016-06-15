@@ -10,6 +10,7 @@
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
 #include "StageTable.h"
+#include "GameCamera.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -21,6 +22,7 @@ void CPlayer::Initialize()
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
+	GameCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	m_transform.position = PlayerTransformArray[m_StageID].pos;
 	m_transform.angle = PlayerTransformArray[m_StageID].rotation;
 	m_transform.scale = PlayerTransformArray[m_StageID].scale;
@@ -347,6 +349,8 @@ void CPlayer::LockOn()
 void CPlayer::BehaviorCorrection()
 {
 	D3DXVECTOR3		V1;
+	V1 = GameCamera->GetCamera()->GetTarget() - GameCamera->GetCamera()->GetPos();
+	
 	D3DXVECTOR3		V2;
 	D3DXVECTOR3		Up;
 
@@ -355,8 +359,8 @@ void CPlayer::BehaviorCorrection()
 	Up.z = 0.0f;
 
 	//直行するベクトルを求める。
-	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
-	V1 = Cource.endPosition - Cource.startPosition;
+	//COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
+	//V1 = Cource.endPosition - Cource.startPosition;
 	D3DXVec3Normalize(&V1, &V1);//3D ベクトルを正規化したベクトルを返す。
 	D3DXVec3Cross(&V2, &V1,&Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &V2);
