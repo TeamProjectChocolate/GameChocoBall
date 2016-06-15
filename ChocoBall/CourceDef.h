@@ -15,6 +15,7 @@ public:
 	~CCourceDef(){};
 	void Initialize();
 	COURCE_BLOCK FindCource(D3DXVECTOR3);
+	COURCE_BLOCK FindCource(int);
 	D3DXVECTOR3 EndCource(){
 		return m_courceEnd;
 	}

@@ -1,6 +1,7 @@
 #pragma once
 #include "C2DImage.h"
 #include "DirectInput.h"
+#include "Audio.h"
 
 class CTitleCursor :
 	public C2DImage
@@ -16,4 +17,5 @@ private:
 	
 	CInterface*	m_pInput;
 	short dir;
+	CAudio* m_pAudio;
 };

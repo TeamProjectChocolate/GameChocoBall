@@ -8,7 +8,6 @@
 #include "Player.h"
 
 
-
 CTitleCursor::CTitleCursor()
 {
 	strcpy(m_pFileName, "image/ACFA.jpg");
@@ -17,10 +16,14 @@ CTitleCursor::CTitleCursor()
 
 CTitleCursor::~CTitleCursor()
 {
+	SAFE_DELETE(m_pAudio);
 }
 
 void CTitleCursor::Initialize(){
 	C2DImage::Initialize();
+	m_pAudio = new CAudio;
+	m_pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");	// 各種音楽ファイル読込
+	m_pAudio->PlayCue("ChariotsOfFireBGM");	// 音楽再生
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
 	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
 	SetRotation(0.0f);
@@ -31,8 +34,9 @@ void CTitleCursor::Initialize(){
 
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-
+	m_pAudio->Run();
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 250.0f){
+		m_pAudio->StopCue("ChariotsOfFireBGM");
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);
 		m_transform.scale.x += 20;

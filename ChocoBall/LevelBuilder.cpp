@@ -10,12 +10,14 @@
 #include "FallFloor.h"
 #include "MoveFloor.h"
 #include "ShadowRender.h"
+#include "UpFloor.h"
 
 
 CLevelBuilder::CLevelBuilder()
 {
 	memset(m_ghostObject, 0, sizeof(m_ghostObject));//ghostobjectの配列を0からメモリ分初期化
 	m_IsStage = STAGE_ID::STAGE_NONE;
+	m_ChocoWallNum = 0;
 }
 
 CLevelBuilder::~CLevelBuilder()
@@ -40,7 +42,7 @@ void CLevelBuilder::Build()
 	for (int i = 0; i < tableSize; i++){
 
 		SEnemyAndGimmickInfo info = pInfo[i];
-		if (info.enemyType == 0){
+		if (info.enemyType == EnemyType::EnemyType_LR){
 			//敵を生成。
 			CEnemyLR* enemy = new CEnemyLR;
 			enemy->SetStageID(m_IsStage);
@@ -51,7 +53,7 @@ void CLevelBuilder::Build()
 			enemyMgr->AddEnemy(enemy);
 			SINSTANCE(CShadowRender)->Entry(enemy);
 		}
-		else if (info.enemyType == 1){
+		else if (info.enemyType == EnemyType::EnemyType_FB){
 			//敵を生成。
 			CEnemyFB* enemyfb = new CEnemyFB;
 			enemyfb->SetStageID(m_IsStage);
@@ -62,7 +64,7 @@ void CLevelBuilder::Build()
 			enemyMgr->AddEnemy(enemyfb);
 			SINSTANCE(CShadowRender)->Entry(enemyfb);
 		}
-		else if (info.enemyType == 2){
+		else if (info.enemyType == EnemyType::EnemyType_JUMP){
 			//敵を生成。
 			CEnemyjamp* enemyjamp = new CEnemyjamp;	
 			enemyjamp->SetStageID(m_IsStage);
@@ -73,7 +75,7 @@ void CLevelBuilder::Build()
 			enemyMgr->AddEnemy(enemyjamp);
 			SINSTANCE(CShadowRender)->Entry(enemyjamp);
 		}
-		else if (info.enemyType == 3){
+		else if (info.enemyType == EnemyType::EnemyType_BULLET){
 			//敵を生成。
 			CEnemy* enemy = new CEnemy;
 			enemy->SetStageID(m_IsStage);
@@ -101,11 +103,16 @@ void CLevelBuilder::Build()
 		}
 		if (info.gimmickType == GimmickType_Wall){
 			//ギミックの生成
-			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T("B_Block"), PRIORTY::OBJECT3D, false);
+			string str = "B_Block";
+			char num[100];
+			_itoa(m_ChocoWallNum, num, 10);
+			str += num;
+			CBuildBlock* buildBlock = SINSTANCE(CObjectManager)->GenerationObject<CBuildBlock>(_T(str.c_str()),PRIORTY::OBJECT3D,false);
 			buildBlock->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot
 			);
+			m_ChocoWallNum++;
 		}
 		if (info.gimmickType == GimmickType_FallFloor){
 			//落ちる床だよ。つかって
@@ -124,6 +131,16 @@ void CLevelBuilder::Build()
 				pInfo[i].rot
 			);
 			SINSTANCE(CShadowRender)->Entry(movefloor);
+		}
+		if (info.gimmickType == GimmickType_UpFloor){
+			// 上昇床
+			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			upfloor->Initialize(
+				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
+				pInfo[i].rot
+				);
+			upfloor->SetMaxMove(pInfo[i].MaxMove);
+			SINSTANCE(CShadowRender)->Entry(upfloor);
 		}
 	}
 

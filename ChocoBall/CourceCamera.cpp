@@ -23,16 +23,16 @@ namespace{
 void CCourceCamera::Initialize(){
 	m_courceDef.SetStageID(m_StageID);
 	m_courceDef.Initialize();
-	//D3DXVECTOR3 Target = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"))->GetPos();
-	//COURCE_BLOCK StartBlock = m_courceDef.FindCource(Target);
 	CGameCamera::Initialize();
-	//Target.y += 0.1f;
-	//m_camera.SetTarget(Target);
 	m_CompCamera = false;
 	m_isFirst = true;
 	m_cameraPosSpeed.x = 0.0f;
 	m_cameraPosSpeed.y = 0.0f;
 	m_cameraPosSpeed.z = 0.0f;
+	m_PrevCource = COURCE_BLOCK();
+	m_PrevCource.blockNo = -1;
+	m_CurrentCource.blockNo = 0;
+	m_TurnFlg = false;
 	m_IsEnd = false;
 }
 
@@ -41,18 +41,20 @@ void CCourceCamera::Update(){
 	if (m_GameState == GAMEEND_ID::CONTINUE){
 		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 		D3DXVECTOR3 Target = pl->GetPos();
+		m_CurrentCource = m_courceDef.FindCource(Target);
+		m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
 
-		m_NowCource = m_courceDef.FindCource(Target);
 		Target.y += 0.1f;
 		m_camera.SetTarget(Target);
-		D3DXVECTOR3 courceVec = m_NowCource.endPosition - m_NowCource.startPosition;
+
+		D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
 		D3DXVECTOR3 Dir;
 		D3DXVec3Normalize(&Dir, &courceVec);
-		D3DXVECTOR3 TargetPos = pl->GetPos() - m_NowCource.startPosition;
-		float t = D3DXVec3Dot(&Dir, &TargetPos);
-		TargetPos = m_NowCource.startPosition + (Dir*(t - 8.0f));
-		TargetPos.y += 2.5f;
-		//TargetPos.y = 2.0f;
+		D3DXVECTOR3 TargetPos = pl->GetPos() - m_CurrentCource.startPosition;
+
+		CourceTurn(Dir, TargetPos, D3DXToRadian(140.0f), 1.5f);
+
+		TargetPos.y = Target.y + 2.5f;
 
 		if (!m_isFirst){
 			VectorSmoothDamp(
@@ -104,4 +106,67 @@ void CCourceCamera::ClearCamera(){
 		return;
 	}
 	m_IsEnd = false;
+
+}
+
+void CCourceCamera::Draw(){
+	CGameCamera::Draw();
+}
+
+void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){
+#if 0
+	bool TurnFlg = false;
+	// コースとコースの継ぎ目の角度が一定値以下の時はカメラが一定値以上離れないようにする
+	D3DXVECTOR3 Vec1, Vec2;
+	//if (m_NowCource.blockNo < m_OldCource.blockNo){
+	//	//m_TurnFlg = false;
+	//	return;
+	//	Vec1 = m_NowCource.startPosition - m_NowCource.endPosition;
+	//	Vec2 = m_OldCource.endPosition - m_OldCource.startPosition;
+	//}
+	//else{
+	Vec1 = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
+	Vec2 = m_PrevCource.startPosition - m_PrevCource.endPosition;
+	//}
+	D3DXVec3Normalize(&Vec1, &Vec1);
+	D3DXVec3Normalize(&Vec2, &Vec2);
+	Vec1.y = 0.0f;
+	Vec2.y = 0.0f;
+	float cos = D3DXVec3Dot(&Vec1, &Vec2);
+	float acos = acosf(cos);
+	if (acos <= kakudo){
+		TurnFlg = true;
+	}
+
+	float t = D3DXVec3Dot(&Dir, &Target);
+
+	if (TurnFlg){
+		if (t < 0.0f){
+			Target = m_CurrentCource.startPosition + (Dir * (t - 4.0f));
+		}
+		else{
+			Target = m_CurrentCource.startPosition + (Dir*(t - 8.0f));
+		}
+	}
+	else{
+		Target = m_CurrentCource.startPosition + (Dir*(t - 8.0f));
+	}
+	Target.y = 0.0f;
+#else
+
+	float t = D3DXVec3Dot(&Dir, &Target);
+	if (fabsf(t) - 8.0f < 0.0f &&m_PrevCource.blockNo != -1){
+		//プレイヤの座標を手前のコースに射影する。
+		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+		D3DXVECTOR3 prevCourceDir = m_PrevCource.endPosition - m_PrevCource.startPosition;
+		D3DXVec3Normalize(&prevCourceDir, &prevCourceDir);
+		Target = pl->GetPos() - m_PrevCource.startPosition;
+		t = D3DXVec3Dot(&prevCourceDir, &Target);
+		Target = m_PrevCource.startPosition + (prevCourceDir*(t - 8.0f));
+	}
+	else{
+		Target = m_CurrentCource.startPosition + (Dir*(t - 8.0f));
+	}
+	Target.y = 0.0f;
+#endif
 }

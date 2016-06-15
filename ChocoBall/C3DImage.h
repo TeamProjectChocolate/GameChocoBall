@@ -12,12 +12,15 @@ class C3DImage :public CGameObject{
 public:
 	C3DImage(){
 		m_pImage = nullptr;
-		m_pSkinModel = nullptr;
+		m_UseBorn = false;
 	};
 	~C3DImage(){};
 	virtual void Initialize()override;
 	virtual void Update()override;
 	virtual void Draw()override;
+	virtual void SetUpTechniqueAnimation(){
+		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
+	}
 	virtual void SetUpTechnique()override{
 		m_pEffect->SetTechnique("NotNormalMapTextureTec");
 	}
@@ -39,14 +42,14 @@ private:
 	void UpdateFrame(LPDIRECT3DDEVICE9, LPD3DXFRAME);
 	void AnimationUpdate();
 	void NonAnimationUpdate();
-	void DrawFrame(/*LPDIRECT3DDEVICE9, */LPD3DXFRAME);
-	void DrawMeshContainer(/*LPDIRECT3DDEVICE9,*/ LPD3DXMESHCONTAINER/*, LPD3DXFRAME*/);
-	void AnimationDraw(/*LPDIRECT3DDEVICE9, */D3DXMESHCONTAINER_DERIVED*/*, LPD3DXMESHCONTAINER, LPD3DXFRAME*/);
-	void NonAnimationDraw();
+	void DrawFrame(LPD3DXFRAME);
+	void DrawMeshContainer(LPD3DXMESHCONTAINER, LPD3DXFRAME);
+	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,D3DXFRAME_DERIVED*);
+	void NonAnimationDraw(D3DXFRAME_DERIVED*);
 protected:
 	// 3D描画用メンバ変数
 	D3DXMATRIX m_World;		// ワールド行列
-	CSkinModelData* m_pSkinModel;
 	CAnimation m_animation;
 	int m_currentAnimNo;
+	bool m_UseBorn;		// ボーンを使用するかどうかのフラグ(trueなら使用、falseなら使用しない)
 };

@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "ObjectManager.h"
 #include "ShadowRender.h"
+#include "RenderContext.h"
 
 CGameManager* CGameManager::m_instance = nullptr;
 
@@ -61,7 +62,10 @@ void CGameManager::Update(){
 }
 
 void CGameManager::Draw(){
+	//SINSTANCE(CRenderContext)->RenderingStart();
 	m_NowScene->Draw();
+	//SINSTANCE(CRenderContext)->RenderingEnd();
+	//SINSTANCE(CRenderContext)->SetRenderingBuffer();
 }
 
 void CGameManager::DeleteAll(){
