@@ -17,10 +17,11 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	strcpy(m_pFileName, "image/down_block.x");
 	C3DImage::Initialize();
 	//D3DXMatrixInverse()
-	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, -40.0f);
+	m_transform.position = pos;//D3DXVECTOR3(0.0f, 0.0f, -40.0f);
 	StartPos = m_transform.position;
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.angle = rot;
 	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
@@ -50,10 +51,13 @@ void MoveFloor::Update()
 	trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 
+
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
-	m_transform.position.z -= 0.01;
+	m_transform.position += m_dir * 0.05f;
+
 
 	C3DImage::Update();
+
 
 	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
@@ -104,7 +108,7 @@ bool MoveFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f)
+	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= 0.6)
 	{
 		return TRUE;
 	}

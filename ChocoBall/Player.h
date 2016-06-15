@@ -144,7 +144,9 @@ private:
 	bool			m_HitFlag;
 	MoveFloor*		parent;
 	D3DXVECTOR3		localPosition;
-	
+
+
+	//
 	STAGE_ID m_StageID;
 	CGameCamera* GameCamera;
 };

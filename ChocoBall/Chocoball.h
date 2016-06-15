@@ -17,7 +17,6 @@ public:
 		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
 	}
 	void OnDestroy();
-	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 
 	D3DXVECTOR3 GetPos()
 	{

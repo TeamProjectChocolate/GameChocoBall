@@ -35,9 +35,11 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	m_pPlayer->SetStageID(m_Stage_ID);
 
 	SINSTANCE(CObjectManager)->FindGameObject<CField>(_T("TESTStage3D"))->SetStageID(m_Stage_ID);
+	SINSTANCE(CObjectManager)->GenerationObject<Skybox>(_T("skybox"), PRIORTY::OBJECT3D, false);
 
 	SINSTANCE(CObjectManager)->Intialize();
 
+	
 
 	CCourceDef cource = m_pPlayer->GetCourceDef();
 	COURCE_BLOCK block = cource.FindCource(cource.EndCource());
