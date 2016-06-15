@@ -99,7 +99,7 @@ bool FallingFloor::IsHitPlayer(D3DXVECTOR3 pos,float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= -0uhh.6f)
+	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= -0.6f)
 	{
 		return TRUE;
 	}
