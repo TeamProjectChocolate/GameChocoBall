@@ -24,13 +24,13 @@
 },
 //Ground_04
 {
-	D3DXVECTOR3(0.00f, 15.79f, 14.64f),             //平行移動
+	D3DXVECTOR3(0.00f, 15.73f, 14.67f),             //平行移動
 	D3DXQUATERNION(0.25f, 0.00f, 0.00f, 0.97f ),    //回転
 	D3DXVECTOR3(8.00f, 2.00f, 23.00f ),            //拡大
 },
 //Ground_05
 {
-	D3DXVECTOR3(-15.00f, 21.10f, -9.55f),             //平行移動
+	D3DXVECTOR3(-15.00f, 21.10f, -9.47f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(40.00f, 2.00f, 29.00f ),            //拡大
 },
@@ -45,4 +45,10 @@
 	D3DXVECTOR3(-26.50f, 26.51f, 15.39f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(10.00f, 2.00f, 9.90f ),            //拡大
+},
+//Ground_08
+{
+	D3DXVECTOR3(-26.50f, 26.51f, 40.49f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(10.00f, 2.00f, 20.05f ),            //拡大
 },

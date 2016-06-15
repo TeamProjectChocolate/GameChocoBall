@@ -14,6 +14,7 @@ struct SEnemyAndGimmickInfo{
 	D3DXVECTOR3 scale;
 	int enemyType;
 	int gimmickType;
+	float MaxMove;
 };
 struct SCollisionInfo {
 	D3DXVECTOR3 pos;

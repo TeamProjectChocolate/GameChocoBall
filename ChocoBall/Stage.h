@@ -6,6 +6,7 @@
 #include "Score.h"
 #include "CourceCamera.h"
 #include "EnemyManager.h"
+#include "Skybox.h"
 
 
 class CStage
@@ -38,5 +39,6 @@ private:
 	CScore m_score;	
 	CCourceCamera* m_pCamera;
 	CEnemyManager* m_pEnemyManager;
+	Skybox m_skybox;
 };
 

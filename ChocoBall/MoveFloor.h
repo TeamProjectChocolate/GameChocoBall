@@ -22,6 +22,10 @@ public:
 		return position;
 	}
 
+	void SetMaxMove(float maxmove){
+		MaxMove = maxmove;
+	}
+
 	
 
 	//ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
@@ -29,6 +33,13 @@ public:
 
 	D3DXVECTOR3 GetMoveSpeed(){
 		return m_MoveSpeed;
+	}
+	void SetDirection(D3DXVECTOR3 dir){
+		D3DXVec3Normalize(&m_dir, &dir);
+	}
+
+	D3DXVECTOR3 GetDirection(){
+		return m_dir;
 	}
 private:
 	D3DXVECTOR4			dimension;
@@ -42,4 +53,6 @@ private:
 	D3DXVECTOR3			StartPos;
 	D3DXVECTOR3			PlayerPos;
 	D3DXVECTOR3			m_MoveSpeed;
+	float				MaxMove;
+	D3DXVECTOR3 m_dir;
 };

@@ -13,6 +13,7 @@ void FallingFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	StartPos = m_transform.position;
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.angle = rot;
 	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
@@ -98,7 +99,7 @@ bool FallingFloor::IsHitPlayer(D3DXVECTOR3 pos,float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f)
+	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= -0uhh.6f)
 	{
 		return TRUE;
 	}
