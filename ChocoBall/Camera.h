@@ -59,6 +59,10 @@ public:
 	D3DXMATRIX GetCameraRotation(){
 		return m_Rota;
 	}
+	D3DXVECTOR3 GetTarget()
+	{
+		return m_target;
+	}
 private:
 	D3DXVECTOR3 m_position;
 	D3DXVECTOR3 m_target;

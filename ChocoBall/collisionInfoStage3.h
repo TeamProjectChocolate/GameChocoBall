@@ -46,6 +46,11 @@
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(10.00f, 2.00f, 9.90f ),            //拡大
 },
+//Ground_08
+{
+	D3DXVECTOR3(-26.50f, 26.51f, 40.49f),             //平行移動
+	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(10.00f, 2.00f, 20.05f ),            //拡大
 //Wall_00
 {
 	D3DXVECTOR3(3.68f, 9.10f, 12.30f),             //平行移動

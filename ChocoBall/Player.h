@@ -15,6 +15,7 @@ class CLockOn;
 class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
+class CGameCamera;
 
 class CPlayer : public C3DImage
 {
@@ -143,8 +144,11 @@ private:
 	bool			m_HitFlag;
 	MoveFloor*		parent;
 	D3DXVECTOR3		localPosition;
-	
+
+
+	//
 	STAGE_ID m_StageID;
+	CGameCamera* GameCamera;
 };
 
 extern CPlayer* g_player;
@@ -164,5 +168,6 @@ namespace tkEngine{
 }
 
 static double AnimationTime[] = {
-	-1.0
+	-1.0,
+	20.0f/30.0f
 };

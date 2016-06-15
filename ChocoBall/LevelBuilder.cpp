@@ -103,6 +103,7 @@ void CLevelBuilder::Build()
 		}
 		if (info.gimmickType == GimmickType_Wall){
 			//ƒMƒ~ƒbƒN‚Ì¶¬
+
 			string str = "B_Block";
 			char num[100];
 			_itoa(m_ChocoWallNum, num, 10);
@@ -130,6 +131,15 @@ void CLevelBuilder::Build()
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot
 			);
+			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
+			D3DXMATRIX mRot;
+			D3DXMatrixRotationQuaternion(&mRot, &rot);
+			D3DXVECTOR3 back;
+			back.x = -mRot.m[2][0];
+			back.y = -mRot.m[2][1];
+			back.z = -mRot.m[2][2];
+			movefloor->SetDirection((movefloor->GetPos() + back) - movefloor->GetPos());
+			movefloor->SetMaxMove(pInfo[i].MaxMove);
 			SINSTANCE(CShadowRender)->Entry(movefloor);
 		}
 		if (info.gimmickType == GimmickType_UpFloor){

@@ -28,6 +28,7 @@ public:
 		return m_pos;
 	}
 
+
 	//最初のポジションをセットします。
 	void SetStartPosition(D3DXVECTOR3 pos)
 	{

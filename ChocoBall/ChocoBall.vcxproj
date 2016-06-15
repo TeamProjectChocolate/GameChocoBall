@@ -163,6 +163,7 @@
     <ClInclude Include="Score.h" />
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="SkinModelData.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageTable.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="SkinModelData.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="stdafx.cpp">

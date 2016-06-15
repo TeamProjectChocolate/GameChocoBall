@@ -84,7 +84,6 @@ void CCourceCamera::Draw(){
 
 void CCourceCamera::ClearCamera(){
 	D3DXVECTOR3 courceVec = m_CurrentCource.startPosition - m_NowPos;
-
 	float length = D3DXVec3Length(&courceVec);
 	if (1.0f <= length){
 		D3DXVECTOR3 Dir;
@@ -109,17 +108,15 @@ void CCourceCamera::ClearCamera(){
 
 }
 
-
-
 void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){
 #if 0
 	bool TurnFlg = false;
 	// コースとコースの継ぎ目の角度が一定値以下の時はカメラが一定値以上離れないようにする
 	D3DXVECTOR3 Vec1, Vec2;
-	//if (m_NowCource.blockNo < m_OldCource.blockNo){
+	//if (m_CurrentCource.blockNo < m_OldCource.blockNo){
 	//	//m_TurnFlg = false;
 	//	return;
-	//	Vec1 = m_NowCource.startPosition - m_NowCource.endPosition;
+	//	Vec1 = m_CurrentCource.startPosition - m_CurrentCource.endPosition;
 	//	Vec2 = m_OldCource.endPosition - m_OldCource.startPosition;
 	//}
 	//else{
