@@ -3,9 +3,7 @@
 #include "Bullet.h"
 #include"Player.h"
 
-extern CPlayer* g_player;
-
-
+//extern CPlayer* g_player;
 
 CEnemyBullet::CEnemyBullet()
 {
@@ -53,5 +51,4 @@ void CEnemyBullet::BulletPlayerCollision(){
 			}
 			
 		}
-	
 }

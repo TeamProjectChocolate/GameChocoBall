@@ -8,7 +8,6 @@
 #include "Player.h"
 
 
-
 CTitleCursor::CTitleCursor()
 {
 	strcpy(m_pFileName, "image/ACFA.jpg");
@@ -31,8 +30,9 @@ void CTitleCursor::Initialize(){
 
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-
+	m_pAudio->Run();
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 250.0f){
+		m_pAudio->StopCue("ChariotsOfFireBGM");
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);
 		m_transform.scale.x += 20;

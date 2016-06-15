@@ -72,6 +72,9 @@ void CPlayer::Initialize()
 
 	deadTimer = 0.0f;
 	m_lockonEnemyIndex = 0;	
+	for (int idx = 0; idx < m_animation.GetNumAnimationSet(); idx++){
+		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
+	}
 	//m_pEmitter = CParticleEmitter::EmitterCreate(
 	//	_T("ParticleEmitterTEST"),
 	//	PARTICLE_TYPE::FIRE,
@@ -84,7 +87,7 @@ void CPlayer::Initialize()
 	//	m_transform.position,
 	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
 	//	);
-
+	m_UseBorn = true;
 }
 
 void CPlayer::SetParent(MoveFloor* parent)

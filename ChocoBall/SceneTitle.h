@@ -18,6 +18,4 @@ private:
 	CTitleBack m_Back;
 	CTitleSelect m_Select[2];
 	CTitleCursor m_Cursor;
-
-	CAudio* m_pAudo;
 };
