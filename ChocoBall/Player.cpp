@@ -367,7 +367,7 @@ void CPlayer::BehaviorCorrection()
 	D3DXVec3Cross(&V2, &V1,&Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &V2);
 
-	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
+	//カメラにしたがってプレイヤーの進行方向と曲がり方を指定
 	D3DXVECTOR3 t0, t1;
 	t0 = V1 * m_moveSpeed.z;
 	t1 = V2 * -m_moveSpeed.x;
@@ -420,7 +420,7 @@ void CPlayer::StateManaged()
 		}
 	}
 	//ゲームオーバー処理
-	if (m_transform.position.y <= -10.0f)
+	if (m_transform.position.y <= -15.0f)
 	{
 		m_GameState = GAMEEND_ID::OVER;
 		return;
