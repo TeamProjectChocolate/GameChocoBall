@@ -10,7 +10,7 @@
 
 CTitleCursor::CTitleCursor()
 {
-	strcpy(m_pFileName, "image/ACFA.jpg");
+	strcpy(m_pFileName, "image/arrow.png");
 }
 
 
@@ -21,23 +21,22 @@ CTitleCursor::~CTitleCursor()
 void CTitleCursor::Initialize(){
 	C2DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(510.0f, 300.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(80, 80, 10);
+	m_transform.scale = D3DXVECTOR3(75, 80, 10);
 	SetAlive(true);
 	C2DImage::SetImage();
 }
 
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 250.0f){
+	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);
 		m_transform.scale.x += 20;
 		m_transform.scale.y += 20;*/
 	}
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
-		MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
+	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
 		PostQuitMessage(0);
 	}
 	
@@ -45,12 +44,13 @@ void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	float Y = m_pInput->GetStickL_YFloat();
 	if (Y>0){
-		m_transform.position.y = 250.0f;
+		m_transform.position.y = 300.0f;
+		m_transform.position.x = 510.0f;
 
 	}
 	if (Y<0){
-		m_transform.position.y = 350.0f;
-
+		m_transform.position.y = 430.0f;
+		m_transform.position.x = 592.0f;
 	}
 	
 
