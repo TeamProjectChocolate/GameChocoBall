@@ -56,7 +56,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
 	m_pAudio = pAudio;
-	m_pAudio->PlayCue(Stage_BGM[m_Stage_ID]);	// 音楽再生
+	//m_pAudio->PlayCue(Stage_BGM[m_Stage_ID]);	// 音楽再生
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 	m_isGameContinue = true;
@@ -64,7 +64,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 void CStage::Update()
 {
-	m_pAudio->Run();		// 音楽更新
+	//m_pAudio->Run();		// 音楽更新
 	m_GameState = m_pPlayer->GetGameState();
 	m_score.Update();
 	m_pCamera->SetGameState(m_GameState);
