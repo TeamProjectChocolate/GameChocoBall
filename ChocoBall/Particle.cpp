@@ -141,7 +141,7 @@ void CParticle::SetupMatrices(){
 	D3DXMatrixMultiply(&mWorld, &mWorld, &(m_camera->GetProj()));
 }
 
-void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEmitParameter* param, const D3DXVECTOR3& emitPosition){
+void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEmitParameter* param, const D3DXVECTOR3& emitPosition,D3DXVECTOR3 dir){
 	m_pEffect = SINSTANCE(CEffect)->SetEffect(_T("Shader/2DShader.hlsl"));	// 使用するshaderファイルを指定(デフォルト)
 	m_transform.scale = D3DXVECTOR3(param->w, param->h, 1.0f);
 
@@ -181,11 +181,12 @@ void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEm
 	m_camera = &camera;
 	m_random = &random;
 	m_life = param->life;
-	m_ParticleData.velocity = param->initVelocity;
+
+	m_ParticleData.velocity = dir * D3DXVec3Length(&(param->initVelocity));
 
 	m_ParticleData.velocity.x += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initVelocityVelocityRandomMargin.x;
 	m_ParticleData.velocity.y += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initVelocityVelocityRandomMargin.y;
-	m_ParticleData.velocity.y += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initVelocityVelocityRandomMargin.y;
+	m_ParticleData.velocity.z += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initVelocityVelocityRandomMargin.z;
 	m_ParticleData.position = emitPosition;
 	m_ParticleData.position.x += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initPositionRandomMargin.x;
 	m_ParticleData.position.y += ((static_cast<float>(random.GetRandDouble()) - 0.5f) * 2.0f) * param->initPositionRandomMargin.y;

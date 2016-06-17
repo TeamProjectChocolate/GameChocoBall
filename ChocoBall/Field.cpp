@@ -11,12 +11,12 @@ CField::~CField()
 
 void CField::Initialize(){
 
-	m_transform.position = D3DXVECTOR3(0.0f,0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXToRadian(90.0f));
 	//m_transform.angle = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
-	strcpy(m_pFileName,FieldNameArray[m_StageID]);
+	strcpy(m_pFileName, FieldNameArray[m_StageID]);
 
 	//„‘Ì‚ð‰Šú‰»B
 	{
@@ -35,7 +35,7 @@ void CField::Initialize(){
 
 			//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
 			m_myMotionState = new btDefaultMotionState(groundTransform);
-			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, work, btVector3(0,0,0));
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, work, btVector3(0, 0, 0));
 			btRigidBody* work2 = new btRigidBody(rbInfo);
 			m_rigidBody.push_back(work2);
 			work2->activate();

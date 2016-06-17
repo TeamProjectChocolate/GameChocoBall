@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Infomation.h"
+#include "StageTable.h"
 
 typedef struct COURCE_BLOCK{
 	D3DXVECTOR3 startPosition;

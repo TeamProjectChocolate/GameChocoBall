@@ -3,6 +3,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Infomation.h"
+#include "CollisionType.h"
 
 
 namespace{
@@ -56,6 +57,7 @@ void CCourceCamera::Update(){
 
 		TargetPos.y = Target.y + 2.5f;
 
+		m_transform.position = m_NowPos;
 		if (!m_isFirst){
 			VectorSmoothDamp(
 				m_NowPos,
@@ -63,9 +65,12 @@ void CCourceCamera::Update(){
 				TargetPos,
 				m_cameraPosSpeed,
 				10);
+			m_Isintersect.Intersect3(&m_NowPos, &(m_NowPos - m_transform.position));
 		}
 		else{
 			m_NowPos = TargetPos;
+			m_transform.position = m_NowPos;
+			m_Isintersect.CollisitionInitialize(&m_NowPos, 2.8f,CollisionType_Camera);
 			m_isFirst = false;
 		}
 		m_camera.SetPos(m_NowPos);

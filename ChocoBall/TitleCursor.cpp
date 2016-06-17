@@ -25,18 +25,20 @@ void CTitleCursor::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(75, 80, 10);
 	SetAlive(true);
+	m_pAudio->PlayCue("ChariotsOfFireBGM", false);	// 音楽再生
 	C2DImage::SetImage();
 }
 
 void CTitleCursor::Update(){
+
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
+		m_pAudio->StopCue("ChariotsOfFireBGM");
+		m_pAudio->DeleteNameAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
-		/*SINSTANCE(CObjectManager)->FindGameObject<CTitleSelect>(_T("Start"))->SetAlpha(1.0f);
-		m_transform.scale.x += 20;
-		m_transform.scale.y += 20;*/
 	}
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
+		// ここの中身の処理はセーブを実装し手続きから遊ぶの処理にする
 		PostQuitMessage(0);
 	}
 	
@@ -52,12 +54,14 @@ void CTitleCursor::Update(){
 		m_transform.position.y = 430.0f;
 		m_transform.position.x = 592.0f;
 	}
-	
-
-
-	
+	m_pAudio->Run();
 }
+
 void CTitleCursor::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
+}
+
+void CTitleCursor::Release(){
+	SAFE_DELETE(m_pAudio);
 }

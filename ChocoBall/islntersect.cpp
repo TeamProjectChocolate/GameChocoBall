@@ -27,6 +27,16 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera
+			&& convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map) {
+			//無視。
+			return 0.0f;
+		}
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_NONE){
+			//無視。
+			return 0.0f;
+		}
+
 		D3DXVECTOR3 hitPointNormal;
 		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
 		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
@@ -83,6 +93,15 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera
+			&& convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map) {
+			//無視。
+			return 0.0f;
+		}
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_NONE){
+			//無視。
+			return 0.0f;
+		}
 
 		D3DXVECTOR3 hitPointNormal;
 		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
@@ -122,7 +141,7 @@ CIsIntersect::~CIsIntersect()
 }
 
 //剛体(当たり判定のある物体)の初期化
-void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
+void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius,CollisionType type)
 {
 	//コリジョン初期化。
 	m_radius = radius;
@@ -138,7 +157,7 @@ void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius)
 	m_myMotionState = new btDefaultMotionState(rbTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_myMotionState, m_collisionShape, btVector3(0, 0, 0));
 	m_rigidBody = new btRigidBody(rbInfo);
-	m_rigidBody->setUserIndex(CollisionType_Player);
+	m_rigidBody->setUserIndex(type);
 	//ワールドに追加。
 	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(m_rigidBody);
 }
@@ -343,6 +362,63 @@ void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 		}
 	}
 	
+	*position += addPos;
+
+	const btVector3& rPos = m_rigidBody->getWorldTransform().getOrigin();
+
+	m_rigidBody->getWorldTransform().setOrigin(btVector3(position->x, position->y, position->z));
+}
+
+void CIsIntersect::Intersect3(D3DXVECTOR3* position,D3DXVECTOR3* moveSpeed)
+{
+	D3DXVECTOR3 addPos = *moveSpeed;
+	//下方向を調べる。
+	{
+		btTransform start, end;
+		start.setIdentity();
+		end.setIdentity();
+#ifdef ORIGIN_CENTER
+		start.setOrigin(btVector3(position->x, position->y, position->z));
+#else
+		start.setOrigin(btVector3(position->x, position->y + m_radius, position->z));
+#endif
+		D3DXVECTOR3 newPos;
+		SweepResultGround callback;
+		callback.startPos = *position;
+		if (fabsf(addPos.y) > 0.0001f) {
+			newPos = *position;
+#ifdef ORIGIN_CENTER
+			newPos.y += addPos.y;
+#else
+			newPos.y += addPos.y + m_radius;
+#endif
+			end.setOrigin(btVector3(newPos.x, newPos.y, newPos.z));
+			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->ConvexSweepTest(m_collisionShape, start, end, callback);
+		}
+		if (callback.isHit) {
+			//当たった。
+			//地面。
+
+			D3DXVECTOR3 Circle;
+			float x = 0.0f;
+			float offset = 0.0f;	//押し戻す量。
+			Circle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+			Circle = *position;
+			Circle.y = callback.hitPos.y;//円の中心
+			D3DXVECTOR3 v = Circle - callback.hitPos;
+			x = D3DXVec3Length(&v);//物体の角とプレイヤーの間の横幅の距離が求まる。
+
+			offset = sqrt(m_radius*m_radius - x*x);//yの平方根を求める。
+
+			moveSpeed->y = 0.0f;
+			addPos.y = callback.hitPos.y - position->y;
+#ifdef ORIGIN_CENTER
+			addPos.y += offset/*m_radius*/;
+#endif
+		}
+
+	}
 	*position += addPos;
 
 	const btVector3& rPos = m_rigidBody->getWorldTransform().getOrigin();

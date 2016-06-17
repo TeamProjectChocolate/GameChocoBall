@@ -27,7 +27,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void SetupMatrices()override;
-	void InitParticle(CRandom&, CCamera&, const SParticleEmitParameter*, const D3DXVECTOR3&);
+	void InitParticle(CRandom&, CCamera&, const SParticleEmitParameter*, const D3DXVECTOR3&,D3DXVECTOR3);
 	// パーティクルに力を加える関数
 	void ApplyFource(const D3DXVECTOR3& applyFource){
 		this->m_applyFource = applyFource;

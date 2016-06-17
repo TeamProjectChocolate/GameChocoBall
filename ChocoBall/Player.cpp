@@ -66,7 +66,7 @@ void CPlayer::Initialize()
 	// ƒ‰ƒCƒgŠÖ˜A‚Ì‰Šú‰»
 	this->ConfigLight();
 	
-	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
+	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
 	
 	m_CBManager =NULL;
 
@@ -77,20 +77,14 @@ void CPlayer::Initialize()
 	for (int idx = 0; idx < m_animation.GetNumAnimationSet(); idx++){
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
-	//m_pEmitter = CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterTEST"),
-	//	PARTICLE_TYPE::FIRE,
-	//	m_transform.position,
-	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	//);
-	//CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterPORIGON"),
-	//	PARTICLE_TYPE::PORIGON,
-	//	m_transform.position,
-	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	//	);
-	m_UseBorn = true;
-}
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterPORIGON"),
+		PARTICLE_TYPE::PORIGON,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera(),
+		true
+		);
+	m_UseBorn = true;}
 
 void CPlayer::SetParent(MoveFloor* parent)
 {

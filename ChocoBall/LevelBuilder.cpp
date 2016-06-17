@@ -11,6 +11,7 @@
 #include "MoveFloor.h"
 #include "ShadowRender.h"
 #include "UpFloor.h"
+#include "FireJet.h"
 
 
 CLevelBuilder::CLevelBuilder()
@@ -85,8 +86,7 @@ void CLevelBuilder::Build()
 			enemy->SetInitPosition(info.pos);
 			enemyMgr->AddEnemy(enemy);
 		}
-
-		if (info.gimmickType == GimmickType_Chocoball){
+		else if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
 			CCBManager* mgr =new CCBManager;
 			m_chocoballMgrList.push_back(mgr);
@@ -101,7 +101,7 @@ void CLevelBuilder::Build()
 			mgr->SetStartPosition(startPos);
 			mgr->SetEndPosition(startPos + back);
 		}
-		if (info.gimmickType == GimmickType_Wall){
+		else if (info.gimmickType == GimmickType_Wall){
 			//ギミックの生成
 
 			string str = "B_Block";
@@ -115,7 +115,7 @@ void CLevelBuilder::Build()
 			);
 			m_ChocoWallNum++;
 		}
-		if (info.gimmickType == GimmickType_FallFloor){
+		else if (info.gimmickType == GimmickType_FallFloor){
 			//落ちる床だよ。つかって
 			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
 			fallfloor->Initialize(
@@ -124,7 +124,7 @@ void CLevelBuilder::Build()
 			);
 			SINSTANCE(CShadowRender)->Entry(fallfloor);
 		}
-		if (info.gimmickType == GimmickType_MoveFloor){
+		else if (info.gimmickType == GimmickType_MoveFloor){
 			// 動く床
 			MoveFloor* movefloor = SINSTANCE(CObjectManager)->GenerationObject<MoveFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
 			movefloor->Initialize(
@@ -142,7 +142,7 @@ void CLevelBuilder::Build()
 			movefloor->SetMaxMove(pInfo[i].MaxMove);
 			SINSTANCE(CShadowRender)->Entry(movefloor);
 		}
-		if (info.gimmickType == GimmickType_UpFloor){
+		else if (info.gimmickType == GimmickType_UpFloor){
 			// 上昇床
 			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
 			upfloor->Initialize(
@@ -151,6 +151,22 @@ void CLevelBuilder::Build()
 				);
 			upfloor->SetMaxMove(pInfo[i].MaxMove);
 			SINSTANCE(CShadowRender)->Entry(upfloor);
+		}
+		else if (info.gimmickType == GimmickType_FireJet){
+			// 炎を噴出するギミック
+			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T("firejet"), PRIORTY::OBJECT3D_ALPHA, false);
+			fire->Initialize();
+			fire->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
+			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
+			D3DXMATRIX mRot;
+			D3DXMatrixRotationQuaternion(&mRot, &rot);
+			D3DXVECTOR3 back;
+			back.x = -mRot.m[2][0];
+			back.y = -mRot.m[2][1];
+			back.z = -mRot.m[2][2];
+			D3DXVECTOR3 dir = (fire->GetPos() + back) - fire->GetPos();
+			D3DXVec3Normalize(&dir, &dir);
+			fire->SetDirection(dir);
 		}
 	}
 
