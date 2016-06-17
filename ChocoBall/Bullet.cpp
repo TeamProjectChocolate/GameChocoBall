@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
+#include "CollisionType.h"
 
 Bullet::~Bullet()
 {
@@ -21,7 +22,7 @@ void Bullet::Initialize()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 	this->Build();
-	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
+	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_NONE);
 	//m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	C3DImage::SetImage();
 }

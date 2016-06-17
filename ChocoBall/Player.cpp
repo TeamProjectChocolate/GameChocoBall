@@ -10,6 +10,7 @@
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
 #include "StageTable.h"
+#include "GameCamera.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -21,6 +22,7 @@ void CPlayer::Initialize()
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
+	GameCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	m_transform.position = PlayerTransformArray[m_StageID].pos;
 	m_transform.angle = PlayerTransformArray[m_StageID].rotation;
 	m_transform.scale = PlayerTransformArray[m_StageID].scale;
@@ -64,7 +66,7 @@ void CPlayer::Initialize()
 	// ライト関連の初期化
 	this->ConfigLight();
 	
-	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
+	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
 	
 	m_CBManager =NULL;
 
@@ -75,20 +77,14 @@ void CPlayer::Initialize()
 	for (int idx = 0; idx < m_animation.GetNumAnimationSet(); idx++){
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
-	//m_pEmitter = CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterTEST"),
-	//	PARTICLE_TYPE::FIRE,
-	//	m_transform.position,
-	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	//);
-	//CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterPORIGON"),
-	//	PARTICLE_TYPE::PORIGON,
-	//	m_transform.position,
-	//	SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera()
-	//	);
-	m_UseBorn = true;
-}
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterPORIGON"),
+		PARTICLE_TYPE::PORIGON,
+		m_transform.position,
+		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera(),
+		true
+		);
+	m_UseBorn = true;}
 
 void CPlayer::SetParent(MoveFloor* parent)
 {
@@ -349,6 +345,8 @@ void CPlayer::LockOn()
 void CPlayer::BehaviorCorrection()
 {
 	D3DXVECTOR3		V1;
+	V1 = GameCamera->GetCamera()->GetTarget() - GameCamera->GetCamera()->GetPos();
+	
 	D3DXVECTOR3		V2;
 	D3DXVECTOR3		Up;
 
@@ -357,13 +355,13 @@ void CPlayer::BehaviorCorrection()
 	Up.z = 0.0f;
 
 	//直行するベクトルを求める。
-	COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
-	V1 = Cource.endPosition - Cource.startPosition;
+	//COURCE_BLOCK Cource = m_Courcedef.FindCource(m_transform.position);
+	//V1 = Cource.endPosition - Cource.startPosition;
 	D3DXVec3Normalize(&V1, &V1);//3D ベクトルを正規化したベクトルを返す。
 	D3DXVec3Cross(&V2, &V1,&Up);//2つの3Dベクトルの上方向の外積を求める→直行するV2が見つかる。
 	D3DXVec3Normalize(&V2, &V2);
 
-	//コース定義にしたがってプレイヤーの進行方向と曲がり方を指定
+	//カメラにしたがってプレイヤーの進行方向と曲がり方を指定
 	D3DXVECTOR3 t0, t1;
 	t0 = V1 * m_moveSpeed.z;
 	t1 = V2 * -m_moveSpeed.x;
@@ -416,7 +414,7 @@ void CPlayer::StateManaged()
 		}
 	}
 	//ゲームオーバー処理
-	if (m_transform.position.y <= -10.0f)
+	if (m_transform.position.y <= -15.0f)
 	{
 		m_GameState = GAMEEND_ID::OVER;
 		return;

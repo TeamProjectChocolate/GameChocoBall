@@ -15,6 +15,7 @@ class CLockOn;
 class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
+class CGameCamera;
 
 class CPlayer : public C3DImage
 {
@@ -80,8 +81,8 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
-	CCourceDef GetCourceDef(){
-		return m_Courcedef;
+	CCourceDef* GetCourceDef(){
+		return &m_Courcedef;
 	}
 
 	bool GetGameover()
@@ -147,6 +148,7 @@ private:
 
 	//
 	STAGE_ID m_StageID;
+	CGameCamera* GameCamera;
 };
 
 extern CPlayer* g_player;
@@ -166,5 +168,6 @@ namespace tkEngine{
 }
 
 static double AnimationTime[] = {
-	-1.0
+	-1.0,
+	20.0f/30.0f
 };

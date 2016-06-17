@@ -21,8 +21,8 @@ public:
 	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot);
 	void Update();
 	void Draw();
-	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+	void SetUpTechnique()override{
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
 	}
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;

@@ -7,7 +7,8 @@ enum GimmickType{
 	GimmickType_Wall,
 	GimmickType_FallFloor,
 	GimmickType_MoveFloor,
-	GimmickType_UpFloor
+	GimmickType_UpFloor,
+	GimmickType_FireJet
 };
 
 enum EnemyType{
@@ -35,9 +36,8 @@ struct SCollisionInfo {
 // フィールドのXファイル名
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
-	"image/SUTE2_01.x",
-	//"image/StageModel_Ookawa.x",
-	//"image/StageModel_Iriguchi1.x"
+	//"image/SUTE2_01.x",
+	//"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Ookawa1.x"
 };
 
@@ -45,9 +45,11 @@ static LPCSTR FieldNameArray[] = {
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
-	"ChariotsOfFireBGM",
-	"22-emiya[1]"
+	//"ChariotsOfFireBGM",
+	//"emiya",
+	"Modern_copy",
 };
+
 
 
 
@@ -55,6 +57,7 @@ static LPCSTR Stage_BGM[] = {
 // ※新しいステージを作ったら同じ書き方で新しい配列を追加してください
 // ※オブジェクトの名前は、同じステージの中でなければ被っても構いません
 // ※下の配列に新しい名前のオブジェクトを追加したらStage.cppのActivateObjects関数にif文を追加してください
+<<<<<<< HEAD
 static LPCSTR StageGameObject_1[] = {
 	{ "BulletPhysics" },// すべてのステージにこれが必要です
 	{ "TESTStage3D" },// すべてのステージにこれが必要です
@@ -64,23 +67,15 @@ static LPCSTR StageGameObject_1[] = {
 	{ "TEST3D" },// すべてのステージにこれが必要です
 	{ "2DTest" },
 };
-//static LPCSTR StageGameObject_2[] = {
-//	{ "BulletPhysics" },	// すべてのステージにこれが必要です
-//	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-//	{ "Number" },	// すべてのステージにこれが必要です
-//	{ "Camera" },	// すべてのステージにこれが必要です
-//	{ "EnemyManager" },	// すべてのステージにこれが必要です
-//	{ "TEST3D" },	// すべてのステージにこれが必要です
-//};
-//static LPCSTR StageGameObject_3[] = {
-//	{ "BulletPhysics" },	// すべてのステージにこれが必要です
-//	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-//	{ "Number" },	// すべてのステージにこれが必要です
-//	{ "Camera" },	// すべてのステージにこれが必要です
-//	{ "EnemyManager" },	// すべてのステージにこれが必要です
-//	{ "TEST3D" },	// すべてのステージにこれが必要です
-//};
-static LPCSTR StageGameObject_4[] = {
+static LPCSTR StageGameObject_2[] = {
+	{ "BulletPhysics" },	// すべてのステージにこれが必要です
+	{ "TESTStage3D" },	// すべてのステージにこれが必要です
+	{ "Number" },	// すべてのステージにこれが必要です
+	{ "Camera" },	// すべてのステージにこれが必要です
+	{ "EnemyManager" },	// すべてのステージにこれが必要です
+	{ "TEST3D" },	// すべてのステージにこれが必要です
+};
+static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
 	{ "Number" },	// すべてのステージにこれが必要です
@@ -94,96 +89,131 @@ static LPCSTR StageGameObject_4[] = {
 
 static LPCSTR* StageArray[] = {
 	StageGameObject_1,
-	//StageGameObject_2,
-	//StageGameObject_3,
-	StageGameObject_4
+	StageGameObject_2,
+	StageGameObject_Final
 };
 
 // ステージオブジェクト配列の要素数を格納する配列
 static int StageObjectNumArray[] = {
 	ARRAYSIZE(StageGameObject_1),
-	//ARRAYSIZE(StageGameObject_2),
-	//ARRAYSIZE(StageGameObject_3),
-	ARRAYSIZE(StageGameObject_4)
+	ARRAYSIZE(StageGameObject_2),
+	ARRAYSIZE(StageGameObject_Final)
+};
+
+
+
+// ステージ1のコース定義
+static D3DXVECTOR3 CourceDefine_1[] = {
+#include "CourceDefStage1.h"
+};
+static D3DXVECTOR3 CourceDefine_2[] = {
+#include "CourceDefStage2.h"
+};
+static D3DXVECTOR3 CourceDefine_Final[] = {
+#include "CourceDefStageFinal.h"
+};
+static D3DXVECTOR3* CourceDefineArray[] = {
+	CourceDefine_1,
+	CourceDefine_2,
+	CourceDefine_Final
+};
+
+static int CourceDefineNumArray[] = {
+	ARRAYSIZE(CourceDefine_1),
+	ARRAYSIZE(CourceDefine_2),
+	ARRAYSIZE(CourceDefine_Final)
+};
+static D3DXVECTOR3 CourceDefine_1[] = {
+#include "CourceDefStage1.h"
+};
+static D3DXVECTOR3 CourceDefine_2[] = {
+#include "CourceDefStage2.h"
+};
+static D3DXVECTOR3 CourceDefine_Final[] = {
+#include "CourceDefStageFinal.h"
+};
+
+static D3DXVECTOR3* CourceDefineArray[] = {
+	CourceDefine_1,
+	CourceDefine_2,
+	CourceDefine_Final
+};
+
+static int CourceDefineNumArray[] = {
+	ARRAYSIZE(CourceDefine_1),
+	ARRAYSIZE(CourceDefine_2),
+	ARRAYSIZE(CourceDefine_Final)
 };
 
 
 
 // ステージごとのプレイヤーのポジション情報を格納
 static SCollisionInfo PlayerTransformArray[] = {
+<<<<<<< HEAD
 #include "PlayerPositionInfoStage1.h"
-//#include "PlayerPositionInfoStage2.h"
-//#include "PlayerPositionInfoStage3.h"
-#include "PlayerPositionInfoFinalStage.h"
+#include "PlayerPositionInfoStage2.h"
+#include "PlayerPositionInfoStageFinal.h"
 };
 
 
 
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
+<<<<<<< HEAD
 static SEnemyAndGimmickInfo infoTable_1[] = {
 #include "EnemyGimmickInfoStage1.h"
 };
-//static SEnemyAndGimmickInfo infoTable_2[] = {
-//#include "EnemyGimmickInfoStage2.h"
-//};
-//static SEnemyAndGimmickInfo infoTable_3[] = {
-//#include "EnemyGimmickInfoStage3.h"
-//};
-static SEnemyAndGimmickInfo infoTable_4[] = {
-#include "EnemyGimmickInfoFinalStage.h"
+static SEnemyAndGimmickInfo infoTable_2[] = {
+#include "EnemyGimmickInfoStage2.h"
+};
+static SEnemyAndGimmickInfo infoTable_Final[] = {
+#include "EnemyGimmickInfoStageFinal.h"
 };
 
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SEnemyAndGimmickInfo* infoTableArray[] = {
 	infoTable_1,
-	//infoTable_2,
-	//infoTable_3,
-	infoTable_4
+	infoTable_2,
+	infoTable_Final
 };
 
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列の要素数を格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static int InfoTableSizeArray[] = {
 	ARRAYSIZE(infoTable_1),
-	//ARRAYSIZE(infoTable_2),
-	//ARRAYSIZE(infoTable_3),
-	ARRAYSIZE(infoTable_4)
+	ARRAYSIZE(infoTable_2),
+	ARRAYSIZE(infoTable_Final)
 };
 
 
 
 // ステージ1で使用するギミック発動用当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
+<<<<<<< HEAD
 static SCollisionInfo GimmickTriggerInfoTable_1[] = {
 #include "GimmickTriggerInfoStage1.h"
 };
-//static SCollisionInfo GimmickTriggerInfoTable_2[] = {
-//#include "GimmickTriggerInfoStage2.h"
-//};
-//static SCollisionInfo GimmickTriggerInfoTable_3[] = {
-//#include "GimmickTriggerInfoStage3.h"
-//};
-static SCollisionInfo GimmickTriggerInfoTable_4[] = {
-#include "GimmickTriggerInfoFinalStage.h"
+static SCollisionInfo GimmickTriggerInfoTable_2[] = {
+#include "GimmickTriggerInfoStage2.h"
+};
+static SCollisionInfo GimmickTriggerInfoTable_Final[] = {
+#include "GimmickTriggerInfoStageFinal.h"
 };
 // ステージ1で使用するギミック発動用当たり判定を設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SCollisionInfo* GimmickinfoTableArray[] = {
 	GimmickTriggerInfoTable_1,
-	//GimmickTriggerInfoTable_2,
-	//GimmickTriggerInfoTable_3,
-	GimmickTriggerInfoTable_4
+	GimmickTriggerInfoTable_2,
+	GimmickTriggerInfoTable_Final
 };
 
 // ステージ1で使用するギミック発動用当たり判定を設定した配列の要素数を格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static int GimmickInfoTableSizeArray[] = {
 	ARRAYSIZE(GimmickTriggerInfoTable_1),
-	//ARRAYSIZE(GimmickTriggerInfoTable_2),
-	//ARRAYSIZE(GimmickTriggerInfoTable_3),
-	ARRAYSIZE(GimmickTriggerInfoTable_4)
+	ARRAYSIZE(GimmickTriggerInfoTable_2),
+	ARRAYSIZE(GimmickTriggerInfoTable_Final)
 };
 
 
@@ -193,30 +223,25 @@ static int GimmickInfoTableSizeArray[] = {
 static SCollisionInfo collisionInfoTable_1[] = {
 #include "collisionInfoStage1.h"
 };
-//static SCollisionInfo collisionInfoTable_2[] = {
-//#include "collisionInfoStage2.h"
-//};
-//static SCollisionInfo collisionInfoTable_3[] = {
-//#include "collisionInfoStage3.h"
-//};
-static SCollisionInfo collisionInfoTable_4[] = {
-#include "collisionInfoFinalStage.h"
+static SCollisionInfo collisionInfoTable_2[] = {
+#include "collisionInfoStage2.h"
+};
+static SCollisionInfo collisionInfoTable_Final[] = {
+#include "collisionInfoStageFinal.h"
 };
 
 // ステージ1のフィールドの当たり判定を設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SCollisionInfo* collisionInfoTableArray[] = {
 	collisionInfoTable_1,
-	//collisionInfoTable_2,
-	//collisionInfoTable_3,
-	collisionInfoTable_4
+	collisionInfoTable_2,
+	collisionInfoTable_Final
 };
 
 // ステージ1でのフィールドの当たり判定を設定した配列の要素数を格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static int collisionInfoTableSizeArray[] = {
 	ARRAYSIZE(collisionInfoTable_1),
-	//ARRAYSIZE(collisionInfoTable_2),
-	//ARRAYSIZE(collisionInfoTable_3),
-	ARRAYSIZE(collisionInfoTable_4)
+	ARRAYSIZE(collisionInfoTable_2),
+	ARRAYSIZE(collisionInfoTable_Final)
 };

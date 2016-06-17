@@ -1,6 +1,7 @@
 #pragma once
 #include "GameCamera.h"
 #include "CourceDef.h"
+#include "islntersect.h"
 
 class CCourceCamera :
 	public CGameCamera
@@ -34,5 +35,6 @@ private:
 	bool m_TurnFlg;
 	GAMEEND_ID m_GameState;
 	bool m_IsEnd;
+	CIsIntersect m_Isintersect;
 };
 

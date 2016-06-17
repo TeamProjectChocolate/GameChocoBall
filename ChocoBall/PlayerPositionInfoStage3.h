@@ -1,6 +1,6 @@
 ﻿//Player
 {
-	D3DXVECTOR3(-25.92f, 28.90f, 50.00f),             //平行移動
+	D3DXVECTOR3(0.00f, 0.00f, 20.66f),             //平行移動
 	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
 },
