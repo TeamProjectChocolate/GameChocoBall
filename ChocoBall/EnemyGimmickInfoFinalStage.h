@@ -24,65 +24,41 @@
 },
 //gimmick_Chocoball0
 {
-	D3DXVECTOR3(-34.70f, 12.13f, -30.20f),             //平行移動
-	D3DXQUATERNION(0.00, -0.38f, 0.00f, 0.92f ),    //回転
-	D3DXVECTOR3(1.56f, 1.00f, 1.56f ),            //拡大
-	-1,//エネミータイプ
-	0,//ギミックタイプ
-},
-//gimmick_Chocoball2
-{
-	D3DXVECTOR3(-47.74f, 22.34f, 47.59f),             //平行移動
+	D3DXVECTOR3(-34.70f, 11.73f, -30.30f),             //平行移動
 	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
-	D3DXVECTOR3(1.01f, 1.00f, 1.01f ),            //拡大
+	D3DXVECTOR3(1.27f, 1.14f, 1.31f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 },
 //gimmick_Chocoball1
 {
-	D3DXVECTOR3(-52.00f, 5.70f, -12.40f),             //平行移動
-	D3DXQUATERNION(0.16, 0.84f, -0.35f, 0.39f ),    //回転
-	D3DXVECTOR3(1.03f, 1.60f, 1.60f ),            //拡大
+	D3DXVECTOR3(-52.53f, 5.70f, -12.37f),             //平行移動
+	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
+	D3DXVECTOR3(1.27f, 1.14f, 1.31f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 },
 //FallFloor0
 {
-	D3DXVECTOR3(-50.50f, 6.80f, -14.00f),             //平行移動
-	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.92f ),    //回転
-	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
-	-1,//エネミータイプ
-	2,//ギミックタイプ
+	D3DXVECTOR3(-51.80f, 7.80f, -13.04f),             //平行移動
+	D3DXQUATERNION(0.00, 1.00f, 0.00f, 0.00f ),    //回転
+	D3DXVECTOR3(1.79f, 1.33f, 1.60f ),            //拡大
+	2,//エネミータイプ
+	-1,//ギミックタイプ
 },
-//ChocoWall0
+//gimmick_Chocoball2
 {
-	D3DXVECTOR3(-13.04f, 16.76f, 65.33f),             //平行移動
-	D3DXQUATERNION(0.10, 0.43f, 0.07f, 0.89f ),    //回転
-	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
-	-1,//エネミータイプ
-	1,//ギミックタイプ
-},
-//ChocoWall1
-{
-	D3DXVECTOR3(-26.50f, 20.87f, 56.54f),             //平行移動
-	D3DXQUATERNION(0.08, 0.46f, -0.10f, 0.88f ),    //回転
-	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
-	-1,//エネミータイプ
-	1,//ギミックタイプ
-},
-//gimmick_Chocoball1
-{
-	D3DXVECTOR3(-24.00f, 27.36f, 61.00f),             //平行移動
-	D3DXQUATERNION(-0.45, 0.09f, -0.89f, 0.01f ),    //回転
-	D3DXVECTOR3(0.86f, 0.80f, 0.72f ),            //拡大
+	D3DXVECTOR3(-47.74f, 22.34f, 47.59f),             //平行移動
+	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
+	D3DXVECTOR3(1.28f, 1.14f, 1.32f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 },
-//FallFloor1
+//MoveFloor_00
 {
-	D3DXVECTOR3(-64.76f, 11.00f, 0.27f),             //平行移動
-	D3DXQUATERNION(0.77, 0.07f, -0.63f, -0.05f ),    //回転
+	D3DXVECTOR3(-0.01f, 1.62f, 4.18f),             //平行移動
+	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
 	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
 	-1,//エネミータイプ
-	2,//ギミックタイプ
+	3,//ギミックタイプ
 },
