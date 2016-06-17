@@ -54,5 +54,10 @@ private:
 	D3DXVECTOR3			PlayerPos;
 	D3DXVECTOR3			m_MoveSpeed;
 	float				MaxMove;
+	int m_state;
+	enum state{
+		move_flont,
+		move_back,
+	};
 	D3DXVECTOR3 m_dir;
 };
