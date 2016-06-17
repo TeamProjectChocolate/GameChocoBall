@@ -26,8 +26,7 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
-	this->Build(D3DXVECTOR3(1.0f, 0.5
-		f, 1.0f), m_transform.position);
+	this->Build(D3DXVECTOR3(1.0f, 0.5f, 1.0f), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
