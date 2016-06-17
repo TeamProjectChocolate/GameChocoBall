@@ -39,6 +39,7 @@ void CSkinModelData::LoadModelData(LPCSTR pFileName,CAnimation* anim){
 
 void CSkinModelData::SetUpBoneMatrixPointers(LPD3DXFRAME pFrame, LPD3DXFRAME pRootFrame /*ツリー構造のもっとも根のノードを使用するので渡している*/){
 	// ボーンのツリー構造のいずれかのノードが持っているメッシュ情報を探索
+
 	if (pFrame->pMeshContainer != nullptr){
 		// メッシュ情報があればそれを(不明)する関数を呼び出す
 		SetUpBoneMatrixPointersOnMesh(pFrame->pMeshContainer, pRootFrame);

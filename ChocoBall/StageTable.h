@@ -35,8 +35,8 @@ struct SCollisionInfo {
 // フィールドのXファイル名
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
-	//"image/SUTE2_01.x",
-	//"image/StageModel_Iriguchi1.x",
+	"ChariotsOfFireBGM""image/SUTE2_01.x",
+	"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Ookawa1.x"
 };
 
@@ -44,8 +44,8 @@ static LPCSTR FieldNameArray[] = {
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
-	//"ChariotsOfFireBGM",
-	//"ChariotsOfFireBGM",
+	"ChariotsOfFireBGM",
+	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM"
 };
 
