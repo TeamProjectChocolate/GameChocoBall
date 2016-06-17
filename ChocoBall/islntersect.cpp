@@ -27,8 +27,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
-		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera
-			&& convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map) {
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera) {
 			//無視。
 			return 0.0f;
 		}
@@ -93,8 +92,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
-		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera
-			&& convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map) {
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Camera) {
 			//無視。
 			return 0.0f;
 		}
