@@ -28,4 +28,3 @@ private:
 	D3DXVECTOR3 m_courceEnd;
 	STAGE_ID m_StageID;
 };
-

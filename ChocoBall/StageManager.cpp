@@ -36,6 +36,7 @@ void CStageManager::SetNextStage(){
 			SINSTANCE(CObjectManager)->CleanManager();
 			SAFE_DELETE(m_pStage);
 			m_pStage = new CStage;
+			m_IsContinue = false;
 			SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
 			SINSTANCE(CGameManager)->SetNextScene();
 			return;

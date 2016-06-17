@@ -2,9 +2,6 @@
 #include "C3DImage.h"
 #include "BulletPhysics.h"
 
-#define MaxCollision 200
-
-
 class CField :
 	public C3DImage
 {
@@ -27,8 +24,8 @@ public:
 	
 private:
 	//ここからbulletPhysicsの剛体を使用するために必要な変数。
-	btBoxShape*	m_groundShape[MaxCollision];	//地面のコリジョン形状。
-	btRigidBody*		m_rigidBody[MaxCollision];	//剛体。
+	vector<btBoxShape*>	m_groundShape;	//地面のコリジョン形状。
+	vector<btRigidBody*>		m_rigidBody;	//剛体。
 	btDefaultMotionState* m_myMotionState;
 	STAGE_ID m_StageID;
 };
