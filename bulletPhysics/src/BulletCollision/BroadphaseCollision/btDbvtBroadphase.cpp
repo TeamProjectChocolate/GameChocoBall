@@ -189,8 +189,7 @@ btBroadphaseProxy*				btDbvtBroadphase::createProxy(	const btVector3& aabbMin,
 }
 
 //
-void							btDbvtBroadphase::destroyProxy(	btBroadphaseProxy* absproxy,
-															   btDispatcher* dispatcher)
+void btDbvtBroadphase::destroyProxy(	btBroadphaseProxy* absproxy,btDispatcher* dispatcher)
 {
 	btDbvtProxy*	proxy=(btDbvtProxy*)absproxy;
 	if(proxy->stage==STAGECOUNT)
