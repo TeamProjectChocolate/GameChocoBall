@@ -2,7 +2,7 @@
 #include "C3DImage.h"
 #include "BulletPhysics.h"
 
-#define MaxCollision 100
+#define MaxCollision 200
 
 
 class CField :

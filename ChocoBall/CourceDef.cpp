@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CourceDef.h"
+#include "StageTable.h"
 
 void CCourceDef::Initialize(){
 	m_courceNum = 0;
