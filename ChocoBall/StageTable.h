@@ -36,8 +36,8 @@ struct SCollisionInfo {
 // フィールドのXファイル名
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
-	//"image/SUTE2_01.x",
-	//"image/StageModel_Iriguchi1.x",
+	"image/SUTE2_01.x",
+	"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Ookawa1.x"
 };
 
@@ -45,8 +45,8 @@ static LPCSTR FieldNameArray[] = {
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
-	//"ChariotsOfFireBGM",
-	//"emiya",
+	"ChariotsOfFireBGM",
+	"ChariotsOfFireBGM",
 	"Modern_copy",
 };
 
@@ -57,7 +57,6 @@ static LPCSTR Stage_BGM[] = {
 // ※新しいステージを作ったら同じ書き方で新しい配列を追加してください
 // ※オブジェクトの名前は、同じステージの中でなければ被っても構いません
 // ※下の配列に新しい名前のオブジェクトを追加したらStage.cppのActivateObjects関数にif文を追加してください
-<<<<<<< HEAD
 static LPCSTR StageGameObject_1[] = {
 	{ "BulletPhysics" },// すべてのステージにこれが必要です
 	{ "TESTStage3D" },// すべてのステージにこれが必要です
@@ -149,7 +148,6 @@ static int CourceDefineNumArray[] = {
 
 // ステージごとのプレイヤーのポジション情報を格納
 static SCollisionInfo PlayerTransformArray[] = {
-<<<<<<< HEAD
 #include "PlayerPositionInfoStage1.h"
 #include "PlayerPositionInfoStage2.h"
 #include "PlayerPositionInfoStageFinal.h"
@@ -159,7 +157,6 @@ static SCollisionInfo PlayerTransformArray[] = {
 
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
-<<<<<<< HEAD
 static SEnemyAndGimmickInfo infoTable_1[] = {
 #include "EnemyGimmickInfoStage1.h"
 };
@@ -190,7 +187,6 @@ static int InfoTableSizeArray[] = {
 
 // ステージ1で使用するギミック発動用当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
-<<<<<<< HEAD
 static SCollisionInfo GimmickTriggerInfoTable_1[] = {
 #include "GimmickTriggerInfoStage1.h"
 };
@@ -215,6 +211,7 @@ static int GimmickInfoTableSizeArray[] = {
 	ARRAYSIZE(GimmickTriggerInfoTable_2),
 	ARRAYSIZE(GimmickTriggerInfoTable_Final)
 };
+
 
 
 
