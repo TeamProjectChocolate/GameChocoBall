@@ -23,20 +23,29 @@ void CParticleEmitter::Initialize(){
 	m_timer = 0.0f;
 	m_random.Init(0.1);
 	SetAlive(true);
+	D3DXVec3Normalize(&m_dir,&(m_param->initVelocity));
 }
 
 void CParticleEmitter::Update(){
-	if (m_timer >= m_param->intervalTime){
-		//char num[10];
-		//_itoa(m_count, num,10);
-		//strcat(m_EmitterName, num);
-		CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_EmitterName),PRIORTY::OBJECT2D_ALPHA,false);
-		p->InitParticle(m_random, *m_camera, m_param, m_emitPosition);
-		m_timer = 0.0f;
-		m_ParticleList.push_back(p);
-		m_count++;
+	if (m_EmitFlg){
+		if (m_timer >= m_param->intervalTime){
+			for (int idx = 0; idx < m_param->EmitNum; idx++){
+				//char num[10];
+				//_itoa(m_count, num,10);
+				//strcat(m_EmitterName, num);
+				CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_EmitterName), PRIORTY::OBJECT2D_ALPHA, false);
+				p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
+				m_timer = 0.0f;
+				m_ParticleList.push_back(p);
+				m_count++;
+			}
+		}
+		m_timer += 1.0f / 60.0f;
 	}
-	m_timer += 1.0f / 60.0f;
+	else{
+		m_timer = 0.0f;
+	}
+
 	list<CParticle*>::iterator itr = m_ParticleList.begin();
 	while (itr != m_ParticleList.end()){
 		if ((*itr)->GetIsDead()){

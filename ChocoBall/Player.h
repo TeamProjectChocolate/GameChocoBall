@@ -81,8 +81,8 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
-	CCourceDef GetCourceDef(){
-		return m_Courcedef;
+	CCourceDef* GetCourceDef(){
+		return &m_Courcedef;
 	}
 
 	bool GetGameover()

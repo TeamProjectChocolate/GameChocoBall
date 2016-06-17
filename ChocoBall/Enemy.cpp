@@ -63,8 +63,6 @@ void CEnemy::Update()
 {
 
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-
-
 	
 	//‰ñ“]s—ñ
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);

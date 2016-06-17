@@ -85,8 +85,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			}
 			Update();
 			Draw();	
-			SINSTANCE(CGameManager)->SetNextScene();
 			SINSTANCE(CShadowRender)->ExcuteDeleteObjects();
+			SINSTANCE(CGameManager)->SetNextScene();
 			SINSTANCE(CObjectManager)->ExcuteDeleteObjects();
 		}
 
@@ -245,7 +245,7 @@ void Initialize()
 	CAudio* pAudio = new CAudio;
 	pAudio->Initialize("Audio/Audio.xgs", "Audio/Audio.xwb", "Audio/Audio.xsb");
 	SINSTANCE(CStageManager)->SetAudio(pAudio);
-
+	SINSTANCE(CGameManager)->SetAudio(pAudio);
 	AddScene();
 	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
 	SINSTANCE(CGameManager)->SetNextScene();

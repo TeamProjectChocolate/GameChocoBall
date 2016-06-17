@@ -50,13 +50,13 @@ void CUpFloor::Update()
 	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
-		if (m_transform.position.y < m_MaxMove){
+		if (m_transform.position.y < m_transform.position.y + m_MaxMove){
 			m_transform.position.y += 0.1f;
 			PlayerPos.y += 0.1f;
 			m_player->SetPos(PlayerPos);
 		}
 	}
-	else if (m_transform.position.y < StartPos.y)
+	else if (m_transform.position.y > StartPos.y)
 	{
 		m_transform.position.y -= 0.05f;
 	}

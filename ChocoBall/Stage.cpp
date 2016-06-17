@@ -41,30 +41,29 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	
 
-	CCourceDef cource = m_pPlayer->GetCourceDef();
-	COURCE_BLOCK block = cource.FindCource(cource.EndCource());
+	CCourceDef* cource = m_pPlayer->GetCourceDef();
+	COURCE_BLOCK block = cource->FindCource(cource->EndCource());
 	D3DXVECTOR3 workVec = block.endPosition - block.startPosition;
 	D3DXVec3Normalize(&workVec, &workVec);
 	D3DXVec3Cross(&workVec, &workVec, &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	D3DXVec3Normalize(&workVec, &workVec);
 
-	//CParticleEmitter::EmitterCreate(_T("GoarParticle_Left"), PARTICLE_TYPE::PORIGON, block.endPosition - (workVec * 2.0f), m_pCamera->GetCamera());
-	//CParticleEmitter::EmitterCreate(_T("GoarParticle_Right"), PARTICLE_TYPE::PORIGON, block.endPosition + (workVec * 2.0f), m_pCamera->GetCamera());
+	CParticleEmitter::EmitterCreate(_T("GoarParticle_Left"), PARTICLE_TYPE::PORIGON, block.endPosition - (workVec * 2.0f), m_pCamera->GetCamera(),true);
+	CParticleEmitter::EmitterCreate(_T("GoarParticle_Right"), PARTICLE_TYPE::PORIGON, block.endPosition + (workVec * 2.0f), m_pCamera->GetCamera(),true);
 
 	m_CLevelBuilder.SetIsStage(m_Stage_ID);
 	m_CLevelBuilder.Build();
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
 	m_pAudio = pAudio;
-	//m_pAudio->PlayCue(Stage_BGM[m_Stage_ID]);	// 音楽再生
 
+	m_pAudio->PlayCue(Stage_BGM[m_Stage_ID],false);	// 音楽再生
 	m_GameState = GAMEEND_ID::CONTINUE;
 	m_isGameContinue = true;
 }
 
 void CStage::Update()
 {
-	//m_pAudio->Run();		// 音楽更新
 	m_GameState = m_pPlayer->GetGameState();
 	m_score.Update();
 	m_pCamera->SetGameState(m_GameState);
@@ -102,6 +101,7 @@ void CStage::Update()
 	}
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
+	m_pAudio->Run();		// 音楽更新
 }
 
 void CStage::Draw()
