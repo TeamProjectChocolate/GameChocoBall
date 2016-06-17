@@ -111,6 +111,7 @@ static D3DXVECTOR3 CourceDefine_2[] = {
 static D3DXVECTOR3 CourceDefine_Final[] = {
 #include "CourceDefStageFinal.h"
 };
+
 static D3DXVECTOR3* CourceDefineArray[] = {
 	CourceDefine_1,
 	CourceDefine_2,
