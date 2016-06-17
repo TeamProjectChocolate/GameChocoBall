@@ -4,6 +4,7 @@
 CAudio::CAudio(){}//コンストラクタ
 CAudio::~CAudio()//デストラクタ
 {
+	DeleteNameAll();
 	CleanupXACT();
 }
 
@@ -167,12 +168,23 @@ void CAudio::CleanupXACT(){
 		UnmapViewOfFile(m_audio.pbWaveBank);    //ウェーブバンクのビューをアンマップ    
 	}
 	m_audio.pbWaveBank = NULL;
-	//m_audio.pWaveBank->Destroy();
-	//m_audio.pSoundBank->Destroy();
+
+	m_audio.pWaveBank->Destroy();
+	m_audio.pSoundBank->Destroy();
 	CoUninitialize();
 }
 
-void CAudio::PlayCue(const char* cue){
+void CAudio::PlayCue(const char* cue,bool Isrepeat){
+	if (!Isrepeat){
+		LPCSTR work = FindName(cue);
+		if (work != nullptr){
+			return;
+		}
+		else{
+			AddSoundName(cue);
+		}
+	}
+	
 	if (m_audio.pSoundBank != NULL){
 		//サウンドバンクから指定したキューのキューインデックス取得
 		m_audio.cueIndex = m_audio.pSoundBank->GetCueIndex(cue);
@@ -181,9 +193,11 @@ void CAudio::PlayCue(const char* cue){
 			m_audio.pSoundBank->Play(m_audio.cueIndex, 0, 0, NULL);    //キュー再生
 		}
 	}
+	
 }
 
 void CAudio::StopCue(const char* cue){
+	DeleteName(cue);
 	if (m_audio.pSoundBank != NULL){
 		// サウンドバンクから指定したキューのキューインデクッス取得
 		m_audio.cueIndex = m_audio.pSoundBank->GetCueIndex(cue);

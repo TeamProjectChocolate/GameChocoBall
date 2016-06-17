@@ -51,6 +51,7 @@ void CGameManager::SetNextScene(){
 		MessageBox(nullptr, _T("ƒV[ƒ“‚ª“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"), _T("error"), MB_OK);
 		abort();
 	}
+	m_NowScene->SetAudio(m_pAudio);
 	m_NowScene->Initialize();
 	strcpy(m_NowSceneName, m_NextSceneName);
 }

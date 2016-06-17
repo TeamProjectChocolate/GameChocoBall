@@ -166,7 +166,6 @@ void CShadowRender::DeleteObject(CGameObject* pObject){
 			return;
 		}
 	}
-	MessageBox(NULL, "オブジェクトが登録されていません", 0, 0);
 }
 
 void CShadowRender::CleanManager(){

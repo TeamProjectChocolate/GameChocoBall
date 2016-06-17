@@ -14,8 +14,5 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-private:
-	CTitleBack m_Back;
-	CTitleSelect m_Select[2];
-	CTitleCursor m_Cursor;
+	void Release();
 };

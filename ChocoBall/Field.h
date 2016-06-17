@@ -2,8 +2,6 @@
 #include "C3DImage.h"
 #include "BulletPhysics.h"
 
-//#define MaxCollision 100
-
 
 class CField :
 	public C3DImage

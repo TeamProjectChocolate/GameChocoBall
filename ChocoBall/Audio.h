@@ -33,13 +33,52 @@ public:
 	void CleanupXACT();
 
 	//キュー再生関数(キュー名)
-	void PlayCue(const char*);
+	//引き数:const char*型 サウンド名
+	//		 bool型 音を重ねて再生するかのフラグ(trueなら重ねる,falseなら重ねない)
+	void PlayCue(const char*,bool);
 
 	//キュー停止関数(キュー名)
 	void StopCue(const char*);
 
+	void AddSoundName(LPCSTR name){
+		char* work = new char[FILENAME_MAX];
+		strcpy(work, name);
+		m_SoundNameArray.push_back(work);
+	}
+
+	void DeleteName(LPCSTR name){
+		for (vector<LPCSTR>::iterator itr = m_SoundNameArray.begin(); itr != m_SoundNameArray.end();){
+			if (!strcmp(name, *itr)){
+				SAFE_DELETE(*itr);
+				itr = m_SoundNameArray.erase(itr);
+				return;
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+
+	void DeleteNameAll(){
+		for (vector<LPCSTR>::iterator itr = m_SoundNameArray.begin(); itr != m_SoundNameArray.end();){
+			SAFE_DELETE(*itr);
+			itr++;
+		}
+		m_SoundNameArray.clear();
+	}
+
+	LPCSTR FindName(LPCSTR name){
+		int size = m_SoundNameArray.size();
+		for (int idx = 0; idx < size; idx++){
+			if (!strcmp(name,m_SoundNameArray[idx])){
+				return m_SoundNameArray[idx];
+			}
+		}
+		return nullptr;
+	}
 private:
 	AUDIO_SET m_audio;	//XACTデータ用
+	vector<LPCSTR> m_SoundNameArray;
 };
 
 //WaveBank生成

@@ -67,6 +67,10 @@ public:
 	LPCSTR GetScene(){
 		return m_NowSceneName;
 	}
+
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 private:
 	vector<SCENE_DATA*> m_Scenes;
 	CScene* m_NowScene = nullptr;
@@ -74,6 +78,7 @@ private:
 	void Add(SCENE_DATA*);
 	char m_NowSceneName[SCENENAME_MAX + 1];
 	char m_NextSceneName[SCENENAME_MAX + 1];
+	CAudio* m_pAudio;
 
 	//vectorに登録された要素をすべて削除する関数
 	//※デストラクタにて呼び出される

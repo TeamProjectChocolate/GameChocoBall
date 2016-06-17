@@ -39,10 +39,10 @@ public:
 	bool GetManagerNewFlg(){
 		return m_ManagerNewFlg;
 	}
-	void SetPos(D3DXVECTOR3 pos){
+	virtual void SetPos(D3DXVECTOR3 pos){
 		m_transform.position = pos;
 	}
-	D3DXVECTOR3 GetPos()
+	virtual D3DXVECTOR3 GetPos()
 	{
 		return m_transform.position;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "BulletPhysics.h"
+#include "CollisionType.h"
 
 
 class CIsIntersect
@@ -7,9 +8,10 @@ class CIsIntersect
 public:
 	CIsIntersect();
 	~CIsIntersect();
-	void CIsIntersect::CollisitionInitialize(D3DXVECTOR3* position,float radius);
+	void CIsIntersect::CollisitionInitialize(D3DXVECTOR3*,float,CollisionType);
 	void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed, bool Jumpflag);
 	void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
+	void CIsIntersect::Intersect3(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed);
 	bool IsHitGround();
 	btRigidBody* GetRigidBody()
 	{
