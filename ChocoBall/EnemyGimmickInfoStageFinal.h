@@ -27,7 +27,6 @@
 },
 //gimmick_Chocoball0
 {
-
 	D3DXVECTOR3(-34.70f, 12.13f, -30.20f),             //平行移動
 	D3DXQUATERNION(0.00, -0.38f, 0.00f, 0.92f ),    //回転
 	D3DXVECTOR3(1.56f, 1.00f, 1.56f ),            //拡大
@@ -39,23 +38,22 @@
 {
 	D3DXVECTOR3(-47.74f, 22.34f, 47.59f),             //平行移動
 	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
-	D3DXVECTOR3(1.27f, 1.14f, 1.31f ),            //拡大
+	D3DXVECTOR3(1.01f, 1.00f, 1.01f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 	0.00f,//最大移動量
 },
 //gimmick_Chocoball1
 {
-	D3DXVECTOR3(-52.53f, 5.70f, -12.37f),             //平行移動
-	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
-	D3DXVECTOR3(1.27f, 1.14f, 1.31f ),            //拡大
+	D3DXVECTOR3(-52.00f, 5.70f, -12.40f),             //平行移動
+	D3DXQUATERNION(0.16, 0.84f, -0.35f, 0.39f ),    //回転
+	D3DXVECTOR3(1.03f, 1.60f, 1.60f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 	0.00f,//最大移動量
 },
 //FallFloor0
 {
-
 	D3DXVECTOR3(-50.50f, 6.80f, -14.00f),             //平行移動
 	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.92f ),    //回転
 	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
@@ -81,39 +79,21 @@
 	1,//ギミックタイプ
 	0.00f,//最大移動量
 },
-//gimmick_Chocoball2
+//gimmick_Chocoball1
 {
-	D3DXVECTOR3(-47.74f, 22.34f, 47.59f),             //平行移動
-	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
-	D3DXVECTOR3(1.28f, 1.14f, 1.32f ),            //拡大
+	D3DXVECTOR3(-24.00f, 27.36f, 61.00f),             //平行移動
+	D3DXQUATERNION(-0.45, 0.09f, -0.89f, 0.01f ),    //回転
+	D3DXVECTOR3(0.86f, 0.80f, 0.72f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 	0.00f,//最大移動量
 },
-//MoveFloor_00
+//FallFloor1
 {
-	D3DXVECTOR3(-0.01f, 1.62f, 4.18f),             //平行移動
-	D3DXQUATERNION(0.00, 0.00f, 0.00f, 1.00f ),    //回転
+	D3DXVECTOR3(-64.76f, 11.00f, 0.27f),             //平行移動
+	D3DXQUATERNION(0.77, 0.07f, -0.63f, -0.05f ),    //回転
 	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
 	-1,//エネミータイプ
 	2,//ギミックタイプ
-	0.00f,//最大移動量
-},
-//UpFloor0
-{
-	D3DXVECTOR3(-57.29f, 7.75f, -8.60f),             //平行移動
-	D3DXQUATERNION(0.00, 0.38f, 0.00f, 0.92f ),    //回転
-	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
-	-1,//エネミータイプ
-	4,//ギミックタイプ
-	1.00f,//最大移動量
-},
-//FireJet0
-{
-	D3DXVECTOR3(-67.25f, 11.70f, -1.96f),             //平行移動
-	D3DXQUATERNION(0.03, 0.39f, 0.04f, 0.92f ),    //回転
-	D3DXVECTOR3(1.00f, 1.00f, 1.00f ),            //拡大
-	-1,//エネミータイプ
-	5,//ギミックタイプ
 	0.00f,//最大移動量
 },
