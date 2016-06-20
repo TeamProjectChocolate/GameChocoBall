@@ -2,6 +2,8 @@
 #include "C3DImage.h"
 #include "BulletPhysics.h"
 
+class CZBufferSphere;
+
 class CField :
 	public C3DImage
 {
@@ -16,7 +18,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("ShadowTec");
+		m_pEffect->SetTechnique("ShadowMaskTec");
 	}
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
@@ -28,5 +30,6 @@ private:
 	vector<btRigidBody*>		m_rigidBody;	//çÑëÃÅB
 	btDefaultMotionState* m_myMotionState;
 	STAGE_ID m_StageID;
+	CZBufferSphere* m_czbuffersphere;
 };
 

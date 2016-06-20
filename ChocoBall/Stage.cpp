@@ -36,6 +36,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	SINSTANCE(CObjectManager)->FindGameObject<CField>(_T("TESTStage3D"))->SetStageID(m_Stage_ID);
 	SINSTANCE(CObjectManager)->GenerationObject<Skybox>(_T("skybox"), PRIORTY::OBJECT3D, false);
+	SINSTANCE(CObjectManager)->GenerationObject<CZBufferSphere>(_T("ZBufferSphere"), PRIORTY::PLAYER, false);
 
 	SINSTANCE(CObjectManager)->Intialize();
 

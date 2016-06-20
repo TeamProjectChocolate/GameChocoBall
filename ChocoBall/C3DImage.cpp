@@ -216,6 +216,7 @@ void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
 	// 視点をシェーダーに転送
 	m_pEffect->SetVector("EyePosition", reinterpret_cast<D3DXVECTOR4*>(&SINSTANCE(CRenderContext)->GetCurrentCamera()->GetPos()));
 
+	
 	SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
 	//ここで固定描画と同じように、ローカル座標に設定された頂点群をデバイスに渡す。通常と同じ方法。
 	//	メッシュも同じく、マテリアルやテクスチャを設定
