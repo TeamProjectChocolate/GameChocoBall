@@ -31,8 +31,6 @@ struct SCollisionInfo {
 	D3DXVECTOR3 scale;
 };
 
-
-
 // フィールドのXファイル名
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
@@ -41,16 +39,12 @@ static LPCSTR FieldNameArray[] = {
 	"image/StageModel_Ookawa1.x"
 };
 
-
-
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
 	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
 	"Modern_copy",
 };
-
-
 
 
 // ステージ1で使用するオブジェクトの定義配列
@@ -99,8 +93,6 @@ static int StageObjectNumArray[] = {
 	ARRAYSIZE(StageGameObject_Final)
 };
 
-
-
 // ステージ1のコース定義
 static D3DXVECTOR3 CourceDefine_1[] = {
 #include "CourceDefStage1.h"
@@ -131,8 +123,6 @@ static SCollisionInfo PlayerTransformArray[] = {
 #include "PlayerPositionInfoStageFinal.h"
 };
 
-
-
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
 static SEnemyAndGimmickInfo infoTable_1[] = {
@@ -161,8 +151,6 @@ static int InfoTableSizeArray[] = {
 	ARRAYSIZE(infoTable_Final)
 };
 
-
-
 // ステージ1で使用するギミック発動用当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
 static SCollisionInfo GimmickTriggerInfoTable_1[] = {
@@ -189,9 +177,6 @@ static int GimmickInfoTableSizeArray[] = {
 	ARRAYSIZE(GimmickTriggerInfoTable_2),
 	ARRAYSIZE(GimmickTriggerInfoTable_Final)
 };
-
-
-
 
 // ステージ1のフィールドの当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
