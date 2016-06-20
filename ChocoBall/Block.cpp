@@ -42,6 +42,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
 
 	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+	m_rigidBody->setUserIndex(CollisionType_Wall);
 	//m_moveSpeed.x = 0.0f;
 	//m_moveSpeed.z = 0.0f;
 	//m_moveSpeed.y = 0.0f;

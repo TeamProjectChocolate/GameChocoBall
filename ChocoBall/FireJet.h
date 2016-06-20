@@ -1,6 +1,7 @@
 #pragma once
 #include "JetGimmick.h"
 #include "Player.h"
+#include "Vibration.h"
 
 class CFireJet :
 	public CJetGimmick
@@ -12,5 +13,7 @@ public:
 	void Update()override;
 private:
 	CPlayer* m_pPlayer;
+	CVibration m_vibration;
+	COURCE_BLOCK m_TargetCource;
 };
 

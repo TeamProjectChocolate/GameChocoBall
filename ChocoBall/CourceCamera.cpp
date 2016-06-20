@@ -65,7 +65,7 @@ void CCourceCamera::Update(){
 				TargetPos,
 				m_cameraPosSpeed,
 				10);
-			m_Isintersect.Intersect3(&m_NowPos, &(m_NowPos - m_transform.position));
+			m_Isintersect.IntersectCamera(&m_NowPos, &(m_NowPos - m_transform.position));
 		}
 		else{
 			m_NowPos = TargetPos;

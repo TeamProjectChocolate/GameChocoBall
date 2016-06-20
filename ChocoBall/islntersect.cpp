@@ -7,12 +7,14 @@
 
 #define ORIGIN_CENTER	//定義で起点が足元。
 
+// プレイヤー用コールバック
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 {
 	bool isHit;
 	D3DXVECTOR3 hitPos;
 	D3DXVECTOR3 startPos;
 	float fMin;
+
 	SweepResultGround()
 	{
 		isHit = false;
@@ -31,8 +33,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
-		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_NONE){
-			//無視。
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Bullet){
 			return 0.0f;
 		}
 
@@ -96,10 +97,10 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 			//無視。
 			return 0.0f;
 		}
-		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_NONE){
-			//無視。
+		else if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Bullet){
 			return 0.0f;
 		}
+
 
 		D3DXVECTOR3 hitPointNormal;
 		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
@@ -124,6 +125,56 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		hitPos.x = convexResult.m_hitPointLocal.x();
 		hitPos.y = convexResult.m_hitPointLocal.y();
 		hitPos.z = convexResult.m_hitPointLocal.z();
+		return 0.0f;
+	}
+};
+
+// カメラ用コールバック
+struct SweepResultGround_Camera : public btCollisionWorld::ConvexResultCallback
+{
+	bool isHit;
+	D3DXVECTOR3 hitPos;
+	D3DXVECTOR3 startPos;
+	float fMin;
+
+	SweepResultGround_Camera()
+	{
+		isHit = false;
+		fMin = FLT_MAX;
+	}
+
+	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map){		
+			//無視。
+			return 0.0f;
+		}
+
+		D3DXVECTOR3 hitPointNormal;
+		hitPointNormal.x = convexResult.m_hitNormalLocal.x();
+		hitPointNormal.y = convexResult.m_hitNormalLocal.y();
+		hitPointNormal.z = convexResult.m_hitNormalLocal.z();
+		float d = D3DXVec3Dot(&hitPointNormal, &CVec3Up);
+		if (d < 0.0f) {
+			//当たってない。
+			return 0.0f;
+		}
+		if (acosf(d) > fPI * 0.2) {
+			//ホントは地面かどうかとかの属性を見るのがベストなんだけど、今回は角度で。
+			return 0.0f;
+		}
+		isHit = true;
+		D3DXVECTOR3 hitPosTmp;
+		hitPosTmp.x = convexResult.m_hitPointLocal.x();
+		hitPosTmp.y = convexResult.m_hitPointLocal.y();
+		hitPosTmp.z = convexResult.m_hitPointLocal.z();
+		D3DXVECTOR3 diff;
+		diff = hitPosTmp - startPos;
+		float len = D3DXVec3Length(&diff);
+		if (len < fMin){
+			hitPos = hitPosTmp;
+			fMin = len;
+		}
 		return 0.0f;
 	}
 };
@@ -367,7 +418,7 @@ void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 	m_rigidBody->getWorldTransform().setOrigin(btVector3(position->x, position->y, position->z));
 }
 
-void CIsIntersect::Intersect3(D3DXVECTOR3* position,D3DXVECTOR3* moveSpeed)
+void CIsIntersect::IntersectCamera(D3DXVECTOR3* position,D3DXVECTOR3* moveSpeed)
 {
 	D3DXVECTOR3 addPos = *moveSpeed;
 	//下方向を調べる。
@@ -381,7 +432,7 @@ void CIsIntersect::Intersect3(D3DXVECTOR3* position,D3DXVECTOR3* moveSpeed)
 		start.setOrigin(btVector3(position->x, position->y + m_radius, position->z));
 #endif
 		D3DXVECTOR3 newPos;
-		SweepResultGround callback;
+		SweepResultGround_Camera callback;
 		callback.startPos = *position;
 		if (fabsf(addPos.y) > 0.0001f) {
 			newPos = *position;
