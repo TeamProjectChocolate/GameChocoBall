@@ -23,19 +23,12 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_transform.angle = rot;
 	m_state = move_flont;
-	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
-
+	m_MoveSpeed = D3DXVECTOR3(0.0f,0.0f,0.05f);
 	this->Build(D3DXVECTOR3(1.0f, 0.5f, 1.0f), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
 	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-	//m_moveSpeed.x = 0.0f;
-	//m_moveSpeed.z = 0.0f;
-	//m_moveSpeed.y = 0.0f;
-
-	//m_radius = 1.0f;
 
 	SetAlive(true);
 
@@ -55,7 +48,7 @@ void MoveFloor::Update()
 
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
 
-	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > MaxMove)
+	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > MaxMove )
 	{
 		m_state = move_back;
 	}
@@ -67,11 +60,12 @@ void MoveFloor::Update()
 	switch (m_state){
 	case move_flont:
 	{
-		m_transform.position += m_dir * 0.05f;
+		m_transform.position += m_dir * m_MoveSpeed.z;
 		break;
 	}
-	case move_back:{
-		m_transform.position -= m_dir * 0.05f;
+	case move_back:
+	{
+		m_transform.position -= m_dir * m_MoveSpeed.z;
 		break;
 	}
 	}
@@ -80,15 +74,14 @@ void MoveFloor::Update()
 
 	C3DImage::Update();
 
-
 	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
 		m_player->SetParent(this);
 	}
-	else
+	else if (!IsHitPlayer(m_transform.position, 1.0f))
 	{
-		m_player->SetParent(nullptr);
+  		m_player->SetParent(nullptr);
 	}
 
 
@@ -130,9 +123,10 @@ bool MoveFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= 0.6)
+	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.7f && dimension.y >= 0.6f)
 	{
 		return TRUE;
 	}
+
 	return FALSE;
 }

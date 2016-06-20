@@ -4,7 +4,7 @@
 #include "Player.h"
 
 
-class MoveFloor:public C3DImage{
+class MoveFloor : public C3DImage{
 public:
 	MoveFloor();
 	~MoveFloor();
