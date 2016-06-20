@@ -192,7 +192,6 @@ static int GimmickInfoTableSizeArray[] = {
 
 
 
-
 // ステージ1のフィールドの当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
 static SCollisionInfo collisionInfoTable_1[] = {

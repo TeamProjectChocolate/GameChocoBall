@@ -22,7 +22,7 @@ void Bullet::Initialize()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.y = 0.0f;
 	this->Build();
-	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_NONE);
+	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Bullet);
 	//m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	C3DImage::SetImage();
 }

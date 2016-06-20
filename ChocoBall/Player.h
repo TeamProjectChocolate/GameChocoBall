@@ -93,6 +93,9 @@ public:
 	{
 		m_GameState = GAMEEND_ID::OVER;
 	}
+	D3DXVECTOR3* GetPosRef(){
+		return &(m_transform.position);
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;

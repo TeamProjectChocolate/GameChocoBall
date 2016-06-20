@@ -11,7 +11,7 @@ public:
 	void CIsIntersect::CollisitionInitialize(D3DXVECTOR3*,float,CollisionType);
 	void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed, bool Jumpflag);
 	void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* m_moveSpeed);
-	void CIsIntersect::Intersect3(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed);
+	void CIsIntersect::IntersectCamera(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed);
 	bool IsHitGround();
 	btRigidBody* GetRigidBody()
 	{
