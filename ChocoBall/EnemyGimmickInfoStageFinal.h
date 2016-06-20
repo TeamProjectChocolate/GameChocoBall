@@ -27,9 +27,9 @@
 },
 //gimmick_Chocoball2
 {
-	D3DXVECTOR3(-47.74f, 22.34f, 47.59f),             //平行移動
-	D3DXQUATERNION(0.00, 0.92f, 0.00f, 0.38f ),    //回転
-	D3DXVECTOR3(1.01f, 1.00f, 1.01f ),            //拡大
+	D3DXVECTOR3(-48.66f, 24.32f, 46.67f),             //平行移動
+	D3DXQUATERNION(-0.21, 0.78f, 0.50f, 0.32f ),    //回転
+	D3DXVECTOR3(1.01f, 1.16f, 0.87f ),            //拡大
 	-1,//エネミータイプ
 	0,//ギミックタイプ
 	0.00f,//最大移動量
