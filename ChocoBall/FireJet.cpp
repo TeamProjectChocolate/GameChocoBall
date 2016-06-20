@@ -27,12 +27,13 @@ void CFireJet::Initialize(){
 }
 
 void CFireJet::Update(){
-	m_TargetCource = m_pPlayer->GetCourceDef()->FindCource(m_pPlayer->GetPos());
-	//m_vibration.Activate();
-	m_vibration.m_VibrationTime = 0.0f;
-	m_vibration.SetIsVibration(true);
-	D3DXVec3Normalize(&(m_vibration.m_dir), &(m_TargetCource.endPosition - m_TargetCource.startPosition));
-	m_vibration.SetTarget(m_pPlayer->GetPosRef());
-	m_vibration.Update();
+
+	//m_TargetCource = m_pPlayer->GetCourceDef()->FindCource(m_pPlayer->GetPos());
+	////m_vibration.Activate();
+	//m_vibration.m_VibrationTime = 0.0f;
+	//m_vibration.SetIsVibration(true);
+	//D3DXVec3Normalize(&(m_vibration.m_dir), &(m_TargetCource.endPosition - m_TargetCource.startPosition));
+	//m_vibration.SetTarget(m_pPlayer->GetPosRef());
+	//m_vibration.Update();
 	CJetGimmick::Update();
 }
