@@ -26,8 +26,6 @@ public:
 		MaxMove = maxmove;
 	}
 
-	
-
 	//ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 	bool IsHitPlayer(D3DXVECTOR3 pos, float radius);
 

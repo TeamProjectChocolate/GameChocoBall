@@ -55,7 +55,7 @@ void MoveFloor::Update()
 
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
 
-	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > 10.0f)
+	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > MaxMove)
 	{
 		m_state = move_back;
 	}
@@ -63,6 +63,7 @@ void MoveFloor::Update()
 	{
 		m_state = move_flont;
 	}
+
 	switch (m_state){
 	case move_flont:
 	{
