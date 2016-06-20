@@ -39,7 +39,7 @@ void CField::Initialize(){
 			btRigidBody* work2 = new btRigidBody(rbInfo);
 			m_rigidBody.push_back(work2);
 			work2->activate();
-			//m_rigidBody[i]->setUserIndex(CollisionType_Map);
+			m_rigidBody[i]->setUserIndex(CollisionType_Map);
 			//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 			SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddRigidBody(work2);
 		}

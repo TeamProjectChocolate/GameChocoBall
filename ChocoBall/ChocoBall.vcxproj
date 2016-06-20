@@ -176,6 +176,7 @@
     <ClInclude Include="TitleSelect.h" />
     <ClInclude Include="Turn.h" />
     <ClInclude Include="UpFloor.h" />
+    <ClInclude Include="Vibration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllocateHierarchy.cpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="TitleSelect.cpp" />
     <ClCompile Include="Tunr.cpp" />
     <ClCompile Include="UpFloor.cpp" />
+    <ClCompile Include="Vibration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />
