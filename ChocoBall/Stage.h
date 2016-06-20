@@ -7,6 +7,7 @@
 #include "CourceCamera.h"
 #include "EnemyManager.h"
 #include "Skybox.h"
+#include "ZBufferSphere.h"
 
 
 class CStage
@@ -40,5 +41,6 @@ private:
 	CCourceCamera* m_pCamera;
 	CEnemyManager* m_pEnemyManager;
 	Skybox m_skybox;
+	CZBufferSphere m_zbuffersphere;
 };
 

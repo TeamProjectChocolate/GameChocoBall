@@ -13,7 +13,7 @@ Skybox::~Skybox(){}
 void Skybox::Initialize()
 {
 	strcpy(m_pFileName, "image/sky.x");
-	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(0.0f, -100.0f, 0.0f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	C3DImage::Initialize();
 	SetAlive(true);
