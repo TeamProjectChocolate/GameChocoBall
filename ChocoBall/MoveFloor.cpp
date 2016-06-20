@@ -74,14 +74,15 @@ void MoveFloor::Update()
 
 	C3DImage::Update();
 
-	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
 		m_player->SetParent(this);
 	}
 	else if (!IsHitPlayer(m_transform.position, 1.0f))
 	{
-  		m_player->SetParent(nullptr);
+		if (m_player->GetParent() == this){
+			m_player->SetParent(nullptr);
+		}
 	}
 
 
