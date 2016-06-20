@@ -132,9 +132,9 @@ void CPlayer::Update()
 
 			D3DXVECTOR4 pos;
 			D3DXVec3Transform(&pos, &localPosition, &mParentWorld);
-			m_transform.position.x = pos.x + parent->GetMoveSpeed().x;
-			m_transform.position.y = pos.y + parent->GetMoveSpeed().y;
-			m_transform.position.z = pos.z + parent->GetMoveSpeed().z;
+			m_transform.position.x = pos.x;
+			m_transform.position.y = pos.y;
+			m_transform.position.z = pos.z;
 		}
 		
 		// デバイスが切り替わった場合は自動で切り替える
