@@ -9,7 +9,7 @@ MoveFloor::MoveFloor()
 
 MoveFloor::~MoveFloor()
 {
-
+	
 }
 
 void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
@@ -22,10 +22,11 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_transform.angle = rot;
+	m_state = move_flont;
 	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
-	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
+	this->Build(D3DXVECTOR3(1.0f, 0.5f, 1.0f), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
@@ -53,7 +54,27 @@ void MoveFloor::Update()
 
 
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
-	m_transform.position += m_dir * 0.05f;
+
+	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > 10.0f)
+	{
+		m_state = move_back;
+	}
+	else if (fabsf(m_transform.position.z) - fabsf(StartPos.z) <= 0.0f)
+	{
+		m_state = move_flont;
+	}
+	switch (m_state){
+	case move_flont:
+	{
+		m_transform.position += m_dir * 0.05f;
+		break;
+	}
+	case move_back:{
+		m_transform.position -= m_dir * 0.05f;
+		break;
+	}
+	}
+	
 
 
 	C3DImage::Update();

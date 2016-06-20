@@ -124,8 +124,6 @@ static int CourceDefineNumArray[] = {
 	ARRAYSIZE(CourceDefine_Final)
 };
 
-
-
 // ステージごとのプレイヤーのポジション情報を格納
 static SCollisionInfo PlayerTransformArray[] = {
 #include "PlayerPositionInfoStage1.h"
