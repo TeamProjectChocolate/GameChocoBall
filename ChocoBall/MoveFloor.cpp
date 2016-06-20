@@ -63,6 +63,7 @@ void MoveFloor::Update()
 	{
 		m_state = move_flont;
 	}
+
 	switch (m_state){
 	case move_flont:
 	{
@@ -80,7 +81,6 @@ void MoveFloor::Update()
 	C3DImage::Update();
 
 
-	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
 		m_player->SetParent(this);
@@ -129,7 +129,7 @@ bool MoveFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f && dimension.y >= 0.6)
+	if (fabsf(dimension.x) < radius && fabsf(dimension.z) < radius && dimension.y <= 1.6f && dimension.y >= 0.6)
 	{
 		return TRUE;
 	}
