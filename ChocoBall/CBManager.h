@@ -6,7 +6,7 @@
 #include "GameObject.h"
 #include "Player.h"
 
-#define CHOCO_NUM 200	//一回に流れるチョコの数
+#define CHOCO_NUM 2	//一回に流れるチョコの数
 
 
 //Chocoballを管理するクラス
@@ -54,7 +54,7 @@ private:
 	D3DXVECTOR3			m_posG;			//流れていく先(ゴール)のポジション。
 	D3DXVECTOR3			m_Vector;		//チョコの進行方向。
 	CChocoBall			m_Choco[CHOCO_NUM];
-	float				m_interval;		//インターバール。
+	float				m_interval;		//インターバル。
 	float				m_timer;		//タイマー。
 	int					m_numCreate;	//作成済みのチョコボールの数。
 };

@@ -76,6 +76,10 @@ public:
 
 	//e‚ğ‚«‚ß‚é‚â‚Â
 	void SetParent(MoveFloor* parent);
+
+	MoveFloor* GetParent(){
+		return parent;
+	}
 	
 
 	void SetStageID(STAGE_ID id){
