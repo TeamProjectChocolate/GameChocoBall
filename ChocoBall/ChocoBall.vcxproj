@@ -177,6 +177,7 @@
     <ClInclude Include="Turn.h" />
     <ClInclude Include="UpFloor.h" />
     <ClInclude Include="Vibration.h" />
+    <ClInclude Include="ZBufferSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllocateHierarchy.cpp" />
@@ -258,6 +259,7 @@
     <ClCompile Include="Tunr.cpp" />
     <ClCompile Include="UpFloor.cpp" />
     <ClCompile Include="Vibration.cpp" />
+    <ClCompile Include="ZBufferSphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX.rc" />

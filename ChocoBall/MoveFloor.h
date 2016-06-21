@@ -4,7 +4,7 @@
 #include "Player.h"
 
 
-class MoveFloor:public C3DImage{
+class MoveFloor : public C3DImage{
 public:
 	MoveFloor();
 	~MoveFloor();
@@ -25,8 +25,6 @@ public:
 	void SetMaxMove(float maxmove){
 		MaxMove = maxmove;
 	}
-
-	
 
 	//ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 	bool IsHitPlayer(D3DXVECTOR3 pos, float radius);

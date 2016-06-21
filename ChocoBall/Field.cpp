@@ -3,14 +3,14 @@
 #include "CollisionType.h"
 #include "ObjectManager.h"
 #include "StageTable.h"
-
+#include "ZBufferSphere.h"
 
 CField::~CField()
 {
 }
 
 void CField::Initialize(){
-
+	m_czbuffersphere = NULL;
 	m_transform.position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	SetRotation(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXToRadian(90.0f));
 	//m_transform.angle = D3DXVECTOR3(0.0f,0.0f,0.0f);
@@ -57,5 +57,11 @@ void CField::Update(){
 
 void CField::Draw(){
 	SetUpTechnique();
+	if (m_czbuffersphere == NULL){
+		m_czbuffersphere = SINSTANCE(CObjectManager)->FindGameObject<CZBufferSphere>(_T("ZBufferSphere"));
+	}
+	if (m_czbuffersphere){
+		m_pEffect->SetTexture("g_ZMask", m_czbuffersphere->GetTexture());
+	}
 	C3DImage::Draw();
 }

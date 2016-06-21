@@ -41,7 +41,16 @@ sampler_state{
 	AddressU = Clamp;
 	AddressV = Clamp;
 };
-
+texture g_ZMask;	// Zマスク
+sampler g_ZMaskSampler =
+sampler_state{
+	Texture = <g_ZMask>;
+	MipFilter = LINEAR;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
 texture g_normalMap;	// 法線マップ
 sampler g_normalMapSampler = 
 sampler_state{
@@ -163,7 +172,7 @@ float4 CalcSpeculerLight(float3 normal,float4 worldpos){
 	return lig;
 }
 
-float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap ) :	COLOR{
+float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMask ) :	COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
@@ -184,6 +193,19 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap ) :	COLOR{
 	}
 	else{
 		normal = In.normal;
+	}
+	if (hasZMask){
+		float4 screenPos = In.WorldPos;
+		screenPos = mul(screenPos, View);			// ビュー座標に変換
+		screenPos = mul(screenPos, Proj);			// プロジェクション座標に変換
+		screenPos.xyz /= screenPos.w;
+		screenPos.xy *= float2(0.5f, -0.5f);			//-0.5～0.5の範囲にする
+		screenPos.xy += 0.5f;						//0.0～1.0の範囲する。
+		float4 zmask = tex2D(g_ZMaskSampler, screenPos.xy);
+		if (zmask.z > screenPos.z){
+			clip(-1.0f);
+		}
+
 	}
 	// ディフューズライトの計算
 	float4 light = CalcDiffuseLight(normal);
@@ -323,10 +345,17 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	return color;
 }
 
+float4 ZMaskPsShader(VS_OUTPUT In) : COLOR {
+	float4 screenPos = In.WorldPos;
+	screenPos = mul(screenPos, View);			// ビュー座標に変換
+	screenPos = mul(screenPos, Proj);			// プロジェクション座標に変換
+	return screenPos.z / screenPos.w;
+}
+
 technique ShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(true);
+		PixelShader = compile ps_3_0 ShadowPixel(true, false);
 	}
 };
 
@@ -354,7 +383,7 @@ technique NotNormalMapAnimationTec{
 technique NotNormalMapShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(false);
+		PixelShader = compile ps_3_0 ShadowPixel(false, false);
 	}
 };
 
@@ -385,3 +414,18 @@ technique NotNormalMapNonAnimationFresnelTec{
 		PixelShader = compile ps_3_0 FresnelShader(false);
 	}
 }
+
+technique ZMask{
+	pass p0{
+		VertexShader = compile vs_3_0 BasicTransform();
+		PixelShader = compile ps_3_0 ZMaskPsShader();
+	}
+}
+
+
+technique ShadowMaskTec{
+	pass p0{
+		VertexShader = compile vs_3_0 ShadowVertex();
+		PixelShader = compile ps_3_0 ShadowPixel(true, true);
+	}
+};
