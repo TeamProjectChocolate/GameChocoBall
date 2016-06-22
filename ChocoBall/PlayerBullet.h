@@ -11,15 +11,15 @@ public:
 	CPlayerBullet();
 	~CPlayerBullet();
 	void Initialize();
-	void Update();
+	bool Update();
 	void Draw();
 	void OnDestroy();
 	void Build();
 	void SetDir(D3DXVECTOR4 dir){
 		m_bullet.SetDir(dir);
 	}
-	void BulletEnemyCollision();
-	void BulletBlockCollision();
+	bool BulletEnemyCollision();
+	bool BulletBlockCollision();
 	void SetPos(D3DXVECTOR3 pos){
 		m_bullet.SetPos(pos);
 	}

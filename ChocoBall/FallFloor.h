@@ -15,7 +15,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelShadowTec");
 	}
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 	void SetPos(D3DXVECTOR3 pos){
@@ -23,6 +23,9 @@ public:
 	}
 	D3DXVECTOR3 GetPos(){
 		return position;
+	}
+	void SetMaxMove(float max){
+		m_MaxMove = max;
 	}
 
 	//プレイヤーとの当たり判定
@@ -40,4 +43,5 @@ private:
 	btCollisionShape*	m_collisionShape;	//コリジョンの形状。
 	btDefaultMotionState* m_myMotionState;
 	CPlayer*			m_player;
+	float m_MaxMove;
 };

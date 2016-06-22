@@ -19,4 +19,5 @@ private:
 	std::vector<CCBManager*>	m_chocoballMgrList;			//チョコボールマネージャのリスト。
 	STAGE_ID m_IsStage;
 	int m_ChocoWallNum;
+	int m_FireJetNum;
 };

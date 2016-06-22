@@ -6,11 +6,11 @@
 #include "LevelBuilder.h"
 #include "GameObject.h"
 
-#define BUILD_H 5
-//生成される壁の高さ
+#define BUILD_H 5		//生成される壁の高さ
 #define BUILD_W 6		//生成される壁の幅
-#define BLOCK_H 1.0		//ブロックのたかさ
-#define BLOCK_W 1.0		//ブロックの幅
+
+#define BLOCK_H 1.0f		//ブロックのたかさ
+#define BLOCK_W 1.0f		//ブロックの幅
 
 
 class CBuildBlock : public CGameObject{
@@ -32,6 +32,13 @@ public:
 	int GetNum_X(){
 		return BUILD_W;
 	}
+	float GetBlockHeight(){
+		return BLOCK_H;
+	}
+	float GetBlockWidth(){
+		return BLOCK_W;
+	}
+
 private:
 	CBlock	m_blocks[BUILD_H][BUILD_W];	//壁の配列
 };

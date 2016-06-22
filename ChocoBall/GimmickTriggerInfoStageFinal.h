@@ -42,7 +42,7 @@
 },
 //GimmickTrigger
 {
-	D3DXVECTOR3(-17.91f, 35.51f, 8.12f),             //平行移動
-	D3DXQUATERNION(0.00, 0.77f, -0.59f, 0.25f ),    //回転
-	D3DXVECTOR3(7.80f, 5.77f, 1.00f ),            //拡大
+	D3DXVECTOR3(-16.33f, 31.36f, 7.60f),             //平行移動
+	D3DXQUATERNION(0.01, 0.76f, -0.61f, 0.25f ),    //回転
+	D3DXVECTOR3(7.80f, 8.78f, 2.29f ),            //拡大
 },

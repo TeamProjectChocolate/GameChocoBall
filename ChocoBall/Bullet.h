@@ -7,6 +7,9 @@
 
 #define BULLET_LENG 20.0f
 
+#define BULLET_HEIGHT 1.0f
+#define BULLET_WIDTH 1.0f
+
 
 class Bullet : public C3DImage
 {
@@ -32,6 +35,13 @@ public:
 	{
 		m_Speed = Speed;
 	}
+	float GetHeight(){
+		return BULLET_HEIGHT;
+	}
+	float GetWidth(){
+		return BULLET_WIDTH;
+	}
+
 private:
 	D3DXVECTOR3		m_position;	//íeÇÃç¿ïW
 	D3DXVECTOR3		m_moveSpeed;//à⁄ìÆë¨ìxÅB

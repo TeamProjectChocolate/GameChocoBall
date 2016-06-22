@@ -29,6 +29,9 @@ public:
 	D3DXVECTOR3 GetPos()override{
 		return m_pEmitter->GetEmitPos();
 	}
+	void SetEmitterName(LPCSTR name){
+		strcpy(m_pFileName, name);
+	}
 private:
 	CParticleEmitter* m_pEmitter;
 	CAudio* m_pAudio;
