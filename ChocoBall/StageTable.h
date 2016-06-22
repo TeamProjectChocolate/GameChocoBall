@@ -38,11 +38,13 @@ static LPCSTR FieldNameArray[] = {
 	//"image/StageModel_Iriguchi2.x",
 	"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Huzita3.x",
+	"image/StageModel_Huzita4.x",
 	"image/StageModel_Ookawa1.x"
 };
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
+	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
@@ -79,6 +81,14 @@ static LPCSTR StageGameObject_3[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 };
+static LPCSTR StageGameObject_4[] = {
+	{ "BulletPhysics" },	// すべてのステージにこれが必要です
+	{ "TESTStage3D" },	// すべてのステージにこれが必要です
+	{ "Number" },	// すべてのステージにこれが必要です
+	{ "Camera" },	// すべてのステージにこれが必要です
+	{ "EnemyManager" },	// すべてのステージにこれが必要です
+	{ "TEST3D" },	// すべてのステージにこれが必要です
+};
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
@@ -95,6 +105,7 @@ static LPCSTR* StageArray[] = {
 	StageGameObject_1,
 	StageGameObject_2,
 	StageGameObject_3,
+	StageGameObject_4,
 	StageGameObject_Final
 };
 
@@ -103,6 +114,7 @@ static int StageObjectNumArray[] = {
 	ARRAYSIZE(StageGameObject_1),
 	ARRAYSIZE(StageGameObject_2),
 	ARRAYSIZE(StageGameObject_3),
+	ARRAYSIZE(StageGameObject_4),
 	ARRAYSIZE(StageGameObject_Final)
 };
 
@@ -116,6 +128,9 @@ static D3DXVECTOR3 CourceDefine_2[] = {
 static D3DXVECTOR3 CourceDefine_3[] = {
 #include "CourceDefStage3.h"
 };
+static D3DXVECTOR3 CourceDefine_4[] = {
+#include "CourceDefStage4.h"
+};
 static D3DXVECTOR3 CourceDefine_Final[] = {
 #include "CourceDefStageFinal.h"
 };
@@ -124,6 +139,7 @@ static D3DXVECTOR3* CourceDefineArray[] = {
 	CourceDefine_1,
 	CourceDefine_2,
 	CourceDefine_3,
+	CourceDefine_4,
 	CourceDefine_Final
 };
 
@@ -131,6 +147,7 @@ static int CourceDefineNumArray[] = {
 	ARRAYSIZE(CourceDefine_1),
 	ARRAYSIZE(CourceDefine_2),
 	ARRAYSIZE(CourceDefine_3),
+	ARRAYSIZE(CourceDefine_4),
 	ARRAYSIZE(CourceDefine_Final)
 };
 
@@ -139,6 +156,7 @@ static SCollisionInfo PlayerTransformArray[] = {
 #include "PlayerPositionInfoStage1.h"
 #include "PlayerPositionInfoStage2.h"
 #include "PlayerPositionInfoStage3.h"
+#include "PlayerPositionInfoStage4.h"
 #include "PlayerPositionInfoStageFinal.h"
 };
 
@@ -153,6 +171,9 @@ static SEnemyAndGimmickInfo infoTable_2[] = {
 static SEnemyAndGimmickInfo infoTable_3[] = {
 #include "EnemyGimmickInfoStage3.h"
 };
+static SEnemyAndGimmickInfo infoTable_4[] = {
+#include "EnemyGimmickInfoStage4.h"
+};
 static SEnemyAndGimmickInfo infoTable_Final[] = {
 #include "EnemyGimmickInfoStageFinal.h"
 };
@@ -163,6 +184,7 @@ static SEnemyAndGimmickInfo* infoTableArray[] = {
 	infoTable_1,
 	infoTable_2,
 	infoTable_3,
+	infoTable_4,
 	infoTable_Final
 };
 
@@ -172,6 +194,7 @@ static int InfoTableSizeArray[] = {
 	ARRAYSIZE(infoTable_1),
 	ARRAYSIZE(infoTable_2),
 	ARRAYSIZE(infoTable_3),
+	ARRAYSIZE(infoTable_4),
 	ARRAYSIZE(infoTable_Final)
 };
 
@@ -186,6 +209,9 @@ static SCollisionInfo GimmickTriggerInfoTable_2[] = {
 static SCollisionInfo GimmickTriggerInfoTable_3[] = {
 #include "GimmickTriggerInfoStage3.h"
 };
+static SCollisionInfo GimmickTriggerInfoTable_4[] = {
+#include "GimmickTriggerInfoStage4.h"
+};
 static SCollisionInfo GimmickTriggerInfoTable_Final[] = {
 #include "GimmickTriggerInfoStageFinal.h"
 };
@@ -195,6 +221,7 @@ static SCollisionInfo* GimmickinfoTableArray[] = {
 	GimmickTriggerInfoTable_1,
 	GimmickTriggerInfoTable_2,
 	GimmickTriggerInfoTable_3,
+	GimmickTriggerInfoTable_4,
 	GimmickTriggerInfoTable_Final
 };
 
@@ -204,6 +231,7 @@ static int GimmickInfoTableSizeArray[] = {
 	ARRAYSIZE(GimmickTriggerInfoTable_1),
 	ARRAYSIZE(GimmickTriggerInfoTable_2),
 	ARRAYSIZE(GimmickTriggerInfoTable_3),
+	ARRAYSIZE(GimmickTriggerInfoTable_4),
 	ARRAYSIZE(GimmickTriggerInfoTable_Final)
 };
 
@@ -218,6 +246,9 @@ static SCollisionInfo collisionInfoTable_2[] = {
 static SCollisionInfo collisionInfoTable_3[] = {
 #include "collisionInfoStage3.h"
 };
+static SCollisionInfo collisionInfoTable_4[] = {
+#include "collisionInfoStage4.h"
+};
 static SCollisionInfo collisionInfoTable_Final[] = {
 #include "collisionInfoStageFinal.h"
 };
@@ -228,6 +259,7 @@ static SCollisionInfo* collisionInfoTableArray[] = {
 	collisionInfoTable_1,
 	collisionInfoTable_2,
 	collisionInfoTable_3,
+	collisionInfoTable_4,
 	collisionInfoTable_Final
 };
 
@@ -237,5 +269,6 @@ static int collisionInfoTableSizeArray[] = {
 	ARRAYSIZE(collisionInfoTable_1),
 	ARRAYSIZE(collisionInfoTable_2),
 	ARRAYSIZE(collisionInfoTable_3),
+	ARRAYSIZE(collisionInfoTable_4),
 	ARRAYSIZE(collisionInfoTable_Final)
 };

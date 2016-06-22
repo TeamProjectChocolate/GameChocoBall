@@ -37737,7 +37737,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    1.000000;1.000000;1.000000;;
    TextureFilename {
-    "C:\\Users\\mukim_000\\Desktop\\1_1.png";
+    "image\\1_1.png";
    }
   }
   Material {
@@ -37746,7 +37746,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    1.000000;1.000000;1.000000;;
    TextureFilename {
-    "C:\\Users\\mukim_000\\Desktop\\1_2.png";
+    "image\\1_2.png";
    }
   }
   Material {
@@ -37755,7 +37755,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    1.000000;1.000000;1.000000;;
    TextureFilename {
-    "C:\\Users\\mukim_000\\Desktop\\1_2_Y.png";
+    "image\\1_2_Y.png";
    }
   }
   Material {
@@ -37764,7 +37764,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    1.000000;1.000000;1.000000;;
    TextureFilename {
-    "C:\\Users\\mukim_000\\Desktop\\1_3.png";
+    "image\\1_3.png";
    }
   }
  }
