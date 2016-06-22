@@ -10,6 +10,7 @@
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
 #include "StageTable.h"
+#include "FireJet.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -76,13 +77,13 @@ void CPlayer::Initialize()
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
 	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
-	CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterPORIGON"),
-		PARTICLE_TYPE::PORIGON,
-		m_transform.position,
-		m_pCamera->GetCamera(),
-		true
-		);
+	//CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterPORIGON"),
+	//	PARTICLE_TYPE::PORIGON,
+	//	m_transform.position,
+	//	m_pCamera->GetCamera(),
+	//	true
+	//	);
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
@@ -414,27 +415,6 @@ void CPlayer::BehaviorCorrection()
 
 void CPlayer::StateManaged()
 {
-	if (!m_vibration.GetIsVibration()){
-		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-		if (m_lockonEnemyIndex != -1){
-			EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-			D3DXVECTOR3 dist;
-			dist = Enemy->GetPos() - m_transform.position;
-			float R;
-			R = D3DXVec3Length(&dist);//ベクトルの長さを計算
-
-			if (R <= 1)
-			{
-				m_MoveFlg = false;
-				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
-				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				//m_GameState = GAMEEND_ID::OVER;
-			}
-		}
-	}
-
 	//ゲームオーバー処理
 	if (m_transform.position.y <= -15.0f)
 	{
@@ -452,6 +432,48 @@ void CPlayer::StateManaged()
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;
+	}
+
+	if (!m_vibration.GetIsVibration()){
+		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+		if (m_lockonEnemyIndex != -1){
+			EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+			D3DXVECTOR3 dist;
+			dist = Enemy->GetPos() - m_transform.position;
+			float R;
+			R = D3DXVec3Length(&dist);//ベクトルの長さを計算
+
+			if (R <= 1)
+			{
+				m_MoveFlg = false;
+				m_pCamera->SetIsTarget(false);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				//m_GameState = GAMEEND_ID::OVER;
+				return;
+			}
+		}
+
+		// 炎のギミックとの当たり判定
+		for (int idx = 0;; idx++){
+			string str = "firejet";
+			char num[100];
+			_itoa(idx, num, 10);
+			str += num;
+			CFireJet* firejet = SINSTANCE(CObjectManager)->FindGameObject<CFireJet>(_T(str.c_str()));
+			if (firejet == nullptr){
+				return;
+			}
+			if (firejet->IsCollision(m_transform.position, 1.0f)){
+				m_MoveFlg = false;
+				m_pCamera->SetIsTarget(false);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				//m_GameState = GAMEEND_ID::OVER;
+				return;
+			}
+		}
 	}
 }
 

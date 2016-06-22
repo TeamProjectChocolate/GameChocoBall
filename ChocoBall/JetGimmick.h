@@ -33,16 +33,17 @@ public:
 		strcpy(m_pFileName, name);
 	}
 private:
-	CParticleEmitter* m_pEmitter;
 	CAudio* m_pAudio;
 	CCamera* m_pCamera;
-	float m_TimeCounter;
-	bool m_JetFlg;
+	float m_IntervalCounter;
 protected:
-	float m_IntervalTime;
+	CParticleEmitter* m_pEmitter;
 	float m_JetTime;
 	PARTICLE_TYPE m_ParticleType;
 	char m_SoundName[FILENAME_MAX];
 	bool m_IsPlay;
+	float m_JetCounter;
+	float m_IntervalTime;
+	bool m_JetFlg;
 };
 

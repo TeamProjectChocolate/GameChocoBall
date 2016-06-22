@@ -39,6 +39,9 @@ public:
 		CH_ASSERT(strlen(name) <= MAX_FILENAME);
 		strcpy(m_pFileName, name);
 	}
+	D3DXVECTOR3* GetPosRef(){
+		return &(m_ParticleData.position);
+	}
 private:
 	CPrimitive m_Primitive;
 	CCamera* m_camera;

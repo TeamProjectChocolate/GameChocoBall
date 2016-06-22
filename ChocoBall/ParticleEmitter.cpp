@@ -26,6 +26,8 @@ void CParticleEmitter::Initialize(){
 	strcpy(m_ParticleName, m_param->texturePath);
 	m_CourceDef.Initialize();
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+	m_TailPosition = nullptr;
+	m_Residual = false;
 }
 
 void CParticleEmitter::Update(){
@@ -42,6 +44,9 @@ void CParticleEmitter::Update(){
 					p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
 					m_timer = 0.0f;
 					m_ParticleList.push_back(p);
+					m_pTailParticle = p;
+					m_TailPosition = p->GetPosRef();
+					m_Residual = true;
 					m_count++;
 				}
 			}
@@ -61,6 +66,12 @@ void CParticleEmitter::Update(){
 		else{
 			itr++;
 		}
+	}
+	if (m_pTailParticle == nullptr){
+		return;
+	}
+	else if (m_pTailParticle->GetIsDead()){
+		m_Residual = false;
 	}
 }
 
