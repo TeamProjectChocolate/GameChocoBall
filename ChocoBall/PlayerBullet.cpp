@@ -19,13 +19,19 @@ void CPlayerBullet::Initialize(){
 	m_pBlockManager = SINSTANCE(CObjectManager)->FindGameObject<CBuildBlock>(_T("B_Block"));
 }
 
-void CPlayerBullet::Update(){
+bool CPlayerBullet::Update(){
 	m_bullet.Update();
 
 	//弾と敵との衝突判定
-	BulletEnemyCollision();
+	if (BulletEnemyCollision()){
+		return true;
+	}
 	// 弾と壁ギミックの当たり判定
-	BulletBlockCollision();
+	if (BulletBlockCollision()){
+		return true;
+	}
+
+	return false;
 }
 
 void CPlayerBullet::Draw(){
@@ -40,7 +46,7 @@ void CPlayerBullet::Build(){
 	m_bullet.Build();
 }
 
-void CPlayerBullet::BulletEnemyCollision(){
+bool CPlayerBullet::BulletEnemyCollision(){
 	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_bullet.GetPos());
 	if (m_lockonEnemyIndex != -1){
 		EnemyBase* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
@@ -53,11 +59,13 @@ void CPlayerBullet::BulletEnemyCollision(){
 		{
 			//m_Hitflag = true;
 			m_pEnemyManager->DeleteEnemy(Enemy);
+			return true;
 		}
 	}
+	return false;
 }
 
-void CPlayerBullet::BulletBlockCollision(){
+bool CPlayerBullet::BulletBlockCollision(){
 	for (int idx = 0;; idx++){
 		string str = "B_Block";
 		char num[100];
@@ -68,25 +76,31 @@ void CPlayerBullet::BulletBlockCollision(){
 			int max_X = m_pBlockManager->GetNum_X();
 			int max_Y = m_pBlockManager->GetNum_Y();
 
+			float blockWidth = m_pBlockManager->GetBlockWidth();
+			float bulletWidth = m_bullet.GetWidth();
+
 			D3DXVECTOR3 dist;
 			for (int idx_Y = 0; idx_Y < max_Y; idx_Y++){
 				for (int idx_X = 0; idx_X < max_X; idx_X++){
 					CBlock* pBlock;
 					pBlock = m_pBlockManager->GetBlocks(idx_X, idx_Y);
-
-					dist = pBlock->GetPos() - m_bullet.GetPos();
-					float L;
-					L = D3DXVec3Length(&dist);//ベクトルの長さを計算
-					if (L <= 1.2f)
-					{
-						pBlock->SetAlive(false);
+					if (pBlock->GetAlive()){
+						dist = pBlock->GetPos() - m_bullet.GetPos();
+						float L;
+						L = D3DXVec3Length(&dist);//ベクトルの長さを計算
+						L -= blockWidth / 2;
+						L -= 1.73 / 2;
+						if (L <= 0.0f)
+						{
+							pBlock->SetAlive(false);
+							return true;
+						}
 					}
-
 				}
 			}
 		}
 		else{
-			return;
+			return false;
 		}
 	}
 }

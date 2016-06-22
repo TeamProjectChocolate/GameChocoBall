@@ -49,15 +49,15 @@ void CBuildBlock::Update()
 			}
 		}
 	}
-	if (GetAsyncKeyState('D')){
-		for (int i = 0; i < BUILD_H; i++){
-			for (int j = 0; j < BUILD_W; j++){
-				if (!m_blocks[i][j].IsDead()){
-					m_blocks[i][j].OnDestroy();
-				}
-			}
-		}
-	}
+	//if (GetAsyncKeyState('D')){
+	//	for (int i = 0; i < BUILD_H; i++){
+	//		for (int j = 0; j < BUILD_W; j++){
+	//			if (!m_blocks[i][j].IsDead()){
+	//				m_blocks[i][j].OnDestroy();
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 

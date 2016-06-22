@@ -23,9 +23,19 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
+		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
+			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
+			if (!mgr->GetAlive()){
+				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+				mgr->Initialize();
+				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
+				g_player->SetCBM(mgr);
+			}
+			return 0.0f;
+		}
+
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player 
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball) {
 			//–³Ž‹B
 			return 0.0f;
 		}
@@ -333,7 +343,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 			addPos.y = callback.hitPos.y - position->y;
 			m_isHitGround = true;
 #ifdef ORIGIN_CENTER
-			addPos.y += offset/*m_radius*/;
+			addPos.y += offset;
 			
 #endif
 		}
@@ -463,7 +473,7 @@ void CIsIntersect::IntersectCamera(D3DXVECTOR3* position,D3DXVECTOR3* moveSpeed)
 			moveSpeed->y = 0.0f;
 			addPos.y = callback.hitPos.y - position->y;
 #ifdef ORIGIN_CENTER
-			addPos.y += offset/*m_radius*/;
+			addPos.y += offset;
 #endif
 		}
 

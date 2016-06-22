@@ -20,6 +20,7 @@ void CVibration::Initialize(){
 	m_ReflectionTime = 0.0f;
 	m_VibrationCounter = 0.0f;
 	m_ReflectionCounter = 0.0f;
+	m_CourceDef.Initialize();
 }
 
 void CVibration::Update(){
@@ -43,4 +44,16 @@ void CVibration::Update(){
 		}
 		m_VibrationCounter += 1.0f / 60.0f;	
 	}
+}
+
+void CVibration::ThisVibration(D3DXVECTOR3* pos,D3DXVECTOR3 Amount,float Time,float ReflectionTime){
+	COURCE_BLOCK Cource = m_CourceDef.FindCource(*pos);
+	m_IsVibration = true;
+	m_VibrationCounter = 0.0f;
+	m_ReflectionCounter = 0.0f;
+	m_VibrationTime = Time;
+	m_ReflectionTime = ReflectionTime;
+	m_VibrationAmount = Amount;
+	D3DXVec3Normalize(&m_dir, &(Cource.endPosition - Cource.startPosition));
+	m_Target = pos;
 }

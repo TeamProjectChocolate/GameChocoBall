@@ -10,7 +10,6 @@ CParticleEmitter::CParticleEmitter()
 	m_param = nullptr;
 	m_timer = 0.0f;
 	m_count = 0;
-	strcpy(m_pFileName, "image/test.png");
 }
 
 
@@ -24,26 +23,33 @@ void CParticleEmitter::Initialize(){
 	m_random.Init(0.1);
 	SetAlive(true);
 	D3DXVec3Normalize(&m_dir,&(m_param->initVelocity));
+	strcpy(m_ParticleName, m_param->texturePath);
+	m_CourceDef.Initialize();
+	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 }
 
 void CParticleEmitter::Update(){
-	if (m_EmitFlg){
-		if (m_timer >= m_param->intervalTime){
-			for (int idx = 0; idx < m_param->EmitNum; idx++){
-				//char num[10];
-				//_itoa(m_count, num,10);
-				//strcat(m_EmitterName, num);
-				CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_EmitterName), PRIORTY::OBJECT2D_ALPHA, false);
-				p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
-				m_timer = 0.0f;
-				m_ParticleList.push_back(p);
-				m_count++;
+	m_CurrentCourceNo = m_CourceDef.FindCource(m_emitPosition).blockNo;
+	m_NowPlayerCourceNo = m_CourceDef.FindCource(m_pPlayer->GetPos()).blockNo;
+	if (m_CurrentCourceNo == m_NowPlayerCourceNo){
+		if (m_EmitFlg){
+			if (m_timer >= m_param->intervalTime){
+				for (int idx = 0; idx < m_param->EmitNum; idx++){
+					//char num[10];
+					//_itoa(m_count, num,10);
+					//strcat(m_EmitterName, num);
+					CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_ParticleName), PRIORTY::OBJECT2D_ALPHA, false);
+					p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
+					m_timer = 0.0f;
+					m_ParticleList.push_back(p);
+					m_count++;
+				}
 			}
+			m_timer += 1.0f / 60.0f;
 		}
-		m_timer += 1.0f / 60.0f;
-	}
-	else{
-		m_timer = 0.0f;
+		else{
+			m_timer = 0.0f;
+		}
 	}
 
 	list<CParticle*>::iterator itr = m_ParticleList.begin();
