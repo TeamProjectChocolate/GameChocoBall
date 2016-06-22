@@ -18,8 +18,7 @@ void CJetGimmick::Initialize(){
 	SetAlive(true);
 	CCourceCamera* camera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	m_pCamera = camera->GetCamera();
-	CParticleEmitter::EmitterCreate(m_pFileName, m_ParticleType, m_transform.position, m_pCamera,false);
-	m_pEmitter = SINSTANCE(CObjectManager)->FindGameObject<CParticleEmitter>(m_pFileName);
+	m_pEmitter = CParticleEmitter::EmitterCreate(m_pFileName, m_ParticleType, m_transform.position, m_pCamera, false);
 	m_TimeCounter = 0.0f;
 	m_IsPlay = true;
 }

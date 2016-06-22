@@ -10,12 +10,13 @@
 #include "LockOn.h"
 #include "PlayerBullet.h"
 #include "CBManager.h"
+#include "Vibration.h"
+#include "CourceCamera.h"
 
 class CLockOn;
 class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
-class CGameCamera;
 
 class CPlayer : public C3DImage
 {
@@ -23,6 +24,8 @@ public:
 	CPlayer(){
 		strcpy(m_pFileName, "image/Player.X");
 		m_pEmitter = nullptr;
+		m_pCamera = nullptr;
+		parent = nullptr;
 	};
 	~CPlayer();
 
@@ -97,9 +100,6 @@ public:
 	{
 		m_GameState = GAMEEND_ID::OVER;
 	}
-	D3DXVECTOR3* GetPosRef(){
-		return &(m_transform.position);
-	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -155,7 +155,9 @@ private:
 
 	//
 	STAGE_ID m_StageID;
-	CGameCamera* GameCamera;
+	bool m_MoveFlg;
+	CVibration m_vibration;
+	CCourceCamera* m_pCamera;
 };
 
 extern CPlayer* g_player;

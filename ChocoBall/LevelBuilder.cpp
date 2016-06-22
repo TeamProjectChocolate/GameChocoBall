@@ -19,6 +19,7 @@ CLevelBuilder::CLevelBuilder()
 	memset(m_ghostObject, 0, sizeof(m_ghostObject));//ghostobjectの配列を0からメモリ分初期化
 	m_IsStage = STAGE_ID::STAGE_NONE;
 	m_ChocoWallNum = 0;
+	m_FireJetNum = 0;
 }
 
 CLevelBuilder::~CLevelBuilder()
@@ -122,7 +123,8 @@ void CLevelBuilder::Build()
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot
 			);
-			SINSTANCE(CShadowRender)->Entry(fallfloor);
+			fallfloor->SetMaxMove(pInfo[i].MaxMove);
+			//SINSTANCE(CShadowRender)->Entry(fallfloor);
 		}
 		else if (info.gimmickType == GimmickType_MoveFloor){
 			// 動く床
@@ -140,7 +142,7 @@ void CLevelBuilder::Build()
 			back.z = -mRot.m[2][2];
 			movefloor->SetDirection((movefloor->GetPos() + back) - movefloor->GetPos());
 			movefloor->SetMaxMove(pInfo[i].MaxMove);
-			SINSTANCE(CShadowRender)->Entry(movefloor);
+			//SINSTANCE(CShadowRender)->Entry(movefloor);
 		}
 		else if (info.gimmickType == GimmickType_UpFloor){
 			// 上昇床
@@ -150,23 +152,29 @@ void CLevelBuilder::Build()
 				pInfo[i].rot
 				);
 			upfloor->SetMaxMove(pInfo[i].MaxMove);
-			SINSTANCE(CShadowRender)->Entry(upfloor);
+			//SINSTANCE(CShadowRender)->Entry(upfloor);
 		}
 		else if (info.gimmickType == GimmickType_FireJet){
 			// 炎を噴出するギミック
-			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T("firejet"), PRIORTY::OBJECT3D_ALPHA, false);
+			string str = "firejet";
+			char num[100];
+			_itoa(m_FireJetNum, num, 10);
+			str += num;
+			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
+			fire->SetEmitterName(_T(str.c_str()));
 			fire->Initialize();
 			fire->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
 			D3DXMATRIX mRot;
 			D3DXMatrixRotationQuaternion(&mRot, &rot);
 			D3DXVECTOR3 back;
-			back.x = -mRot.m[2][0];
-			back.y = -mRot.m[2][1];
-			back.z = -mRot.m[2][2];
+			back.x = mRot.m[2][0];
+			back.y = mRot.m[2][1];
+			back.z = mRot.m[2][2];
 			D3DXVECTOR3 dir = (fire->GetPos() + back) - fire->GetPos();
 			D3DXVec3Normalize(&dir, &dir);
 			fire->SetDirection(dir);
+			m_FireJetNum++;
 		}
 	}
 

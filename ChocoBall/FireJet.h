@@ -2,6 +2,8 @@
 #include "JetGimmick.h"
 #include "Player.h"
 #include "Vibration.h"
+#include "CourceCamera.h"
+
 
 class CFireJet :
 	public CJetGimmick
@@ -11,9 +13,9 @@ public:
 	~CFireJet();
 	void Initialize()override;
 	void Update()override;
-private:
-	CPlayer* m_pPlayer;
-	CVibration m_vibration;
-	COURCE_BLOCK m_TargetCource;
+	bool IsCollision(D3DXVECTOR3,float);
+	void SetName(LPCSTR name){
+		strcpy(m_pFileName, name);
+	}
 };
 
