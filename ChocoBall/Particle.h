@@ -33,7 +33,7 @@ public:
 		this->m_applyFource = applyFource;
 	}
 	bool GetIsDead(){
-		return m_isDead;
+		return m_state == EMIT_STATE::DEAD;
 	}
 	void SetFileName(LPCSTR name){
 		CH_ASSERT(strlen(name) <= MAX_FILENAME);
@@ -48,7 +48,6 @@ private:
 	PARTICLE_DATA m_ParticleData;
 	float m_rotateZ;
 	D3DXVECTOR3 m_addVelocityRandomMargin;	// 速度の積分のときのランダム幅
-	bool m_isDead;		// 死亡フラグ
 	bool m_isFade;		// 死ぬときにフェードアウトするかのフラグ
 	float m_fadeTime;		// フェードの時間
 	EMIT_STATE m_state;	// 状態

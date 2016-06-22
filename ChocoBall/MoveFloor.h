@@ -12,7 +12,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	virtual void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapShadowTec");
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelShadowTec");
 	}
 	void Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos);
 	void SetPos(D3DXVECTOR3 pos){
@@ -56,6 +56,7 @@ private:
 	enum state{
 		move_flont,
 		move_back,
+		move_none
 	};
 	D3DXVECTOR3 m_dir;
 };

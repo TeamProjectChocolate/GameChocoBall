@@ -23,6 +23,9 @@ public:
 	bool GetIsEnd(){
 		return m_IsEnd;
 	}
+	void SetIsTarget(bool flg){
+		m_IsTarget = flg;
+	}
 private:
 	CCourceDef m_courceDef;
 	COURCE_BLOCK m_PrevCource;	// プレイヤーがワンフレーム前にいたブロック
@@ -36,5 +39,6 @@ private:
 	GAMEEND_ID m_GameState;
 	bool m_IsEnd;
 	CIsIntersect m_Isintersect;
+	bool m_IsTarget;
 };
 

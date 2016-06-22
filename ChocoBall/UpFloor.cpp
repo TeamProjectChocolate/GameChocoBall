@@ -47,10 +47,9 @@ void CUpFloor::Update()
 
 	C3DImage::Update();
 
-	IsHitPlayer(m_transform.position, 1.0f);
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
-		if (m_transform.position.y < m_transform.position.y + m_MaxMove){
+		if (m_transform.position.y < StartPos.y + m_MaxMove){
 			m_transform.position.y += 0.1f;
 			PlayerPos.y += 0.1f;
 			m_player->SetPos(PlayerPos);
@@ -99,21 +98,9 @@ bool CUpFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.6f)
+	if (fabsf(dimension.x) < 1.5f && fabsf(dimension.z) < 1.5f && dimension.y <= 1.7f && dimension.y >= 0.6f)
 	{
-		return TRUE;
+		return true;
 	}
-	//D3DXVECTOR3 dist;
-	//dist = m_player->GetPos() - pos;
-	//float Length;
-	//Length = D3DXVec3LengthSq(&dist);
-
-	//if (Length <= radius * radius){
-	//	return TRUE;
-	//}
-	//else
-	//{
-	//	return FALSE;
-	//}
-	return FALSE;
+	return false;
 }

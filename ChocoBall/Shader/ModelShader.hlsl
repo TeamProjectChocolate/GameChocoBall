@@ -216,6 +216,7 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
+	// 影の描画
 	float4 ShadowPos = In.ShadowPos;
 	float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
 	if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
@@ -302,7 +303,7 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	return color;
 }
 
-float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
+float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasShadow) :COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
@@ -337,10 +338,22 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	float3 normalInCamera = mul(normal, g_CameraRotaInverse);
 	float fresnel = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
 	fresnel = pow(fresnel, 1.5f);
-
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
 	color += fresnel;
+	if (hasShadow){
+		// 影の描画
+		float4 ShadowPos = In.ShadowPos;
+			float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
+		if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
+			if (shadowMapUV.y <= 1.0f && shadowMapUV.y >= 0.0f){
+				if (dot(float3(0.0f, 1.0f, 0.0f), normal) >= 0.1f){
+					float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
+						color *= shadow_val;
+				}
+			}
+		}
+	}
 	color.w = Alpha;
 	return color;
 }
@@ -404,14 +417,14 @@ technique NotNormalMapBasicTec{
 technique NotNormalMapAnimationFresnelTec{
 	pass p0{
 		VertexShader = compile vs_3_0 AnimationVertex();
-		PixelShader = compile ps_3_0 FresnelShader(false);
+		PixelShader = compile ps_3_0 FresnelShader(false,false);
 	}
 }
 
 technique NotNormalMapNonAnimationFresnelTec{
 	pass p0{
 		VertexShader = compile vs_3_0 BasicTransform();
-		PixelShader = compile ps_3_0 FresnelShader(false);
+		PixelShader = compile ps_3_0 FresnelShader(false,false);
 	}
 }
 
@@ -429,3 +442,10 @@ technique ShadowMaskTec{
 		PixelShader = compile ps_3_0 ShadowPixel(true, true);
 	}
 };
+
+technique NotNormalMapNonAnimationFresnelShadowTec{
+	pass p0{
+		VertexShader = compile vs_3_0 ShadowVertex();
+		PixelShader = compile ps_3_0 FresnelShader(false,true);
+	}
+}

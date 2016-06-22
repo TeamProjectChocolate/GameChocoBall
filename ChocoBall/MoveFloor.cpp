@@ -45,19 +45,25 @@ void MoveFloor::Update()
 	trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
 	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 
-
+	float length = D3DXVec3Length(&(m_transform.position - StartPos));
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
-
-	if (fabsf(m_transform.position.z) - fabsf(StartPos.z) > MaxMove )
+	if (MaxMove == 0.0f){
+		m_state = move_none;
+	}
+	else if (length/*fabsf(m_transform.position.z) - fabsf(StartPos.z)*/ > MaxMove )
 	{
 		m_state = move_back;
 	}
-	else if (fabsf(m_transform.position.z) - fabsf(StartPos.z) <= 0.0f)
+	else if (length/*fabsf(m_transform.position.z) - fabsf(StartPos.z)*/ <= 0.01f && m_state == move_back)
 	{
 		m_state = move_flont;
 	}
 
 	switch (m_state){
+	case move_none:
+	{
+		break;
+	}
 	case move_flont:
 	{
 		m_transform.position += m_dir * m_MoveSpeed.z;
@@ -124,10 +130,10 @@ bool MoveFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.0f && fabsf(dimension.z) < 1.0f && dimension.y <= 1.7f && dimension.y >= 0.6f)
+	if (fabsf(dimension.x) < 1.5f && fabsf(dimension.z) < 1.5f && dimension.y <= 1.7f && dimension.y >= 0.6f)
 	{
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }

@@ -4,6 +4,7 @@
 #include "Particle.h"
 #include "ParticleParameterTable.h"
 #include "ObjectManager.h"
+#include "Player.h"
 
 #define MAX_NAME 256
 
@@ -12,11 +13,10 @@ class CParticleEmitter:public CGameObject
 {
 public:
 	static CParticleEmitter* EmitterCreate(LPCSTR EmitterName, PARTICLE_TYPE type,D3DXVECTOR3 pos,CCamera* pcamera,bool flg){
-		CParticleEmitter* pEmitter = SINSTANCE(CObjectManager)->GenerationObject<CParticleEmitter>(_T(EmitterName), PRIORTY::EMITTER, false);
+		CParticleEmitter* pEmitter = SINSTANCE(CObjectManager)->GenerationObject<CParticleEmitter>(EmitterName, PRIORTY::EMITTER, false);
 		pEmitter->SetCamera(pcamera);
 		pEmitter->SetEmitParameter(reinterpret_cast<SParticleEmitParameter*>(ParticleParamPT_Array[type]));
 		pEmitter->SetEmitPos(pos);
-		pEmitter->SetEmitterName(EmitterName);
 		pEmitter->SetEmitFlg(flg);
 		pEmitter->Initialize();
 		return pEmitter;
@@ -59,8 +59,13 @@ private:
 	list<CParticle*> m_ParticleList;
 	list<CParticle*> m_deleteParticleList;
 	char m_EmitterName[MAX_NAME];
+	char m_ParticleName[MAX_NAME];
 	int m_count;
 	bool m_EmitFlg;	// パーティクルを生成するかのフラグ
 	D3DXVECTOR3 m_dir;
+	int m_CurrentCourceNo;
+	int m_NowPlayerCourceNo;
+	CCourceDef m_CourceDef;
+	CPlayer* m_pPlayer;
 };
 

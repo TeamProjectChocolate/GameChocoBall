@@ -35,6 +35,7 @@ void CCourceCamera::Initialize(){
 	m_CurrentCource.blockNo = 0;
 	m_TurnFlg = false;
 	m_IsEnd = false;
+	m_IsTarget = true;
 }
 
 void CCourceCamera::Update(){
@@ -46,8 +47,9 @@ void CCourceCamera::Update(){
 		m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
 
 		Target.y += 0.1f;
-		m_camera.SetTarget(Target);
-
+		if (m_IsTarget){
+			m_camera.SetTarget(Target);
+		}
 		D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
 		D3DXVECTOR3 Dir;
 		D3DXVec3Normalize(&Dir, &courceVec);

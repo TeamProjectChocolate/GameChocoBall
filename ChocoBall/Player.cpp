@@ -10,7 +10,6 @@
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
 #include "StageTable.h"
-#include "GameCamera.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -22,7 +21,6 @@ void CPlayer::Initialize()
 	g_player = this;
 	C3DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	GameCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	m_transform.position = PlayerTransformArray[m_StageID].pos;
 	m_transform.angle = PlayerTransformArray[m_StageID].rotation;
 	m_transform.scale = PlayerTransformArray[m_StageID].scale;
@@ -77,14 +75,18 @@ void CPlayer::Initialize()
 	for (int idx = 0; idx < m_animation.GetNumAnimationSet(); idx++){
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
+	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	CParticleEmitter::EmitterCreate(
 		_T("ParticleEmitterPORIGON"),
 		PARTICLE_TYPE::PORIGON,
 		m_transform.position,
-		SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"))->GetCamera(),
+		m_pCamera->GetCamera(),
 		true
 		);
-	m_UseBorn = true;}
+	m_UseBorn = true;
+	m_MoveFlg = true;
+	m_vibration.Initialize();
+}
 
 void CPlayer::SetParent(MoveFloor* parent)
 {
@@ -149,7 +151,9 @@ void CPlayer::Update()
 		StateManaged();
 
 		//ゲームパッドでのプレイヤーの移動。
-		Move();
+		if (m_MoveFlg){
+			Move();
+		}
 
 		// アニメーション再生関数を呼び出す
 		m_animation.PlayAnimation(m_currentAnimNo, 0.1f);
@@ -158,7 +162,9 @@ void CPlayer::Update()
 		BehaviorCorrection();
 
 		//ロックオン処理
-		LockOn();
+		if (m_MoveFlg){
+			LockOn();
+		}
 
 		if (m_CBManager != NULL)
 		{
@@ -173,6 +179,14 @@ void CPlayer::Update()
 		if (GamaOverFlag==false)//ゲームオーバーになっていない時の処理
 		{
 			
+			m_vibration.Update();
+			// 振動処理実行後、振動が終了しているか
+			if (!m_vibration.GetIsVibration()){
+				m_MoveFlg = true;
+				m_pCamera->SetIsTarget(true);
+			}
+
+
 			//プレイヤーの処理の最後になるべく書いて
 			m_IsIntersect.Intersect(&m_transform.position, &m_moveSpeed, Jumpflag);
 
@@ -204,11 +218,13 @@ void CPlayer::Update()
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 10.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 20.0f, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
-		m_bullets[idx]->Update();
+		if (m_bullets[idx]->Update()){
+			DeleteBullet(m_bullets[idx]);
+		}
 	}
 }
 
@@ -345,7 +361,7 @@ void CPlayer::LockOn()
 void CPlayer::BehaviorCorrection()
 {
 	D3DXVECTOR3		V1;
-	V1 = GameCamera->GetCamera()->GetTarget() - GameCamera->GetCamera()->GetPos();
+	V1 = m_pCamera->GetCamera()->GetTarget() - m_pCamera->GetCamera()->GetPos();
 	
 	D3DXVECTOR3		V2;
 	D3DXVECTOR3		Up;
@@ -398,21 +414,27 @@ void CPlayer::BehaviorCorrection()
 
 void CPlayer::StateManaged()
 {
-	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
-	if (m_lockonEnemyIndex != -1){
-		EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
-		D3DXVECTOR3 dist;
-		dist = Enemy->GetPos() - m_transform.position;
-		float R;
-		R = D3DXVec3Length(&dist);//ベクトルの長さを計算
+	if (!m_vibration.GetIsVibration()){
+		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
+		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
+		if (m_lockonEnemyIndex != -1){
+			EnemyBase* Enemy = EnemyManager->GetEnemy(m_lockonEnemyIndex);
+			D3DXVECTOR3 dist;
+			dist = Enemy->GetPos() - m_transform.position;
+			float R;
+			R = D3DXVec3Length(&dist);//ベクトルの長さを計算
 
-		if (R <= 1)
-		{
-			m_GameState = GAMEEND_ID::OVER;
-			return;
+			if (R <= 1)
+			{
+				m_MoveFlg = false;
+				m_pCamera->SetIsTarget(false);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				//m_GameState = GAMEEND_ID::OVER;
+			}
 		}
 	}
+
 	//ゲームオーバー処理
 	if (m_transform.position.y <= -15.0f)
 	{
@@ -435,21 +457,23 @@ void CPlayer::StateManaged()
 
 void CPlayer::BulletShot()
 {
-	if (m_pInput->IsTriggerRightShift())
-	{
+	if (m_MoveFlg){
+		if (m_pInput->IsTriggerRightShift())
+		{
 
-		//プレイヤーの向いているベクトルを計算
-		D3DXVec3Normalize(&RV0, &RV0);
-		D3DXMatrixRotationY(&Rot, m_currentAngleY);
-		D3DXVec3Transform(&RV1, &RV0, &Rot);
+			//プレイヤーの向いているベクトルを計算
+			D3DXVec3Normalize(&RV0, &RV0);
+			D3DXMatrixRotationY(&Rot, m_currentAngleY);
+			D3DXVec3Transform(&RV1, &RV0, &Rot);
 
 
-		CPlayerBullet* bullet = new CPlayerBullet;
-		bullet->Initialize();
-		bullet->SetPos(m_transform.position);
-		bullet->SetDir(RV1);
-		bullet->SetBulletSpeed(3.0f);
-		m_bullets.push_back(bullet);
+			CPlayerBullet* bullet = new CPlayerBullet;
+			bullet->Initialize();
+			bullet->SetPos(m_transform.position);
+			bullet->SetDir(RV1);
+			bullet->SetBulletSpeed(0.5f);
+			m_bullets.push_back(bullet);
+		}
 	}
 
 	//プレイヤーと弾の距離が20mになると弾が自動でDeleteする。
@@ -458,7 +482,6 @@ void CPlayer::BulletShot()
 		D3DXVECTOR3 V5;
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
-		length = fabs(length);
 		if (length > BULLET_LENG)
 		{
 			DeleteBullet(m_bullets[idx]);
@@ -531,4 +554,3 @@ void CPlayer::RollingPlayer()
 		m_GameState = GAMEEND_ID::OVER;
 	}
 }
-

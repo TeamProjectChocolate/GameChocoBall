@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "CourceDef.h"
 
 class CVibration
 {
@@ -8,25 +9,16 @@ public:
 	~CVibration();
 	void Initialize();
 	void Update();
-	void Activate(){
-		m_IsVibration = true;
-		m_VibrationCounter = 0.0f;
-		m_ReflectionCounter = 0.0f;
-	}
-	void SetIsVibration(bool flg){
-		m_IsVibration = flg;
-	}
+	void ThisVibration(D3DXVECTOR3*,D3DXVECTOR3, float,float);
 	bool GetIsVibration(){
 		return m_IsVibration;
-	}
-	void SetTarget(D3DXVECTOR3* target){
-		m_Target = target;
 	}
 private:
 	D3DXVECTOR3 m_currentDir;
 	bool m_IsVibration;
 	float m_VibrationCounter;
 	float m_ReflectionCounter;
+	CCourceDef m_CourceDef;
 public:
 	D3DXVECTOR3 m_dir;
 	D3DXVECTOR3 m_VibrationAmount;	// êUìÆó 
