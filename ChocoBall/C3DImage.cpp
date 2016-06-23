@@ -57,7 +57,7 @@ void C3DImage::AnimationUpdate(){
 	m_Rota = m_World;
 
 	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &Scale);
+	D3DXMatrixMultiply(&m_World, &Scale, &m_World);
 
 	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &Trans);

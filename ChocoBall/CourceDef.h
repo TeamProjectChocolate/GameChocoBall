@@ -20,6 +20,9 @@ public:
 	D3DXVECTOR3 EndCource(){
 		return m_courceEnd;
 	}
+	int GetCourceMax(){
+		return m_courceNum;
+	}
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}

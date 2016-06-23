@@ -199,6 +199,8 @@ void CPlayer::Update()
 			else
 			{
 				Jumpflag = true;
+				//m_currentAnimNo = Jump;
+
 			}
 			// ’e”­Ëˆ—
 			BulletShot();
@@ -423,12 +425,13 @@ void CPlayer::StateManaged()
 	}
 
 	//ƒQ[ƒ€ƒNƒŠƒA
-	D3DXVECTOR3 Endposition;
-	Endposition = m_Courcedef.EndCource();
-	D3DXVECTOR3 StageEndPosition;
-	StageEndPosition = Endposition - m_transform.position;
-	float Kyori = D3DXVec3Length(&StageEndPosition);
-	if (Kyori < 5)
+	COURCE_BLOCK EndBlock = m_Courcedef.FindCource(m_Courcedef.GetCourceMax() - 1);
+	D3DXVECTOR3 LoadVec;
+	LoadVec = EndBlock.startPosition - EndBlock.endPosition;
+	D3DXVECTOR3 GoalToPlayerVec;
+	GoalToPlayerVec = m_transform.position - EndBlock.endPosition;
+	float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
+	if (Kyori < 0.001f)
 	{
 		m_GameState = GAMEEND_ID::CLEAR;
 		return;

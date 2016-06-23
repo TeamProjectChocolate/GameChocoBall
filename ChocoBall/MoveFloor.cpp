@@ -12,7 +12,7 @@ MoveFloor::~MoveFloor()
 	
 }
 
-void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
+void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale)
 {
 	strcpy(m_pFileName, "image/down_block.x");
 	C3DImage::Initialize();
@@ -20,11 +20,11 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	m_transform.position = pos;//D3DXVECTOR3(0.0f, 0.0f, -40.0f);
 	StartPos = m_transform.position;
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
-	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.scale = scale;// D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_transform.angle = rot;
 	m_state = move_flont;
 	m_MoveSpeed = D3DXVECTOR3(0.0f,0.0f,0.05f);
-	this->Build(D3DXVECTOR3(1.0f, 0.5f, 1.0f), m_transform.position);
+	this->Build(D3DXVECTOR3(1.5f * scale.x, 0.5f * scale.y, 1.5f * scale.z), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
@@ -43,7 +43,6 @@ void MoveFloor::Update()
 {
 	btTransform& trans = m_rigidBody->getWorldTransform();
 	trans.setOrigin(btVector3(m_transform.position.x, m_transform.position.y, m_transform.position.z));
-	trans.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
 
 	float length = D3DXVec3Length(&(m_transform.position - StartPos));
 	D3DXVECTOR3 PlayerPos = m_player->GetPos();
@@ -107,6 +106,7 @@ void MoveFloor::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos){
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
+	groundTransform.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z, m_transform.angle.w));
 	float mass = 0.0f;
 
 	//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects

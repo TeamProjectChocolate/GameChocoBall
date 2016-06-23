@@ -102,7 +102,7 @@ void CStage::Update()
 	}
 	SINSTANCE(CObjectManager)->Update();
 	SINSTANCE(CShadowRender)->Update();
-	m_pAudio->Run();		// 音楽更新
+	//m_pAudio->Run();		// 音楽更新
 }
 
 void CStage::Draw()

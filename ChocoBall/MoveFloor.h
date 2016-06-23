@@ -8,7 +8,7 @@ class MoveFloor : public C3DImage{
 public:
 	MoveFloor();
 	~MoveFloor();
-	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot);
+	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale);
 	void Update()override;
 	void Draw()override;
 	virtual void SetUpTechnique()override{

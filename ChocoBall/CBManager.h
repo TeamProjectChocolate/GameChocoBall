@@ -8,7 +8,6 @@
 
 #define CHOCO_NUM 200	//一回に流れるチョコの数
 
-
 //Chocoballを管理するクラス
 class CCBManager : public CGameObject{
 public:

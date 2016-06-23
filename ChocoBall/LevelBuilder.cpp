@@ -121,7 +121,8 @@ void CLevelBuilder::Build()
 			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
 			fallfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
-				pInfo[i].rot
+				pInfo[i].rot,
+				D3DXVECTOR3(pInfo[i].scale.x, pInfo[i].scale.y, pInfo[i].scale.z)
 			);
 			fallfloor->SetMaxMove(pInfo[i].MaxMove);
 			//SINSTANCE(CShadowRender)->Entry(fallfloor);
@@ -131,7 +132,8 @@ void CLevelBuilder::Build()
 			MoveFloor* movefloor = SINSTANCE(CObjectManager)->GenerationObject<MoveFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
 			movefloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
-				pInfo[i].rot
+				pInfo[i].rot,
+				D3DXVECTOR3(pInfo[i].scale.x, pInfo[i].scale.y, pInfo[i].scale.z)
 			);
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
 			D3DXMATRIX mRot;
