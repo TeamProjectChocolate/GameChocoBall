@@ -96,23 +96,3 @@ void C2DImage::SetupMatrices()
 	mWorld = matScale * matRota * matTrans;
 }
 
-//void C2DImage::SetupMatrices(RECT rec, D3DXVECTOR2 pos, D3DXVECTOR2 center){
-//	D3DXVECTOR3 Scale;
-//	Scale.x = m_transform.scale.x / 10 / WINDOW_WIDTH;
-//	Scale.y = m_transform.scale.y / WINDOW_HEIGHT;
-//	D3DXVECTOR3 Transform;
-//	Transform.x = pos.x / WINDOW_WIDTH;
-//	Transform.y = pos.y / WINDOW_HEIGHT;
-//	Transform.x = -1.0f + Transform.x * 2.0f;
-//	Transform.y = 1.0f - Transform.y * 2.0f;
-//
-//	D3DXMATRIX matScale;
-//	D3DXMATRIX matTrans;
-//	D3DXMATRIX matRota;
-//	D3DXMatrixIdentity(&this->mWorld);	//ƒ[ƒ‹ƒhs—ñ‰Šú‰»
-//	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
-//	D3DXMatrixRotationQuaternion(&matRota, &m_transform.angle);
-//	//D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
-//	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
-//	mWorld = matScale * matRota * matTrans;
-//}
