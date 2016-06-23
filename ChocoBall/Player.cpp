@@ -77,13 +77,13 @@ void CPlayer::Initialize()
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
 	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
-	//CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterPORIGON"),
-	//	PARTICLE_TYPE::PORIGON,
-	//	m_transform.position,
-	//	m_pCamera->GetCamera(),
-	//	true
-	//	);
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterPORIGON"),
+		PARTICLE_TYPE::PORIGON,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		true
+		);
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
