@@ -1,4 +1,4 @@
-﻿D3DXVECTOR3(0.00f, 6.97f, 4.42f), //Cube
+﻿D3DXVECTOR3(0.00f, 2.14f, 12.79f), //Cube
 D3DXVECTOR3(0.00f, 12.30f, -5.00f), //Cube
 D3DXVECTOR3(0.00f, 12.30f, -38.60f), //Cube
 D3DXVECTOR3(0.00f, 23.00f, -59.00f), //Cube
