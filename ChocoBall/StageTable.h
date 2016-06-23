@@ -35,10 +35,10 @@ struct SCollisionInfo {
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
-	//"image/StageModel_Iriguchi2.x",
 	"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Huzita3.x",
 	"image/StageModel_Huzita4.x",
+	//"image/StageModel_Iriguchi2.x",
 	"image/StageModel_Ookawa1.x"
 };
 
