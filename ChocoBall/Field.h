@@ -1,6 +1,7 @@
 #pragma once
 #include "C3DImage.h"
 #include "BulletPhysics.h"
+#include "StageTable.h"
 
 class CZBufferSphere;
 

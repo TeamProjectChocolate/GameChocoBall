@@ -33,8 +33,10 @@ typedef struct SParticleEmitParameter{
 };
 
 
+
+
 // 新しいパラメータを設定したらこの列挙体に追加すること
-enum PARTICLE_TYPE{FIRE = 0,PORIGON,FIREGIMMICK};
+enum PARTICLE_TYPE{FIRE = 0,PORIGON,FIREGIMMICK,STAR};
 
 
 // パーティクルのパラメータ
@@ -97,7 +99,7 @@ static SParticleEmitParameter Param_Porigon = {
 	1,								// 半透明合成、1加算合成。
 };
 
-// 燃え上がる炎
+// 炎噴出
 static SParticleEmitParameter Param_FireGimmick = {
 	"image/PRT_Fire.png",	//テクスチャのファイル名
 	D3DXVECTOR3(0.0f, 0.0f, 1.0f),		// 初速度。
@@ -125,11 +127,39 @@ static SParticleEmitParameter Param_FireGimmick = {
 	1,								// 半透明合成、1加算合成。
 };
 
+// 星噴出
+static SParticleEmitParameter Param_Star = {
+	"image/Star.png",	//テクスチャのファイル名
+	D3DXVECTOR3(0.0f, 1.0f, 0.0f),		// 初速度。
+	4.0f,							// 寿命。単位は秒。
+	0.0f,							// 発生時間。単位は秒。
+	1,								// 1フレームに発生させる量
+	0.5f,							// パーティクルの幅。
+	0.5f,							// パーティクルの高さ。
+	D3DXVECTOR3(0.3f, 0.0f, 0.3f),		// 初期位置のランダム幅。
+	D3DXVECTOR3(0.3f, 0.0f, 0.3f),		// 初速度のランダム幅。
+	D3DXVECTOR3(0.006f, 0.0f, 0.006f),	// 速度の積分のときのランダム幅。
+	{	// UVテーブル。最大4まで保持できる。xが左上のu、yが左上のv、zが右下のu、wが右下のvになる。
+		D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f),
+		D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f),
+		D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f),
+		D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f),
+	},
+	1,									// UVテーブルのサイズ。
+	D3DXVECTOR3(0.0f, 1.0f, 0.0f),		// 重力。
+	true,							// 死ぬときにフェードアウトする？
+	1.5f,							// フェードする時間。
+	1.0f,							// 初期アルファ値。
+	true,							// ビルボード？
+	2.0f,							// 輝度。ブルームが有効になっているとこれを強くすると光が溢れます。
+	1,								// 半透明合成、1加算合成。
+};
 
 // パラメーター構造体のポインタ配列
 // ※パラメーターを追加したらここに追加した構造体のポインタを格納すること
 static SParticleEmitParameter* ParticleParamPT_Array[] = { 
 	&Param_Fire,
 	&Param_Porigon,
-	&Param_FireGimmick
+	&Param_FireGimmick,
+	&Param_Star
 };

@@ -1,6 +1,7 @@
 #pragma once 
 #include "stdafx.h"
 #include "C3DImage.h"
+#include "StageTable.h"
 
 class EnemyBase : public C3DImage
 {

@@ -120,6 +120,7 @@ void CShadowRender::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer,C3DI
 			m_pEffect->BeginPass(0);
 
 			m_camera.SetCamera(m_pEffect);
+			m_camera.SetFarNear(m_pEffect);
 
 			m_pEffect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
 

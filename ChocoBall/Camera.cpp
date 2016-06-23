@@ -87,3 +87,7 @@ void CCamera::SetCamera(LPD3DXEFFECT effect){
 	effect->SetMatrix("View"/*エフェクトファイル内の変数名*/, &m_View/*設定したい行列へのポインタ*/);
 	effect->SetMatrix("g_CameraRotaInverse", &m_RotaInv);
 }
+
+void CCamera::SetFarNear(LPD3DXEFFECT effect){
+	effect->SetVector("g_FarNear", reinterpret_cast<D3DXVECTOR4*>(&(D3DXVECTOR2(m_Far, m_Near))));
+}

@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 
+
 enum GimmickType{
 	GimmickType_Chocoball,
 	GimmickType_Wall,
@@ -45,6 +46,11 @@ static LPCSTR Stage_BGM[] = {
 	"ChariotsOfFireBGM",
 	"Modern_copy",
 };
+
+
+
+enum STAGE_ID{ FIRST = 0, SECOUND, FINAL, MAX, STAGE_NONE = 999 };
+
 
 
 // ステージ1で使用するオブジェクトの定義配列

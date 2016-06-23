@@ -13,6 +13,7 @@ public:
 	void Initialize();
 	void Update();
 	void SetCamera(LPD3DXEFFECT);
+	void SetFarNear(LPD3DXEFFECT);
 	inline void SetPos(D3DXVECTOR3 pos){
 		m_position = pos;
 	}

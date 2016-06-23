@@ -28,6 +28,7 @@ public:
 	}
 	void SetShadowCamera(LPD3DXEFFECT effect){
 		effect->SetMatrix("LightViewProj", &(m_camera.GetView() * m_camera.GetProj()));
+		m_camera.SetFarNear(effect);
 	}
 	void DrawFrame(/*LPDIRECT3DDEVICE9, */LPD3DXFRAME,C3DImage*);
 	void DrawMeshContainer(/*LPDIRECT3DDEVICE9,*/ LPD3DXMESHCONTAINER,C3DImage*/*, LPD3DXFRAME*/);

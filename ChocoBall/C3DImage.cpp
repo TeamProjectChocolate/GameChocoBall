@@ -44,50 +44,7 @@ void C3DImage::Update(){
 }
 
 void C3DImage::UpdateFrame(LPDIRECT3DDEVICE9 Device, LPD3DXFRAME pFrame){
-
 	AnimationUpdate();
-	/*UpdateFrameMatrices()
-	LPD3DXMESHCONTAINER pMeshContainer;
-	if (pFrame &&  pFrame->Name && strcmp(pFrame->Name, "_face") == 0){
-		printf("joge");
-	}
-	pMeshContainer = pFrame->pMeshContainer;
-	if (pMeshContainer != nullptr){
-		if (pMeshContainer->pSkinInfo != nullptr){
-			AnimationUpdate();
-		}
-		else{
-			NonAnimationUpdate();
-		}
-		return;
-	}
-	if (pFrame->pFrameSibling != nullptr){
-		UpdateFrame(Device, pFrame->pFrameSibling);
-	}
-
-	if (pFrame->pFrameFirstChild != nullptr){
-		UpdateFrame(Device, pFrame->pFrameFirstChild);
-	}*/
-}
-
-void C3DImage::NonAnimationUpdate(){
-	D3DXMATRIX Trans;	// 移動行列
-	D3DXMATRIX Scale;	// 拡大・縮小行列
-	D3DXMatrixIdentity(&m_World);	// 行列初期化
-
-	D3DXMatrixRotationQuaternion(&m_World, &m_transform.angle);	// クォータニオンによる回転行列の作成
-
-	m_Rota = m_World;
-
-	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &Scale);
-
-	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
-	if (m_pImage->pModel){
-		m_pImage->pModel->UpdateBoneMatrix(&m_World);	//ボーン行列を更新。
-	}
-
 }
 
 void C3DImage::AnimationUpdate(){
@@ -169,6 +126,8 @@ void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAM
 		SINSTANCE(CRenderContext)->GetCurrentCamera()->SetCamera(m_pEffect);
 		SINSTANCE(CRenderContext)->GetCurrentLight()->SetLight(m_pEffect);
 		m_pEffect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
+
+		SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
 
 		// ボーンの数
 		m_pEffect->SetFloat("g_numBone", pMeshContainer->NumInfl);
