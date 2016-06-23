@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "C2DImage.h"
 #include "Player.h"
+#include "RenderContext.h"
 
 CObjectManager* CObjectManager::m_instance = nullptr;
 
@@ -78,7 +79,6 @@ void CObjectManager::ExcuteDeleteObjects(){
 				if ((*itr)->object->GetManagerNewFlg()){
 					SAFE_DELETE((*itr)->object);
 					SAFE_DELETE((*itr));
-					//なんじを抱擁す
 				}
 				itr = m_GameObjects.erase(itr);	
 				break;
@@ -118,8 +118,14 @@ void CObjectManager::Update(){
 }
 
 void CObjectManager::Draw(){
+	SINSTANCE(CRenderContext)->RenderingStart();
 	int size = m_GameObjects.size();
 	for (short priorty = 0; priorty <= MAX_PRIORTY; priorty++){	// 優先度の高いものから更新
+		if (priorty == PRIORTY::OBJECT2D){
+			// 3D描画が終わったらレンダリングターゲットを元に戻す
+			SINSTANCE(CRenderContext)->RenderingEnd();
+			SINSTANCE(CRenderContext)->SetRenderingBuffer();
+		}
 		for (int idx = 0; idx < size; idx++){
 			if (m_GameObjects[idx]->object->GetAlive()){	// 生存しているもののみ描画
 				if (m_GameObjects[idx]->priority == priorty){	// 現在の優先度と一致するものを描画

@@ -65,10 +65,7 @@ void CGameManager::Update(){
 }
 
 void CGameManager::Draw(){
-	//SINSTANCE(CRenderContext)->RenderingStart();
 	m_NowScene->Draw();
-	//SINSTANCE(CRenderContext)->RenderingEnd();
-	//SINSTANCE(CRenderContext)->SetRenderingBuffer();
 }
 
 void CGameManager::DeleteAll(){

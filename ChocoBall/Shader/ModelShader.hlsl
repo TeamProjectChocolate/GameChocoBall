@@ -6,6 +6,8 @@ float4x4 Rota;	// 回転行列。法線をモデルと同じ量だけ回転させるために必要
 float3 EyePosition;	// 視点
 float4x4 LightViewProj;		// ライトビュープロジェクション行列
 
+float2 g_FarNear;
+
 float Alpha;		// 透明度
 
 #define DIFFUSE_LIGHT_NUM 4		// ディフューズライトの数
@@ -205,28 +207,36 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 		if (zmask.z > screenPos.z){
 			clip(-1.0f);
 		}
-
 	}
+
+	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	// ディフューズライトの計算
 	float4 light = CalcDiffuseLight(normal);
 	// スペキュラライトを計算
-	light += CalcSpeculerLight(normal,In.WorldPos);
+	light += CalcSpeculerLight(normal, In.WorldPos);
 	// アンビエントライトを加算
 	light.xyz += ambientLight;
 
-	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
+
 	// 影の描画
 	float4 ShadowPos = In.ShadowPos;
 	float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
+	float4 shadow_val = float4(1.0f,1.0f,1.0f,1.0f);
 	if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
 		if (shadowMapUV.y <= 1.0f && shadowMapUV.y >= 0.0f){
 			if (dot(float3(0.0f, 1.0f, 0.0f), normal) >= 0.1f){
-				float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
-				color *= shadow_val;
+				shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
 			}
 		}
 	}
+	float depth = (ShadowPos.z - g_FarNear.y) / (g_FarNear.x - g_FarNear.y);
+
+	if (depth > shadow_val.z){
+		// 影になっている
+		color.xyz *= shadow_val.xyz;	// 影を書き込む
+	}
+
 	color.w = Alpha;
 	return color;
 }
@@ -341,19 +351,27 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasSha
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
 	color += fresnel;
+	float4 shadow_val = float4(1.0f, 1.0f, 1.0f, 1.0f);
+
 	if (hasShadow){
 		// 影の描画
 		float4 ShadowPos = In.ShadowPos;
-			float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
+		float2 shadowMapUV = float2(0.5f, -0.5f) * ShadowPos.xy / ShadowPos.w + float2(0.5f, 0.5f);
 		if (shadowMapUV.x <= 1.0f && shadowMapUV.x >= 0.0f){
 			if (shadowMapUV.y <= 1.0f && shadowMapUV.y >= 0.0f){
 				if (dot(float3(0.0f, 1.0f, 0.0f), normal) >= 0.1f){
-					float4 shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
-						color *= shadow_val;
+					shadow_val = tex2D(g_ShadowMapSampler, shadowMapUV);
 				}
 			}
 		}
+		float depth = (ShadowPos.z - g_FarNear.y) / (g_FarNear.x - g_FarNear.y);
+
+		if (depth > shadow_val.z){
+			// 影になっている
+			color.xyz *= shadow_val.xyz;
+		}
 	}
+	
 	color.w = Alpha;
 	return color;
 }

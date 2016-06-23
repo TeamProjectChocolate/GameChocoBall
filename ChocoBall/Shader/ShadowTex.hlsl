@@ -2,6 +2,8 @@ float4x4 World;
 float4x4 View;
 float4x4 Proj;
 
+float2 g_FarNear;	// 遠平面と近平面。xに遠平面、yに近平面
+
 // スキン行列
 #define MAX_MATRICES 26
 float4x3 g_WorldMatrixArray[MAX_MATRICES]:WORLDMATRIXARRAY;
@@ -16,6 +18,7 @@ struct VS_INPUT{
 // 頂点情報出力用構造体
 struct VS_OUTPUT{
 	float4	pos		: POSITION;
+	float4  depth	: TEXCOORD;
 };
 
 VS_OUTPUT VS_ShadowMain(VS_INPUT In, uniform bool isBone){
@@ -45,11 +48,13 @@ VS_OUTPUT VS_ShadowMain(VS_INPUT In, uniform bool isBone){
 		Out.pos = mul(In.pos, World);
 	}
 	Out.pos = mul(Out.pos, LightViewProj);
+	Out.depth = Out.pos;
 	return Out;
 }
 
 float4 PS_ShadowMain(VS_OUTPUT In)	: COLOR{
-	return float4(0.5f,0.5f,0.5f,1.0f);
+	float z = (In.depth.z - g_FarNear.y) / (g_FarNear.x - g_FarNear.y);
+	return float4(z,z,z,z);
 }
 
 technique BonelessShadowMapping{

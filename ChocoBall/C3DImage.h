@@ -41,7 +41,6 @@ private:
 	D3DXMATRIX m_Rota;	// âÒì]çsóÒ
 	void UpdateFrame(LPDIRECT3DDEVICE9, LPD3DXFRAME);
 	void AnimationUpdate();
-	void NonAnimationUpdate();
 	void DrawFrame(LPD3DXFRAME);
 	void DrawMeshContainer(LPD3DXMESHCONTAINER, LPD3DXFRAME);
 	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,D3DXFRAME_DERIVED*);
