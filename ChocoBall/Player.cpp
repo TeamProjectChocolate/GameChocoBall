@@ -10,6 +10,7 @@
 #include "ParticleEmitter.h"
 #include "MoveFloor.h"
 #include "StageTable.h"
+#include "FireJet.h"
 
 CPlayer* g_player = NULL;
 CPlayer::~CPlayer(){  }
@@ -76,13 +77,13 @@ void CPlayer::Initialize()
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
 	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
-	CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterPORIGON"),
-		PARTICLE_TYPE::PORIGON,
-		m_transform.position,
-		m_pCamera->GetCamera(),
-		true
-		);
+	//CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterPORIGON"),
+	//	PARTICLE_TYPE::PORIGON,
+	//	m_transform.position,
+	//	m_pCamera->GetCamera(),
+	//	true
+	//	);
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
@@ -198,6 +199,8 @@ void CPlayer::Update()
 			else
 			{
 				Jumpflag = true;
+				//m_currentAnimNo = Jump;
+
 			}
 			// 弾発射処理
 			BulletShot();
@@ -414,6 +417,26 @@ void CPlayer::BehaviorCorrection()
 
 void CPlayer::StateManaged()
 {
+	//ゲームオーバー処理
+	if (m_transform.position.y <= -15.0f)
+	{
+		m_GameState = GAMEEND_ID::OVER;
+		return;
+	}
+
+	//ゲームクリア
+	COURCE_BLOCK EndBlock = m_Courcedef.FindCource(m_Courcedef.GetCourceMax() - 1);
+	D3DXVECTOR3 LoadVec;
+	LoadVec = EndBlock.startPosition - EndBlock.endPosition;
+	D3DXVECTOR3 GoalToPlayerVec;
+	GoalToPlayerVec = m_transform.position - EndBlock.endPosition;
+	float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
+	if (Kyori < 0.001f)
+	{
+		m_GameState = GAMEEND_ID::CLEAR;
+		return;
+	}
+
 	if (!m_vibration.GetIsVibration()){
 		CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
 		m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_transform.position);
@@ -431,27 +454,29 @@ void CPlayer::StateManaged()
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
+				return;
 			}
 		}
-	}
 
-	//ゲームオーバー処理
-	if (m_transform.position.y <= -15.0f)
-	{
-		m_GameState = GAMEEND_ID::OVER;
-		return;
-	}
-
-	//ゲームクリア
-	D3DXVECTOR3 Endposition;
-	Endposition = m_Courcedef.EndCource();
-	D3DXVECTOR3 StageEndPosition;
-	StageEndPosition = Endposition - m_transform.position;
-	float Kyori = D3DXVec3Length(&StageEndPosition);
-	if (Kyori < 5)
-	{
-		m_GameState = GAMEEND_ID::CLEAR;
-		return;
+		// 炎のギミックとの当たり判定
+		for (int idx = 0;; idx++){
+			string str = "firejet";
+			char num[100];
+			_itoa(idx, num, 10);
+			str += num;
+			CFireJet* firejet = SINSTANCE(CObjectManager)->FindGameObject<CFireJet>(_T(str.c_str()));
+			if (firejet == nullptr){
+				return;
+			}
+			if (firejet->IsCollision(m_transform.position, 1.0f)){
+				m_MoveFlg = false;
+				m_pCamera->SetIsTarget(false);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				//m_GameState = GAMEEND_ID::OVER;
+				return;
+			}
+		}
 	}
 }
 

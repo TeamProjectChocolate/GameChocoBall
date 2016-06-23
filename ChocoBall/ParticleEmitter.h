@@ -16,6 +16,7 @@ public:
 		CParticleEmitter* pEmitter = SINSTANCE(CObjectManager)->GenerationObject<CParticleEmitter>(EmitterName, PRIORTY::EMITTER, false);
 		pEmitter->SetCamera(pcamera);
 		pEmitter->SetEmitParameter(reinterpret_cast<SParticleEmitParameter*>(ParticleParamPT_Array[type]));
+		pEmitter->SetEmitterName(EmitterName);
 		pEmitter->SetEmitPos(pos);
 		pEmitter->SetEmitFlg(flg);
 		pEmitter->Initialize();
@@ -34,6 +35,9 @@ public:
 	void SetEmitParameter(SParticleEmitParameter* param){
 		m_param = param;
 	}
+	SParticleEmitParameter* GetEmitParameter(){
+		return m_param;
+	}
 	void SetEmitPos(D3DXVECTOR3 pos){
 		m_emitPosition = pos;
 	}
@@ -49,6 +53,15 @@ public:
 	}
 	void SetDirection(D3DXVECTOR3 dir){
 		m_dir = dir;
+	}
+	D3DXVECTOR3 GetDirection(){
+		return m_dir;
+	}
+	D3DXVECTOR3 GetTailPos(){
+		return *m_TailPosition;
+	}
+	bool GetResidual(){
+		return m_Residual;
 	}
 private:
 	float m_timer;
@@ -67,5 +80,8 @@ private:
 	int m_NowPlayerCourceNo;
 	CCourceDef m_CourceDef;
 	CPlayer* m_pPlayer;
+	D3DXVECTOR3* m_TailPosition;	// 最後に生成したプリミティブのポジションを追跡するためのポインタ
+	CParticle* m_pTailParticle;		// 最後に生成したパーティクルのポインタ
+	bool m_Residual;			// 最後に生成したパーティクルが残留しているか
 };
 

@@ -19,35 +19,37 @@ void CJetGimmick::Initialize(){
 	CCourceCamera* camera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
 	m_pCamera = camera->GetCamera();
 	m_pEmitter = CParticleEmitter::EmitterCreate(m_pFileName, m_ParticleType, m_transform.position, m_pCamera, false);
-	m_TimeCounter = 0.0f;
+	m_IntervalCounter = 0.0f;
+	m_JetCounter = 0.0f;
 	m_IsPlay = true;
 }
 
 void CJetGimmick::Update(){
 	if (m_JetFlg){
-		if (m_TimeCounter <= m_JetTime){
+		if (m_JetCounter <= m_JetTime){
 			m_pEmitter->SetEmitFlg(true);
 			SoundPlay();
 		}
 		else{
-			m_TimeCounter = 0.0f;
+			m_JetCounter = 0.0f;
 			//m_pAudio->StopCue(m_SoundName);
 			m_JetFlg = false;
 			m_IsPlay = true;
 			return;
 		}
+		m_JetCounter += 1.0f / 60.0f;
 	}
 	else{
-		if (m_TimeCounter >= m_IntervalTime){
+		if (m_IntervalCounter >= m_IntervalTime){
 			m_JetFlg = true;
-			m_TimeCounter = 0.0f;
+			m_IntervalCounter = 0.0f;
 			return;
 		}
 		else{
 			m_pEmitter->SetEmitFlg(false);
 		}
+		m_IntervalCounter += 1.0f / 60.0f;
 	}
-	m_TimeCounter += 1.0f / 60.0f;
 }
 
 void CJetGimmick::Draw(){
