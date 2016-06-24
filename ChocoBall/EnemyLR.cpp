@@ -78,7 +78,7 @@ void CEnemyLR::Update()
 	//âÒì]çsóÒ
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 
-	C3DImage::Update();
+	EnemyBase::Update();
 }
 
 
@@ -93,14 +93,4 @@ void CEnemyLR::Draw()
 	}
 }
 
-void CEnemyLR::OnDestroy()
-{
-	m_Rigidbody.OnDestroy();
-	SetAlive(false);
-}
-
-void CEnemyLR::Build()
-{
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
-}
 

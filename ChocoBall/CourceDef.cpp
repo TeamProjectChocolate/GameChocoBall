@@ -51,7 +51,7 @@ COURCE_BLOCK CCourceDef::FindCource(D3DXVECTOR3 pos){
 	if (ret == nullptr){
 		COURCE_BLOCK ret2;
 		ret2.blockNo = -1;
-		abort();
+		//abort();
 		return ret2;
 	}
 	return *ret;

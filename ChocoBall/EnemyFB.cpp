@@ -41,7 +41,6 @@ void CEnemyFB::Initialize()
 
 	m_V1 = Cource.endPosition - Cource.startPosition;					//スタートからゴールに向けてのベクトル
 	D3DXVec3Normalize(&V1, &m_V1);										//上で求めたベクトルの正規化
-
 }
 
 D3DXVECTOR3 CEnemyFB::GetPos(){
@@ -78,7 +77,7 @@ void CEnemyFB::Update()
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 
 	
-	C3DImage::Update();
+	EnemyBase::Update();
 }
 
 
@@ -92,15 +91,3 @@ void CEnemyFB::Draw()
 		C3DImage::Draw();
 	}
 }
-
-void CEnemyFB::OnDestroy()
-{
-	m_Rigidbody.OnDestroy();
-	SetAlive(false);
-}
-
-void CEnemyFB::Build()
-{
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
-}
-

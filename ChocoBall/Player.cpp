@@ -210,7 +210,6 @@ void CPlayer::Update()
 		{
 			//ゲームオーバー状態でのチョコボールに流される処理
 			RollingPlayer();
-
 		}
 		C3DImage::Update();
 
@@ -424,15 +423,18 @@ void CPlayer::StateManaged()
 
 	//ゲームクリア
 	COURCE_BLOCK EndBlock = m_Courcedef.FindCource(m_Courcedef.GetCourceMax() - 1);
-	D3DXVECTOR3 LoadVec;
-	LoadVec = EndBlock.startPosition - EndBlock.endPosition;
-	D3DXVECTOR3 GoalToPlayerVec;
-	GoalToPlayerVec = m_transform.position - EndBlock.endPosition;
-	float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
-	if (Kyori < 0.001f)
-	{
-		m_GameState = GAMEEND_ID::CLEAR;
-		return;
+	COURCE_BLOCK nowBlock = m_Courcedef.FindCource(m_transform.position);
+	if (nowBlock.blockNo == EndBlock.blockNo){
+		D3DXVECTOR3 LoadVec;
+		LoadVec = EndBlock.startPosition - EndBlock.endPosition;
+		D3DXVECTOR3 GoalToPlayerVec;
+		GoalToPlayerVec = m_transform.position - EndBlock.endPosition;
+		float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
+		if (Kyori < 0.001f)
+		{
+			m_GameState = GAMEEND_ID::CLEAR;
+			return;
+		}
 	}
 
 	if (!m_vibration.GetIsVibration()){
@@ -449,7 +451,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 1.2f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 0.8f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -547,7 +549,7 @@ void CPlayer::EnemyBulletHit( D3DXVECTOR3 moveDir )
 {
 	GamaOverFlag = true;
 	btRigidBody* rb = m_IsIntersect.GetRigidBody();//プレイヤーの剛体を取得
-	m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。
+	//m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。
 	rb->setMassProps(1.0f, btVector3(0.01f, 0.01f, 0.01f));//第一引数は質量、第二引数は回転のしやすさ
 	moveDir *= 750.0f;
 	rb->applyForce(btVector3(moveDir.x, moveDir.y + 1000.0f, moveDir.z), btVector3(1.0f, 1.0f, 1.0f));//チョコボールに当たって吹っ飛ぶ力を設定

@@ -67,7 +67,7 @@ void CEnemyjamp::Update()
 	}
 
 	
-	C3DImage::Update();
+	EnemyBase::Update();
 }
 
 
@@ -80,16 +80,5 @@ void CEnemyjamp::Draw()
 		SetUpTechnique();
 		C3DImage::Draw();
 	}
-}
-
-void CEnemyjamp::OnDestroy()
-{
-	m_Rigidbody.OnDestroy();
-	SetAlive(false);
-}
-
-void CEnemyjamp::Build()
-{
-	m_Rigidbody.Build(m_transform.scale, m_transform.position);
 }
 
