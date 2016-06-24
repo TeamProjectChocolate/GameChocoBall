@@ -69,7 +69,7 @@ void CImageManager::DeleteAll(){
 		SAFE_DELETE(m_ModelList[idx]->pModel);
 	}
 	m_ModelList.clear();
-	for (int idx = 0, size = m_ModelList.size(); idx < size; idx++){
+	for (int idx = 0, size = m_ImageList.size(); idx < size; idx++){
 		SAFE_DELETE(m_ImageList[idx]->pTex);
 		SAFE_DELETE(m_ImageList[idx]);
 	}
