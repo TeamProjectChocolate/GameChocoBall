@@ -55,6 +55,8 @@ void CChocoBall::Update()
 	//m_transform.position.y -= 0.05f;
 	//btVector3 a(0.0f, 0.0f, 1.0f);
 
+
+
 	m_Rigidbody.Update(&m_transform.position);
 	C3DImage::Update();
 

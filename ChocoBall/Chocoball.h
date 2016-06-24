@@ -47,4 +47,5 @@ private:
 	CIsIntersect			m_IsIntersect;
 	float					m_radius;
 	D3DXVECTOR3				m_moveSpeed;		//ˆÚ“®‘¬“xB
+	
 };
