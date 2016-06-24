@@ -17,7 +17,7 @@ void CGameOver::Initialize(){
 	C2DImage::Initialize();
 	m_transform.position = D3DXVECTOR3(480.0f, 0.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(100, 80, 100);
+	m_transform.scale = D3DXVECTOR3(420, 420, 100);
 	SetAlive(true);
 	m_IsEnd = false;
 	C2DImage::SetImage();

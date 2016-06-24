@@ -30,7 +30,6 @@ void CTitleCursor::Initialize(){
 }
 
 void CTitleCursor::Update(){
-
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
 		m_pAudio->StopCue("ChariotsOfFireBGM");
@@ -48,7 +47,6 @@ void CTitleCursor::Update(){
 	if (Y>0){
 		m_transform.position.y = 300.0f;
 		m_transform.position.x = 510.0f;
-
 	}
 	if (Y<0){
 		m_transform.position.y = 430.0f;

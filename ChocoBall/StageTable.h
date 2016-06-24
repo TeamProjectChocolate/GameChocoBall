@@ -46,8 +46,9 @@ static LPCSTR FieldNameArray[] = {
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
-	"ChariotsOfFireBGM",
-	"joban_Sutage",
+	"joban_Stage",
+	"joban_Stage",
+	"tyuban_Stage",
 	"tyuban_Stage",
 	"lastStage",
 	"ChariotsOfFireBGM",
