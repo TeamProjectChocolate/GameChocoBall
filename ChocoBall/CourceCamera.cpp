@@ -90,11 +90,10 @@ void CCourceCamera::Draw(){
 }
 
 void CCourceCamera::ClearCamera(){
-	D3DXVECTOR3 courceVec = m_CurrentCource.startPosition - m_NowPos;
-	float length = D3DXVec3Length(&courceVec);
-	if (1.0f <= length){
-		D3DXVECTOR3 Dir;
-		D3DXVec3Normalize(&Dir, &courceVec);
+	D3DXVECTOR3 Vec = m_NowPos - m_CurrentCource.startPosition;
+	D3DXVECTOR3 Vec2 = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
+	float length = D3DXVec3Dot(&Vec2, &Vec);
+	if (0.001f >= length){
 		D3DXVECTOR3 TargetPos = m_CurrentCource.startPosition;
 		TargetPos.y += 2.5f;
 		VectorSmoothDamp(
@@ -108,11 +107,7 @@ void CCourceCamera::ClearCamera(){
 	else{
 		m_IsEnd = true;
 	}
-	if (m_IsEnd){
-		return;
-	}
-	m_IsEnd = false;
-
+	//m_IsEnd = false;
 }
 
 void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){
