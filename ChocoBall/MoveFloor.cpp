@@ -24,7 +24,7 @@ void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scal
 	m_transform.angle = rot;
 	m_state = move_flont;
 	m_MoveSpeed = D3DXVECTOR3(0.0f,0.0f,0.05f);
-	this->Build(D3DXVECTOR3(1.5f * scale.x, 0.5f * scale.y, 1.5f * scale.z), m_transform.position);
+	this->Build(D3DXVECTOR3(1.5f * scale.x, 0.3f * scale.y, 1.5f * scale.z), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
