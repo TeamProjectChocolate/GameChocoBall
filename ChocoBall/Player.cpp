@@ -517,7 +517,10 @@ void CPlayer::StateManaged()
 		}
 	}
 }
-
+bool CPlayer::IsVibration() 
+{
+	return m_vibration.GetIsVibration();
+}
 void CPlayer::BulletShot()
 {
 	if (m_MoveFlg){

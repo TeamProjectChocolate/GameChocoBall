@@ -70,5 +70,6 @@ COURCE_BLOCK CCourceDef::FindCource(int num){
 		}
 		itr = itr->nextBlock;
 	}
+	return *itr;
 }
 

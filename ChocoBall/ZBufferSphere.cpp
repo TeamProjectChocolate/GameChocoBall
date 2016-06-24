@@ -34,7 +34,9 @@ void CZBufferSphere::Initialize()
 void CZBufferSphere::Update()
 {
 	float rate = 0.2f;
-	m_transform.position = (Player->GetPos() * (1.0f-rate) + GameCamera->GetCamera()->GetPos() * rate) ;
+	if (!Player->IsVibration()) {
+		m_transform.position = (Player->GetPos() * (1.0f - rate) + GameCamera->GetCamera()->GetPos() * rate);
+	}
 #if 0
 	D3DXMATRIX mRot = GameCamera->GetCamera()->GetView();
 	D3DXMatrixInverse(&mRot, NULL, &mRot); //カメラ行列の逆行列はカメラのワールド行列
