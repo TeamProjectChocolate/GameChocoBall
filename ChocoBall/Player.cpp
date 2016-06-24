@@ -489,7 +489,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 0.8f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.8f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -509,7 +509,7 @@ void CPlayer::StateManaged()
 			if (firejet->IsCollision(m_transform.position, 0.8f)){
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 1.2f, 0.08f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 1.2f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
