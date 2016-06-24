@@ -31,6 +31,9 @@ public:
 	void SetDir(D3DXVECTOR4 dir){
 		m_dir = dir;
 	}
+	D3DXVECTOR3 GetDirection(){
+		return m_dir;
+	}
 	void SetBulletSpeed(float Speed)
 	{
 		m_Speed = Speed;

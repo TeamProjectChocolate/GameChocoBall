@@ -7,5 +7,6 @@ enum CollisionType{
 	CollisionType_ChocoballTrigger,	//チョコボール起動コリジョン。
 	CollisionType_Camera,			//カメラのコリジョン
 	CollisionType_Wall,				//チョコ壁のコリジョン
-	CollisionType_Bullet				//弾のコリジョン
+	CollisionType_Bullet,				//弾のコリジョン
+	CollisionType_Enemy
 };

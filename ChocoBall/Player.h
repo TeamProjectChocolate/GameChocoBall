@@ -101,6 +101,8 @@ public:
 	{
 		m_GameState = GAMEEND_ID::OVER;
 	}
+	bool IsVibration() ;
+	
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;

@@ -43,6 +43,7 @@ void CVibration::Update(){
 		}
 		else{
 			m_VibrationCounter = 0.0f;
+			m_OrgPos.y = m_Target->y;
 			*m_Target = m_OrgPos;
 			m_IsVibration = false;
 			return;

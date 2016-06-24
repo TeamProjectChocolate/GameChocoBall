@@ -69,6 +69,7 @@ void CParticleEmitter::Update(){
 		return;
 	}
 	else if (m_pTailParticle->GetIsDead()){
+		m_pTailParticle = nullptr;
 		m_Residual = false;
 	}
 }
