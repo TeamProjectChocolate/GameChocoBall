@@ -103,7 +103,7 @@ void CLevelBuilder::Build()
 			mgr->SetEndPosition(startPos + back);
 		}
 		else if (info.gimmickType == GimmickType_Wall){
-			//ギミックの生成
+			//チョコ壁の生成
 
 			string str = "B_Block";
 			char num[100];
@@ -164,15 +164,16 @@ void CLevelBuilder::Build()
 			str += num;
 			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
 			fire->SetEmitterName(_T(str.c_str()));
+			fire->SetStageID(m_IsStage);
 			fire->Initialize();
 			fire->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
 			D3DXMATRIX mRot;
 			D3DXMatrixRotationQuaternion(&mRot, &rot);
 			D3DXVECTOR3 back;
-			back.x = mRot.m[2][0];
+			back.x = -mRot.m[2][0];
 			back.y = mRot.m[2][1];
-			back.z = mRot.m[2][2];
+			back.z = -mRot.m[2][2];
 			D3DXVECTOR3 dir = (fire->GetPos() + back) - fire->GetPos();
 			D3DXVec3Normalize(&dir, &dir);
 			fire->SetDirection(dir);
