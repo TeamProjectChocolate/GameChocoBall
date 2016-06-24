@@ -37,10 +37,7 @@ void CParticleEmitter::Update(){
 		if (m_EmitFlg){
 			if (m_timer >= m_param->intervalTime){
 				for (int idx = 0; idx < m_param->EmitNum; idx++){
-					//char num[10];
-					//_itoa(m_count, num,10);
-					//strcat(m_EmitterName, num);
-					CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_ParticleName), PRIORTY::OBJECT2D_ALPHA, false);
+					CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_ParticleName), PRIORTY::OBJECT3D_ALPHA, false);
 					p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
 					m_timer = 0.0f;
 					m_ParticleList.push_back(p);

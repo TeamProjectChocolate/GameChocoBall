@@ -77,13 +77,13 @@ void CPlayer::Initialize()
 		m_animation.SetAnimationEndtime(idx,AnimationTime[idx]);
 	}
 	m_pCamera = SINSTANCE(CObjectManager)->FindGameObject<CCourceCamera>(_T("Camera"));
-	//CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterPORIGON"),
-	//	PARTICLE_TYPE::PORIGON,
-	//	m_transform.position,
-	//	m_pCamera->GetCamera(),
-	//	true
-	//	);
+	CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterStart"),
+		PARTICLE_TYPE::STAR,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		true
+		);
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
@@ -116,9 +116,6 @@ void CPlayer::SetParent(MoveFloor* parent)
 		localPosition.y = pos.y;
 		localPosition.z = pos.z;
 
-		m_transform.position.x = pos.x;
-		m_transform.position.y = pos.y;
-		m_transform.position.z = pos.z;
 		this->parent = parent;
 	}
 }
