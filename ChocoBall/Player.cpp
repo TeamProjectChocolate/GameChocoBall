@@ -95,6 +95,7 @@ void CPlayer::Initialize()
 		PARTICLE_TYPE::SMOKE,
 		m_transform.position,
 		m_pCamera->GetCamera(),
+		m_StageID,
 		false
 		);
 	m_UseBorn = true;
