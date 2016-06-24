@@ -18,7 +18,7 @@ class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
 
-enum PLAYER_STATE{ Jump = 1, Walk, Wait};
+enum PLAYER_STATE{ Wait, Walk, Jump };
 class CPlayer : public C3DImage
 {
 public:
@@ -132,6 +132,11 @@ private:
 	float			deadTimer;			//ゲームオーバーまでの待機時間
 	int             BusterEnemyNum;		//倒した敵の数
 
+	float m_Time;						//パーティクルが発生し続ける時間
+	float m_Timer;						//パーティクルをを発生させる時間のカウンター
+	bool m_PreviousJumpFlag;			//パーティクルをジャンプの着地時に発生させるためのフラグ
+
+	int BulletShotInterval;			//弾を発射する間隔の時間
 
 	D3DXVECTOR3		m_size;	//プレイヤーを内包するバウンディングボックスのサイズ。
 

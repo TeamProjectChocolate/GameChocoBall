@@ -32,6 +32,9 @@ public:
 	void SetEmitterName(LPCSTR name){
 		strcpy(m_pFileName, name);
 	}
+	void SetStageID(STAGE_ID id){
+		m_Stage_ID = id;
+	}
 private:
 	CAudio* m_pAudio;
 	CCamera* m_pCamera;
@@ -45,5 +48,6 @@ protected:
 	float m_JetCounter;
 	float m_IntervalTime;
 	bool m_JetFlg;
+	STAGE_ID m_Stage_ID;
 };
 
