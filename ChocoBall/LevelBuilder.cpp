@@ -52,6 +52,7 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
+			enemy->Build();
 			enemyMgr->AddEnemy(enemy);
 			SINSTANCE(CShadowRender)->Entry(enemy);
 		}
@@ -63,6 +64,7 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyfb->SetInitPosition(info.pos);	
+			enemyfb->Build();
 			enemyMgr->AddEnemy(enemyfb);
 			SINSTANCE(CShadowRender)->Entry(enemyfb);
 		}
@@ -74,6 +76,7 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemyjamp->SetInitPosition(info.pos);
+			enemyjamp->Build();
 			enemyMgr->AddEnemy(enemyjamp);
 			SINSTANCE(CShadowRender)->Entry(enemyjamp);
 		}
@@ -85,6 +88,7 @@ void CLevelBuilder::Build()
 			info.pos.x = pInfo[i].pos.x * -1;
 			info.pos.z = pInfo[i].pos.z * -1;
 			enemy->SetInitPosition(info.pos);
+			enemy->Build();
 			enemyMgr->AddEnemy(enemy);
 		}
 		else if (info.gimmickType == GimmickType_Chocoball){

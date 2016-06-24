@@ -35,7 +35,8 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 		}
 
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player 
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball) {
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Enemy) {
 			//–³‹B
 			return 0.0f;
 		}
@@ -99,7 +100,9 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		}
 
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball) {
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball 
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Enemy) 
+		{	
 			//–³‹B
 			return 0.0f;
 		}
@@ -155,7 +158,9 @@ struct SweepResultGround_Camera : public btCollisionWorld::ConvexResultCallback
 
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
-		if (convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map){		
+		if (convexResult.m_hitCollisionObject->getUserIndex() != CollisionType_Map
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Enemy)
+		{
 			//–³‹B
 			return 0.0f;
 		}

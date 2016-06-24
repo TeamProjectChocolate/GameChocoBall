@@ -40,15 +40,21 @@ void CCourceCamera::Initialize(){
 
 void CCourceCamera::Update(){
 
+	CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+	if (pl->IsVibration()) {
+		return;
+	}
 	if (m_GameState == GAMEEND_ID::CONTINUE){
-		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+		
 		D3DXVECTOR3 Target = pl->GetPos();
 		Target.y += 0.1f;
 		if (m_IsTarget){
 			m_camera.SetTarget(Target);
 		}
-
-		m_CurrentCource = m_courceDef.FindCource(Target);
+		COURCE_BLOCK cource = m_courceDef.FindCource(Target);
+		if (cource.blockNo != -1) {
+			m_CurrentCource = cource;
+		}
 		if (m_CurrentCource.blockNo != -1){
 			m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
 			D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
