@@ -724,6 +724,18 @@
 	D3DXQUATERNION(0.46f, 0.45f, -0.25f, 0.72f ),    //回転
 	D3DXVECTOR3(2.00f, 4.80f, 0.54f ),            //拡大
 },
+//PartWall_44
+{
+	D3DXVECTOR3(-42.05f, 32.90f, 47.42f),             //平行移動
+	D3DXQUATERNION(0.46f, 0.45f, -0.25f, 0.72f ),    //回転
+	D3DXVECTOR3(1.70f, 4.80f, 0.54f ),            //拡大
+},
+//PartWall_45
+{
+	D3DXVECTOR3(-40.21f, 33.14f, 43.94f),             //平行移動
+	D3DXQUATERNION(0.46f, 0.45f, -0.25f, 0.72f ),    //回転
+	D3DXVECTOR3(2.00f, 4.80f, 0.54f ),            //拡大
+},
 //Ground_22
 {
 	D3DXVECTOR3(-45.46f, 34.85f, 45.71f),             //平行移動
