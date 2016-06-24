@@ -87,6 +87,7 @@ void CPlayer::Initialize()
 		PARTICLE_TYPE::STAR,
 		m_transform.position,
 		m_pCamera->GetCamera(),
+		m_StageID,
 		true
 		);
 	m_pEmitter = CParticleEmitter::EmitterCreate(
@@ -485,7 +486,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 1.2f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -502,10 +503,10 @@ void CPlayer::StateManaged()
 			if (firejet == nullptr){
 				return;
 			}
-			if (firejet->IsCollision(m_transform.position, 1.0f)){
+			if (firejet->IsCollision(m_transform.position, 0.8f)){
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.1f, 0.0f, 0.0f), 1.0f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 1.2f, 0.08f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;

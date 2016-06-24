@@ -30,7 +30,7 @@ void CCourceDef::Initialize(){
 
 COURCE_BLOCK CCourceDef::FindCource(D3DXVECTOR3 pos){
     float Min = FLT_MAX;
-	COURCE_BLOCK ret;
+	COURCE_BLOCK* ret = nullptr;
 	COURCE_BLOCK* itr = &m_cource;
 	for (int num = 0; num < m_courceNum; num++){
 		D3DXVECTOR3 endvector = itr->endPosition - itr->startPosition;
@@ -42,13 +42,19 @@ COURCE_BLOCK CCourceDef::FindCource(D3DXVECTOR3 pos){
 		if (PlayerDist <= Distance + 6.0f && PlayerDist > -6.0f){
 			D3DXVECTOR3 VecToVecDist/*ベクトルとベクトルの距離*/ = (Dir * PlayerDist) - Playervector;
 			if (D3DXVec3Length(&VecToVecDist) < Min){
-				ret = *itr;
+				ret = itr;
 				Min = D3DXVec3Length(&VecToVecDist);
 			}
 		}
 		itr = itr->nextBlock;
 	}
-	return ret;
+	if (ret == nullptr){
+		COURCE_BLOCK ret2;
+		ret2.blockNo = -1;
+		abort();
+		return ret2;
+	}
+	return *ret;
 }
 
 COURCE_BLOCK CCourceDef::FindCource(int num){

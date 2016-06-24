@@ -22,9 +22,12 @@ private:
 public:
 	D3DXVECTOR3 m_dir;
 	D3DXVECTOR3 m_VibrationAmount;	// 振動量
+	D3DXVECTOR3 m_OrgPos;
 	float m_VibrationTime;			// 振動時間
-	float m_ReflectionTime;			// 向き反転時間
+	float m_ReflectionTime;			// もとのポジションに戻るのにかかる時間
 private:
+	float m_length;
+	float m_MoveSpeed;
 	D3DXVECTOR3* m_Target;			// 振動させるオブジェクトの移動量を格納
 };
 
