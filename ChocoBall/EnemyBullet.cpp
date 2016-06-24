@@ -26,13 +26,6 @@ void CEnemyBullet::Draw(){
 	m_enemybullet.Draw();
 }
 
-void CEnemyBullet::OnDestroy(){
-	m_enemybullet.OnDestroy();
-}
-
-void CEnemyBullet::Build(){
-	m_enemybullet.Build();
-}
 
 void CEnemyBullet::BulletPlayerCollision(){
 		D3DXVECTOR3 dist;
@@ -46,8 +39,6 @@ void CEnemyBullet::BulletPlayerCollision(){
 			{
 				dist /= E;
 				g_player->EnemyBulletHit(dist);
-			//	g_player->RollingPlayer();
-			//	g_player->RequestGameOver();
 			}
 			
 		}

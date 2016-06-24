@@ -67,7 +67,7 @@ void CEnemy::Update()
 	//âÒì]çsóÒ
 	SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_eCurrentAngleY);
 	EnemyBulletShot();
-	C3DImage::Update();
+	EnemyBase::Update();
 }
 
 
@@ -75,8 +75,6 @@ void CEnemy::Draw()
 {
 	if (GetAlive())
 	{
-		//IMAGE3D* img = GetImage();
-		//m_Rigidbody.Draw();
 		SetUpTechnique();
 		C3DImage::Draw();
 	}
@@ -88,16 +86,7 @@ void CEnemy::Draw()
 	ExcuteDeleteBullets();
 }
 
-void CEnemy::OnDestroy()
-{
-	//m_Rigidbody.OnDestroy();
-	SetAlive(false);
-}
 
-void CEnemy::Build()
-{
-	//m_Rigidbody.Build(m_transform.scale, m_transform.position);
-}
 void CEnemy::EnemyBulletShot()
 {
 	D3DXVECTOR3 dist;

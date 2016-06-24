@@ -40,15 +40,21 @@ void CCourceCamera::Initialize(){
 
 void CCourceCamera::Update(){
 
+	CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+	if (pl->IsVibration()) {
+		return;
+	}
 	if (m_GameState == GAMEEND_ID::CONTINUE){
-		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
+		
 		D3DXVECTOR3 Target = pl->GetPos();
 		Target.y += 0.1f;
 		if (m_IsTarget){
 			m_camera.SetTarget(Target);
 		}
-
-		m_CurrentCource = m_courceDef.FindCource(Target);
+		COURCE_BLOCK cource = m_courceDef.FindCource(Target);
+		if (cource.blockNo != -1) {
+			m_CurrentCource = cource;
+		}
 		if (m_CurrentCource.blockNo != -1){
 			m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
 			D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
@@ -89,11 +95,10 @@ void CCourceCamera::Draw(){
 }
 
 void CCourceCamera::ClearCamera(){
-	D3DXVECTOR3 courceVec = m_CurrentCource.startPosition - m_NowPos;
-	float length = D3DXVec3Length(&courceVec);
-	if (1.0f <= length){
-		D3DXVECTOR3 Dir;
-		D3DXVec3Normalize(&Dir, &courceVec);
+	D3DXVECTOR3 Vec = m_NowPos - m_CurrentCource.startPosition;
+	D3DXVECTOR3 Vec2 = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
+	float length = D3DXVec3Dot(&Vec2, &Vec);
+	if (0.001f >= length){
 		D3DXVECTOR3 TargetPos = m_CurrentCource.startPosition;
 		TargetPos.y += 2.5f;
 		VectorSmoothDamp(
@@ -107,11 +112,7 @@ void CCourceCamera::ClearCamera(){
 	else{
 		m_IsEnd = true;
 	}
-	if (m_IsEnd){
-		return;
-	}
-	m_IsEnd = false;
-
+	//m_IsEnd = false;
 }
 
 void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){

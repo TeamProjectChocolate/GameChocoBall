@@ -36,19 +36,19 @@ struct SCollisionInfo {
 // ※上から順にステージ1,2,3……
 static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
-	"image/StageModel_Iriguchi2.x",
-	//"image/StageModel_Iriguchi1.x",
+	"image/StageModel_Iriguchi1.x",
 	"image/StageModel_Huzita3.x",
 	"image/StageModel_Huzita4.x",
 	"image/StageModel_Huzita5.x",
-	"image/07.x",
-	"image/StageModel_Ookawa1.x"
+	"image/StageModel_Iriguchi2.x",
+	"image/StageModel_Ookawa1.x",
 };
 
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
-	"ChariotsOfFireBGM",
-	"joban_Sutage",
+	"joban_Stage",
+	"joban_Stage",
+	"tyuban_Stage",
 	"tyuban_Stage",
 	"lastStage",
 	"ChariotsOfFireBGM",
@@ -58,7 +58,7 @@ static LPCSTR Stage_BGM[] = {
 
 
 
-enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,roku, FINAL, MAX, STAGE_NONE = 999 };
+enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE = 999 };
 
 
 

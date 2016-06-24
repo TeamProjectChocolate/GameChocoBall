@@ -38,7 +38,7 @@ void CResultCursor::Update(){
 	}
 	
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
-		MessageBox(0, "ゲームを終了しますか?", NULL, MB_OK);
+		//MessageBox(0, "ゲームを終了しますか?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}
 

@@ -12,12 +12,12 @@ void FallingFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 s
 	m_transform.position = pos; //D3DXVECTOR3(0.0f, 0.0f, -45.0f);
 	StartPos = m_transform.position;
 	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
-	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.scale = scale;// D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_transform.angle = rot;
 	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
-	this->Build(D3DXVECTOR3(1.0f, 1.0f, 1.0f), m_transform.position);
+	this->Build(D3DXVECTOR3(1.5f*scale.x, 1.5f*scale.y, 1.5f*scale.z), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
