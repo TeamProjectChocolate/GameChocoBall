@@ -44,6 +44,7 @@ void CObjectManager::DeleteGameObject(LPCSTR ObjectName){
 
 void CObjectManager::DeleteGameObject(CGameObject* pObject){
 	int size = m_GameObjects.size();
+	pObject->OnDestroy();
 	m_DeleteObjects.push_back(pObject);
 }
 
