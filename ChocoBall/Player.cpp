@@ -49,6 +49,7 @@ void CPlayer::Initialize()
 	LockOnflag = false;
 	Shotflag = false;
 	Jumpflag = false;
+	m_PreviousJumpFlag = false;
 	ChocoBall = false;
 	
 	GamaOverFlag = false;
@@ -56,6 +57,10 @@ void CPlayer::Initialize()
 	m_size.x = 1.0f;
 	m_size.y = 2.0f;
 	m_size.z = 1.0f;
+
+	m_Time = 0.2f;
+	m_Timer = 0.0f;
+	BulletShotInterval = 0;
 
 	m_GameState = GAMEEND_ID::CONTINUE;
 
@@ -83,6 +88,13 @@ void CPlayer::Initialize()
 		m_transform.position,
 		m_pCamera->GetCamera(),
 		true
+		);
+	m_pEmitter = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterSmoke"),
+		PARTICLE_TYPE::SMOKE,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		false
 		);
 	m_UseBorn = true;
 	m_MoveFlg = true;
@@ -124,6 +136,15 @@ void CPlayer::Update()
 {
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
+		//1フレームでのカウンターの加算処理
+		m_Timer += 1.0f / 60.0f;
+		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
+		if (m_Timer>=m_Time)
+		{
+			m_pEmitter->SetEmitFlg(false);
+			m_Timer = 0.0f;
+		}
+
 		//親がいるときの処理
 		if (parent)
 		{
@@ -191,6 +212,16 @@ void CPlayer::Update()
 			//着地しているのでフラグはfalse
 			if (m_IsIntersect.IsHitGround())
 			{
+				if (m_PreviousJumpFlag!=Jumpflag)
+				{
+					m_pEmitter->SetEmitFlg(true);
+					// 自分の周囲にパーティクル発生
+					//Setすると常にプレイヤーの場所にパーティクルの発生する
+					D3DXVECTOR3 pos = m_transform.position;//パーティクルのposを変えるためだけの格納
+					pos.y = pos.y - 0.7f;
+					m_pEmitter->SetEmitPos(pos);
+					m_PreviousJumpFlag = Jumpflag;
+				}
 				Jumpflag = false;
 			}
 			else
@@ -213,9 +244,6 @@ void CPlayer::Update()
 		}
 		C3DImage::Update();
 
-		// 自分の周囲にパーティクル発生
-		//Setすると常にプレイヤーの場所にパーティクルの発生する
-		//m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
@@ -295,6 +323,14 @@ void CPlayer::Move()
 	{
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
+		m_pEmitter->SetEmitFlg(true);
+		// 自分の周囲にパーティクル発生
+		//Setすると常にプレイヤーの場所にパーティクルの発生する
+		D3DXVECTOR3 pos = m_transform.position;//パーティクルのposを変えるためだけの格納
+		pos.y = pos.y - 0.5f;
+		m_pEmitter->SetEmitPos(pos);
+		m_PreviousJumpFlag = Jumpflag;
+		m_currentAnimNo = 2;
 	}
 
 	m_moveSpeed.x = 0.0f;
@@ -309,7 +345,7 @@ void CPlayer::Move()
 
 		m_moveSpeed.z = Y * MOVE_SPEED;
 		isTurn = true;
-		m_currentAnimNo = 1;
+		m_currentAnimNo = Walk;
 	}
 
 	//左右の動き
@@ -317,7 +353,7 @@ void CPlayer::Move()
 	{
 		m_moveSpeed.x = X * MOVE_SPEED;
 		isTurn = true;
-		m_currentAnimNo = 1;
+		m_currentAnimNo = Walk;
 	}
 	//D3DXToRadianの値は各自で設定する。 例　正面D3DXToRadian(0.0f)
 	//isTurnはUpdateの最初でfalseにして、回転させたい時にtrueにする。
@@ -481,21 +517,24 @@ void CPlayer::StateManaged()
 void CPlayer::BulletShot()
 {
 	if (m_MoveFlg){
-		if (m_pInput->IsTriggerRightShift())
-		{
+		BulletShotInterval++;
+		if (BulletShotInterval % 5 == 0){
 
-			//プレイヤーの向いているベクトルを計算
-			D3DXVec3Normalize(&RV0, &RV0);
-			D3DXMatrixRotationY(&Rot, m_currentAngleY);
-			D3DXVec3Transform(&RV1, &RV0, &Rot);
+			if (m_pInput->IsPressRightShift())
+			{
+				//プレイヤーの向いているベクトルを計算
+				D3DXVec3Normalize(&RV0, &RV0);
+				D3DXMatrixRotationY(&Rot, m_currentAngleY);
+				D3DXVec3Transform(&RV1, &RV0, &Rot);
 
 
-			CPlayerBullet* bullet = new CPlayerBullet;
-			bullet->Initialize();
-			bullet->SetPos(m_transform.position);
-			bullet->SetDir(RV1);
-			bullet->SetBulletSpeed(0.5f);
-			m_bullets.push_back(bullet);
+				CPlayerBullet* bullet = new CPlayerBullet;
+				bullet->Initialize();
+				bullet->SetPos(m_transform.position);
+				bullet->SetDir(RV1);
+				bullet->SetBulletSpeed(0.5f);
+				m_bullets.push_back(bullet);
+			}
 		}
 	}
 
