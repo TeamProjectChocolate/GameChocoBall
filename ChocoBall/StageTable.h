@@ -53,14 +53,12 @@ static LPCSTR Stage_BGM[] = {
 	"lastStage",
 	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
-
 	"Modern_copy",
 };
 
 
 
 enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE = 999 };
-
 
 
 
@@ -117,7 +115,6 @@ static LPCSTR StageGameObject_6[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 };
-
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です

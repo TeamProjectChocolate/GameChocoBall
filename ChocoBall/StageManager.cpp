@@ -14,8 +14,7 @@ void CStageManager::Initialize()
 	SetNextStage();
 }
 
-void CStageManager::Update()
-{
+void CStageManager::Update(){
 	m_pStage->Update();
 }
 
