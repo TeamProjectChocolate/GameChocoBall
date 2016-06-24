@@ -155,7 +155,8 @@ void CLevelBuilder::Build()
 			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
 			upfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
-				pInfo[i].rot
+				pInfo[i].rot,
+				D3DXVECTOR3(pInfo[i].scale.x, pInfo[i].scale.y, pInfo[i].scale.z)
 				);
 			upfloor->SetMaxMove(pInfo[i].MaxMove);
 			//SINSTANCE(CShadowRender)->Entry(upfloor);

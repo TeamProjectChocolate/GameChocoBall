@@ -137,6 +137,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="ParticleParameterTable.h" />
+    <ClInclude Include="PlayerAnimationContoller.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="PlayerParam.h" />
     <ClInclude Include="Primitive.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAnimationContoller.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Random.cpp" />
