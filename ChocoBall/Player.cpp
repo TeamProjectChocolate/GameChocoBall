@@ -214,6 +214,7 @@ void CPlayer::Update()
 		C3DImage::Update();
 
 		// 自分の周囲にパーティクル発生
+		//Setすると常にプレイヤーの場所にパーティクルの発生する
 		//m_pEmitter->SetEmitPos(m_transform.position);
 	}
 
