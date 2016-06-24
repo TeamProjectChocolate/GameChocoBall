@@ -43,41 +43,40 @@ void CCourceCamera::Update(){
 	if (m_GameState == GAMEEND_ID::CONTINUE){
 		CPlayer* pl = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 		D3DXVECTOR3 Target = pl->GetPos();
-		m_CurrentCource = m_courceDef.FindCource(Target);
-		m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
-
 		Target.y += 0.1f;
 		if (m_IsTarget){
 			m_camera.SetTarget(Target);
 		}
-		D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
-		D3DXVECTOR3 Dir;
-		D3DXVec3Normalize(&Dir, &courceVec);
-		D3DXVECTOR3 TargetPos = pl->GetPos() - m_CurrentCource.startPosition;
 
-		CourceTurn(Dir, TargetPos, D3DXToRadian(140.0f), 1.5f);
+		m_CurrentCource = m_courceDef.FindCource(Target);
+		if (m_CurrentCource.blockNo != -1){
+			m_PrevCource = m_courceDef.FindCource(m_CurrentCource.blockNo - 1);
+			D3DXVECTOR3 courceVec = m_CurrentCource.endPosition - m_CurrentCource.startPosition;
+			D3DXVec3Normalize(&m_Dir, &courceVec);
+			m_TargetPos = pl->GetPos() - m_CurrentCource.startPosition;
+		}
 
-		TargetPos.y = Target.y + 2.5f;
+		CourceTurn(m_Dir, m_TargetPos, D3DXToRadian(140.0f), 1.5f);
+
+		m_TargetPos.y = Target.y + 2.5f;
 
 		m_transform.position = m_NowPos;
 		if (!m_isFirst){
 			VectorSmoothDamp(
 				m_NowPos,
 				m_NowPos,
-				TargetPos,
+				m_TargetPos,
 				m_cameraPosSpeed,
 				10);
 			m_Isintersect.IntersectCamera(&m_NowPos, &(m_NowPos - m_transform.position));
 		}
 		else{
-			m_NowPos = TargetPos;
+			m_NowPos = m_TargetPos;
 			m_transform.position = m_NowPos;
 			m_Isintersect.CollisitionInitialize(&m_NowPos, 2.8f,CollisionType_Camera);
 			m_isFirst = false;
 		}
 		m_camera.SetPos(m_NowPos);
-
-		//m_camera.SetTarget(target);
 	}
 	else if (m_GameState == GAMEEND_ID::CLEAR){
 		ClearCamera();

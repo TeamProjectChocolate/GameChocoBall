@@ -12,13 +12,14 @@
 class CParticleEmitter:public CGameObject
 {
 public:
-	static CParticleEmitter* EmitterCreate(LPCSTR EmitterName, PARTICLE_TYPE type,D3DXVECTOR3 pos,CCamera* pcamera,bool flg){
+	static CParticleEmitter* EmitterCreate(LPCSTR EmitterName, PARTICLE_TYPE type,D3DXVECTOR3 pos,CCamera* pcamera,STAGE_ID Id,bool flg){
 		CParticleEmitter* pEmitter = SINSTANCE(CObjectManager)->GenerationObject<CParticleEmitter>(EmitterName, PRIORTY::EMITTER, false);
 		pEmitter->SetCamera(pcamera);
 		pEmitter->SetEmitParameter(reinterpret_cast<SParticleEmitParameter*>(ParticleParamPT_Array[type]));
 		pEmitter->SetEmitterName(EmitterName);
 		pEmitter->SetEmitPos(pos);
 		pEmitter->SetEmitFlg(flg);
+		pEmitter->SetStageID(Id);
 		pEmitter->Initialize();
 		return pEmitter;
 	}
@@ -51,6 +52,9 @@ public:
 	void SetEmitFlg(bool flg){
 		m_EmitFlg = flg;
 	}
+	bool GetEmitFlg(){
+		return m_EmitFlg;
+	}
 	void SetDirection(D3DXVECTOR3 dir){
 		m_dir = dir;
 	}
@@ -62,6 +66,9 @@ public:
 	}
 	bool GetResidual(){
 		return m_Residual;
+	}
+	void SetStageID(STAGE_ID id){
+		m_Stage_ID = id;
 	}
 private:
 	float m_timer;
@@ -83,5 +90,7 @@ private:
 	D3DXVECTOR3* m_TailPosition;	// 最後に生成したプリミティブのポジションを追跡するためのポインタ
 	CParticle* m_pTailParticle;		// 最後に生成したパーティクルのポインタ
 	bool m_Residual;			// 最後に生成したパーティクルが残留しているか
+private:
+	STAGE_ID m_Stage_ID;
 };
 
