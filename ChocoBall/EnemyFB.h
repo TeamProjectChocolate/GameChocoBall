@@ -15,8 +15,6 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-	void OnDestroy();
-	void Build();
 	D3DXVECTOR3 GetPos();
 	void Setradius(float radius)
 	{

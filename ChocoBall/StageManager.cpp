@@ -11,12 +11,11 @@ void CStageManager::Initialize()
 {
 	m_NowStage = STAGE_ID::STAGE_NONE;
 
-	ChangeStage(STAGE_ID::SIX);
+	ChangeStage(STAGE_ID::FIFTH);
 	SetNextStage();
 }
 
-void CStageManager::Update()
-{
+void CStageManager::Update(){
 	m_pStage->Update();
 }
 

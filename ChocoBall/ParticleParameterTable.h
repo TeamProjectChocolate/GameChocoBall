@@ -139,7 +139,7 @@ static SParticleEmitParameter Param_FireGimmick = {
 static SParticleEmitParameter Param_Star = {
 	"image/Star.png",	//テクスチャのファイル名
 	D3DXVECTOR3(0.0f, 6.5f, 0.0f),		// 初速度。
-	2.0f,							// 寿命。単位は秒。
+	1.0f,							// 寿命。単位は秒。
 	0.05f,							// 発生時間。単位は秒。
 	1,								// 1フレームに発生させる量
 	0.7f,							// パーティクルの幅。

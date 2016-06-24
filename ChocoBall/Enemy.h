@@ -16,8 +16,6 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-	void OnDestroy();
-	void Build();
 	D3DXVECTOR3 GetPos();
 	void Setradius(float radius);
 	void SetInitPosition(D3DXVECTOR3 pos);
@@ -47,7 +45,6 @@ private:
 	int				time;
 
 	CTurn			m_Turn;				//CTurnのインスタンス
-	CIsIntersect	m_IsIntersect;		//CIsIntersectのインスタンス
 	CCourceDef		m_Courcedef;
 	vector<CEnemyBullet*> m_bullets;
 	vector<CEnemyBullet*> m_Deletebullets;	// 削除リスト

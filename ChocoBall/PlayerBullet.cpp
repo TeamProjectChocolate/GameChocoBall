@@ -57,8 +57,7 @@ bool CPlayerBullet::BulletEnemyCollision(){
 
 		if (L <= 1)
 		{
-			//m_Hitflag = true;
-			m_pEnemyManager->DeleteEnemy(Enemy);
+			Enemy->PlayerBulletHit(m_bullet.GetDirection());
 			return true;
 		}
 	}
