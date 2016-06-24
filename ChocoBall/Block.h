@@ -22,7 +22,7 @@ public:
 	void Update();
 	void Draw();
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelShadowTec");
 	}
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;

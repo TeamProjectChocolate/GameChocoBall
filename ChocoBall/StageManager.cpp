@@ -12,6 +12,7 @@ void CStageManager::Initialize()
 	m_NowStage = STAGE_ID::STAGE_NONE;
 
 	ChangeStage(STAGE_ID::SECOUND);
+
 	SetNextStage();
 }
 

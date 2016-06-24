@@ -143,7 +143,17 @@ void CParticle::SetupMatrices(){
 
 void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEmitParameter* param, const D3DXVECTOR3& emitPosition,D3DXVECTOR3 dir){
 	m_pEffect = SINSTANCE(CEffect)->SetEffect(_T("Shader/2DShader.hlsl"));	// 使用するshaderファイルを指定(デフォルト)
-	m_transform.scale = D3DXVECTOR3(param->w, param->h, 1.0f);
+
+	if (param->size_randMax < param->size_randMin){
+		MessageBox(nullptr, _T("MaxとMinの数字が逆転しています"), _T("警告"), MB_OK);
+		abort();
+	}
+	float rand = (static_cast<float>(random.GetRandDouble()) * (param->size_randMax - param->size_randMin)) + param->size_randMin;
+
+	float width = param->w * rand;
+	float hight = param->h * rand;
+
+	m_transform.scale = D3DXVECTOR3(width, hight, 1.0f);
 
 	float halfW = param->w * 0.5f;
 	float halfH = param->h * 0.5f;

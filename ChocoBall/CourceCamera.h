@@ -40,5 +40,7 @@ private:
 	bool m_IsEnd;
 	CIsIntersect m_Isintersect;
 	bool m_IsTarget;
+	D3DXVECTOR3 m_Dir;
+	D3DXVECTOR3 m_TargetPos;
 };
 

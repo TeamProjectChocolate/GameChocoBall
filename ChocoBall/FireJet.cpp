@@ -25,7 +25,7 @@ void CFireJet::Update(){
 bool CFireJet::IsCollision(D3DXVECTOR3 pos, float radius){
 	SParticleEmitParameter* param = m_pEmitter->GetEmitParameter();
 	float timer;
-	if (m_pEmitter->GetResidual() && m_JetCounter <= param->life){
+	if (m_pEmitter->GetEmitFlg() && m_JetCounter <= param->life && m_pEmitter->GetResidual()/*エミットフラグのみだとこちらの更新の方が速いためnullアクセスが発生する*/){
 		timer = m_JetCounter;
 	}
 	else if (m_pEmitter->GetResidual()){

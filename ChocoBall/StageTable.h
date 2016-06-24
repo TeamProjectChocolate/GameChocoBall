@@ -47,9 +47,9 @@ static LPCSTR FieldNameArray[] = {
 // フィールドで使用するBGM
 static LPCSTR Stage_BGM[] = {
 	"ChariotsOfFireBGM",
-	"ChariotsOfFireBGM",
-	"ChariotsOfFireBGM",
-	"ChariotsOfFireBGM",
+	"joban_Sutage",
+	"tyuban_Stage",
+	"lastStage",
 	"ChariotsOfFireBGM",
 	"ChariotsOfFireBGM",
 
@@ -58,7 +58,8 @@ static LPCSTR Stage_BGM[] = {
 
 
 
-enum STAGE_ID{ FIRST = 0, SECOUND, THARD, FOUR, FIVE, SIX, FINAL, MAX, STAGE_NONE = 999 };
+enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE = 999 };
+
 
 
 

@@ -86,8 +86,6 @@ void CRenderContext::SetRenderingBuffer(){
 	m_pEffect->SetTexture("g_tex",m_pTexture);
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 	
-	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
-
 	(*graphicsDevice()).SetVertexDeclaration(m_copyBackBufferPrim.GetVertexDecl());
 	(*graphicsDevice()).SetStreamSource(0, m_copyBackBufferPrim.GetVertexBuffer(), 0, sizeof(SShapeVertex_PT));
 	(*graphicsDevice()).SetIndices(m_copyBackBufferPrim.GetIndexBuffer());

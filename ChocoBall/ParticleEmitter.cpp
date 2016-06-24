@@ -24,6 +24,7 @@ void CParticleEmitter::Initialize(){
 	SetAlive(true);
 	D3DXVec3Normalize(&m_dir,&(m_param->initVelocity));
 	strcpy(m_ParticleName, m_param->texturePath);
+	m_CourceDef.SetStageID(m_Stage_ID);
 	m_CourceDef.Initialize();
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 	m_TailPosition = nullptr;
@@ -33,14 +34,11 @@ void CParticleEmitter::Initialize(){
 void CParticleEmitter::Update(){
 	m_CurrentCourceNo = m_CourceDef.FindCource(m_emitPosition).blockNo;
 	m_NowPlayerCourceNo = m_CourceDef.FindCource(m_pPlayer->GetPos()).blockNo;
-	if (m_CurrentCourceNo == m_NowPlayerCourceNo){
+	if (m_CurrentCourceNo == m_NowPlayerCourceNo && m_CurrentCourceNo != -1 && m_NowPlayerCourceNo != -1){
 		if (m_EmitFlg){
 			if (m_timer >= m_param->intervalTime){
 				for (int idx = 0; idx < m_param->EmitNum; idx++){
-					//char num[10];
-					//_itoa(m_count, num,10);
-					//strcat(m_EmitterName, num);
-					CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_ParticleName), PRIORTY::OBJECT2D_ALPHA, false);
+					CParticle* p = SINSTANCE(CObjectManager)->GenerationObject<CParticle>(static_cast<LPCSTR>(m_ParticleName), PRIORTY::OBJECT3D_ALPHA, false);
 					p->InitParticle(m_random, *m_camera, m_param, m_emitPosition, m_dir);
 					m_timer = 0.0f;
 					m_ParticleList.push_back(p);
