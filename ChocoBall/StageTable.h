@@ -38,8 +38,8 @@ static LPCSTR FieldNameArray[] = {
 	"image/SUTE2_01.x",
 	//"image/StageModel_Iriguchi2.x",
 	"image/StageModel_Iriguchi1.x",
-	"image/StageModel_Huzita3.x",
 	"image/StageModel_Huzita4.x",
+	"image/StageModel_Huzita5.x",
 	"image/StageModel_Ookawa1.x"
 };
 
@@ -54,7 +54,7 @@ static LPCSTR Stage_BGM[] = {
 
 
 
-enum STAGE_ID{ FIRST = 0, SECOUND, FINAL, MAX, STAGE_NONE = 999 };
+enum STAGE_ID{ FIRST = 0, SECOUND,SAN,YON, FINAL, MAX, STAGE_NONE = 999 };
 
 
 

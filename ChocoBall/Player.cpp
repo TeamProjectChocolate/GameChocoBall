@@ -433,8 +433,12 @@ void CPlayer::StateManaged()
 	float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
 	if (Kyori < 0.001f)
 	{
-		m_GameState = GAMEEND_ID::CLEAR;
-		return;
+		if (GamaOverFlag != true)
+		{
+			m_GameState = GAMEEND_ID::CLEAR;
+			return;
+		}
+		
 	}
 
 	if (!m_vibration.GetIsVibration()){
