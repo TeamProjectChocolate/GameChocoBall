@@ -247,7 +247,7 @@ void Initialize()
 	SINSTANCE(CStageManager)->SetAudio(pAudio);
 	SINSTANCE(CGameManager)->SetAudio(pAudio);
 	AddScene();
-	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	SINSTANCE(CGameManager)->ChangeScene(_T("Result"));
 	SINSTANCE(CGameManager)->SetNextScene();
 }
 
