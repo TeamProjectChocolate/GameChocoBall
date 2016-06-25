@@ -34,7 +34,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapTextureTec");
+		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
 	}
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);

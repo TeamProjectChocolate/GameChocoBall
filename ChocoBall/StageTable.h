@@ -61,7 +61,6 @@ enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE
 
 
 
-
 // ステージ1で使用するオブジェクトの定義配列
 // ※新しいステージを作ったら同じ書き方で新しい配列を追加してください
 // ※オブジェクトの名前は、同じステージの中でなければ被っても構いません
@@ -115,7 +114,6 @@ static LPCSTR StageGameObject_6[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 };
-
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
