@@ -52,7 +52,7 @@ static LPCSTR Stage_BGM[] = {
 	"tyuban_Stage",
 	"lastStage",
 	"lastStage",
-	"Modern_copy",
+	"Modern",
 };
 
 

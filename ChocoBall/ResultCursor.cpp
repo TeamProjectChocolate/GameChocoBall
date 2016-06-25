@@ -37,7 +37,7 @@ void CResultCursor::Update(){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
 	
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
+	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 400.0f){
 		//MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}
@@ -46,13 +46,16 @@ void CResultCursor::Update(){
 	float Y = m_pInput->GetStickL_YFloat();
 	if (Y>0){
 		m_transform.position.y = 300.0f;
+		m_transform.position.x = 620.0f;
 
 	}
 	if (Y<0){
-		m_transform.position.y = 350.0f;
-
+		m_transform.position.y = 400.0f;
+		m_transform.position.x = 600.0f;
 	}
 }
+
+
 
 void CResultCursor::Draw(){
 	C2DImage::SetupMatrices();
