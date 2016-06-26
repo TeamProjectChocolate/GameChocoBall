@@ -207,7 +207,7 @@ void CPlayer::Update()
 
 		//ƒƒbƒNƒIƒ“ˆ—
 		if (m_MoveFlg){
-			LockOn();
+			//LockOn();
 		}
 
 		if (m_CBManager != NULL)
