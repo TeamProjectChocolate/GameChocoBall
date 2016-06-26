@@ -6,6 +6,7 @@
 #include "CollisionType.h"
 
 #define ORIGIN_CENTER	//定義で起点が足元。
+void GenelateChocoBall(CCBManager* mgr, btGhostObject* m_hitCollisionObject);
 
 // プレイヤー用コールバック
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
@@ -25,12 +26,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
-			if (!mgr->GetAlive()){
-				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
-				mgr->Initialize();
-				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
-				g_player->SetCBM(mgr);
-			}
+			GenelateChocoBall(mgr, (btGhostObject*)convexResult.m_hitCollisionObject);
 			return 0.0f;
 		}
 
@@ -90,12 +86,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
-			if (!mgr->GetAlive()){
- 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
-				mgr->Initialize();
-				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
-				g_player->SetCBM(mgr);
-			}
+			GenelateChocoBall(mgr, (btGhostObject*)convexResult.m_hitCollisionObject);
 			return 0.0f;
 		}
 
@@ -141,6 +132,16 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		return 0.0f;
 	}
 };
+
+
+void GenelateChocoBall(CCBManager* mgr, btGhostObject* m_hitCollisionObject){
+	if (!mgr->GetAlive()){
+		SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+		mgr->Initialize();
+		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_hitCollisionObject);
+		g_player->SetCBM(mgr);
+	}
+}
 
 // カメラ用コールバック
 struct SweepResultGround_Camera : public btCollisionWorld::ConvexResultCallback

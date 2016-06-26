@@ -49,11 +49,11 @@ void MoveFloor::Update()
 	if (MaxMove == 0.0f){
 		m_state = move_none;
 	}
-	else if (length/*fabsf(m_transform.position.z) - fabsf(StartPos.z)*/ > MaxMove )
+	else if (length > MaxMove )
 	{
 		m_state = move_back;
 	}
-	else if (length/*fabsf(m_transform.position.z) - fabsf(StartPos.z)*/ <= 0.01f && m_state == move_back)
+	else if (length <= 0.01f && m_state == move_back)
 	{
 		m_state = move_flont;
 	}

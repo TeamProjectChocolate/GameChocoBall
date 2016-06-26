@@ -47,6 +47,9 @@ public:
 	void ChocoHit();
 	void RollingPlayer();
 
+	void DeleteChocoBall(CCBManager*);
+	void ExcuteDeleteChocoBall();
+
 	void DeleteBullet(CPlayerBullet*);
 	void ExcuteDeleteBullets();
 	D3DXVECTOR3 GetPos(){
@@ -71,7 +74,7 @@ public:
 	}
 	void SetCBM(CCBManager* CHOCO)
 	{
-		m_CBManager = CHOCO;
+		m_CBManager.push_back(CHOCO);
 	}
 	int GetBusterEnemyNum()
 	{
@@ -142,7 +145,8 @@ private:
 
 	D3DXVECTOR3		m_size;	//プレイヤーを内包するバウンディングボックスのサイズ。
 
-	CCBManager*		m_CBManager;
+	list<CCBManager*> m_CBManager;
+	list<CCBManager*> m_DeleteChocoBall;
 
 	CCourceDef		m_Courcedef;
 	D3DXVECTOR3 RV0;
@@ -166,6 +170,7 @@ private:
 	bool m_MoveFlg;
 	CVibration m_vibration;
 	CCourceCamera* m_pCamera;
+	int m_NowCourceNo;
 };
 
 extern CPlayer* g_player;

@@ -76,7 +76,7 @@ bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 		//プレイヤーを内包する箱の最大値と最小値を求める。
 		D3DXVECTOR3 MaxSize;//最大値
 		D3DXVECTOR3 MinSize;//最小値
-		const static float Sphereradius = 1.0f;//チョコボールの半径
+		const static float Sphereradius = 0.5f;//チョコボールの半径
 		size *= 0.5f;
 		MaxSize.x = pos.x + size.x + Sphereradius;
 		MaxSize.y = pos.y + size.y + Sphereradius;
@@ -99,4 +99,17 @@ bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 	
 	}
 	return FALSE;
+}
+
+void CCBManager::FindCource(){
+	m_CourceDef.SetStageID(m_StageID);
+	m_CourceDef.Initialize();
+	m_InitPosOfCourceNo = m_CourceDef.FindCource(m_pos).blockNo;
+}
+
+void CCBManager::NonActivate(){
+	for (int idx = 0; idx < CHOCO_NUM; idx++){
+		m_Choco[idx].SetAlive(false);
+	}
+	SetAlive(false);
 }

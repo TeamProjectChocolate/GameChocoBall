@@ -5,6 +5,8 @@
 #include "Chocoball.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "CourceDef.h"
+#include "ShadowRender.h"
 
 
 #define CHOCO_NUM 200	//一回に流れるチョコの数
@@ -13,9 +15,17 @@
 //Chocoballを管理するクラス
 class CCBManager : public CGameObject{
 public:
+	CCBManager(){};
+	~CCBManager(){
+		for (int idx = 0; idx <= CHOCO_NUM; idx++){
+			SINSTANCE(CShadowRender)->DeleteObject(&m_Choco[idx]);
+		}
+	};
 	void Initialize();
 	void Update();
 	void Draw();
+	void FindCource();
+	void NonActivate();
 
 	//進行方向をセットします。
 	void SetVector(D3DXVECTOR3 vec)
@@ -50,6 +60,12 @@ public:
 	//チョコボールとの衝突判定。
 	bool IsHit(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	
+	void SetStageID(STAGE_ID id){
+		m_StageID = id;
+	}
+	int GetCourceNo(){
+		return m_InitPosOfCourceNo;
+	}
 private:
 	D3DXVECTOR3			m_pos;			//生成される場所のポジション。
 	D3DXVECTOR3			m_posG;			//流れていく先(ゴール)のポジション。
@@ -58,4 +74,7 @@ private:
 	float				m_interval;		//インターバル。
 	float				m_timer;		//タイマー。
 	int					m_numCreate;	//作成済みのチョコボールの数。
+	int					m_InitPosOfCourceNo;// チョコボールが生成された場所のコースナンバー
+	CCourceDef m_CourceDef;
+	STAGE_ID m_StageID;
 };

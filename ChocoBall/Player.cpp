@@ -13,7 +13,19 @@
 #include "FireJet.h"
 
 CPlayer* g_player = NULL;
-CPlayer::~CPlayer(){  }
+CPlayer::~CPlayer(){ 
+	int bulletMax = m_bullets.size();
+	for (int idx = 0; idx < bulletMax; idx++){
+		SAFE_DELETE(m_bullets[idx]);
+	}
+	m_bullets.clear();
+
+	list<CCBManager*>::iterator itr = m_CBManager.begin();
+	for (; itr != m_CBManager.end();itr++){
+		SINSTANCE(CObjectManager)->DeleteGameObjectImmediate(*itr);
+	}
+	m_CBManager.clear();
+}
 
 void CPlayer::Initialize()
 
@@ -66,14 +78,13 @@ void CPlayer::Initialize()
 
 	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
+	m_NowCourceNo = -1;
 
 	// ライト関連の初期化
 	this->ConfigLight();
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
 	
-	m_CBManager =NULL;
-
 	C3DImage::SetImage();
 
 	deadTimer = 0.0f;
@@ -187,13 +198,20 @@ void CPlayer::Update()
 			LockOn();
 		}
 
-		if (m_CBManager != NULL)
-		{
-			//チョコボールに当たっているかの処理
-			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_size))
+		for (auto itr : m_CBManager){
+			if (itr != NULL)
 			{
-				//チョコボールに当たったらの処理
-				ChocoHit();
+				//チョコボールに当たっているかの処理
+				if (m_HitFlag = itr->IsHit(m_transform.position, m_size))
+				{
+					//チョコボールに当たったらの処理
+					ChocoHit();
+				}
+			}
+			if (m_NowCourceNo != -1){
+				if (m_NowCourceNo - itr->GetCourceNo() >= 5){
+					DeleteChocoBall(itr);
+				}
 			}
 		}
 
@@ -270,6 +288,7 @@ void CPlayer::Draw(){
 
 	// 絶対にここで呼べよ！　絶対だぞっ！？
 	ExcuteDeleteBullets();
+	ExcuteDeleteChocoBall();
 }
 
 void CPlayer::UpdateLight(){
@@ -462,6 +481,7 @@ void CPlayer::StateManaged()
 	//ゲームクリア
 	COURCE_BLOCK EndBlock = m_Courcedef.FindCource(m_Courcedef.GetCourceMax() - 1);
 	COURCE_BLOCK nowBlock = m_Courcedef.FindCource(m_transform.position);
+	m_NowCourceNo = nowBlock.blockNo;
 	if (nowBlock.blockNo == EndBlock.blockNo){
 		D3DXVECTOR3 LoadVec;
 		LoadVec = EndBlock.startPosition - EndBlock.endPosition;
@@ -506,7 +526,7 @@ void CPlayer::StateManaged()
 			if (firejet == nullptr){
 				return;
 			}
-			if (firejet->IsCollision(m_transform.position, 0.8f)){
+			if (firejet->IsCollision(m_transform.position, 1.0f)){
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 1.2f, 0.01f);
@@ -622,4 +642,24 @@ void CPlayer::RollingPlayer()
 	if (deadTimer >= 2.0f){
 		m_GameState = GAMEEND_ID::OVER;
 	}
+}
+
+void CPlayer::DeleteChocoBall(CCBManager* mgr){
+	m_DeleteChocoBall.push_back(mgr);
+}
+
+void CPlayer::ExcuteDeleteChocoBall(){
+	for (auto itr2 : m_DeleteChocoBall){
+		for (list<CCBManager*>::iterator itr = m_CBManager.begin(); itr != m_CBManager.end();){
+			if (*itr == itr2){
+				(*itr)->NonActivate();
+				SINSTANCE(CObjectManager)->DeleteGameObject(*itr);
+				itr = m_CBManager.erase(itr);
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+	m_DeleteChocoBall.clear();
 }
