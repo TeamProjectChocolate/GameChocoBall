@@ -51,7 +51,7 @@ static LPCSTR Stage_BGM[] = {
 	"tyuban_Stage",
 	"tyuban_Stage",
 	"lastStage",
-	"ChariotsOfFireBGM",
+	"lastStage",
 	"Modern",
 };
 
@@ -217,6 +217,7 @@ static SEnemyAndGimmickInfo infoTable_Final[] = {
 #include "EnemyGimmickInfoStageFinal.h"
 };
 
+
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SEnemyAndGimmickInfo* infoTableArray[] = {
@@ -240,6 +241,7 @@ static int InfoTableSizeArray[] = {
 	ARRAYSIZE(infoTable_6),
 	ARRAYSIZE(infoTable_Final)
 };
+
 
 // ステージ1で使用するギミック発動用当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
@@ -275,6 +277,7 @@ static SCollisionInfo* GimmickinfoTableArray[] = {
 	GimmickTriggerInfoTable_6,
 	GimmickTriggerInfoTable_Final
 };
+
 
 // ステージ1で使用するギミック発動用当たり判定を設定した配列の要素数を格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
@@ -312,6 +315,7 @@ static SCollisionInfo collisionInfoTable_Final[] = {
 #include "collisionInfoStageFinal.h"
 };
 
+
 // ステージ1のフィールドの当たり判定を設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SCollisionInfo* collisionInfoTableArray[] = {
@@ -335,3 +339,4 @@ static int collisionInfoTableSizeArray[] = {
 	ARRAYSIZE(collisionInfoTable_6),
 	ARRAYSIZE(collisionInfoTable_Final)
 };
+
