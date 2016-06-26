@@ -21,4 +21,6 @@ private:
 	CAudio* m_pAudio;
 	CInterface*	m_pInput;
 	short dir;
+	bool isup;
+	bool isdown;
 };

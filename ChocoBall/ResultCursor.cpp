@@ -11,6 +11,8 @@
 CResultCursor::CResultCursor()
 {
 	strcpy(m_pFileName, "image/result_CSR.png");
+	isup = false;
+	isdown = false;
 }
 
 
@@ -47,12 +49,13 @@ void CResultCursor::Update(){
 	if (Y>0){
 		m_transform.position.y = 300.0f;
 		m_transform.position.x = 620.0f;
-
+		
 	}
-	if (Y<0){
+	if (Y < 0){
 		m_transform.position.y = 400.0f;
 		m_transform.position.x = 600.0f;
 	}
+
 }
 
 
@@ -60,4 +63,8 @@ void CResultCursor::Update(){
 void CResultCursor::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
+}
+
+void CResultCursor::Release(){
+	SAFE_DELETE(m_pAudio);
 }

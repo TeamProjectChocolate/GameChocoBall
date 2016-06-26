@@ -223,6 +223,7 @@ void CPlayer::Update()
 					pos.y = pos.y - 0.7f;
 					m_pEmitter->SetEmitPos(pos);
 					m_PreviousJumpFlag = Jumpflag;
+					m_pAudio->PlayCue("Landing", true);
 				}
 				Jumpflag = false;
 			}
@@ -322,6 +323,7 @@ void CPlayer::Move()
 
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
+		m_pAudio->PlayCue("Jump", true);//ƒWƒƒƒ“ƒvSE
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
 		m_pEmitter->SetEmitFlg(true);
@@ -541,6 +543,7 @@ void CPlayer::BulletShot()
 				bullet->SetDir(RV1);
 				bullet->SetBulletSpeed(0.5f);
 				m_bullets.push_back(bullet);
+				m_pAudio->PlayCue("cover03", true);
 			}
 		}
 	}
