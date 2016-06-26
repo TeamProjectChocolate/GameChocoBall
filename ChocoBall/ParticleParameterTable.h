@@ -38,7 +38,7 @@ typedef struct SParticleEmitParameter{
 
 
 // 新しいパラメータを設定したらこの列挙体に追加すること
-enum PARTICLE_TYPE{FIRE = 0,PORIGON,FIREGIMMICK,STAR,SMOKE,GUNSMOKE};
+enum PARTICLE_TYPE{ FIRE = 0, PORIGON, FIREGIMMICK, STAR, SMOKE, GUNSMOKE, SOMKEGIMMICK };
 
 
 // パーティクルのパラメータ
@@ -57,7 +57,7 @@ static SParticleEmitParameter Param_Fire = {
 	1.0f,							// パーティクルサイズのランダム最大倍率
 	1.0f,							// パーティクルサイズのランダム最小倍率
 	D3DXVECTOR3(0.3f, 0.0f, 0.3f),		// 初期位置のランダム幅。
-	D3DXVECTOR3(0.3f, 0.0f, 0.3f),		// 初速度のランダム幅。
+	D3DXVECTOR3(0.3f, 0.0f, 0.0f),		// 初速度のランダム幅。
 	D3DXVECTOR3(0.006f, 0.0f, 0.006f),	// 速度の積分のときのランダム幅。
 	{	// UVテーブル。最大4まで保持できる。xが左上のu、yが左上のv、zが右下のu、wが右下のvになる。
 		D3DXVECTOR4(0.0f, 0.0f, 0.25f, 0.5f),
@@ -225,6 +225,37 @@ static SParticleEmitParameter Param_GunSmoke = {
 	1,								// 半透明合成、1加算合成。
 };
 
+// 煙噴出
+static SParticleEmitParameter Param_SmokeGimmick = {
+	"image/pipo-btleffect059.png",	//テクスチャのファイル名
+	D3DXVECTOR3(0.0f, 0.0f, 1.0f),		// 初速度。
+	4.0f,							// 寿命。単位は秒。
+	0.0f,							// 発生時間。単位は秒。
+	1,								// 1フレームに発生させる量
+	0.6f,							// パーティクルの幅。
+	0.6f,							// パーティクルの高さ。
+	1.0f,							// パーティクルサイズのランダム最大倍率
+	1.0f,							// パーティクルサイズのランダム最小倍率
+	D3DXVECTOR3(0.0f, 0.0f, 0.0f),		// 初期位置のランダム幅。
+	D3DXVECTOR3(0.1f, 0.1f, 0.0f),		// 初速度のランダム幅。
+	D3DXVECTOR3(0.006f, 0.0f, 0.0006f),	// 速度の積分のときのランダム幅。
+	{	// UVテーブル。最大4まで保持できる。xが左上のu、yが左上のv、zが右下のu、wが右下のvになる。
+		D3DXVECTOR4(0.3f, 0.0f, 0.4f, 1.0f),
+		D3DXVECTOR4(0.4f, 0.0f, 0.5f, 1.0f),
+		D3DXVECTOR4(0.5f, 0.0f, 0.6f, 1.0f),
+		D3DXVECTOR4(0.6f, 0.0f, 0.7f, 1.0f),
+	},
+	4,									// UVテーブルのサイズ。
+	D3DXVECTOR3(0.0f, 0.0f, 0.0f),		// 重力。
+	true,							// 死ぬときにフェードアウトする？
+	0.5f,							// フェードする時間。
+	1.0f,							// 初期アルファ値。
+	true,							// ビルボード？
+	2.0f,							// 輝度。ブルームが有効になっているとこれを強くすると光が溢れます。
+	1,								// 半透明合成、1加算合成。
+};
+
+
 // パラメーター構造体のポインタ配列
 // ※パラメーターを追加したらここに追加した構造体のポインタを格納すること
 static SParticleEmitParameter* ParticleParamPT_Array[] = { 
@@ -233,5 +264,6 @@ static SParticleEmitParameter* ParticleParamPT_Array[] = {
 	&Param_FireGimmick,
 	&Param_Star,
 	&Param_Smoke,
-	&Param_GunSmoke
+	&Param_GunSmoke,
+	&Param_SmokeGimmick,
 };
