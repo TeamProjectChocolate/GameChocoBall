@@ -25,14 +25,14 @@ void CTitleCursor::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(75, 80, 10);
 	SetAlive(true);
-	m_pAudio->PlayCue("ChariotsOfFireBGM", false);	// ‰¹ŠyÄ¶
+	m_pAudio->PlayCue("Title", false);	// ‰¹ŠyÄ¶
 	C2DImage::SetImage();
 }
 
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
-		m_pAudio->StopCue("ChariotsOfFireBGM");
+		m_pAudio->StopCue("Title");
 		m_pAudio->DeleteNameAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}

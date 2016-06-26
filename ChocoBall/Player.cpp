@@ -58,8 +58,14 @@ void CPlayer::Initialize()
 	m_size.y = 2.0f;
 	m_size.z = 1.0f;
 
+	//ジャンプ＆着地時のタイマー関係
 	m_Time = 0.2f;
 	m_Timer = 0.0f;
+	
+	//銃発射時のタイマー関係
+	m_Time2 = 0.2f;
+	m_Timer2 = 0.0f;
+
 	BulletShotInterval = 0;
 
 	m_GameState = GAMEEND_ID::CONTINUE;
@@ -90,6 +96,7 @@ void CPlayer::Initialize()
 		m_StageID,
 		true
 		);
+	//ジャンプ＆着地時の煙
 	m_pEmitter = CParticleEmitter::EmitterCreate(
 		_T("ParticleEmitterSmoke"),
 		PARTICLE_TYPE::SMOKE,
@@ -98,6 +105,17 @@ void CPlayer::Initialize()
 		m_StageID,
 		false
 		);
+
+	//銃発射時の煙
+	m_pEmitter2 = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterGunSmoke"),
+		PARTICLE_TYPE::GUNSMOKE,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		m_StageID,
+		false
+		);
+
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
@@ -129,7 +147,6 @@ void CPlayer::SetParent(MoveFloor* parent)
 		localPosition.x = pos.x;
 		localPosition.y = pos.y;
 		localPosition.z = pos.z;
-
 		this->parent = parent;
 	}
 }
@@ -140,11 +157,17 @@ void CPlayer::Update()
 	{
 		//1フレームでのカウンターの加算処理
 		m_Timer += 1.0f / 60.0f;
+		m_Timer2 += 1.0f / 60.0f;
 		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
 		if (m_Timer>=m_Time)
 		{
 			m_pEmitter->SetEmitFlg(false);
 			m_Timer = 0.0f;
+		}
+		if (m_Timer2 >= m_Time2)
+		{
+			m_pEmitter2->SetEmitFlg(false);
+			m_Timer2 = 0.0f;
 		}
 
 		//親がいるときの処理
@@ -214,6 +237,7 @@ void CPlayer::Update()
 			//着地しているのでフラグはfalse
 			if (m_IsIntersect.IsHitGround())
 			{
+				//着地時の煙を出す処理
 				if (m_PreviousJumpFlag!=Jumpflag)
 				{
 					m_pEmitter->SetEmitFlg(true);
@@ -238,7 +262,7 @@ void CPlayer::Update()
 			//回転行列
 			SetRotation(D3DXVECTOR3(0.0f, 1.0f, 0.0f), m_currentAngleY);
 		}
-		else if (GamaOverFlag == true)
+		else if (GamaOverFlag == true)//ゲームオーバー状態での処理
 		{
 			//ゲームオーバー状態でのチョコボールに流される処理
 			RollingPlayer();
@@ -320,6 +344,7 @@ void CPlayer::Move()
 	isTurn = false;
 
 
+	//ジャンプ関連の処理
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
@@ -489,7 +514,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 0.8f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.8f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -509,7 +534,7 @@ void CPlayer::StateManaged()
 			if (firejet->IsCollision(m_transform.position, 0.8f)){
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.2f, 0.0f, 0.0f), 1.2f, 0.08f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 1.2f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -529,6 +554,10 @@ void CPlayer::BulletShot()
 
 			if (m_pInput->IsPressRightShift())
 			{
+				D3DXVECTOR3 pos = m_transform.position;
+				m_pEmitter2->SetEmitFlg(true);
+				m_pEmitter2->SetEmitPos(pos);
+
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);
 				D3DXMatrixRotationY(&Rot, m_currentAngleY);

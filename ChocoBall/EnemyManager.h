@@ -17,7 +17,7 @@ public:
 	{
 		numEnemy = 0;
 	}
-	~CEnemyManager(){
+	virtual ~CEnemyManager(){
 		this->DeleteAll();
 	}
 

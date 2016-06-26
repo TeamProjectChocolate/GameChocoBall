@@ -12,6 +12,7 @@ CParticle::CParticle()
 
 CParticle::~CParticle()
 {
+	m_Primitive.Release();
 }
 
 void CParticle::Initialize(){

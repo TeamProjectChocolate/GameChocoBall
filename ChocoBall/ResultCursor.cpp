@@ -10,7 +10,7 @@
 
 CResultCursor::CResultCursor()
 {
-	strcpy(m_pFileName, "image/Result.jpg");
+	strcpy(m_pFileName, "image/result_CSR.png");
 }
 
 
@@ -21,9 +21,9 @@ CResultCursor::~CResultCursor()
 void CResultCursor::Initialize(){
 	C2DImage::Initialize();
 	m_pInput = SINSTANCE(CInputManager)->GetCurrentInput();
-	m_transform.position = D3DXVECTOR3(400.0f, 250.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(620.0f, 300.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(100, 80, 10);
+	m_transform.scale = D3DXVECTOR3(88, 85, 10);
 	dir = -1;
 	SetAlive(true);
 	C2DImage::SetImage();
@@ -33,11 +33,11 @@ void CResultCursor::Initialize(){
 void CResultCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 250.0f){
+	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
 	
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 350.0f){
+	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 400.0f){
 		//MessageBox(0, "ƒQ[ƒ€‚ðI—¹‚µ‚Ü‚·‚©?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}
@@ -45,14 +45,17 @@ void CResultCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	float Y = m_pInput->GetStickL_YFloat();
 	if (Y>0){
-		m_transform.position.y = 250.0f;
+		m_transform.position.y = 300.0f;
+		m_transform.position.x = 620.0f;
 
 	}
 	if (Y<0){
-		m_transform.position.y = 350.0f;
-
+		m_transform.position.y = 400.0f;
+		m_transform.position.x = 600.0f;
 	}
 }
+
+
 
 void CResultCursor::Draw(){
 	C2DImage::SetupMatrices();
