@@ -116,6 +116,16 @@ void CPlayer::Initialize()
 		false
 		);
 
+	//煙の噴出ギミック
+	m_pEmitter3 = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterSmokeGimmick"),
+		PARTICLE_TYPE::SOMKEGIMMICK,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		m_StageID,
+		true
+		);
+
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
@@ -495,8 +505,11 @@ void CPlayer::StateManaged()
 		float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
 		if (Kyori < 0.001f)
 		{
-			m_GameState = GAMEEND_ID::CLEAR;
-			return;
+			if (GamaOverFlag = !true)
+			{
+				m_GameState = GAMEEND_ID::CLEAR;
+				return;
+			}	
 		}
 	}
 
