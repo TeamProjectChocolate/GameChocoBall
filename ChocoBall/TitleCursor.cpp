@@ -11,6 +11,8 @@
 CTitleCursor::CTitleCursor()
 {
 	strcpy(m_pFileName, "image/arrow.png");
+	isup = false;
+	isdown = false;
 }
 
 
@@ -47,10 +49,29 @@ void CTitleCursor::Update(){
 	if (Y>0){
 		m_transform.position.y = 300.0f;
 		m_transform.position.x = 510.0f;
+		if (!isup)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isup = true;
+		}
+	}
+	else
+	{
+		isup = false;
 	}
 	if (Y<0){
 		m_transform.position.y = 430.0f;
 		m_transform.position.x = 592.0f;
+		if (!isdown)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isdown = true;
+		}
+		
+	}
+	else
+	{
+		isdown = false;
 	}
 	m_pAudio->Run();
 }

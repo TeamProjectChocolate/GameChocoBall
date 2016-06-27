@@ -2,6 +2,8 @@
 #include "FallFloor.h"
 
 
+bool FallingFloor::m_IsPlayCue = false;
+
 void FallingFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale)
 {
 	strcpy(m_pFileName, "image/down_block.x");
@@ -37,13 +39,30 @@ void FallingFloor::Update()
 	if (IsHitPlayer(m_transform.position,1.0f))
 	{
 		if (m_MaxMove == -1 || m_transform.position.y > StartPos.y - m_MaxMove){
+			if (!m_IsPlayCue){
+				m_pAudio->PlayCue("Lift", false);//リフトAudio
+				m_IsPlayCue = true;
+				m_IamFlgKeeper = true;
+			}
 			m_transform.position.y -= 0.1f;
 			PlayerPos.y -= 0.1f;
 			m_player->SetPos(PlayerPos);
 		}
+		else{
+			if (m_IamFlgKeeper){
+				m_pAudio->StopCue("Lift");//リフトAudio
+				m_IsPlayCue = false;
+				m_IamFlgKeeper = false;
+			}
+		}
 	}
 	else if (m_transform.position.y < StartPos.y)
 	{
+		if (m_IamFlgKeeper){
+			m_pAudio->StopCue("Lift");//リフトAudio
+			m_IsPlayCue = false;
+			m_IamFlgKeeper = false;
+		}
 		m_transform.position.y += 0.05f;
 	}
 	

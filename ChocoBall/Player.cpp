@@ -75,8 +75,8 @@ void CPlayer::Initialize()
 	m_Timer = 0.0f;
 	
 	//銃発射時のタイマー関係
-	m_Time2 = 0.2f;
-	m_Timer2 = 0.0f;
+	//m_Time2 = 0.2f;
+	//m_Timer2 = 0.0f;
 
 	BulletShotInterval = 0;
 
@@ -90,6 +90,7 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
+	m_IsIntersect.SetAudio(m_pAudio);
 	
 	C3DImage::SetImage();
 
@@ -117,15 +118,15 @@ void CPlayer::Initialize()
 		false
 		);
 
-	//銃発射時の煙
-	m_pEmitter2 = CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterGunSmoke"),
-		PARTICLE_TYPE::GUNSMOKE,
-		m_transform.position,
-		m_pCamera->GetCamera(),
-		m_StageID,
-		false
-		);
+	////銃発射時の煙
+	//m_pEmitter2 = CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterGunSmoke"),
+	//	PARTICLE_TYPE::GUNSMOKE,
+	//	m_transform.position,
+	//	m_pCamera->GetCamera(),
+	//	m_StageID,
+	//	false
+	//	);
 
 	m_UseBorn = true;
 	m_MoveFlg = true;
@@ -168,18 +169,18 @@ void CPlayer::Update()
 	{
 		//1フレームでのカウンターの加算処理
 		m_Timer += 1.0f / 60.0f;
-		m_Timer2 += 1.0f / 60.0f;
+		//m_Timer2 += 1.0f / 60.0f;
 		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
 		if (m_Timer>=m_Time)
 		{
 			m_pEmitter->SetEmitFlg(false);
 			m_Timer = 0.0f;
 		}
-		if (m_Timer2 >= m_Time2)
+		/*if (m_Timer2 >= m_Time2)
 		{
 			m_pEmitter2->SetEmitFlg(false);
 			m_Timer2 = 0.0f;
-		}
+		}*/
 
 		//親がいるときの処理
 		if (parent)
@@ -265,6 +266,7 @@ void CPlayer::Update()
 					pos.y = pos.y - 0.7f;
 					m_pEmitter->SetEmitPos(pos);
 					m_PreviousJumpFlag = Jumpflag;
+					m_pAudio->PlayCue("Landing", true);
 				}
 				Jumpflag = false;
 			}
@@ -285,12 +287,14 @@ void CPlayer::Update()
 			//ゲームオーバー状態でのチョコボールに流される処理
 			RollingPlayer();
 		}
-		C3DImage::Update();
-
+		if (m_GameState!=GAMEEND_ID::CLEAR)
+		{
+			C3DImage::Update();
+		}
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 20.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
@@ -366,6 +370,7 @@ void CPlayer::Move()
 	//ジャンプ関連の処理
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
+		m_pAudio->PlayCue("Jump", true);//ジャンプSE
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
 		m_pEmitter->SetEmitFlg(true);
@@ -577,9 +582,9 @@ void CPlayer::BulletShot()
 
 			if (m_pInput->IsPressRightShift())
 			{
-				D3DXVECTOR3 pos = m_transform.position;
-				m_pEmitter2->SetEmitFlg(true);
-				m_pEmitter2->SetEmitPos(pos);
+				//D3DXVECTOR3 pos = m_transform.position;
+				//m_pEmitter2->SetEmitFlg(true);
+				//m_pEmitter2->SetEmitPos(pos);
 
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);
@@ -592,7 +597,9 @@ void CPlayer::BulletShot()
 				bullet->SetPos(m_transform.position);
 				bullet->SetDir(RV1);
 				bullet->SetBulletSpeed(0.5f);
+				bullet->SetAudio(m_pAudio);
 				m_bullets.push_back(bullet);
+				m_pAudio->PlayCue("Laser", true);
 			}
 		}
 	}

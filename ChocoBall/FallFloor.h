@@ -4,6 +4,7 @@
 #include "Rigidbody.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Audio.h"
 
 
 //::落ちる床のクラス::
@@ -27,7 +28,9 @@ public:
 	void SetMaxMove(float max){
 		m_MaxMove = max;
 	}
-
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 	//プレイヤーとの当たり判定
 	bool IsHitPlayer(D3DXVECTOR3 pos, float radius);
 
@@ -44,4 +47,7 @@ private:
 	btDefaultMotionState* m_myMotionState;
 	CPlayer*			m_player;
 	float m_MaxMove;
+	CAudio* m_pAudio;
+	bool m_IamFlgKeeper;
+	static bool m_IsPlayCue;
 };

@@ -11,6 +11,8 @@
 CResultCursor::CResultCursor()
 {
 	strcpy(m_pFileName, "image/result_CSR.png");
+	isup = false;
+	isdown = false;
 }
 
 
@@ -47,12 +49,31 @@ void CResultCursor::Update(){
 	if (Y>0){
 		m_transform.position.y = 300.0f;
 		m_transform.position.x = 620.0f;
-
+		if (!isup)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isup = true;
+		}
+	}
+	else
+	{
+		isup = false;
 	}
 	if (Y<0){
 		m_transform.position.y = 400.0f;
 		m_transform.position.x = 600.0f;
+		if (!isdown)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isdown = true;
+		}
+		
 	}
+	else
+	{
+		isdown = false;
+	}
+	m_pAudio->Run();
 }
 
 
