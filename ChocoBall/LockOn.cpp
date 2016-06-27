@@ -45,7 +45,7 @@ int CLockOn::FindNearEnemy(D3DXVECTOR3 position)
 	float Min;
 
 	CEnemyManager* EnemyManager = (SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager")));
-	EnemyBase* Enemy;
+	EnemyBase* Enemy = nullptr;
 	m_lockonEnemyIndex = -1;
 	int NumEnemy = EnemyManager->GetNumEnemy();
 	Min = 99999;	//”Ô•º

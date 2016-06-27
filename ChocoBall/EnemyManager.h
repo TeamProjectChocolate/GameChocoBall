@@ -18,6 +18,9 @@ public:
 	CEnemyManager()
 	{
 		numEnemy = 0;
+		for (int idx = 0; idx < ENEMY_MAX; idx++){
+			Enemy[idx] = nullptr;
+		}
 	}
 	virtual ~CEnemyManager(){
 		this->DeleteAll();
@@ -44,18 +47,19 @@ public:
 		else{
 			m_DeleteObjects.push_back(Enemy[enemyIndex]);
 			SINSTANCE(CShadowRender)->DeleteObject(Enemy[enemyIndex]);
+			Enemy[enemyIndex] = nullptr;
 		}
 		for (int i = enemyIndex; i < numEnemy - 1; i++){
 			Enemy[i] = Enemy[i + 1];
 		}
+		Enemy[numEnemy - 1] = nullptr;
+		numEnemy--;
 	}
 
 	void ExcuteDeleteObjects(){
 		int size = m_DeleteObjects.size();
 		for (int idx = 0; idx < size;idx++){
 			SAFE_DELETE(m_DeleteObjects[idx]);
-			m_DeleteObjects[idx] = nullptr;
-			numEnemy--;
 		}
 		m_DeleteObjects.clear();
 	}

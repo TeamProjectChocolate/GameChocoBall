@@ -537,7 +537,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.8f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.5f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
