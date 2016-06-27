@@ -6,6 +6,7 @@
 #include "CollisionType.h"
 
 #define ORIGIN_CENTER	//定義で起点が足元。
+void GenelateChocoBall(CCBManager* mgr, btGhostObject* m_hitCollisionObject,CAudio* pAudio);
 
 // プレイヤー用コールバック
 struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
@@ -26,13 +27,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
-			if (!mgr->GetAlive()){
-				m_pAudio->PlayCue("sei_ge_gororon01", true);//チョコ落下Audio
-				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
-				mgr->Initialize();
-				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
-				g_player->SetCBM(mgr);
-			}
+			GenelateChocoBall(mgr, (btGhostObject*)convexResult.m_hitCollisionObject,m_pAudio);
 			return 0.0f;
 		}
 
@@ -93,13 +88,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
-			if (!mgr->GetAlive()){
-				m_pAudio->PlayCue("sei_ge_gororon01", true);//チョコ落下Audio
-				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
-				mgr->Initialize();
-				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
-				g_player->SetCBM(mgr);
-			}
+			GenelateChocoBall(mgr, (btGhostObject*)convexResult.m_hitCollisionObject,m_pAudio);
 			return 0.0f;
 		}
 
@@ -146,6 +135,17 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 	}
 	CAudio* m_pAudio;
 };
+
+
+void GenelateChocoBall(CCBManager* mgr, btGhostObject* m_hitCollisionObject,CAudio* pAudio){
+	if (!mgr->GetAlive()){
+		pAudio->PlayCue("sei_ge_gororon01", true);//チョコ落下Audio
+		SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+		mgr->Initialize();
+		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_hitCollisionObject);
+		g_player->SetCBM(mgr);
+	}
+}
 
 // カメラ用コールバック
 struct SweepResultGround_Camera : public btCollisionWorld::ConvexResultCallback

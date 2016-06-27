@@ -112,7 +112,10 @@ void CCourceCamera::ClearCamera(){
 	else{
 		m_IsEnd = true;
 	}
-	//m_IsEnd = false;
+	if (m_IsEnd){
+		return;
+	}
+	m_IsEnd = false;
 }
 
 void CCourceCamera::CourceTurn(D3DXVECTOR3& Dir, D3DXVECTOR3& Target, float kakudo, float length){

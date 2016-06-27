@@ -21,11 +21,11 @@ void CSceneTitle::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTitleBack>(_T("TitleBack"),PRIORTY::OBJECT2D,false);
 	CTitleSelect* start = SINSTANCE(CObjectManager)->GenerationObject<CTitleSelect>(_T("NewGame"),PRIORTY::OBJECT2D_ALPHA,false);
 	CTitleSelect* Continue = SINSTANCE(CObjectManager)->GenerationObject<CTitleSelect>(_T("continue"), PRIORTY::OBJECT2D_ALPHA, false);
-	Continue->SetFileName(_T("image/continue.png"));
+	Continue->SetFileName(_T("image/TAI_EXIT.png"));
 	CTitleCursor* cursor = SINSTANCE(CObjectManager)->GenerationObject<CTitleCursor>(_T("Cursor"), PRIORTY::OBJECT2D, false);
 	cursor->SetAudio(m_pAudio);
 	SINSTANCE(CObjectManager)->Intialize();
-	Continue->SetPos(D3DXVECTOR3(745.0f, 430.0f, 0.0f));//Exitのポジション
+	Continue->SetPos(D3DXVECTOR3(655.0f, 430.0f, 0.0f));//Exitのポジション
 }
 
 void CSceneTitle::Update(){

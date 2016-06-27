@@ -6,11 +6,14 @@
 
 class CCBManager;
 
-class CLevelBuilder{
+class CLevelBuilder:public CGameObject{
 public:
 	CLevelBuilder();
 	~CLevelBuilder();
 	void Build(CAudio*);
+	void Initialize()override{};
+	void Update()override{};
+	void Draw()override{};
 	void SetIsStage(STAGE_ID now){
 		m_IsStage = now;
 	}
@@ -21,4 +24,5 @@ private:
 	STAGE_ID m_IsStage;
 	int m_ChocoWallNum;
 	int m_FireJetNum;
+	int m_SmokeJetNum;
 };

@@ -53,8 +53,9 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	CParticleEmitter::EmitterCreate(_T("GoalParticle_Left"), PARTICLE_TYPE::STAR, block.endPosition - (workVec * 2.0f), m_pCamera->GetCamera(),m_Stage_ID,true);
 	CParticleEmitter::EmitterCreate(_T("GoalParticle_Right"), PARTICLE_TYPE::STAR, block.endPosition + (workVec * 2.0f), m_pCamera->GetCamera(),m_Stage_ID,true);
 
-	m_CLevelBuilder.SetIsStage(m_Stage_ID);
-	m_CLevelBuilder.Build(pAudio);
+	m_CLevelBuilder = SINSTANCE(CObjectManager)->GenerationObject<CLevelBuilder>(_T("LevelBuilder"), PRIORTY::EMITTER, false);
+	m_CLevelBuilder->SetIsStage(m_Stage_ID);
+	m_CLevelBuilder->Build(pAudio);
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
 	m_pAudio = pAudio;
@@ -124,12 +125,6 @@ void CStage::ActivateObjects(){
 		}
 		else if (strcmp(ObjectDataArray[idx], "BulletPhysics") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CBulletPhysics>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "2DTest") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CTestObject2D>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
-		}
-		else if (strcmp(ObjectDataArray[idx], "Number") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
 		}
 		else if (strcmp(ObjectDataArray[idx], "Camera") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);

@@ -42,7 +42,13 @@
 },
 //GimmickTrigger
 {
-	D3DXVECTOR3(-16.33f, 31.36f, 7.60f),             //平行移動
-	D3DXQUATERNION(0.01, 0.76f, -0.61f, 0.25f ),    //回転
-	D3DXVECTOR3(7.80f, 8.78f, 2.29f ),            //拡大
+	D3DXVECTOR3(-52.10f, 20.24f, 83.97f),             //平行移動
+	D3DXQUATERNION(0.01, 0.60f, 0.00f, 0.80f ),    //回転
+	D3DXVECTOR3(0.94f, 1.93f, 1.02f ),            //拡大
+},
+//GimmickTrigger
+{
+	D3DXVECTOR3(-47.00f, 22.64f, 84.93f),             //平行移動
+	D3DXQUATERNION(0.01, 0.60f, 0.00f, 0.80f ),    //回転
+	D3DXVECTOR3(7.80f, 10.44f, 1.00f ),            //拡大
 },

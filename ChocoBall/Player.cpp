@@ -13,7 +13,19 @@
 #include "FireJet.h"
 
 CPlayer* g_player = NULL;
-CPlayer::~CPlayer(){  }
+CPlayer::~CPlayer(){ 
+	int bulletMax = m_bullets.size();
+	for (int idx = 0; idx < bulletMax; idx++){
+		SAFE_DELETE(m_bullets[idx]);
+	}
+	m_bullets.clear();
+
+	list<CCBManager*>::iterator itr = m_CBManager.begin();
+	for (; itr != m_CBManager.end();itr++){
+		SINSTANCE(CObjectManager)->DeleteGameObjectImmediate(*itr);
+	}
+	m_CBManager.clear();
+}
 
 void CPlayer::Initialize()
 
@@ -63,8 +75,8 @@ void CPlayer::Initialize()
 	m_Timer = 0.0f;
 	
 	//銃発射時のタイマー関係
-	m_Time2 = 0.2f;
-	m_Timer2 = 0.0f;
+	//m_Time2 = 0.2f;
+	//m_Timer2 = 0.0f;
 
 	BulletShotInterval = 0;
 
@@ -72,6 +84,7 @@ void CPlayer::Initialize()
 
 	m_Courcedef.SetStageID(m_StageID);
 	m_Courcedef.Initialize();
+	m_NowCourceNo = -1;
 
 	// ライト関連の初期化
 	this->ConfigLight();
@@ -79,8 +92,6 @@ void CPlayer::Initialize()
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
 	m_IsIntersect.SetAudio(m_pAudio);
 	
-	m_CBManager =NULL;
-
 	C3DImage::SetImage();
 
 	deadTimer = 0.0f;
@@ -107,15 +118,15 @@ void CPlayer::Initialize()
 		false
 		);
 
-	//銃発射時の煙
-	m_pEmitter2 = CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterGunSmoke"),
-		PARTICLE_TYPE::GUNSMOKE,
-		m_transform.position,
-		m_pCamera->GetCamera(),
-		m_StageID,
-		false
-		);
+	////銃発射時の煙
+	//m_pEmitter2 = CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterGunSmoke"),
+	//	PARTICLE_TYPE::GUNSMOKE,
+	//	m_transform.position,
+	//	m_pCamera->GetCamera(),
+	//	m_StageID,
+	//	false
+	//	);
 
 	m_UseBorn = true;
 	m_MoveFlg = true;
@@ -158,18 +169,18 @@ void CPlayer::Update()
 	{
 		//1フレームでのカウンターの加算処理
 		m_Timer += 1.0f / 60.0f;
-		m_Timer2 += 1.0f / 60.0f;
+		//m_Timer2 += 1.0f / 60.0f;
 		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
 		if (m_Timer>=m_Time)
 		{
 			m_pEmitter->SetEmitFlg(false);
 			m_Timer = 0.0f;
 		}
-		if (m_Timer2 >= m_Time2)
+		/*if (m_Timer2 >= m_Time2)
 		{
 			m_pEmitter2->SetEmitFlg(false);
 			m_Timer2 = 0.0f;
-		}
+		}*/
 
 		//親がいるときの処理
 		if (parent)
@@ -211,13 +222,20 @@ void CPlayer::Update()
 			//LockOn();
 		}
 
-		if (m_CBManager != NULL)
-		{
-			//チョコボールに当たっているかの処理
-			if (m_HitFlag = m_CBManager->IsHit(m_transform.position, m_size))
+		for (auto itr : m_CBManager){
+			if (itr != NULL)
 			{
-				//チョコボールに当たったらの処理
-				ChocoHit();
+				//チョコボールに当たっているかの処理
+				if (m_HitFlag = itr->IsHit(m_transform.position, m_size))
+				{
+					//チョコボールに当たったらの処理
+					ChocoHit();
+				}
+			}
+			if (m_NowCourceNo != -1){
+				if (m_NowCourceNo - itr->GetCourceNo() >= 5){
+					DeleteChocoBall(itr);
+				}
 			}
 		}
 
@@ -269,12 +287,14 @@ void CPlayer::Update()
 			//ゲームオーバー状態でのチョコボールに流される処理
 			RollingPlayer();
 		}
-		C3DImage::Update();
-
+		if (m_GameState!=GAMEEND_ID::CLEAR)
+		{
+			C3DImage::Update();
+		}
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 20.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
@@ -296,6 +316,7 @@ void CPlayer::Draw(){
 
 	// 絶対にここで呼べよ！　絶対だぞっ！？
 	ExcuteDeleteBullets();
+	ExcuteDeleteChocoBall();
 }
 
 void CPlayer::UpdateLight(){
@@ -490,6 +511,7 @@ void CPlayer::StateManaged()
 	//ゲームクリア
 	COURCE_BLOCK EndBlock = m_Courcedef.FindCource(m_Courcedef.GetCourceMax() - 1);
 	COURCE_BLOCK nowBlock = m_Courcedef.FindCource(m_transform.position);
+	m_NowCourceNo = nowBlock.blockNo;
 	if (nowBlock.blockNo == EndBlock.blockNo){
 		D3DXVECTOR3 LoadVec;
 		LoadVec = EndBlock.startPosition - EndBlock.endPosition;
@@ -498,8 +520,11 @@ void CPlayer::StateManaged()
 		float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
 		if (Kyori < 0.001f)
 		{
-			m_GameState = GAMEEND_ID::CLEAR;
-			return;
+			if (GamaOverFlag = true)
+			{
+				m_GameState = GAMEEND_ID::CLEAR;
+				return;
+			}	
 		}
 	}
 
@@ -517,7 +542,7 @@ void CPlayer::StateManaged()
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
-				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.8f, 0.01f);
+				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.5f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
@@ -534,7 +559,7 @@ void CPlayer::StateManaged()
 			if (firejet == nullptr){
 				return;
 			}
-			if (firejet->IsCollision(m_transform.position, 0.8f)){
+			if (firejet->IsCollision(m_transform.position, 1.0f)){
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 1.2f, 0.01f);
@@ -557,9 +582,9 @@ void CPlayer::BulletShot()
 
 			if (m_pInput->IsPressRightShift())
 			{
-				D3DXVECTOR3 pos = m_transform.position;
-				m_pEmitter2->SetEmitFlg(true);
-				m_pEmitter2->SetEmitPos(pos);
+				//D3DXVECTOR3 pos = m_transform.position;
+				//m_pEmitter2->SetEmitFlg(true);
+				//m_pEmitter2->SetEmitPos(pos);
 
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);
@@ -656,4 +681,24 @@ void CPlayer::RollingPlayer()
 	if (deadTimer >= 2.0f){
 		m_GameState = GAMEEND_ID::OVER;
 	}
+}
+
+void CPlayer::DeleteChocoBall(CCBManager* mgr){
+	m_DeleteChocoBall.push_back(mgr);
+}
+
+void CPlayer::ExcuteDeleteChocoBall(){
+	for (auto itr2 : m_DeleteChocoBall){
+		for (list<CCBManager*>::iterator itr = m_CBManager.begin(); itr != m_CBManager.end();){
+			if (*itr == itr2){
+				(*itr)->NonActivate();
+				SINSTANCE(CObjectManager)->DeleteGameObject(*itr);
+				itr = m_CBManager.erase(itr);
+			}
+			else{
+				itr++;
+			}
+		}
+	}
+	m_DeleteChocoBall.clear();
 }

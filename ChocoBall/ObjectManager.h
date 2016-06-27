@@ -33,8 +33,8 @@ public:
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		Object->SetCommon(common);
-		if (priorty > PRIORTY::LOWEST){
-			priorty = PRIORTY::LOWEST;
+		if (priorty > PRIORTY::MAX_PRIORTY){
+			priorty = PRIORTY::MAX_PRIORTY;
 		}
 		this->Add(Object, ObjectName,priorty);
 		return Object;
@@ -54,7 +54,7 @@ public:
 		T* Object = new T;
 		Object->ActiveManagerNewFlg();	// ObjectManagerクラス内でnewしたため、フラグをtrueにする
 		Object->SetCommon(common);
-		PRIORTY priorty = PRIORTY::LOWEST;
+		PRIORTY priorty = PRIORTY::MAX_PRIORTY;
 		this->Add(Object,ObjectName ,priorty);
 		return Object;
 	}

@@ -12,6 +12,7 @@
 #include "ShadowRender.h"
 #include "UpFloor.h"
 #include "FireJet.h"
+#include "SmokeJet.h"
 
 
 CLevelBuilder::CLevelBuilder()
@@ -20,6 +21,7 @@ CLevelBuilder::CLevelBuilder()
 	m_IsStage = STAGE_ID::STAGE_NONE;
 	m_ChocoWallNum = 0;
 	m_FireJetNum = 0;
+	m_SmokeJetNum = 0;
 }
 
 CLevelBuilder::~CLevelBuilder()
@@ -90,6 +92,7 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			enemy->SetInitPosition(info.pos);
 			enemy->Build();
 			enemyMgr->AddEnemy(enemy);
+			SINSTANCE(CShadowRender)->Entry(enemy);
 		}
 		else if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
@@ -101,10 +104,12 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			D3DXMatrixRotationQuaternion(&mRot, &rot);
 			D3DXVECTOR3 back;
 			back.x = -mRot.m[2][0];
-			back.y = -mRot.m[2][1];
+			back.y = mRot.m[2][1];
 			back.z = -mRot.m[2][2];
 			mgr->SetStartPosition(startPos);
 			mgr->SetEndPosition(startPos + back);
+			mgr->SetStageID(m_IsStage);
+			mgr->FindCource();
 		}
 		else if (info.gimmickType == GimmickType_Wall){
 			//チョコ壁の生成
@@ -156,9 +161,10 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			// 上昇床
 			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
 			upfloor->SetAudio(pAudio);
+			D3DXQUATERNION rot(-pInfo[i].rot.x, pInfo[i].rot.y, -pInfo[i].rot.z,pInfo[i].rot.w);
 			upfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
-				pInfo[i].rot,
+				rot,
 				D3DXVECTOR3(pInfo[i].scale.x, pInfo[i].scale.y, pInfo[i].scale.z)
 				);
 			upfloor->SetMaxMove(pInfo[i].MaxMove);
@@ -187,6 +193,29 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			D3DXVec3Normalize(&dir, &dir);
 			fire->SetDirection(dir);
 			m_FireJetNum++;
+		}
+		else if (info.gimmickType == GimmickType_SmokeJet){
+			// 煙を噴出するギミック
+			string str = "smokejet";
+			char num[100];
+			_itoa(m_FireJetNum, num, 10);
+			str += num;
+			CSmokeJet* smoke = SINSTANCE(CObjectManager)->GenerationObject<CSmokeJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
+			smoke->SetEmitterName(_T(str.c_str()));
+			smoke->SetStageID(m_IsStage);
+			smoke->Initialize();
+			smoke->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
+			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
+			D3DXMATRIX mRot;
+			D3DXMatrixRotationQuaternion(&mRot, &rot);
+			D3DXVECTOR3 back;
+			back.x = -mRot.m[2][0];
+			back.y = mRot.m[2][1];
+			back.z = -mRot.m[2][2];
+			D3DXVECTOR3 dir = (smoke->GetPos() + back) - smoke->GetPos();
+			D3DXVec3Normalize(&dir, &dir);
+			smoke->SetDirection(dir);
+			m_SmokeJetNum++;
 		}
 	}
 

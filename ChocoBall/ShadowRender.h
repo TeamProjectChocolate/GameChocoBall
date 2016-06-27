@@ -34,7 +34,7 @@ public:
 	void DrawMeshContainer(/*LPDIRECT3DDEVICE9,*/ LPD3DXMESHCONTAINER,C3DImage*/*, LPD3DXFRAME*/);
 	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,C3DImage*);
 	void NonAnimationDraw(C3DImage*);
-	void DeleteObject(CGameObject*);
+	void DeleteObject(C3DImage*);
 	void CleanManager();
 	void ExcuteDeleteObjects();
 private:

@@ -34,7 +34,7 @@ protected:
 private:
 	CPlayer* m_pPlayer;
 	CParticleEmitter* m_pEmitter;
-	CLevelBuilder m_CLevelBuilder;
+	CLevelBuilder* m_CLevelBuilder;
 	bool m_isGameContinue = true;
 	GAMEEND_ID m_GameState = GAMEEND_ID::CONTINUE;
 
