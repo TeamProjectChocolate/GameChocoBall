@@ -90,6 +90,7 @@ void CLevelBuilder::Build()
 			enemy->SetInitPosition(info.pos);
 			enemy->Build();
 			enemyMgr->AddEnemy(enemy);
+			SINSTANCE(CShadowRender)->Entry(enemy);
 		}
 		else if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
@@ -101,10 +102,12 @@ void CLevelBuilder::Build()
 			D3DXMatrixRotationQuaternion(&mRot, &rot);
 			D3DXVECTOR3 back;
 			back.x = -mRot.m[2][0];
-			back.y = -mRot.m[2][1];
+			back.y = mRot.m[2][1];
 			back.z = -mRot.m[2][2];
 			mgr->SetStartPosition(startPos);
 			mgr->SetEndPosition(startPos + back);
+			mgr->SetStageID(m_IsStage);
+			mgr->FindCource();
 		}
 		else if (info.gimmickType == GimmickType_Wall){
 			//チョコ壁の生成
@@ -154,9 +157,10 @@ void CLevelBuilder::Build()
 		else if (info.gimmickType == GimmickType_UpFloor){
 			// 上昇床
 			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			D3DXQUATERNION rot(-pInfo[i].rot.x, pInfo[i].rot.y, -pInfo[i].rot.z,pInfo[i].rot.w);
 			upfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
-				pInfo[i].rot,
+				rot,
 				D3DXVECTOR3(pInfo[i].scale.x, pInfo[i].scale.y, pInfo[i].scale.z)
 				);
 			upfloor->SetMaxMove(pInfo[i].MaxMove);

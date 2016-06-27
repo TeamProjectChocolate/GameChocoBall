@@ -51,9 +51,8 @@ static LPCSTR Stage_BGM[] = {
 	"tyuban_Stage",
 	"tyuban_Stage",
 	"lastStage",
-	"ChariotsOfFireBGM",
-	"ChariotsOfFireBGM",
-	"Modern_copy",
+	"lastStage",
+	"Modern",
 };
 
 
@@ -69,16 +68,13 @@ enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE
 static LPCSTR StageGameObject_1[] = {
 	{ "BulletPhysics" },// すべてのステージにこれが必要です
 	{ "TESTStage3D" },// すべてのステージにこれが必要です
-	{ "Number" },// すべてのステージにこれが必要です
 	{ "Camera" },// すべてのステージにこれが必要です
 	{ "EnemyManager" },// すべてのステージにこれが必要です
 	{ "TEST3D" },// すべてのステージにこれが必要です
-	{ "2DTest" },
 };
 static LPCSTR StageGameObject_2[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -86,7 +82,6 @@ static LPCSTR StageGameObject_2[] = {
 static LPCSTR StageGameObject_3[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -94,7 +89,6 @@ static LPCSTR StageGameObject_3[] = {
 static LPCSTR StageGameObject_4[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -102,7 +96,6 @@ static LPCSTR StageGameObject_4[] = {
 static LPCSTR StageGameObject_5[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -110,7 +103,6 @@ static LPCSTR StageGameObject_5[] = {
 static LPCSTR StageGameObject_6[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -118,7 +110,6 @@ static LPCSTR StageGameObject_6[] = {
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -226,6 +217,7 @@ static SEnemyAndGimmickInfo infoTable_Final[] = {
 #include "EnemyGimmickInfoStageFinal.h"
 };
 
+
 // ステージ1で使用するギミックやエネミーのポジションなどを設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SEnemyAndGimmickInfo* infoTableArray[] = {
@@ -249,6 +241,7 @@ static int InfoTableSizeArray[] = {
 	ARRAYSIZE(infoTable_6),
 	ARRAYSIZE(infoTable_Final)
 };
+
 
 // ステージ1で使用するギミック発動用当たり判定
 // ※ステージを追加したら同じような配列を新しく作って、追加したステージの出力ヘッダーを読み込んでください
@@ -284,6 +277,7 @@ static SCollisionInfo* GimmickinfoTableArray[] = {
 	GimmickTriggerInfoTable_6,
 	GimmickTriggerInfoTable_Final
 };
+
 
 // ステージ1で使用するギミック発動用当たり判定を設定した配列の要素数を格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
@@ -321,6 +315,7 @@ static SCollisionInfo collisionInfoTable_Final[] = {
 #include "collisionInfoStageFinal.h"
 };
 
+
 // ステージ1のフィールドの当たり判定を設定した配列のポインタを格納する配列
 // ※ステージを追加したら下のような書き方で配列に要素を追加してください
 static SCollisionInfo* collisionInfoTableArray[] = {
@@ -344,3 +339,4 @@ static int collisionInfoTableSizeArray[] = {
 	ARRAYSIZE(collisionInfoTable_6),
 	ARRAYSIZE(collisionInfoTable_Final)
 };
+

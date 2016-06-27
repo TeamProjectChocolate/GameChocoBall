@@ -34,7 +34,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapTextureTec");
+		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
 	}
 	void ConfigLight();
 	void ReflectionLight(D3DXVECTOR4);
@@ -46,6 +46,9 @@ public:
 	void BulletShot();
 	void ChocoHit();
 	void RollingPlayer();
+
+	void DeleteChocoBall(CCBManager*);
+	void ExcuteDeleteChocoBall();
 
 	void DeleteBullet(CPlayerBullet*);
 	void ExcuteDeleteBullets();
@@ -71,7 +74,7 @@ public:
 	}
 	void SetCBM(CCBManager* CHOCO)
 	{
-		m_CBManager = CHOCO;
+		m_CBManager.push_back(CHOCO);
 	}
 	int GetBusterEnemyNum()
 	{
@@ -106,6 +109,7 @@ public:
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
+	CParticleEmitter* m_pEmitter2;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
@@ -134,15 +138,20 @@ private:
 	float			deadTimer;			//ゲームオーバーまでの待機時間
 	int             BusterEnemyNum;		//倒した敵の数
 
-	float m_Time;						//パーティクルが発生し続ける時間
-	float m_Timer;						//パーティクルをを発生させる時間のカウンター
+	float m_Time;						//ジャンプ＆着地時のパーティクルが発生し続ける時間
+	float m_Timer;						//ジャンプ＆着地時のパーティクルをを発生させる時間のカウンター
+
+	float m_Time2;						//銃発射時のパーティクルが発生し続ける時間
+	float m_Timer2;						//銃発射時のパーティクルをを発生させる時間のカウンター
+
 	bool m_PreviousJumpFlag;			//パーティクルをジャンプの着地時に発生させるためのフラグ
 
 	int BulletShotInterval;			//弾を発射する間隔の時間
 
 	D3DXVECTOR3		m_size;	//プレイヤーを内包するバウンディングボックスのサイズ。
 
-	CCBManager*		m_CBManager;
+	list<CCBManager*> m_CBManager;
+	list<CCBManager*> m_DeleteChocoBall;
 
 	CCourceDef		m_Courcedef;
 	D3DXVECTOR3 RV0;
@@ -166,6 +175,7 @@ private:
 	bool m_MoveFlg;
 	CVibration m_vibration;
 	CCourceCamera* m_pCamera;
+	int m_NowCourceNo;
 };
 
 extern CPlayer* g_player;

@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "ShadowRender.h"
 
+#define ENEMY_MAX 100
+
 class CEnemyManager:public CGameObject
 {
 public:
@@ -17,7 +19,7 @@ public:
 	{
 		numEnemy = 0;
 	}
-	~CEnemyManager(){
+	virtual ~CEnemyManager(){
 		this->DeleteAll();
 	}
 
@@ -66,17 +68,12 @@ public:
 		return Enemy[num];
 	}
 
-	EnemyBase* GetEnemyArray()
-	{
-		return Enemy[20];
-	}
-
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
 private:
 	int		numEnemy;	//“G‚Ì”B
-	EnemyBase* Enemy[20];
+	EnemyBase* Enemy[ENEMY_MAX];
 	STAGE_ID m_StageID;
 	vector<EnemyBase*> m_DeleteObjects;
 };

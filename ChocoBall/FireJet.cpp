@@ -51,9 +51,9 @@ bool CFireJet::IsCollision(D3DXVECTOR3 pos, float radius){
 		float rad = fabsf(acosf(D3DXVec3Dot(&Vec, &RealVec)));
 		if (rad <= D3DXToRadian(90.0f)){
 			D3DXVECTOR3 work2;
-			work2.x = work.x + (param->initVelocityVelocityRandomMargin.x * 0.5f);
-			work2.y = work.y + (param->initVelocityVelocityRandomMargin.y * 0.5f);
-			work2.z = work.z + (param->initVelocityVelocityRandomMargin.z * 0.5f);
+			work2.x = work.x + (param->initVelocityVelocityRandomMargin.x * 0.6f);
+			work2.y = work.y + (param->initVelocityVelocityRandomMargin.y * 0.6f);
+			work2.z = work.z + (param->initVelocityVelocityRandomMargin.z * 0.6f);
 			D3DXVECTOR3 Vec3 = (m_pEmitter->GetEmitPos() + work2) - m_pEmitter->GetEmitPos();
 			D3DXVec3Normalize(&Vec3, &Vec3);
 			D3DXVec3Normalize(&Vec2, &Vec2);

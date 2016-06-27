@@ -9,7 +9,7 @@
 
 CResultSelect::CResultSelect()
 {
-	strcpy(m_pFileName, "image/continue.png");
+	strcpy(m_pFileName, "image/result_NEXT.png");
 }
 
 CResultSelect::~CResultSelect()
@@ -19,9 +19,9 @@ CResultSelect::~CResultSelect()
 
 void CResultSelect::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(480.0f, 250.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(810.0f, 300.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(105, 105, 0);
+	m_transform.scale = D3DXVECTOR3(281, 98, 0);
 	SetAlive(true);
 	C2DImage::SetImage();
 	m_resultcursor = SINSTANCE(CObjectManager)->FindGameObject<CResultCursor>(_T("ResultCursor"));

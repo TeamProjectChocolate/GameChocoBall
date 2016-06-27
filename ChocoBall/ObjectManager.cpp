@@ -7,15 +7,15 @@
 CObjectManager* CObjectManager::m_instance = nullptr;
 
 void CObjectManager::AddObject(CGameObject* Object, LPCSTR ObjectName, PRIORTY priorty,bool common){
-	if (priorty > PRIORTY::LOWEST){
-		priorty = PRIORTY::LOWEST;
+	if (priorty > PRIORTY::MAX_PRIORTY){
+		priorty = PRIORTY::MAX_PRIORTY;
 	}
 	Object->SetCommon(common);
 	this->Add(Object,ObjectName,priorty);
 }
 
 void CObjectManager::AddObject(CGameObject* Object,LPCSTR ObjectName,bool common){
-	PRIORTY priorty = PRIORTY::LOWEST;
+	PRIORTY priorty = PRIORTY::MAX_PRIORTY;
 	Object->SetCommon(common);
 	this->Add(Object,ObjectName, priorty);
 }
@@ -44,6 +44,7 @@ void CObjectManager::DeleteGameObject(LPCSTR ObjectName){
 
 void CObjectManager::DeleteGameObject(CGameObject* pObject){
 	int size = m_GameObjects.size();
+	pObject->OnDestroy();
 	m_DeleteObjects.push_back(pObject);
 }
 
@@ -52,11 +53,12 @@ void CObjectManager::DeleteGameObjectImmediate(CGameObject* pObject)
 	pObject->OnDestroy();
 	vector<OBJECT_DATA*>::iterator itr;
 	for (itr = m_GameObjects.begin(); itr != m_GameObjects.end(); itr++){
-		if (!(*itr)->object->GetManagerNewFlg()){
-			if (pObject == (*itr)->object){
-				m_GameObjects.erase(itr);
-				break;
+		if (pObject == (*itr)->object){
+			if ((*itr)->object->GetManagerNewFlg()){
+				SAFE_DELETE(pObject);
 			}
+			itr = m_GameObjects.erase(itr);
+			break;
 		}
 	}
 }
@@ -72,28 +74,41 @@ void CObjectManager::CleanManager(){
 
 void CObjectManager::ExcuteDeleteObjects(){
 	vector<OBJECT_DATA*>::iterator itr;
-	int size = m_DeleteObjects.size();
-	for (int idx = 0; idx < size; idx++){
+	vector<CGameObject*>::iterator itr2;
+	for (int priorty = PRIORTY::MAX_PRIORTY; priorty >= 0; priorty--){
 		for (itr = m_GameObjects.begin(); itr != m_GameObjects.end();){
-			if (m_DeleteObjects[idx] == (*itr)->object){
-				if ((*itr)->object->GetManagerNewFlg()){
-					SAFE_DELETE((*itr)->object);
-					SAFE_DELETE((*itr));
+			bool inclimentFlg = true;
+			if (priorty == (*itr)->priority){
+				for (itr2 = m_DeleteObjects.begin(); itr2 != m_DeleteObjects.end();){
+					if ((*itr2) == (*itr)->object){
+						if ((*itr)->object->GetManagerNewFlg()){
+							SAFE_DELETE((*itr)->object);
+							SAFE_DELETE((*itr));
+						}
+						itr = m_GameObjects.erase(itr);
+						itr2 = m_DeleteObjects.erase(itr2);
+						inclimentFlg = false;
+						break;
+					}
+					else{
+						itr2++;
+					}
 				}
-				itr = m_GameObjects.erase(itr);	
-				break;
 			}
-			else{
+			int size = m_DeleteObjects.size();
+			if (size == 0){
+				return;
+			}
+			if (inclimentFlg){
 				itr++;
 			}
 		}
 	}
-	m_DeleteObjects.clear();
 }
 
 void CObjectManager::Intialize(){
 	int size = m_GameObjects.size();
-	for (int priorty = 0; priorty <= MAX_PRIORTY; priorty++){
+	for (int priorty = 0; priorty <= PRIORTY::MAX_PRIORTY; priorty++){
 		for (int idx = 0; idx < size; idx++){
 			if (m_GameObjects[idx]->priority == priorty){
 				if (!(m_GameObjects[idx]->object->GetOriginal())){
@@ -106,7 +121,7 @@ void CObjectManager::Intialize(){
 
 void CObjectManager::Update(){
 	int size = m_GameObjects.size();
-	for (short priorty = 0; priorty <= MAX_PRIORTY;priorty++){	// 優先度の高いものから更新
+	for (short priorty = 0; priorty <= PRIORTY::MAX_PRIORTY;priorty++){	// 優先度の高いものから更新
 		for (int idx = 0; idx < size; idx++){
 			if (m_GameObjects[idx]->object->GetAlive()){	// 生存しているもののみ更新
 				if (m_GameObjects[idx]->priority == priorty){	// 現在の優先度と一致するものを更新
@@ -120,7 +135,7 @@ void CObjectManager::Update(){
 void CObjectManager::Draw(){
 	SINSTANCE(CRenderContext)->RenderingStart();
 	int size = m_GameObjects.size();
-	for (short priorty = 0; priorty <= MAX_PRIORTY; priorty++){	// 優先度の高いものから更新
+	for (short priorty = 0; priorty <= PRIORTY::MAX_PRIORTY; priorty++){	// 優先度の高いものから更新
 		if (priorty == PRIORTY::OBJECT2D){
 			// 3D描画が終わったらレンダリングターゲットを元に戻す
 			SINSTANCE(CRenderContext)->RenderingEnd();

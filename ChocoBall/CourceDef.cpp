@@ -39,7 +39,7 @@ COURCE_BLOCK CCourceDef::FindCource(D3DXVECTOR3 pos){
 		float Distance = D3DXVec3Length(&endvector);
 		D3DXVec3Normalize(&Dir, &endvector);
 		float PlayerDist = D3DXVec3Dot(&Dir, &Playervector);
-		if (PlayerDist <= Distance + 6.0f && PlayerDist > -6.0f){
+		if (PlayerDist <= Distance + 5.0f && PlayerDist > -5.0f){
 			D3DXVECTOR3 VecToVecDist/*ベクトルとベクトルの距離*/ = (Dir * PlayerDist) - Playervector;
 			if (D3DXVec3Length(&VecToVecDist) < Min){
 				ret = itr;
