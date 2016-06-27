@@ -575,7 +575,7 @@ void CPlayer::BulletShot()
 		BulletShotInterval++;
 		if (BulletShotInterval % 5 == 0){
 
-			if (m_pInput->IsPressRightShift())
+			if (m_pInput->IsPressLeftShift())
 			{
 				D3DXVECTOR3 pos = m_transform.position;
 				m_pEmitter2->SetEmitFlg(true);
