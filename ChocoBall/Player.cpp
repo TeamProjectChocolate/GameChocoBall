@@ -77,6 +77,7 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
+	m_IsIntersect.SetAudio(m_pAudio);
 	
 	m_CBManager =NULL;
 
@@ -571,8 +572,9 @@ void CPlayer::BulletShot()
 				bullet->SetPos(m_transform.position);
 				bullet->SetDir(RV1);
 				bullet->SetBulletSpeed(0.5f);
+				bullet->SetAudio(m_pAudio);
 				m_bullets.push_back(bullet);
-				m_pAudio->PlayCue("cover03", true);
+				m_pAudio->PlayCue("Laser", true);
 			}
 		}
 	}

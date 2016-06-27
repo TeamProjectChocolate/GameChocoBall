@@ -49,13 +49,31 @@ void CResultCursor::Update(){
 	if (Y>0){
 		m_transform.position.y = 300.0f;
 		m_transform.position.x = 620.0f;
-		
+		if (!isup)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isup = true;
+		}
 	}
-	if (Y < 0){
+	else
+	{
+		isup = false;
+	}
+	if (Y<0){
 		m_transform.position.y = 400.0f;
 		m_transform.position.x = 600.0f;
+		if (!isdown)
+		{
+			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			isdown = true;
+		}
+		
 	}
-
+	else
+	{
+		isdown = false;
+	}
+	m_pAudio->Run();
 }
 
 
@@ -63,8 +81,4 @@ void CResultCursor::Update(){
 void CResultCursor::Draw(){
 	C2DImage::SetupMatrices();
 	C2DImage::Draw();
-}
-
-void CResultCursor::Release(){
-	SAFE_DELETE(m_pAudio);
 }

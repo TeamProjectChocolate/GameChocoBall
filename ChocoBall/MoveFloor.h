@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "C3DImage.h"
 #include "Player.h"
+#include "Audio.h"
 
 
 class MoveFloor : public C3DImage{
@@ -39,6 +40,9 @@ public:
 	D3DXVECTOR3 GetDirection(){
 		return m_dir;
 	}
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 private:
 	D3DXVECTOR4			dimension;
 	D3DXVECTOR3			position;
@@ -59,4 +63,7 @@ private:
 		move_none
 	};
 	D3DXVECTOR3 m_dir;
+	CAudio* m_pAudio;
+	bool m_IamFlgKeeper;
+	static bool m_IsPlayCue;
 };

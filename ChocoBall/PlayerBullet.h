@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Bullet.h"
 #include "LockOn.h"
+#include "Audio.h"
 
 class CEnemyManager;
 
@@ -29,11 +30,15 @@ public:
 	void SetBulletSpeed(float s){
 		m_bullet.SetBulletSpeed(s);
 	}
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 private:
 	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	CEnemyManager* m_pEnemyManager;
 	CBuildBlock* m_pBlockManager;
 	Bullet m_bullet;
+	CAudio* m_pAudio;
 };
 

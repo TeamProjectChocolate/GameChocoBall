@@ -4,6 +4,7 @@
 #include "Rigidbody.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Audio.h"
 
 
 //::—‚¿‚é°‚ÌƒNƒ‰ƒX::
@@ -31,6 +32,9 @@ public:
 	void SetMaxMove(float max){
 		m_MaxMove = max;
 	}
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 private:
 	D3DXVECTOR4			dimension;
 	D3DXVECTOR3			position;
@@ -43,4 +47,7 @@ private:
 	btDefaultMotionState* m_myMotionState;
 	CPlayer*			m_player;
 	float m_MaxMove;			// ˆÚ“®ŒÀŠE—Ê
+	CAudio* m_pAudio;
+	bool m_IamFlgKeeper;
+	static bool m_IsPlayCue;
 };

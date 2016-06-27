@@ -24,8 +24,10 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 	virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 	{
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
+
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
 			if (!mgr->GetAlive()){
+				m_pAudio->PlayCue("sei_ge_gororon01", true);//チョコ落下Audio
 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 				mgr->Initialize();
 				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
@@ -75,6 +77,7 @@ struct SweepResultGround : public btCollisionWorld::ConvexResultCallback
 		}
 		return 0.0f;
 	}
+	CAudio* m_pAudio;
 };
 struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 {
@@ -91,7 +94,8 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_ChocoballTrigger) {
 			CCBManager* mgr = (CCBManager*)convexResult.m_hitCollisionObject->getUserPointer();
 			if (!mgr->GetAlive()){
- 				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
+				m_pAudio->PlayCue("sei_ge_gororon01", true);//チョコ落下Audio
+				SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 				mgr->Initialize();
 				SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject((btGhostObject*)convexResult.m_hitCollisionObject);
 				g_player->SetCBM(mgr);
@@ -100,9 +104,9 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		}
 
 		if (convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Player
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball 
-			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Enemy) 
-		{	
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Chocoball
+			|| convexResult.m_hitCollisionObject->getUserIndex() == CollisionType_Enemy)
+		{
 			//無視。
 			return 0.0f;
 		}
@@ -140,6 +144,7 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		hitPos.z = convexResult.m_hitPointLocal.z();
 		return 0.0f;
 	}
+	CAudio* m_pAudio;
 };
 
 // カメラ用コールバック
@@ -255,6 +260,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 			start.setOrigin(btVector3(position->x, position->y, position->z));
 			D3DXVECTOR3 newPos;
 			SweepResultWall callback;
+			callback.m_pAudio = m_pAudio;
 			D3DXVECTOR3 addPosXZ = addPos;
 			addPosXZ.y = 0.0f;
 			if (D3DXVec3Length(&addPosXZ) > 0.0001f) {
@@ -307,6 +313,7 @@ void CIsIntersect::Intersect(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed,bool 
 #endif
 		D3DXVECTOR3 newPos;
 		SweepResultGround callback;
+		callback.m_pAudio = m_pAudio;
 		callback.startPos = *position;
 		if (fabsf(addPos.y) > 0.0001f) {
 			newPos = *position;
@@ -385,6 +392,7 @@ void CIsIntersect::Intersect2(D3DXVECTOR3* position, D3DXVECTOR3* moveSpeed)
 			start.setOrigin(btVector3(position->x, position->y, position->z));
 			D3DXVECTOR3 newPos;
 			SweepResultWall callback;
+			callback.m_pAudio = m_pAudio;
 			D3DXVECTOR3 addPosXZ = addPos;
 			addPosXZ.y = 0.0f;
 			if (D3DXVec3Length(&addPosXZ) > 0.0001f) {
