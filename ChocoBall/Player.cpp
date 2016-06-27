@@ -292,7 +292,7 @@ void CPlayer::Update()
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 20.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
