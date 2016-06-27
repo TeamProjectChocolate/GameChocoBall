@@ -9,7 +9,8 @@ enum GimmickType{
 	GimmickType_FallFloor,
 	GimmickType_MoveFloor,
 	GimmickType_UpFloor,
-	GimmickType_FireJet
+	GimmickType_FireJet,
+	GimmickType_SmokeJet
 };
 
 enum EnemyType{

@@ -37,6 +37,7 @@ public class GimmickTypeText
     public int MoveFloor = 3;
     public int UpFloor = 4;
     public int FireJet = 5;
+    public int SmoekJet = 6;
 }
 
 [System.Serializable]

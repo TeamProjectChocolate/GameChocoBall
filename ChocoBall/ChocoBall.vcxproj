@@ -170,6 +170,7 @@
     <ClInclude Include="ShadowRender.h" />
     <ClInclude Include="SkinModelData.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SmokeJet.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageTable.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="ShadowRender.cpp" />
     <ClCompile Include="SkinModelData.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SmokeJet.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="stdafx.cpp">

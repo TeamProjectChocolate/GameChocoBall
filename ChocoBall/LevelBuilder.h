@@ -20,4 +20,5 @@ private:
 	STAGE_ID m_IsStage;
 	int m_ChocoWallNum;
 	int m_FireJetNum;
+	int m_SmokeJetNum;
 };
