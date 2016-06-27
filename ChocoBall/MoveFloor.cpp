@@ -82,6 +82,7 @@ void MoveFloor::Update()
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
 		m_player->SetParent(this);
+		m_pAudio->PlayCue("Lift",false);
 	}
 	else if (!IsHitPlayer(m_transform.position, 1.0f))
 	{

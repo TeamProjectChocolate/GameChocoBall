@@ -53,6 +53,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 	CParticleEmitter::EmitterCreate(_T("GoalParticle_Right"), PARTICLE_TYPE::STAR, block.endPosition + (workVec * 2.0f), m_pCamera->GetCamera(),m_Stage_ID,true);
 
 	m_CLevelBuilder.SetIsStage(m_Stage_ID);
+	m_CLevelBuilder.SetAudio(pAudio);
 	m_CLevelBuilder.Build();
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
