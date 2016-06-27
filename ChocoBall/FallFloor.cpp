@@ -6,32 +6,18 @@ void FallingFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 s
 {
 	strcpy(m_pFileName, "image/down_block.x");
 	C3DImage::Initialize();
-	//D3DXMatrixInverse()
-	D3DXMATRIX mRot;
-	D3DXMatrixRotationQuaternion(&mRot, &rot);
-	m_transform.position = pos; //D3DXVECTOR3(0.0f, 0.0f, -45.0f);
+	m_transform.position = pos;
 	StartPos = m_transform.position;
-	SetRotation(D3DXVECTOR3(0, 0, 0), 0.1f);
-	m_transform.scale = scale;// D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_transform.scale = scale;
 	m_transform.angle = rot;
-	//m_transform.angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	//m_RigitBody.Initialize(&m_transform.position, &m_transform.scale);
 
 	this->Build(D3DXVECTOR3(1.5f*scale.x, 0.3f*scale.y, 1.5f*scale.z), m_transform.position);
 
 	m_player = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 
 	m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-	//m_moveSpeed.x = 0.0f;
-	//m_moveSpeed.z = 0.0f;
-	//m_moveSpeed.y = 0.0f;
-
-	//m_radius = 1.0f;
 
 	SetAlive(true);
-
-	//SetAlpha(1.0f);
-	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 
 	C3DImage::SetImage();
 }
@@ -77,7 +63,7 @@ void FallingFloor::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos){
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
-	groundTransform.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z));
+	groundTransform.setRotation(btQuaternion(m_transform.angle.x, m_transform.angle.y, m_transform.angle.z,m_transform.angle.w));
 	float mass = 0.0f;
 
 	//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects

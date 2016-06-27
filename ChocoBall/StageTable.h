@@ -69,16 +69,13 @@ enum STAGE_ID{ FIRST = 0, SECOUND,THARD,FOURTH,FIFTH,SIX, FINAL, MAX, STAGE_NONE
 static LPCSTR StageGameObject_1[] = {
 	{ "BulletPhysics" },// すべてのステージにこれが必要です
 	{ "TESTStage3D" },// すべてのステージにこれが必要です
-	{ "Number" },// すべてのステージにこれが必要です
 	{ "Camera" },// すべてのステージにこれが必要です
 	{ "EnemyManager" },// すべてのステージにこれが必要です
 	{ "TEST3D" },// すべてのステージにこれが必要です
-	{ "2DTest" },
 };
 static LPCSTR StageGameObject_2[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -86,7 +83,6 @@ static LPCSTR StageGameObject_2[] = {
 static LPCSTR StageGameObject_3[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -94,7 +90,6 @@ static LPCSTR StageGameObject_3[] = {
 static LPCSTR StageGameObject_4[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -102,7 +97,6 @@ static LPCSTR StageGameObject_4[] = {
 static LPCSTR StageGameObject_5[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -110,7 +104,6 @@ static LPCSTR StageGameObject_5[] = {
 static LPCSTR StageGameObject_6[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
@@ -118,7 +111,6 @@ static LPCSTR StageGameObject_6[] = {
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
 	{ "TESTStage3D" },	// すべてのステージにこれが必要です
-	{ "Number" },	// すべてのステージにこれが必要です
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です

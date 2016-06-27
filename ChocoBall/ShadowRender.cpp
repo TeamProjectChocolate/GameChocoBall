@@ -54,7 +54,14 @@ void CShadowRender::Draw(){
 	(*graphicsDevice()).Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
 
 	for (int idx = 0, size = m_ShadowObjects.size(); idx < size; idx++){
-		DrawFrame(m_ShadowObjects[idx]->GetImage()->pModel->GetFrameRoot(), m_ShadowObjects[idx]);
+		if (m_ShadowObjects[idx] != nullptr){
+			if (m_ShadowObjects[idx]->GetAlive()){
+				DrawFrame(m_ShadowObjects[idx]->GetImage()->pModel->GetFrameRoot(), m_ShadowObjects[idx]);
+			}
+		}
+		else{
+			DeleteObject(m_ShadowObjects[idx]);
+		}
 	}
 
 	// レンダリングターゲットを元に戻す
@@ -159,14 +166,8 @@ void CShadowRender::NonAnimationDraw(C3DImage* pObject){
 	}
 }
 
-void CShadowRender::DeleteObject(CGameObject* pObject){
-	int size = m_ShadowObjects.size();
-	for (int idx = 0; idx < size; idx++){
-		if (m_ShadowObjects[idx] == pObject){
-			m_DeleteObjects.push_back(m_ShadowObjects[idx]);
-			return;
-		}
-	}
+void CShadowRender::DeleteObject(C3DImage* pObject){
+	m_DeleteObjects.push_back(pObject);
 }
 
 void CShadowRender::CleanManager(){

@@ -100,3 +100,16 @@ bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 	}
 	return FALSE;
 }
+
+void CCBManager::FindCource(){
+	m_CourceDef.SetStageID(m_StageID);
+	m_CourceDef.Initialize();
+	m_InitPosOfCourceNo = m_CourceDef.FindCource(m_pos).blockNo;
+}
+
+void CCBManager::NonActivate(){
+	for (int idx = 0; idx < CHOCO_NUM; idx++){
+		m_Choco[idx].SetAlive(false);
+	}
+	SetAlive(false);
+}
