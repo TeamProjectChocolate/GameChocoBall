@@ -75,8 +75,8 @@ void CPlayer::Initialize()
 	m_Timer = 0.0f;
 	
 	//銃発射時のタイマー関係
-	m_Time2 = 0.2f;
-	m_Timer2 = 0.0f;
+	//m_Time2 = 0.2f;
+	//m_Timer2 = 0.0f;
 
 	BulletShotInterval = 0;
 
