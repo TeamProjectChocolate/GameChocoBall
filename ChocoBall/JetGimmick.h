@@ -35,6 +35,9 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_Stage_ID = id;
 	}
+	void SetPlayerCource(int no){
+		m_PlayerCourceNo = no;
+	}
 private:
 	CAudio* m_pAudio;
 	CCamera* m_pCamera;
@@ -44,10 +47,14 @@ protected:
 	float m_JetTime;
 	PARTICLE_TYPE m_ParticleType;
 	char m_SoundName[FILENAME_MAX];
+	char m_SoundEndName[FILENAME_MAX];
 	bool m_IsPlay;
 	float m_JetCounter;
 	float m_IntervalTime;
 	bool m_JetFlg;
 	STAGE_ID m_Stage_ID;
+	int m_PlayerCourceNo;
+	int m_EmitCourceNo;
+	CPlayer* m_pPlayer;
 };
 

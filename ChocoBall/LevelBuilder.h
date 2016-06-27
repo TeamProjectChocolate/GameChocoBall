@@ -1,6 +1,7 @@
 #pragma once
 #include "BulletPhysics.h"
 #include "EnemyBase.h"
+#include "Audio.h"
 #define MaxCollision 100
 
 class CCBManager;
@@ -12,7 +13,7 @@ public:
 	void Initialize()override{};
 	void Update()override{};
 	void Draw()override{};
-	void Build();
+	void Build(CAudio*);
 	void SetIsStage(STAGE_ID now){
 		m_IsStage = now;
 	}

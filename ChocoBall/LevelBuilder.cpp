@@ -35,7 +35,7 @@ CLevelBuilder::~CLevelBuilder()
 		delete cb;
 	}
 }
-void CLevelBuilder::Build()
+void CLevelBuilder::Build(CAudio* pAudio)
 {
 	int StageID = static_cast<int>(m_IsStage);
 	int tableSize = InfoTableSizeArray[StageID];
@@ -174,6 +174,7 @@ void CLevelBuilder::Build()
 			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
 			fire->SetEmitterName(_T(str.c_str()));
 			fire->SetStageID(m_IsStage);
+			fire->SetAudio(pAudio);
 			fire->Initialize();
 			fire->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);

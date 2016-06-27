@@ -54,7 +54,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	m_CLevelBuilder = SINSTANCE(CObjectManager)->GenerationObject<CLevelBuilder>(_T("LevelBuilder"), PRIORTY::EMITTER, false);
 	m_CLevelBuilder->SetIsStage(m_Stage_ID);
-	m_CLevelBuilder->Build();
+	m_CLevelBuilder->Build(pAudio);
 
 	SINSTANCE(CShadowRender)->Entry(m_pPlayer);
 	m_pAudio = pAudio;
