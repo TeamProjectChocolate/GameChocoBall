@@ -10,7 +10,7 @@ CStageManager* CStageManager::m_instance = nullptr;
 void CStageManager::Initialize()
 {
 	m_NowStage = STAGE_ID::STAGE_NONE;
-	ChangeStage(STAGE_ID::THARD);
+	ChangeStage(STAGE_ID::FIRST);
 	SetNextStage();
 }
 

@@ -117,15 +117,15 @@ void CPlayer::Initialize()
 		false
 		);
 
-	//銃発射時の煙
-	m_pEmitter2 = CParticleEmitter::EmitterCreate(
-		_T("ParticleEmitterGunSmoke"),
-		PARTICLE_TYPE::GUNSMOKE,
-		m_transform.position,
-		m_pCamera->GetCamera(),
-		m_StageID,
-		false
-		);
+	////銃発射時の煙
+	//m_pEmitter2 = CParticleEmitter::EmitterCreate(
+	//	_T("ParticleEmitterGunSmoke"),
+	//	PARTICLE_TYPE::GUNSMOKE,
+	//	m_transform.position,
+	//	m_pCamera->GetCamera(),
+	//	m_StageID,
+	//	false
+	//	);
 
 	m_UseBorn = true;
 	m_MoveFlg = true;
@@ -168,18 +168,18 @@ void CPlayer::Update()
 	{
 		//1フレームでのカウンターの加算処理
 		m_Timer += 1.0f / 60.0f;
-		m_Timer2 += 1.0f / 60.0f;
+		//m_Timer2 += 1.0f / 60.0f;
 		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
 		if (m_Timer>=m_Time)
 		{
 			m_pEmitter->SetEmitFlg(false);
 			m_Timer = 0.0f;
 		}
-		if (m_Timer2 >= m_Time2)
+		/*if (m_Timer2 >= m_Time2)
 		{
 			m_pEmitter2->SetEmitFlg(false);
 			m_Timer2 = 0.0f;
-		}
+		}*/
 
 		//親がいるときの処理
 		if (parent)
@@ -285,8 +285,10 @@ void CPlayer::Update()
 			//ゲームオーバー状態でのチョコボールに流される処理
 			RollingPlayer();
 		}
-		C3DImage::Update();
-
+		if (m_GameState!=GAMEEND_ID::CLEAR)
+		{
+			C3DImage::Update();
+		}
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
@@ -577,9 +579,9 @@ void CPlayer::BulletShot()
 
 			if (m_pInput->IsPressRightShift())
 			{
-				D3DXVECTOR3 pos = m_transform.position;
-				m_pEmitter2->SetEmitFlg(true);
-				m_pEmitter2->SetEmitPos(pos);
+				//D3DXVECTOR3 pos = m_transform.position;
+				//m_pEmitter2->SetEmitFlg(true);
+				//m_pEmitter2->SetEmitPos(pos);
 
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);

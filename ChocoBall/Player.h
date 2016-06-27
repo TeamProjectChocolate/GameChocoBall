@@ -109,7 +109,7 @@ public:
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
-	CParticleEmitter* m_pEmitter2;
+	//CParticleEmitter* m_pEmitter2;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
