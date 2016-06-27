@@ -12,6 +12,7 @@
 #include "ShadowRender.h"
 #include "UpFloor.h"
 #include "FireJet.h"
+#include "SmokeJet.h"
 
 
 CLevelBuilder::CLevelBuilder()
@@ -20,6 +21,7 @@ CLevelBuilder::CLevelBuilder()
 	m_IsStage = STAGE_ID::STAGE_NONE;
 	m_ChocoWallNum = 0;
 	m_FireJetNum = 0;
+	m_SmokeJetNum = 0;
 }
 
 CLevelBuilder::~CLevelBuilder()
@@ -188,6 +190,29 @@ void CLevelBuilder::Build()
 			D3DXVec3Normalize(&dir, &dir);
 			fire->SetDirection(dir);
 			m_FireJetNum++;
+		}
+		else if (info.gimmickType == GimmickType_SmokeJet){
+			// 煙を噴出するギミック
+			string str = "smokejet";
+			char num[100];
+			_itoa(m_FireJetNum, num, 10);
+			str += num;
+			CSmokeJet* smoke = SINSTANCE(CObjectManager)->GenerationObject<CSmokeJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
+			smoke->SetEmitterName(_T(str.c_str()));
+			smoke->SetStageID(m_IsStage);
+			smoke->Initialize();
+			smoke->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
+			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
+			D3DXMATRIX mRot;
+			D3DXMatrixRotationQuaternion(&mRot, &rot);
+			D3DXVECTOR3 back;
+			back.x = -mRot.m[2][0];
+			back.y = mRot.m[2][1];
+			back.z = -mRot.m[2][2];
+			D3DXVECTOR3 dir = (smoke->GetPos() + back) - smoke->GetPos();
+			D3DXVec3Normalize(&dir, &dir);
+			smoke->SetDirection(dir);
+			m_SmokeJetNum++;
 		}
 	}
 

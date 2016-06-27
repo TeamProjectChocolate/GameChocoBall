@@ -28,4 +28,5 @@ private:
 	int m_ChocoWallNum;
 	int m_FireJetNum;
 	CAudio* m_pAudio;
+	int m_SmokeJetNum;
 };

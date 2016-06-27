@@ -109,7 +109,7 @@ public:
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
-	CParticleEmitter* m_pEmitter2;
+	//CParticleEmitter* m_pEmitter2;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
@@ -141,8 +141,8 @@ private:
 	float m_Time;						//ジャンプ＆着地時のパーティクルが発生し続ける時間
 	float m_Timer;						//ジャンプ＆着地時のパーティクルをを発生させる時間のカウンター
 
-	float m_Time2;						//銃発射時のパーティクルが発生し続ける時間
-	float m_Timer2;						//銃発射時のパーティクルをを発生させる時間のカウンター
+	//float m_Time2;						//銃発射時のパーティクルが発生し続ける時間
+	//float m_Timer2;						//銃発射時のパーティクルをを発生させる時間のカウンター
 
 	bool m_PreviousJumpFlag;			//パーティクルをジャンプの着地時に発生させるためのフラグ
 

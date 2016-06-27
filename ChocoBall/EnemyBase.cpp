@@ -53,6 +53,6 @@ void EnemyBase::RollingEnemy()
 	//Ž€–S‚Ü‚Å‚Ì‘Ò‹@ŽžŠÔ‚ÌÝ’è
 	m_deadTimer += 1.0 / 60.0f;
 	if (m_deadTimer >= 2.0f){
-		m_pEnemyManager->DeleteEnemy(this);
+		SetAlive(false);
 	}
 }

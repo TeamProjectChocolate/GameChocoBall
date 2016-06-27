@@ -23,7 +23,8 @@ void CEnemyManager::Update()
 		}
 		else
 		{
-			Enemy[i]->OnDestroy();
+			DeleteEnemy(Enemy[i]);
+			i--;
 		}
 		
 	}
@@ -38,9 +39,10 @@ void CEnemyManager::Draw()
 }
 
 void CEnemyManager::DeleteAll(){
-	for (int i = 0; i < numEnemy; i++){
-		SAFE_DELETE(Enemy[i]);
-		Enemy[i] = nullptr;
-	}
-	numEnemy = 0;
+	//for (int i = 0; i < ENEMY_MAX; i++){
+	//	if (Enemy[i] != nullptr){
+	//		SAFE_DELETE(Enemy[i]);
+	//	}
+	//}
+	//numEnemy = 0;
 }

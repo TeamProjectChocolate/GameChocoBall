@@ -7,7 +7,7 @@
 
 CTitleSelect::CTitleSelect()
 {
-	strcpy(m_pFileName, "image/newgame.png");
+	strcpy(m_pFileName, "image/TAI_START.png");
 }
 
 
@@ -18,7 +18,7 @@ CTitleSelect::~CTitleSelect()
 
 void CTitleSelect::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(710.0f, 300.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(595.0f, 300.0f, 1.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(310, 84, 0);
 	SetAlive(true);
