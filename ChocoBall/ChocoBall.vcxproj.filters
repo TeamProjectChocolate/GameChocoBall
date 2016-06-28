@@ -288,6 +288,9 @@
     <ClInclude Include="SmokeJet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="BloomRender.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -528,6 +531,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SmokeJet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BloomRender.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

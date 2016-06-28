@@ -70,6 +70,18 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_Stage_ID = id;
 	}
+	int GetCourceNo(){
+		return m_CurrentCourceNo;
+	}
+	int GetPlayerCourceNo(){
+		return m_NowPlayerCourceNo;
+	}
+	void SetCourceLange(int lange){
+		m_CourceLange = lange;
+	}
+	int GetCourceLange(){
+		return m_CourceLange; 
+	}
 private:
 	float m_timer;
 	CRandom m_random;
@@ -90,6 +102,7 @@ private:
 	D3DXVECTOR3* m_TailPosition;	// 最後に生成したプリミティブのポジションを追跡するためのポインタ
 	CParticle* m_pTailParticle;		// 最後に生成したパーティクルのポインタ
 	bool m_Residual;			// 最後に生成したパーティクルが残留しているか
+	int m_CourceLange;			// プレイヤーとパーティクルの発生位置がどれくらい離れていれば発生させないか
 private:
 	STAGE_ID m_Stage_ID;
 };

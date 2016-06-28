@@ -12,6 +12,7 @@
 #include "CBManager.h"
 #include "Vibration.h"
 #include "CourceCamera.h"
+#include "Audio.h"
 
 class CLockOn;
 class CCBManager;
@@ -106,6 +107,9 @@ public:
 	}
 	bool IsVibration() ;
 	
+	void SetAudio(CAudio* audio){
+		m_pAudio = audio;
+	}
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
@@ -175,6 +179,8 @@ private:
 	bool m_MoveFlg;
 	CVibration m_vibration;
 	CCourceCamera* m_pCamera;
+
+	CAudio* m_pAudio;//SEŽg—p
 	int m_NowCourceNo;
 };
 

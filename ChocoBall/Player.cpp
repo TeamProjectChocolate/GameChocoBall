@@ -90,6 +90,7 @@ void CPlayer::Initialize()
 	this->ConfigLight();
 	
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Player);
+	m_IsIntersect.SetAudio(m_pAudio);
 	
 	C3DImage::SetImage();
 
@@ -265,6 +266,7 @@ void CPlayer::Update()
 					pos.y = pos.y - 0.7f;
 					m_pEmitter->SetEmitPos(pos);
 					m_PreviousJumpFlag = Jumpflag;
+					m_pAudio->PlayCue("Landing", true,this);
 				}
 				Jumpflag = false;
 			}
@@ -292,7 +294,7 @@ void CPlayer::Update()
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 20.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
@@ -334,9 +336,10 @@ void CPlayer::ConfigLight(){
 	m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 	m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
+
 	// アンビエントライト(環境光)の強さ設定
 	D3DXVECTOR4 ambientLight;
-	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 100.0f);
+	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
 	// ライトの設定を反映
 	ReflectionLight(ambientLight);
@@ -368,6 +371,7 @@ void CPlayer::Move()
 	//ジャンプ関連の処理
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
+		m_pAudio->PlayCue("Jump", true,this);//ジャンプSE
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
 		m_pEmitter->SetEmitFlg(true);
@@ -594,7 +598,9 @@ void CPlayer::BulletShot()
 				bullet->SetPos(m_transform.position);
 				bullet->SetDir(RV1);
 				bullet->SetBulletSpeed(0.5f);
+				bullet->SetAudio(m_pAudio);
 				m_bullets.push_back(bullet);
+				m_pAudio->PlayCue("Laser", true,this);
 			}
 		}
 	}
@@ -645,6 +651,7 @@ void CPlayer::ChocoHit()
 }
 void CPlayer::EnemyBulletHit( D3DXVECTOR3 moveDir )
 {
+	m_pAudio->PlayCue("スポッ１", false, this);
 	GamaOverFlag = true;
 	btRigidBody* rb = m_IsIntersect.GetRigidBody();//プレイヤーの剛体を取得
 	//m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。

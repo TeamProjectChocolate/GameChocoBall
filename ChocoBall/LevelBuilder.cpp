@@ -37,7 +37,7 @@ CLevelBuilder::~CLevelBuilder()
 		delete cb;
 	}
 }
-void CLevelBuilder::Build()
+void CLevelBuilder::Build(CAudio* pAudio)
 {
 	int StageID = static_cast<int>(m_IsStage);
 	int tableSize = InfoTableSizeArray[StageID];
@@ -128,6 +128,7 @@ void CLevelBuilder::Build()
 		else if (info.gimmickType == GimmickType_FallFloor){
 			//—Ž‚¿‚é°‚¾‚æB‚Â‚©‚Á‚Ä
 			FallingFloor* fallfloor = SINSTANCE(CObjectManager)->GenerationObject<FallingFloor>(_T("FallFloor"), PRIORTY::OBJECT3D, false);
+			fallfloor->SetAudio(pAudio);
 			fallfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot,
@@ -139,6 +140,7 @@ void CLevelBuilder::Build()
 		else if (info.gimmickType == GimmickType_MoveFloor){
 			// “®‚­°
 			MoveFloor* movefloor = SINSTANCE(CObjectManager)->GenerationObject<MoveFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			movefloor->SetAudio(pAudio);
 			movefloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
 				pInfo[i].rot,
@@ -158,6 +160,7 @@ void CLevelBuilder::Build()
 		else if (info.gimmickType == GimmickType_UpFloor){
 			// ã¸°
 			CUpFloor* upfloor = SINSTANCE(CObjectManager)->GenerationObject<CUpFloor>(_T("movefloor"), PRIORTY::OBJECT3D, false);
+			upfloor->SetAudio(pAudio);
 			D3DXQUATERNION rot(-pInfo[i].rot.x, pInfo[i].rot.y, -pInfo[i].rot.z,pInfo[i].rot.w);
 			upfloor->Initialize(
 				D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z),
@@ -176,6 +179,7 @@ void CLevelBuilder::Build()
 			CFireJet* fire = SINSTANCE(CObjectManager)->GenerationObject<CFireJet>(_T(str.c_str()), PRIORTY::OBJECT3D_ALPHA, false);
 			fire->SetEmitterName(_T(str.c_str()));
 			fire->SetStageID(m_IsStage);
+			fire->SetAudio(pAudio);
 			fire->Initialize();
 			fire->SetPos(D3DXVECTOR3(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z));
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);

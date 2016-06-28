@@ -34,6 +34,7 @@ struct VS_OUTPUT{
 	float2  uv		: TEXCOORD0;
 };
 
+
 // 頂点シェーダ
 VS_OUTPUT vs_main(VS_INPUT In /*頂点情報(ローカル座標*/)
 {
@@ -69,7 +70,7 @@ float4 ps_mainAdd(VS_OUTPUT In) :COLOR{
 	In.color = (float4)0.0f;
 	float4 color = tex2D(g_TextureSampler, In.uv);
 	color.xyz *= Alpha;
-	return float4(color.xyz,color.w * 1.0f / g_brightness);
+	return float4(color.xyz,/*color.w * */1.0f / g_brightness);
 };
 
 technique BasicTec{
