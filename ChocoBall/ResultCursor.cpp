@@ -36,10 +36,14 @@ void CResultCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
+		m_pAudio->PlayCue("オケヒット", false, this);
+		m_pAudio->DeleteAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
 	
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 400.0f){
+		m_pAudio->PlayCue("オケヒット", false, this);
+		m_pAudio->DeleteAll();
 		//MessageBox(0, "ゲームを終了しますか?", NULL, MB_OK);
 		PostQuitMessage(0);
 	}

@@ -18,6 +18,7 @@ CTitleCursor::CTitleCursor()
 
 CTitleCursor::~CTitleCursor()
 {
+	m_pAudio->DeleteAll();
 }
 
 void CTitleCursor::Initialize(){
@@ -34,12 +35,14 @@ void CTitleCursor::Initialize(){
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
+		m_pAudio->PlayCue("オケヒット", false, this);
 		m_pAudio->StopCue("Title",false,this);
 		m_pAudio->DeleteAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
 		// ここの中身の処理はセーブを実装し手続きから遊ぶの処理にする
+		m_pAudio->PlayCue("オケヒット", false, this);
 		PostQuitMessage(0);
 	}
 	
