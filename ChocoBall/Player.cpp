@@ -331,21 +331,15 @@ void CPlayer::ConfigLight(){
 	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 	// ディフューズライト(キャラライト)の色設定(ライト1～4)
-	//m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	//m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	//m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	//m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
-
-	m_lightColor[0] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
-	m_lightColor[1] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
-	m_lightColor[2] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
-	m_lightColor[3] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
 
 	// アンビエントライト(環境光)の強さ設定
 	D3DXVECTOR4 ambientLight;
-	ambientLight = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.5f);
-	//ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
 	// ライトの設定を反映
 	ReflectionLight(ambientLight);
@@ -657,6 +651,7 @@ void CPlayer::ChocoHit()
 }
 void CPlayer::EnemyBulletHit( D3DXVECTOR3 moveDir )
 {
+	m_pAudio->PlayCue("スポッ１", false, this);
 	GamaOverFlag = true;
 	btRigidBody* rb = m_IsIntersect.GetRigidBody();//プレイヤーの剛体を取得
 	//m_IsIntersect.GetSphereShape()->setLocalScaling(btVector3(0.3f, 0.3f, 0.3f));//プレイヤーの球を小さく設定し、チョコボールに埋もれるようにしている。
