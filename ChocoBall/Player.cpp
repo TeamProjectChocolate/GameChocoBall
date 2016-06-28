@@ -545,6 +545,7 @@ void CPlayer::StateManaged()
 				m_pCamera->SetIsTarget(false);
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.5f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				m_pAudio->PlayCue("ta_ge_denki01", true, this);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
 			}
