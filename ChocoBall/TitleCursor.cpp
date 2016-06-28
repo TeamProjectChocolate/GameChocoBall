@@ -37,7 +37,6 @@ void CTitleCursor::Update(){
 		m_pAudio->StopCue("Title",false,this);
 		m_pAudio->DeleteAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
-		m_pAudio->PlayCue("Chocoball", true);
 	}
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
 		// ここの中身の処理はセーブを実装し手続きから遊ぶの処理にする
