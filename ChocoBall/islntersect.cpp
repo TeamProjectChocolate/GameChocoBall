@@ -139,7 +139,8 @@ struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 
 void GenelateChocoBall(CCBManager* mgr, btGhostObject* m_hitCollisionObject,CAudio* pAudio){
 	if (!mgr->GetAlive()){
-		pAudio->PlayCue("Chocoball", true);//チョコ落下Audio
+		pAudio->PlayCue("sei_ge_gororon01", false,nullptr);//チョコ落下Audio
+
 		SINSTANCE(CObjectManager)->AddObject(mgr, _T("CHOCO"), PRIORTY::OBJECT3D, false);
 		mgr->Initialize();
 		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_hitCollisionObject);

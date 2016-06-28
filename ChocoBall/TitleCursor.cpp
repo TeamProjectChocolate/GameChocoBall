@@ -27,15 +27,15 @@ void CTitleCursor::Initialize(){
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(75, 80, 10);
 	SetAlive(true);
-	m_pAudio->PlayCue("Title", false);	// ‰¹ŠyÄ¶
+	m_pAudio->PlayCue("Title", false,this);	// ‰¹ŠyÄ¶
 	C2DImage::SetImage();
 }
 
 void CTitleCursor::Update(){
 	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 300.0f){
-		m_pAudio->StopCue("Title");
-		m_pAudio->DeleteNameAll();
+		m_pAudio->StopCue("Title",false,this);
+		m_pAudio->DeleteAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 		m_pAudio->PlayCue("Chocoball", true);
 	}
@@ -52,7 +52,7 @@ void CTitleCursor::Update(){
 		m_transform.position.x = 510.0f;
 		if (!isup)
 		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
 			isup = true;
 		}
 	}
@@ -65,7 +65,7 @@ void CTitleCursor::Update(){
 		m_transform.position.x = 592.0f;
 		if (!isdown)
 		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
 			isdown = true;
 		}
 		

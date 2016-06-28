@@ -51,7 +51,7 @@ void CResultCursor::Update(){
 		m_transform.position.x = 620.0f;
 		if (!isup)
 		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
 			isup = true;
 		}
 	}
@@ -64,7 +64,7 @@ void CResultCursor::Update(){
 		m_transform.position.x = 600.0f;
 		if (!isdown)
 		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true);
+			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
 			isdown = true;
 		}
 		

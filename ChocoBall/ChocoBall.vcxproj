@@ -100,6 +100,7 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BloomRender.h" />
     <ClInclude Include="BuildBlock.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletPhysics.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BloomRender.cpp" />
     <ClCompile Include="BuildBlock.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletPhysics.cpp" />

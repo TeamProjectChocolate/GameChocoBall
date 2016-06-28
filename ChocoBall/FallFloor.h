@@ -11,7 +11,9 @@
 class FallingFloor : public C3DImage{
 public:
 	FallingFloor(){}
-	~FallingFloor(){}
+	~FallingFloor(){
+		m_pAudio->StopCue("Lift", false,this);
+	}
 	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale);
 	void Update()override;
 	void Draw()override;
