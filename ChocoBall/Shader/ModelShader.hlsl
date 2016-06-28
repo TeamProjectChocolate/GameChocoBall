@@ -22,6 +22,8 @@ float g_numBone;		// 骨の数
 
 float4x4 g_CameraRotaInverse;	// カメラの回転行列の逆行列
 
+float g_luminance;	// 輝度の光の量を調整するための変数
+
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler = 
 sampler_state{
@@ -179,7 +181,7 @@ float4 CalcSpeculerLight(float3 normal,float4 worldpos){
 */
 float CalcLuminance(float3 color)
 {
-	float luminance = dot(color.xyz, float3(0.2125f, 0.7154f, 0.0721f));
+	float luminance = dot(color.xyz, float3(0.2125f, 0.7154f, 0.0721f)) + g_luminance;
 	if (luminance > 1.0f){
 		luminance = 1.0f / luminance;
 	}
@@ -264,7 +266,7 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 }
 
 // ピクセルシェーダ
-float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap) : COLOR{
+float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasIluminance) : COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
@@ -295,7 +297,12 @@ float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap) : COLOR{
 
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
-	color.w = Alpha;
+	if (hasIluminance){
+		color.a = CalcLuminance(color.xyz);
+	}
+	else{
+		color.w = Alpha;
+	}
 	return color;
 }
 
@@ -421,7 +428,7 @@ technique ShadowTec{
 technique TextureTec{
 	pass p0{
 		VertexShader = compile vs_3_0 BasicTransform();	// 頂点シェーダ
-		PixelShader = compile ps_3_0 TextureShader(true);		// ピクセルシェーダ
+		PixelShader = compile ps_3_0 TextureShader(true,false);		// ピクセルシェーダ
 	}
 };
 
@@ -435,7 +442,7 @@ technique BasicTec{
 technique NotNormalMapAnimationTec{
 	pass p0{
 		VertexShader = compile vs_3_0 AnimationVertex();
-		PixelShader = compile ps_3_0 TextureShader(false);
+		PixelShader = compile ps_3_0 TextureShader(false,false);
 	}
 };
 
@@ -449,7 +456,7 @@ technique NotNormalMapShadowTec{
 technique NotNormalMapTextureTec{
 	pass p0{
 		VertexShader = compile vs_3_0 BasicTransform();	// 頂点シェーダ
-		PixelShader = compile ps_3_0 TextureShader(false);		// ピクセルシェーダ
+		PixelShader = compile ps_3_0 TextureShader(false,false);		// ピクセルシェーダ
 	}
 };
 
@@ -496,3 +503,9 @@ technique NotNormalMapNonAnimationFresnelShadowTec{
 	}
 }
 
+technique NotNormalMapNonAnimationBloomTec{
+	pass p0{
+		VertexShader = compile vs_3_0 BasicTransform();
+		PixelShader = compile ps_3_0 TextureShader(false,true);
+	}
+}
