@@ -521,7 +521,7 @@ void CPlayer::StateManaged()
 		float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
 		if (Kyori < 0.001f)
 		{
-			if (GamaOverFlag = true)
+			if (GamaOverFlag == false)
 			{
 				m_GameState = GAMEEND_ID::CLEAR;
 				return;
