@@ -882,7 +882,7 @@
 },
 //gimmick_Chocoball3
 {
-	D3DXVECTOR3(-13.90f, 23.26f, 67.46f),             //平行移動
+	D3DXVECTOR3(-13.14f, 23.68f, 68.61f),             //平行移動
 	D3DXQUATERNION(-0.25, 0.23f, -0.93f, -0.12f ),    //回転
 	D3DXVECTOR3(0.85f, 0.63f, 1.66f ),            //拡大
 	-1,//エネミータイプ

@@ -13,6 +13,7 @@ public:
 	C3DImage(){
 		m_pImage = nullptr;
 		m_UseBorn = false;
+		m_luminance = 0.0f;
 	};
 	~C3DImage(){};
 	virtual void Initialize()override;
@@ -51,4 +52,5 @@ protected:
 	CAnimation m_animation;
 	int m_currentAnimNo;
 	bool m_UseBorn;		// ボーンを使用するかどうかのフラグ(trueなら使用、falseなら使用しない)
+	float m_luminance;	// 輝度の光量を調整するための変数
 };
