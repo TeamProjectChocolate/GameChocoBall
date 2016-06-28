@@ -139,7 +139,7 @@ void CPlayer::SetParent(MoveFloor* parent)
 
 	
 	if (parent != NULL){
-		//Update();
+		Update();
 		
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
@@ -169,7 +169,6 @@ void CPlayer::Update()
 	{
 		//1フレームでのカウンターの加算処理
 		m_JumpParticleTimer += 1.0f / 60.0f;
-		m_GunParticleTimer += 1.0f / 60.0f;
 
 		//ジャンプ＆着地時パーティクルの発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
 		if (m_JumpParticleTimer >= m_JumpParticleTime)
