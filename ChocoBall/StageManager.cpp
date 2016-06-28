@@ -10,7 +10,7 @@ CStageManager* CStageManager::m_instance = nullptr;
 void CStageManager::Initialize()
 {
 	m_NowStage = STAGE_ID::STAGE_NONE;
-	ChangeStage(STAGE_ID::FIRST);
+	ChangeStage(STAGE_ID::FINAL);
 	SetNextStage();
 }
 
@@ -53,7 +53,7 @@ void CStageManager::SetNextStage(){
 		SINSTANCE(CObjectManager)->CleanManager();
 		SAFE_DELETE(m_pStage);
 		m_pStage = new CStage;
-		m_pAudio->DeleteNameAll();
+		m_pAudio->DeleteAll();
 		m_pStage->Initialize(m_pAudio,m_NowStage);
 		m_ContinueStage = m_NowStage;
 	}

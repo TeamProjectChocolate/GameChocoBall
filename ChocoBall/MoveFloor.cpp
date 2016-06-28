@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "MoveFloor.h"
 
+
+bool MoveFloor::m_IsPlayCue = false;
+
 MoveFloor::MoveFloor()
 {
 	m_player = NULL;
@@ -9,7 +12,7 @@ MoveFloor::MoveFloor()
 
 MoveFloor::~MoveFloor()
 {
-	
+	m_pAudio->StopCue("Lift", true,this);
 }
 
 void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale)
@@ -61,6 +64,11 @@ void MoveFloor::Update()
 	switch (m_state){
 	case move_none:
 	{
+		if (m_IamFlgKeeper){
+			m_pAudio->StopCue("Lift",true,this);//リフトAudio
+			m_IsPlayCue = false;
+			m_IamFlgKeeper = false;
+		}
 		break;
 	}
 	case move_flont:
@@ -82,12 +90,23 @@ void MoveFloor::Update()
 	if (IsHitPlayer(m_transform.position, 1.0f))
 	{
 		m_player->SetParent(this);
-		m_pAudio->PlayCue("Lift",false);
+		if (m_state != move_none){
+			if (!m_IsPlayCue){
+				m_pAudio->PlayCue("Lift", true,this);//リフトAudio
+				m_IsPlayCue = true;
+				m_IamFlgKeeper = true;
+			}
+		}
 	}
 	else if (!IsHitPlayer(m_transform.position, 1.0f))
 	{
 		if (m_player->GetParent() == this){
 			m_player->SetParent(nullptr);
+		}
+		if (m_IamFlgKeeper){
+			m_pAudio->StopCue("Lift",true,this);
+			m_IsPlayCue = false;
+			m_IamFlgKeeper = false;
 		}
 	}
 

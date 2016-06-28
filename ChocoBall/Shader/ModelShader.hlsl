@@ -174,7 +174,23 @@ float4 CalcSpeculerLight(float3 normal,float4 worldpos){
 	return lig;
 }
 
-float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMask ) :	COLOR{
+/*!
+* @brief	アルファに埋め込む輝度を計算。
+*/
+float CalcLuminance(float3 color)
+{
+	float luminance = dot(color.xyz, float3(0.2125f, 0.7154f, 0.0721f));
+	if (luminance > 1.0f){
+		luminance = 1.0f / luminance;
+	}
+	else{
+		luminance = 0.0f;
+	}
+	return luminance;
+}
+
+
+float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMask ,uniform bool isIluminance) :	COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
@@ -237,7 +253,13 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 		color.xyz *= shadow_val.xyz;	// 影を書き込む
 	}
 
-	color.w = Alpha;
+	if (isIluminance){
+		// αに輝度を埋め込む
+		color.a = CalcLuminance(color.xyz);
+	}
+	else{
+		color.w = Alpha;
+	}
 	return color;
 }
 
@@ -313,7 +335,7 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	return color;
 }
 
-float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasShadow) :COLOR{
+float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasShadow,uniform bool hasluminance) :COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
@@ -372,7 +394,13 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasSha
 		}
 	}
 	
-	color.w = Alpha;
+	if (hasluminance){
+		// αに輝度を埋め込む
+		color.a = CalcLuminance(color.xyz);
+	}
+	else{
+		color.w = Alpha;
+	}
 	return color;
 }
 
@@ -386,7 +414,7 @@ float4 ZMaskPsShader(VS_OUTPUT In) : COLOR {
 technique ShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(true, false);
+		PixelShader = compile ps_3_0 ShadowPixel(true, false,false);
 	}
 };
 
@@ -414,7 +442,7 @@ technique NotNormalMapAnimationTec{
 technique NotNormalMapShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(false, false);
+		PixelShader = compile ps_3_0 ShadowPixel(false, false,false);
 	}
 };
 
@@ -435,14 +463,14 @@ technique NotNormalMapBasicTec{
 technique NotNormalMapAnimationFresnelTec{
 	pass p0{
 		VertexShader = compile vs_3_0 AnimationVertex();
-		PixelShader = compile ps_3_0 FresnelShader(false,false);
+		PixelShader = compile ps_3_0 FresnelShader(false,false,true);
 	}
 }
 
 technique NotNormalMapNonAnimationFresnelTec{
 	pass p0{
 		VertexShader = compile vs_3_0 BasicTransform();
-		PixelShader = compile ps_3_0 FresnelShader(false,false);
+		PixelShader = compile ps_3_0 FresnelShader(false,false,false);
 	}
 }
 
@@ -457,13 +485,14 @@ technique ZMask{
 technique ShadowMaskTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(true, true);
+		PixelShader = compile ps_3_0 ShadowPixel(true, true,false);
 	}
 };
 
 technique NotNormalMapNonAnimationFresnelShadowTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 FresnelShader(false,true);
+		PixelShader = compile ps_3_0 FresnelShader(false,true,false);
 	}
 }
+

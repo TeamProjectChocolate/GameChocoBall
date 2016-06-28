@@ -29,12 +29,13 @@ void CParticleEmitter::Initialize(){
 	m_pPlayer = SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D"));
 	m_TailPosition = nullptr;
 	m_Residual = false;
+	m_CourceLange = 0;
 }
 
 void CParticleEmitter::Update(){
 	m_CurrentCourceNo = m_CourceDef.FindCource(m_emitPosition).blockNo;
 	m_NowPlayerCourceNo = m_CourceDef.FindCource(m_pPlayer->GetPos()).blockNo;
-	if (m_CurrentCourceNo == m_NowPlayerCourceNo && m_CurrentCourceNo != -1 && m_NowPlayerCourceNo != -1){
+	if (abs(m_CurrentCourceNo - m_NowPlayerCourceNo) <= m_CourceLange && m_CurrentCourceNo != -1 && m_NowPlayerCourceNo != -1){
 		if (m_EmitFlg){
 			if (m_timer >= m_param->intervalTime){
 				for (int idx = 0; idx < m_param->EmitNum; idx++){

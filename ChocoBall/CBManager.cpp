@@ -76,7 +76,7 @@ bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 		//プレイヤーを内包する箱の最大値と最小値を求める。
 		D3DXVECTOR3 MaxSize;//最大値
 		D3DXVECTOR3 MinSize;//最小値
-		const static float Sphereradius = 0.5f;//チョコボールの半径
+		const static float Sphereradius = 0.65f;//チョコボールの半径
 		size *= 0.5f;
 		MaxSize.x = pos.x + size.x + Sphereradius;
 		MaxSize.y = pos.y + size.y + Sphereradius;

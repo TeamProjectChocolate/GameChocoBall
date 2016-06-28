@@ -40,9 +40,7 @@ public:
 	D3DXVECTOR3 GetDirection(){
 		return m_dir;
 	}
-
-	void SetAudio(CAudio* audio)
-	{
+	void SetAudio(CAudio* audio){
 		m_pAudio = audio;
 	}
 private:
@@ -66,4 +64,7 @@ private:
 		move_none
 	};
 	D3DXVECTOR3 m_dir;
+	CAudio* m_pAudio;
+	bool m_IamFlgKeeper;
+	static bool m_IsPlayCue;
 };
