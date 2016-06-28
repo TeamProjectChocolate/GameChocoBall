@@ -17,7 +17,7 @@ void Skybox::Initialize()
 	m_transform.scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	C3DImage::Initialize();
 	SetAlive(true);
-
+	m_luminance = 0.7f;
 	C3DImage::SetImage(); 
 }
 
