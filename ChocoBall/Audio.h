@@ -76,7 +76,7 @@ public:
 		for (vector<SOUND_DATA*>::iterator itr = m_SoundDataArray.begin(); itr != m_SoundDataArray.end();){
 			(*itr)->Pointer = nullptr;
 			SAFE_DELETE(*itr);
-			itr++;
+			itr = m_SoundDataArray.erase(itr);
 		}
 		m_SoundDataArray.clear();
 	}

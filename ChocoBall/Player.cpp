@@ -139,7 +139,7 @@ void CPlayer::SetParent(MoveFloor* parent)
 
 	
 	if (parent != NULL){
-		Update();
+		//Update();
 		
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
@@ -521,7 +521,7 @@ void CPlayer::StateManaged()
 		float Kyori = D3DXVec3Dot(&GoalToPlayerVec, &LoadVec);
 		if (Kyori < 0.001f)
 		{
-			if (GamaOverFlag == false)
+			if (GamaOverFlag = true)
 			{
 				m_GameState = GAMEEND_ID::CLEAR;
 				return;
@@ -538,14 +538,13 @@ void CPlayer::StateManaged()
 			dist = Enemy->GetPos() - m_transform.position;
 			float R;
 			R = D3DXVec3Length(&dist);//ベクトルの長さを計算
-		
+
 			if (R <= 1)
 			{
 				m_MoveFlg = false;
 				m_pCamera->SetIsTarget(false);
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.5f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				m_pAudio->PlayCue("ta_ge_denki01", true, this);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
 			}
