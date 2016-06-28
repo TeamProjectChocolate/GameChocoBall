@@ -24,7 +24,7 @@ public:
 	void Draw()override;
 	void SetUpTechnique()override
 	{
-		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
+		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelBloomTec");
 	};
 	void OnDestroy();
 	void Build();

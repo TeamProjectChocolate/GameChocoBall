@@ -129,6 +129,7 @@ void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAM
 
 		SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
 		m_pEffect->SetFloat("g_luminance", m_luminance);
+
 		// ƒ{[ƒ“‚Ì”
 		m_pEffect->SetFloat("g_numBone", pMeshContainer->NumInfl);
 		m_pEffect->SetTexture("g_Texture", pMeshContainer->ppTextures[pBoneComb[iattrib].AttribId]);

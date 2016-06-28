@@ -509,3 +509,10 @@ technique NotNormalMapNonAnimationBloomTec{
 		PixelShader = compile ps_3_0 TextureShader(false,true);
 	}
 }
+
+technique NotNormalMapNonAnimationFresnelBloomTec{
+	pass p0{
+		VertexShader = compile vs_3_0 BasicTransform();
+		PixelShader = compile ps_3_0 FresnelShader(false, false, true);
+	}
+}

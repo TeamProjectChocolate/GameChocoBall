@@ -40,6 +40,7 @@ void Bullet::Update()
 }
 void Bullet::Draw()
 {
+	m_luminance = 2.5f;
 	SetUpTechnique();
 	C3DImage::Draw();
 }
