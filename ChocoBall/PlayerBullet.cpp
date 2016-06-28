@@ -93,7 +93,7 @@ bool CPlayerBullet::BulletBlockCollision(){
 						if (L <= 0.0f)
 						{
 							pBlock->SetAlive(false);
-							m_pAudio->PlayCue("clap02", true,this);//‰ó‚ê‚é‰¹
+							m_pAudio->PlayCue("sei_ge_touki_hibiware01", true,this);//‰ó‚ê‚é‰¹
 							return true;
 						}
 					}

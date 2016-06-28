@@ -71,12 +71,12 @@ void CPlayer::Initialize()
 	m_size.z = 1.0f;
 
 	//ジャンプ＆着地時のタイマー関係
-	m_Time = 0.2f;
-	m_Timer = 0.0f;
+	m_JumpParticleTime = 0.2f;
+	m_JumpParticleTimer = 0.0f;
 	
 	//銃発射時のタイマー関係
-	//m_Time2 = 0.2f;
-	//m_Timer2 = 0.0f;
+	//m_GunParticleTime = 0.2f;
+	//m_GunParticleTimer = 0.0f;
 
 	BulletShotInterval = 0;
 
@@ -118,15 +118,15 @@ void CPlayer::Initialize()
 		false
 		);
 
-	////銃発射時の煙
-	//m_pEmitter2 = CParticleEmitter::EmitterCreate(
-	//	_T("ParticleEmitterGunSmoke"),
-	//	PARTICLE_TYPE::GUNSMOKE,
-	//	m_transform.position,
-	//	m_pCamera->GetCamera(),
-	//	m_StageID,
-	//	false
-	//	);
+	//銃発射時の煙
+	/*m_pEmitter2 = CParticleEmitter::EmitterCreate(
+		_T("ParticleEmitterGunParticle"),
+		PARTICLE_TYPE::GUNPARTICLE,
+		m_transform.position,
+		m_pCamera->GetCamera(),
+		m_StageID,
+		false
+		);*/
 
 	m_UseBorn = true;
 	m_MoveFlg = true;
@@ -139,7 +139,7 @@ void CPlayer::SetParent(MoveFloor* parent)
 
 	
 	if (parent != NULL){
-		//Update();
+		Update();
 		
 		//親が設定されたので、ローカル座標を親のローカル座標に変換する。
 		D3DXMATRIX mParentWorldInv = parent->GetWorldMatrix();
@@ -168,18 +168,19 @@ void CPlayer::Update()
 	if (m_GameState == GAMEEND_ID::CONTINUE)
 	{
 		//1フレームでのカウンターの加算処理
-		m_Timer += 1.0f / 60.0f;
-		//m_Timer2 += 1.0f / 60.0f;
-		//発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
-		if (m_Timer>=m_Time)
+		m_JumpParticleTimer += 1.0f / 60.0f;
+
+		//ジャンプ＆着地時パーティクルの発生時間よりカウンターが超えたらパーティクルを消す＆カウンターも初期化
+		if (m_JumpParticleTimer >= m_JumpParticleTime)
 		{
 			m_pEmitter->SetEmitFlg(false);
-			m_Timer = 0.0f;
+			m_JumpParticleTimer = 0.0f;
 		}
-		/*if (m_Timer2 >= m_Time2)
+		//銃発射のパーティクル発生時間
+		/*if (m_GunParticleTimer >= m_GunParticleTime)
 		{
 			m_pEmitter2->SetEmitFlg(false);
-			m_Timer2 = 0.0f;
+			m_GunParticleTimer = 0.0f;
 		}*/
 
 		//親がいるときの処理
@@ -219,6 +220,7 @@ void CPlayer::Update()
 
 		//ロックオン処理
 		if (m_MoveFlg){
+			//ロックオン距離が調整できるまでは米アウト
 			//LockOn();
 		}
 
@@ -545,6 +547,7 @@ void CPlayer::StateManaged()
 				m_pCamera->SetIsTarget(false);
 				m_vibration.ThisVibration(&(m_transform.position), D3DXVECTOR3(0.002f, 0.0f, 0.0f), 0.5f, 0.01f);
 				m_moveSpeed = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				m_pAudio->PlayCue("ta_ge_denki01", true, this);
 				//m_GameState = GAMEEND_ID::OVER;
 				return;
 			}
@@ -583,15 +586,17 @@ void CPlayer::BulletShot()
 
 			if (m_pInput->IsPressRightShift())
 			{
-				//D3DXVECTOR3 pos = m_transform.position;
-				//m_pEmitter2->SetEmitFlg(true);
-				//m_pEmitter2->SetEmitPos(pos);
-
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);
 				D3DXMatrixRotationY(&Rot, m_currentAngleY);
 				D3DXVec3Transform(&RV1, &RV0, &Rot);
 
+				//D3DXVECTOR3 pos = m_transform.position;
+				//pos.y += 0.3f;
+				//プレイヤーの向きに合わせてパーティクルの発生場所をずらしている
+				//pos = RV0*1.0f;
+				//m_pEmitter2->SetEmitFlg(true);
+				//m_pEmitter2->SetEmitPos(pos);
 
 				CPlayerBullet* bullet = new CPlayerBullet;
 				bullet->Initialize();
@@ -679,7 +684,7 @@ void CPlayer::RollingPlayer()
 	m_transform.angle.w = rot.w();
 
 	//ゲームオーバーになるまでの待機時間の設定
-	deadTimer += 1.0 / 60.0f;
+	deadTimer += 1.0f / 60.0f;
 	if (deadTimer >= 2.0f){
 		m_GameState = GAMEEND_ID::OVER;
 	}
