@@ -55,7 +55,6 @@ private:
 	D3DXVECTOR3			StartPos;
 	D3DXVECTOR3			PlayerPos;
 	D3DXVECTOR3			m_MoveSpeed;
-	CAudio*				m_pAudio;
 	float				MaxMove;
 	int m_state;
 	enum state{
