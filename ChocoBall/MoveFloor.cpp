@@ -12,7 +12,7 @@ MoveFloor::MoveFloor()
 
 MoveFloor::~MoveFloor()
 {
-	
+	m_pAudio->StopCue("Lift", true,this);
 }
 
 void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale)
@@ -65,7 +65,7 @@ void MoveFloor::Update()
 	case move_none:
 	{
 		if (m_IamFlgKeeper){
-			m_pAudio->StopCue("Lift");//リフトAudio
+			m_pAudio->StopCue("Lift",true,this);//リフトAudio
 			m_IsPlayCue = false;
 			m_IamFlgKeeper = false;
 		}
@@ -92,7 +92,7 @@ void MoveFloor::Update()
 		m_player->SetParent(this);
 		if (m_state != move_none){
 			if (!m_IsPlayCue){
-				m_pAudio->PlayCue("Lift", true);//リフトAudio
+				m_pAudio->PlayCue("Lift", true,this);//リフトAudio
 				m_IsPlayCue = true;
 				m_IamFlgKeeper = true;
 			}
@@ -104,7 +104,7 @@ void MoveFloor::Update()
 			m_player->SetParent(nullptr);
 		}
 		if (m_IamFlgKeeper){
-			m_pAudio->StopCue("Lift");
+			m_pAudio->StopCue("Lift",true,this);
 			m_IsPlayCue = false;
 			m_IamFlgKeeper = false;
 		}

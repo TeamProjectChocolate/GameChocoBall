@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "RenderContext.h"
 #include "GraphicsDevice.h"
+#include "BloomRender.h"
 #include "Effect.h"
+
 
 CRenderContext* CRenderContext::m_instance = nullptr;
 
@@ -45,6 +47,8 @@ void CRenderContext::CreateRenderingTerget(){
 	m_bufferSize_Width = WINDOW_WIDTH * 2;
 	m_bufferSize_Height = WINDOW_HEIGHT * 2;
 
+	// ブルーム描画用クラス
+	m_BloomRender.Create();
 	
 	// レンダリングターゲット生成
 	(*graphicsDevice()).CreateDepthStencilSurface(m_bufferSize_Width, m_bufferSize_Height, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0, TRUE, &m_pMapZ, NULL);
@@ -67,12 +71,15 @@ void CRenderContext::RenderingStart(){
 }
 
 void CRenderContext::RenderingEnd(){
+	m_BloomRender.Draw();
+
 	// レンダリングターゲットを元に戻す
 	(*graphicsDevice()).SetRenderTarget(0, m_SavedBuffer);
 	(*graphicsDevice()).SetDepthStencilSurface(m_SavedMapZ);
 }
 
 void CRenderContext::SetRenderingBuffer(){
+
 	m_pEffect->SetTechnique("TransformedPrim");
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 	m_pEffect->BeginPass(0);

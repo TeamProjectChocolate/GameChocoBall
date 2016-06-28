@@ -14,6 +14,11 @@ typedef struct AUDIO_SET{
 
 }AOUDI_SET;
 
+typedef struct SOUND_DATA{
+	char Name[FILENAME_MAX];
+	void* Pointer;
+};
+
 //XACT初期化
 class CAudio{
 public:
@@ -35,50 +40,61 @@ public:
 	//キュー再生関数(キュー名)
 	//引き数:const char*型 サウンド名
 	//		 bool型 音を重ねて再生するかのフラグ(trueなら重ねる,falseなら重ねない)
-	void PlayCue(const char*,bool);
+	void PlayCue(const char*,bool,void*);
 
 	//キュー停止関数(キュー名)
-	void StopCue(const char*);
+	void StopCue(const char*,bool,void*);
 
-	void AddSoundName(LPCSTR name){
-		char* work = new char[FILENAME_MAX];
-		strcpy(work, name);
-		m_SoundNameArray.push_back(work);
+	void AddSound(LPCSTR name,void* pointer){
+		SOUND_DATA* work = new SOUND_DATA;
+		strcpy(work->Name, name);
+		work->Pointer = pointer;
+		m_SoundDataArray.push_back(work);
 	}
 
-	void DeleteName(LPCSTR name){
-		for (vector<LPCSTR>::iterator itr = m_SoundNameArray.begin(); itr != m_SoundNameArray.end();){
-			if (!strcmp(name, *itr)){
-				SAFE_DELETE(*itr);
-				itr = m_SoundNameArray.erase(itr);
-				return;
+	bool DeleteSound(LPCSTR name,void* pointer){
+		for (vector<SOUND_DATA*>::iterator itr = m_SoundDataArray.begin(); itr != m_SoundDataArray.end();){
+			if ((*itr)->Pointer == pointer){
+				if (!strcmp(name, (*itr)->Name)){
+					(*itr)->Pointer = nullptr;
+					SAFE_DELETE(*itr);
+					itr = m_SoundDataArray.erase(itr);
+					return true;
+				}
+				else{
+					itr++;
+				}
 			}
 			else{
 				itr++;
 			}
 		}
+		return false;
 	}
 
-	void DeleteNameAll(){
-		for (vector<LPCSTR>::iterator itr = m_SoundNameArray.begin(); itr != m_SoundNameArray.end();){
+	void DeleteAll(){
+		for (vector<SOUND_DATA*>::iterator itr = m_SoundDataArray.begin(); itr != m_SoundDataArray.end();){
+			(*itr)->Pointer = nullptr;
 			SAFE_DELETE(*itr);
 			itr++;
 		}
-		m_SoundNameArray.clear();
+		m_SoundDataArray.clear();
 	}
 
-	LPCSTR FindName(LPCSTR name){
-		int size = m_SoundNameArray.size();
+	bool FindSound(LPCSTR name,void* pointer){
+		int size = m_SoundDataArray.size();
 		for (int idx = 0; idx < size; idx++){
-			if (!strcmp(name,m_SoundNameArray[idx])){
-				return m_SoundNameArray[idx];
+			if (m_SoundDataArray[idx]->Pointer == pointer){
+				if (!strcmp(name, m_SoundDataArray[idx]->Name)){
+					return true;
+				}
 			}
 		}
-		return nullptr;
+		return false;
 	}
 private:
 	AUDIO_SET m_audio;	//XACTデータ用
-	vector<LPCSTR> m_SoundNameArray;
+	vector<SOUND_DATA*> m_SoundDataArray;
 };
 
 //WaveBank生成

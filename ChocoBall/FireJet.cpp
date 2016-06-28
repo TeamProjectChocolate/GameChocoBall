@@ -13,7 +13,7 @@ CFireJet::~CFireJet()
 
 void CFireJet::Initialize(){
 	m_IntervalTime = 3.0f;
-	m_JetTime = 2.0f;
+	m_JetTime = 3.0f;
 	m_ParticleType = PARTICLE_TYPE::FIREGIMMICK;
 	strcpy(m_SoundName, "Flame");
 	strcpy(m_SoundEndName, "Flameend");

@@ -266,7 +266,7 @@ void CPlayer::Update()
 					pos.y = pos.y - 0.7f;
 					m_pEmitter->SetEmitPos(pos);
 					m_PreviousJumpFlag = Jumpflag;
-					m_pAudio->PlayCue("Landing", true);
+					m_pAudio->PlayCue("Landing", true,this);
 				}
 				Jumpflag = false;
 			}
@@ -331,14 +331,21 @@ void CPlayer::ConfigLight(){
 	m_lightDir[3] = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
 	// ディフューズライト(キャラライト)の色設定(ライト1～4)
-	m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
-	m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	//m_lightColor[0] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	//m_lightColor[1] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	//m_lightColor[2] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+	//m_lightColor[3] = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
+
+
+	m_lightColor[0] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
+	m_lightColor[1] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
+	m_lightColor[2] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
+	m_lightColor[3] = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.1f);
 
 	// アンビエントライト(環境光)の強さ設定
 	D3DXVECTOR4 ambientLight;
-	ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 100.0f);
+	ambientLight = D3DXVECTOR4(0.2f, 0.2f, 0.2f, 0.5f);
+	//ambientLight = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 
 	// ライトの設定を反映
 	ReflectionLight(ambientLight);
@@ -370,7 +377,7 @@ void CPlayer::Move()
 	//ジャンプ関連の処理
 	if (m_pInput->IsTriggerSpace() && Jumpflag == false)
 	{
-		m_pAudio->PlayCue("Jump", true);//ジャンプSE
+		m_pAudio->PlayCue("Jump", true,this);//ジャンプSE
 		m_moveSpeed.y = PLAYER_JUMP_POWER;
 		Jumpflag = true;
 		m_pEmitter->SetEmitFlg(true);
@@ -599,7 +606,7 @@ void CPlayer::BulletShot()
 				bullet->SetBulletSpeed(0.5f);
 				bullet->SetAudio(m_pAudio);
 				m_bullets.push_back(bullet);
-				m_pAudio->PlayCue("Laser", true);
+				m_pAudio->PlayCue("Laser", true,this);
 			}
 		}
 	}

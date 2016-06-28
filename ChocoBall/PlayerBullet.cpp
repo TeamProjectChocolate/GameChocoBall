@@ -24,7 +24,7 @@ bool CPlayerBullet::Update(){
 
 	//弾と敵との衝突判定
 	if (BulletEnemyCollision()){
-		m_pAudio->PlayCue("スポッ１", true);//衝突音
+		m_pAudio->PlayCue("スポッ１", true,this);//衝突音
 		return true;
 	}
 	// 弾と壁ギミックの当たり判定
@@ -93,7 +93,7 @@ bool CPlayerBullet::BulletBlockCollision(){
 						if (L <= 0.0f)
 						{
 							pBlock->SetAlive(false);
-							m_pAudio->PlayCue("clap02", true);//壊れる音
+							m_pAudio->PlayCue("clap02", true,this);//壊れる音
 							return true;
 						}
 					}

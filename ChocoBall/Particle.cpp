@@ -42,7 +42,9 @@ void CParticle::Draw(){
 	SetUpTechnique();
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, true);
+	(*graphicsDevice()).SetRenderState(D3DRS_ZENABLE, true
+		
+		/*false*/);
 	(*graphicsDevice()).SetRenderState(D3DRS_ZWRITEENABLE, false);
 
 	switch (m_alphaBlendMode){
@@ -53,6 +55,16 @@ void CParticle::Draw(){
 	case 1:
 		(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 		(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+
+
+
+		(*graphicsDevice()).SetRenderState(D3DRS_SEPARATEALPHABLENDENABLE, true);
+		(*graphicsDevice()).SetRenderState(D3DRS_SRCBLENDALPHA, D3DBLEND_ONE);
+		(*graphicsDevice()).SetRenderState(D3DRS_DESTBLENDALPHA, D3DBLEND_ZERO);
+
+
+
+
 		break;
 	}
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
@@ -88,6 +100,15 @@ void CParticle::Draw(){
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
+
+
+
+	(*graphicsDevice()).SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	(*graphicsDevice()).SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+	(*graphicsDevice()).SetRenderState(D3DRS_SEPARATEALPHABLENDENABLE, false);
+
+
+
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	(*graphicsDevice()).SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
