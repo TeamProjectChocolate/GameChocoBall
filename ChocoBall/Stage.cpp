@@ -135,5 +135,8 @@ void CStage::ActivateObjects(){
 		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
 		}
+		else if (strcmp(ObjectDataArray[idx], "NUMBER") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
 	}
 }

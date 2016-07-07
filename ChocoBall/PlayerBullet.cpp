@@ -2,6 +2,7 @@
 #include "PlayerBullet.h"
 #include "EnemyManager.h"
 
+int CPlayerBullet::EnemyDownNum = 0;
 
 CPlayerBullet::CPlayerBullet()
 {
@@ -17,6 +18,7 @@ void CPlayerBullet::Initialize(){
 
 	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
 	m_pBlockManager = SINSTANCE(CObjectManager)->FindGameObject<CBuildBlock>(_T("B_Block"));
+	m_pNumber = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("NUMBER"));
 }
 
 bool CPlayerBullet::Update(){
@@ -24,6 +26,7 @@ bool CPlayerBullet::Update(){
 
 	//’e‚Æ“G‚Æ‚ÌÕ“Ë”»’è
 	if (BulletEnemyCollision()){
+		m_pNumber->SetValue(EnemyDownNum);
 		m_pAudio->PlayCue("ƒXƒ|ƒb‚P", true,this);//Õ“Ë‰¹
 		return true;
 	}
@@ -55,10 +58,12 @@ bool CPlayerBullet::BulletEnemyCollision(){
 		dist = Enemy->GetPos() - m_bullet.GetPos();
 		float L;
 		L = D3DXVec3Length(&dist);//ƒxƒNƒgƒ‹‚Ì’·‚³‚ðŒvŽZ
+		
 
 		if (L <= 1)
 		{
 			Enemy->PlayerBulletHit(m_bullet.GetDirection());
+			EnemyDownNum++;
 			return true;
 		}
 	}
@@ -68,6 +73,7 @@ bool CPlayerBullet::BulletEnemyCollision(){
 bool CPlayerBullet::BulletBlockCollision(){
 	for (int idx = 0;; idx++){
 		string str = "B_Block";
+
 		char num[100];
 		_itoa(idx, num, 10);
 		str += num;

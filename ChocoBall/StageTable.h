@@ -72,6 +72,7 @@ static LPCSTR StageGameObject_1[] = {
 	{ "Camera" },// すべてのステージにこれが必要です
 	{ "EnemyManager" },// すべてのステージにこれが必要です
 	{ "TEST3D" },// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_2[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -79,6 +80,7 @@ static LPCSTR StageGameObject_2[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_3[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -86,6 +88,7 @@ static LPCSTR StageGameObject_3[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_4[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -93,6 +96,7 @@ static LPCSTR StageGameObject_4[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_5[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -100,6 +104,7 @@ static LPCSTR StageGameObject_5[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_6[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -107,6 +112,7 @@ static LPCSTR StageGameObject_6[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -114,6 +120,7 @@ static LPCSTR StageGameObject_Final[] = {
 	{ "Camera" },	// すべてのステージにこれが必要です
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
+	{ "NUMBER" },// すべてのステージにこれが必要です
 };
 
 // 上に新しい配列を追加したらここにそのオブジェクト配列のポインタを順番どおりに格納してください
