@@ -12,7 +12,7 @@ MoveFloor::MoveFloor()
 
 MoveFloor::~MoveFloor()
 {
-	m_pAudio->StopCue("Lift", true,this);
+	m_pAudio->StopCue("Lift", false, this);
 }
 
 void MoveFloor::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scale)
@@ -92,7 +92,7 @@ void MoveFloor::Update()
 		m_player->SetParent(this);
 		if (m_state != move_none){
 			if (!m_IsPlayCue){
-				m_pAudio->PlayCue("Lift", true,this);//リフトAudio
+				m_pAudio->PlayCue("Lift", false ,this);//リフトAudio
 				m_IsPlayCue = true;
 				m_IamFlgKeeper = true;
 			}
@@ -150,7 +150,7 @@ bool MoveFloor::IsHitPlayer(D3DXVECTOR3 pos, float radius)
 
 	D3DXVec3Transform(&dimension, &PlayerPos, &m_InvWorld);
 
-	if (fabsf(dimension.x) < 1.5f && fabsf(dimension.z) < 1.5f && dimension.y <= 1.7f && dimension.y >= 0.6f)
+	if (fabsf(dimension.x) < 1.5f * m_transform.scale.x && fabsf(dimension.z) < 1.5f * m_transform.scale.z && dimension.y <= 1.7f && dimension.y >= 0.6f)
 	{
 		return true;
 	}

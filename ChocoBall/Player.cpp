@@ -584,7 +584,7 @@ void CPlayer::BulletShot()
 		BulletShotInterval++;
 		if (BulletShotInterval % 5 == 0){
 
-			if (m_pInput->IsPressLeftShift())
+			if (m_pInput->IsPressRightShift())
 			{
 				//プレイヤーの向いているベクトルを計算
 				D3DXVec3Normalize(&RV0, &RV0);

@@ -68,6 +68,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 void CStage::Update()
 {
 	m_GameState = m_pPlayer->GetGameState();
+	SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("NUMBER"))->SetValue(CPlayerBullet::EnemyDownNum);
 	m_score.Update();
 	m_pCamera->SetGameState(m_GameState);
 	if (m_isGameContinue){

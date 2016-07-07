@@ -25,7 +25,6 @@ void CPlayerBullet::Initialize(){
 bool CPlayerBullet::Update(){
 	//’e‚Æ“G‚Æ‚ÌÕ“Ë”»’è
 	if (BulletEnemyCollision()){
-		m_pNumber->SetValue(EnemyDownNum);
 		m_pAudio->PlayCue("ƒXƒ|ƒb‚P", true,this);//Õ“Ë‰¹
 		return true;
 	}
@@ -59,7 +58,7 @@ bool CPlayerBullet::BulletEnemyCollision(){
 
 		if (L <= 1)
 		{
-			Enemy->PlayerBulletHit(m_bullet.GetDirection());
+			Enemy->PlayerBulletHit(m_bullet->GetDirection());
 			EnemyDownNum++;
 
 			return true;

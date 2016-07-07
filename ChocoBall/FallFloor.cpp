@@ -40,7 +40,7 @@ void FallingFloor::Update()
 	{
 		if (m_MaxMove == -1 || m_transform.position.y > StartPos.y - m_MaxMove){
 			if (!m_IsPlayCue){
-				m_pAudio->PlayCue("Lift", false,this);//リフトAudio
+ 				m_pAudio->PlayCue("Lift", false,this);//リフトAudio
 				m_IsPlayCue = true;
 				m_IamFlgKeeper = true;
 			}

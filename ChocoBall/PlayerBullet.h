@@ -41,10 +41,11 @@ public:
 		return EnemyDownNum;
 	}
 
+public:
+	static int		EnemyDownNum;
 private:
 	CLockOn          m_LockOn;
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
-	static int		EnemyDownNum;
 	CEnemyManager* m_pEnemyManager;
 	CBuildBlock* m_pBlockManager;
 	Bullet* m_bullet;

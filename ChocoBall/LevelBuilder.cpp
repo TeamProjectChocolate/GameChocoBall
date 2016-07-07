@@ -155,7 +155,6 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			back.z = -mRot.m[2][2];
 			movefloor->SetDirection((movefloor->GetPos() + back) - movefloor->GetPos());
 			movefloor->SetMaxMove(pInfo[i].MaxMove);
-			movefloor->SetAudio(m_pAudio);
 			//SINSTANCE(CShadowRender)->Entry(movefloor);
 		}
 		else if (info.gimmickType == GimmickType_UpFloor){
