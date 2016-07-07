@@ -69,8 +69,8 @@ float4 ps_main(VS_OUTPUT In) : COLOR0{
 float4 ps_mainAdd(VS_OUTPUT In) :COLOR{
 	In.color = (float4)0.0f;
 	float4 color = tex2D(g_TextureSampler, In.uv);
-	color.xyz *= Alpha;
-	return float4(color.xyz,/*color.w * */1.0f / g_brightness);
+	color.xyz *= color.a * Alpha;
+	return float4(color.xyz,color.w * 1.0f / g_brightness);
 };
 
 technique BasicTec{

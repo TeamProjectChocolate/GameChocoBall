@@ -26,7 +26,7 @@
 {
 	D3DXVECTOR3(3.70f, 0.00f, 25.60f),             //平行移動
 	D3DXQUATERNION(0.00f, 0.00f, 0.00f, 1.00f ),    //回転
-	D3DXVECTOR3(0.90f, 60.00f, 50.00f ),            //拡大
+	D3DXVECTOR3(0.90f, 60.00f, 74.69f ),            //拡大
 },
 //Groud01
 {

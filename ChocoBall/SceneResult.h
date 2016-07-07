@@ -26,7 +26,6 @@ private:
 	CResultSelect m_rSelect[2];
 	CResultCursor m_rCursor;
 	CScore m_Score;
-	CNumber m_Number;
 	bool m_IsEnd;
 	int m_time;
 	int m_enemycounter;

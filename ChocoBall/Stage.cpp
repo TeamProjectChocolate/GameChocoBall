@@ -130,7 +130,7 @@ void CStage::ActivateObjects(){
 			SINSTANCE(CObjectManager)->GenerationObject<CCourceCamera>(_T(ObjectDataArray[idx]), PRIORTY::CONFIG, false);
 		}
 		else if (strcmp(ObjectDataArray[idx], "EnemyManager") == 0){
-			SINSTANCE(CObjectManager)->GenerationObject<CEnemyManager>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+			SINSTANCE(CObjectManager)->GenerationObject<CEnemyManager>(_T(ObjectDataArray[idx]), PRIORTY::ENEMY, false);
 		}
 		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);

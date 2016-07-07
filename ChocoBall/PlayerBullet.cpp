@@ -14,7 +14,8 @@ CPlayerBullet::~CPlayerBullet()
 }
 
 void CPlayerBullet::Initialize(){
-	m_bullet.Initialize();
+	m_bullet = SINSTANCE(CObjectManager)->GenerationObject<Bullet>(_T("PlayerBullet"), PRIORTY::BULLET, false);
+	m_bullet->Initialize();
 
 	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
 	m_pBlockManager = SINSTANCE(CObjectManager)->FindGameObject<CBuildBlock>(_T("B_Block"));
@@ -22,8 +23,6 @@ void CPlayerBullet::Initialize(){
 }
 
 bool CPlayerBullet::Update(){
-	m_bullet.Update();
-
 	//弾と敵との衝突判定
 	if (BulletEnemyCollision()){
 		m_pNumber->SetValue(EnemyDownNum);
@@ -34,28 +33,26 @@ bool CPlayerBullet::Update(){
 	if (BulletBlockCollision()){
 		return true;
 	}
-
 	return false;
 }
 
 void CPlayerBullet::Draw(){
-	m_bullet.Draw();
 }
 
 void CPlayerBullet::OnDestroy(){
-	m_bullet.OnDestroy();
+	m_bullet->OnDestroy();
 }
 
 void CPlayerBullet::Build(){
-	m_bullet.Build();
+	m_bullet->Build();
 }
 
 bool CPlayerBullet::BulletEnemyCollision(){
-	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_bullet.GetPos());
+	m_lockonEnemyIndex = m_LockOn.FindNearEnemy(m_bullet->GetPos());
 	if (m_lockonEnemyIndex != -1){
 		EnemyBase* Enemy = m_pEnemyManager->GetEnemy(m_lockonEnemyIndex);
 		D3DXVECTOR3 dist;
-		dist = Enemy->GetPos() - m_bullet.GetPos();
+		dist = Enemy->GetPos() - m_bullet->GetPos();
 		float L;
 		L = D3DXVec3Length(&dist);//ベクトルの長さを計算
 		
@@ -64,6 +61,7 @@ bool CPlayerBullet::BulletEnemyCollision(){
 		{
 			Enemy->PlayerBulletHit(m_bullet.GetDirection());
 			EnemyDownNum++;
+
 			return true;
 		}
 	}
@@ -83,7 +81,7 @@ bool CPlayerBullet::BulletBlockCollision(){
 			int max_Y = m_pBlockManager->GetNum_Y();
 
 			float blockWidth = m_pBlockManager->GetBlockWidth();
-			float bulletWidth = m_bullet.GetWidth();
+			float bulletWidth = m_bullet->GetWidth();
 
 			D3DXVECTOR3 dist;
 			for (int idx_Y = 0; idx_Y < max_Y; idx_Y++){
@@ -91,7 +89,7 @@ bool CPlayerBullet::BulletBlockCollision(){
 					CBlock* pBlock;
 					pBlock = m_pBlockManager->GetBlocks(idx_X, idx_Y);
 					if (pBlock->GetAlive()){
-						dist = pBlock->GetPos() - m_bullet.GetPos();
+						dist = pBlock->GetPos() - m_bullet->GetPos();
 						float L;
 						L = D3DXVec3Length(&dist);//ベクトルの長さを計算
 						L -= blockWidth / 2;
@@ -99,7 +97,7 @@ bool CPlayerBullet::BulletBlockCollision(){
 						if (L <= 0.0f)
 						{
 							pBlock->SetAlive(false);
-							m_pAudio->PlayCue("clap02", true,this);//壊れる音
+							m_pAudio->PlayCue("sei_ge_touki_hibiware01", true,this);//壊れる音
 							return true;
 						}
 					}

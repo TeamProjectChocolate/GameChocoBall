@@ -3,6 +3,7 @@
 #include "ObjectManager.h"
 #include "ShadowRender.h"
 #include "RenderContext.h"
+#include "Audio.h"
 
 CGameManager* CGameManager::m_instance = nullptr;
 
@@ -51,6 +52,7 @@ void CGameManager::SetNextScene(){
 		MessageBox(nullptr, _T("ƒV[ƒ“‚ª“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"), _T("error"), MB_OK);
 		abort();
 	}
+	m_pAudio->DeleteAll();
 	m_NowScene->SetAudio(m_pAudio);
 	m_NowScene->Initialize();
 	strcpy(m_NowSceneName, m_NextSceneName);

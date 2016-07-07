@@ -128,6 +128,7 @@ void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAM
 		m_pEffect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
 
 		SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
+		m_pEffect->SetFloat("g_luminance", m_luminance);
 
 		// ボーンの数
 		m_pEffect->SetFloat("g_numBone", pMeshContainer->NumInfl);
@@ -153,13 +154,13 @@ void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
 		}
 	}
 
-	SetUpTechnique();
-
 	D3DXMESHCONTAINER_DERIVED* container = m_pImage->pModel->GetContainer();
 	if (container->ppTextures == nullptr){
 		m_pEffect->SetTechnique("NotNormalMapBasicTec");
 	}
 	
+	SetUpTechnique();
+
 	UINT numPass;
 	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
 	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
@@ -189,7 +190,7 @@ void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
 	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &World/*設定したい行列へのポインタ*/);
 
 	m_pEffect->SetFloat("Alpha", GetAlpha());
-
+	m_pEffect->SetFloat("g_luminance", m_luminance);
 	for (DWORD i = 0; i < container->NumMaterials; i++){
 		m_pEffect->SetTexture("g_ShadowMap", SINSTANCE(CShadowRender)->GetTexture());	// テクスチャ情報をセット
 		m_pEffect->SetTexture("g_Texture", container->ppTextures[i]);	// テクスチャ情報をセット

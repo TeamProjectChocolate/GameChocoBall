@@ -113,7 +113,7 @@ public:
 private:
 	CInterface*	m_pInput;
 	CParticleEmitter* m_pEmitter;
-	//CParticleEmitter* m_pEmitter2;
+	CParticleEmitter* m_pEmitter2;
 	CLight			m_light;
 	D3DXVECTOR3		m_lightDir[NUM_DIFFUSE_LIGHT];
 	D3DXVECTOR4		m_lightColor[NUM_DIFFUSE_LIGHT];	
@@ -136,17 +136,17 @@ private:
 	bool			Shotflag;			//弾が発射されているのかのフラグ
 	bool            Jumpflag;			//ジャンプフラグ
 	GAMEEND_ID		m_GameState = GAMEEND_ID::CONTINUE;
-	bool            GamaOverFlag;		//ゲームオーバ
+	bool            GamaOverFlag;		//ゲームオーバー
 	bool            ChocoBall;			//チョコボールを流すフラグ
 
 	float			deadTimer;			//ゲームオーバーまでの待機時間
 	int             BusterEnemyNum;		//倒した敵の数
 
-	float m_Time;						//ジャンプ＆着地時のパーティクルが発生し続ける時間
-	float m_Timer;						//ジャンプ＆着地時のパーティクルをを発生させる時間のカウンター
+	float m_JumpParticleTime;						//ジャンプ＆着地時のパーティクルが発生し続ける時間
+	float m_JumpParticleTimer;						//ジャンプ＆着地時のパーティクルをを発生させる時間のカウンター
 
-	//float m_Time2;						//銃発射時のパーティクルが発生し続ける時間
-	//float m_Timer2;						//銃発射時のパーティクルをを発生させる時間のカウンター
+	//float m_GunParticleTime;						//銃発射時のパーティクルが発生し続ける時間
+	//float m_GunParticleTimer;						//銃発射時のパーティクルをを発生させる時間のカウンター
 
 	bool m_PreviousJumpFlag;			//パーティクルをジャンプの着地時に発生させるためのフラグ
 
