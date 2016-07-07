@@ -3,6 +3,7 @@
 #include "TitleBack.h"
 #include "TitleSelect.h"
 #include "TitleCursor.h"
+#include "Number.h"
 
 class CAudio;
 class CSceneTitle :
@@ -15,4 +16,6 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Release();
+private:
+	CNumber* num;
 };

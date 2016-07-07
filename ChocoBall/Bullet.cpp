@@ -23,7 +23,6 @@ void Bullet::Initialize()
 	m_moveSpeed.y = 0.0f;
 	this->Build();
 	m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius,CollisionType_Bullet);
-	//m_pPlayer = (SINSTANCE(CObjectManager)->FindGameObject<CPlayer>(_T("TEST3D")));
 	C3DImage::SetImage();
 }
 
@@ -40,7 +39,7 @@ void Bullet::Update()
 }
 void Bullet::Draw()
 {
-	m_luminance = 2.5f;
+	m_luminance = 12.5f;
 	SetUpTechnique();
 	C3DImage::Draw();
 }

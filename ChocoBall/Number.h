@@ -7,11 +7,8 @@
 
 class CNumber :public C2DImage{
 public:
-	CNumber(){
-		strcpy(m_pFileName, "image\\Number.png");
-		m_value= 0;
-	}
-	~CNumber(){};
+	CNumber();
+	~CNumber();
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

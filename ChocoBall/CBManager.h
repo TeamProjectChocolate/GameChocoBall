@@ -11,7 +11,16 @@
 
 #define CHOCO_NUM 200	//一回に流れるチョコの数
 
-
+struct SInstancingVertex{
+	FLOAT x, y, z, w;
+	DWORD color;
+	FLOAT u, v;
+	int Index;
+public:
+	void SetIndex(const int& index){
+		this->Index = index;
+	}
+};
 //Chocoballを管理するクラス
 class CCBManager : public CGameObject{
 public:
@@ -77,4 +86,6 @@ private:
 	int					m_InitPosOfCourceNo;// チョコボールが生成された場所のコースナンバー
 	CCourceDef m_CourceDef;
 	STAGE_ID m_StageID;
+	bool m_IsFirst;
+	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;
 };

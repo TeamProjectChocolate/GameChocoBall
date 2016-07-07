@@ -24,6 +24,11 @@ float4x4 g_CameraRotaInverse;	// カメラの回転行列の逆行列
 
 float g_luminance;	// 輝度の光の量を調整するための変数
 
+
+//int g_MaxInstance;
+//#define MAX_INSTANCE g_MaxInstance
+//float4x4 g_InstancingWorlds[MAX_INSTANCE]:WORLDMATRIXARRAY;	// インスタンシング描画用のワールド行列配列
+
 texture g_Texture;			// テクスチャ
 sampler g_TextureSampler = 
 sampler_state{
@@ -122,6 +127,22 @@ VS_OUTPUT ShadowVertex(VS_INPUT In){
 	Out.tangent = mul(In.tangent, Rota);
 	return Out;
 }
+
+//VS_OUTPUT InstancingVertex(VS_INPUT In,int Index:TEXCOORD5){
+//	VS_OUTPUT Out = (VS_OUTPUT)0;
+//	float4 pos;
+//	pos = mul(In.pos, g_InstancingWorlds[Index]);
+//	Out.WorldPos = pos;
+//	Out.ShadowPos = mul(pos, LightViewProj);
+//	pos = mul(pos, View);
+//	pos = mul(pos, Proj);
+//	Out.pos = pos;
+//	Out.color = In.color;
+//	Out.uv = In.uv;
+//	Out.normal = mul(In.normal, Rota);
+//	Out.tangent = mul(In.tangent, Rota);
+//	return Out;
+//}
 
 VS_OUTPUT AnimationVertex(VS_INPUT In){
 	VS_OUTPUT Out = (VS_OUTPUT)0;
@@ -516,3 +537,10 @@ technique NotNormalMapNonAnimationFresnelBloomTec{
 		PixelShader = compile ps_3_0 FresnelShader(false, false, true);
 	}
 }
+
+//technique NotNormalMapInstancingTec{
+//	pass p0{
+//		VertexShader = compile vs_3_0 InstancingVertex();
+//		PixelShader = compile ps_3_0 FresnelShader(false, true, false);
+//	}
+//}

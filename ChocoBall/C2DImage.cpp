@@ -28,6 +28,8 @@ void C2DImage::Initialize(){
 	m_pVertexBuffer->Lock(0, sizeof(vertices), (void**)&pVertices, 0);
 	memcpy(pVertices, vertices, sizeof(vertices));
 	m_pVertexBuffer->Unlock();
+	m_Now = D3DXVECTOR2(0.0f, 0.0f);
+	m_Split = D3DXVECTOR2(1.0f, 1.0f);
 }
 
 void C2DImage::Draw()
@@ -50,10 +52,10 @@ void C2DImage::Draw()
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
 	m_pEffect->SetMatrix("World", &mWorld);
-	m_pEffect->SetInt("Split_X", m_Split.x);
-	m_pEffect->SetInt("Split_Y", m_Split.y);
-	m_pEffect->SetInt("NowCol", m_Now.x);
-	m_pEffect->SetInt("NowRow", m_Now.y);
+	m_pEffect->SetInt("Split_X", static_cast<int>(m_Split.x));
+	m_pEffect->SetInt("Split_Y", static_cast<int>(m_Split.y));
+	m_pEffect->SetInt("NowCol", static_cast<int>(m_Now.x));
+	m_pEffect->SetInt("NowRow", static_cast<int>(m_Now.y));
 
 	float ratio_X = m_pImage->RealSize.x / m_pImage->UnRealSize.x;
 	float ratio_Y = m_pImage->RealSize.y / m_pImage->UnRealSize.y;
@@ -62,6 +64,7 @@ void C2DImage::Draw()
 	m_pEffect->SetFloat("Ratio_Y", ratio_Y);
 	
 	m_pEffect->SetTexture("g_Texture", m_pImage->pTex /*テクスチャ情報*/);
+
 
 	m_pEffect->SetFloat("Alpha", GetAlpha());
 	//m_pEffect->SetFloat("g_brightness", m_brightness);

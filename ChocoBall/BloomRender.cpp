@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BloomRender.h"
-#include "GraphicsDevice.h"]
+#include "GraphicsDevice.h"
 #include "RenderContext.h"
 
 
@@ -40,7 +40,7 @@ void CBloomRender::Draw()
 {
 
 	if (m_isEnable) {
-		UpdateWeight(25.0f);
+		UpdateWeight(5.0f);
 		LPDIRECT3DSURFACE9 RenderingTarget;
 		LPDIRECT3DSURFACE9 m_SavedMapZ;
 
@@ -260,7 +260,7 @@ void CBloomRender::Create()
 	m_pTexture[1]->GetSurfaceLevel(0, &m_downSamplingRenderTarget[1]);
 	//横ブラー用。
 	m_size[2].w = w >> 2;
-	m_size[2].h = h;
+	m_size[2].h = h>>1;
 	(*graphicsDevice()).CreateDepthStencilSurface(m_size[2].w, m_size[2].h, D3DFMT_D16, D3DMULTISAMPLE_NONE, 0, TRUE, &m_downSamplingRenderTarget[2], NULL);
 	(*graphicsDevice()).CreateTexture(m_size[2].w, m_size[2].h, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTexture[2], NULL);
 	m_pTexture[2]->GetSurfaceLevel(0, &m_downSamplingRenderTarget[2]);

@@ -17,18 +17,18 @@ public:
 	void OnDestroy();
 	void Build();
 	void SetDir(D3DXVECTOR4 dir){
-		m_bullet.SetDir(dir);
+		m_bullet->SetDir(dir);
 	}
 	bool BulletEnemyCollision();
 	bool BulletBlockCollision();
 	void SetPos(D3DXVECTOR3 pos){
-		m_bullet.SetPos(pos);
+		m_bullet->SetPos(pos);
 	}
 	D3DXVECTOR3 GetPos(){
-		return m_bullet.GetPos();
+		return m_bullet->GetPos();
 	}
 	void SetBulletSpeed(float s){
-		m_bullet.SetBulletSpeed(s);
+		m_bullet->SetBulletSpeed(s);
 	}
 	void SetAudio(CAudio* audio){
 		m_pAudio = audio;
@@ -38,7 +38,7 @@ private:
 	int				m_lockonEnemyIndex;	//ロックオンしている敵のインデックス。
 	CEnemyManager* m_pEnemyManager;
 	CBuildBlock* m_pBlockManager;
-	Bullet m_bullet;
+	Bullet* m_bullet;
 	CAudio* m_pAudio;
 };
 
