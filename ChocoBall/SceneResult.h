@@ -30,4 +30,5 @@ private:
 	int m_time;
 	int m_enemycounter;
 	int score;
+	CNumber* num;
 };

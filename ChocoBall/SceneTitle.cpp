@@ -19,21 +19,18 @@ CSceneTitle::~CSceneTitle()
 void CSceneTitle::Initialize(){
 	SINSTANCE(CObjectManager)->GenerationObject<CTitleBack>(_T("TitleBack"),PRIORTY::OBJECT2D,false);
 	CTitleSelect* start = SINSTANCE(CObjectManager)->GenerationObject<CTitleSelect>(_T("NewGame"),PRIORTY::OBJECT2D_ALPHA,false);
-	CTitleSelect* Continue = SINSTANCE(CObjectManager)->GenerationObject<CTitleSelect>(_T("continue"), PRIORTY::OBJECT2D_ALPHA, false);
-	Continue->SetFileName(_T("image/TAI_EXIT.png"));
+	//CTitleSelect* Continue = SINSTANCE(CObjectManager)->GenerationObject<CTitleSelect>(_T("continue"), PRIORTY::OBJECT2D_ALPHA, false);
+	//Continue->SetFileName(_T("image/TAI_EXIT.png"));
 	CTitleCursor* cursor = SINSTANCE(CObjectManager)->GenerationObject<CTitleCursor>(_T("Cursor"), PRIORTY::OBJECT2D, false);
 	cursor->SetAudio(m_pAudio);
 	num = SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T("Number"), PRIORTY::OBJECT2D_ALPHA, false);
 	SINSTANCE(CObjectManager)->Intialize();
-	Continue->SetPos(D3DXVECTOR3(655.0f, 430.0f, 0.0f));//Exitのポジション
+	//Continue->SetPos(D3DXVECTOR3(655.0f, 430.0f, 0.0f));//Exitのポジション
 }
-int i = 1;
 
 void CSceneTitle::Update(){
+	int i = CPlayerBullet::EnemyDownNum;
 	num->SetValue(i);
-	if (GetAsyncKeyState('A')){
-		i = 550;
-	}
 	SINSTANCE(CObjectManager)->Update();
 }
 

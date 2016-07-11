@@ -32,11 +32,8 @@ CLevelBuilder::~CLevelBuilder()
 			objMgr->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveCollisionObject(m_ghostObject[i]);
 		}
 	}
-	for (auto cb : m_chocoballMgrList){
-		objMgr->DeleteGameObjectImmediate(cb);
-		delete cb;
-	}
 }
+
 void CLevelBuilder::Build(CAudio* pAudio)
 {
 	int StageID = static_cast<int>(m_IsStage);
@@ -236,6 +233,9 @@ void CLevelBuilder::Build(CAudio* pAudio)
 		m_ghostObject[i]->setWorldTransform(groundTransform);
 		m_ghostObject[i]->setUserIndex(CollisionType_ChocoballTrigger);
 		m_ghostObject[i]->setUserPointer(m_chocoballMgrList[i]);
+
+		m_chocoballMgrList.clear();
+
 		//ƒ[ƒ‹ƒh‚É’Ç‰ÁB
 		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddCollisionObject(m_ghostObject[i]);
 	}

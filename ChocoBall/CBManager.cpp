@@ -164,6 +164,7 @@ void CCBManager::FindCource(){
 void CCBManager::NonActivate(){
 	for (int idx = 0; idx < CHOCO_NUM; idx++){
 		m_Choco[idx].SetAlive(false);
+
 	}
 	SetAlive(false);
 }

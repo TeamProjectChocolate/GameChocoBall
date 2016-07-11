@@ -40,42 +40,40 @@ void CTitleCursor::Update(){
 		m_pAudio->DeleteAll();
 		SINSTANCE(CGameManager)->ChangeScene(_T("Main"));
 	}
-	if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
-		// ここの中身の処理はセーブを実装し手続きから遊ぶの処理にする
-		m_pAudio->PlayCue("オケヒット", false, this);
-		PostQuitMessage(0);
-	}
+	//if (m_pInput->IsTriggerDecsion() && m_transform.position.y == 430.0f){
+	//	// ここの中身の処理はセーブを実装し手続きから遊ぶの処理にする
+	//	m_pAudio->PlayCue("オケヒット", false, this);
+	//	PostQuitMessage(0);
+	//}
 	
-
-	SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
-	float Y = m_pInput->GetStickL_YFloat();
-	if (Y>0){
-		m_transform.position.y = 300.0f;
-		m_transform.position.x = 510.0f;
-		if (!isup)
-		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
-			isup = true;
-		}
-	}
-	else
-	{
-		isup = false;
-	}
-	if (Y<0){
-		m_transform.position.y = 430.0f;
-		m_transform.position.x = 592.0f;
-		if (!isdown)
-		{
-			m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
-			isdown = true;
-		}
-		
-	}
-	else
-	{
-		isdown = false;
-	}
+	//float Y = m_pInput->GetStickL_YFloat();
+	//if (Y>0){
+	//	m_transform.position.y = 300.0f;
+	//	m_transform.position.x = 510.0f;
+	//	if (!isup)
+	//	{
+	//		m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
+	//		isup = true;
+	//	}
+	//}
+	//else
+	//{
+	//	isup = false;
+	//}
+	//if (Y<0){
+	//	m_transform.position.y = 430.0f;
+	//	m_transform.position.x = 592.0f;
+	//	if (!isdown)
+	//	{
+	//		m_pAudio->PlayCue("LAPUTA_counter_2", true,this);
+	//		isdown = true;
+	//	}
+	//	
+	//}
+	//else
+	//{
+	//	isdown = false;
+	//}
 	m_pAudio->Run();
 }
 
