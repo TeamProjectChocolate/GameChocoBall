@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Skybox.h"
 #include "RenderContext.h"
-
+#include "tkStopwatch.h"
 
 Skybox::Skybox(){
 	light.SetAmbientLight(D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));

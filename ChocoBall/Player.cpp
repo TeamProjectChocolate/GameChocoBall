@@ -307,7 +307,6 @@ void CPlayer::Update()
 }
 
 void CPlayer::Draw(){
-	
 	SetUpTechnique();
 	C3DImage::Draw();
 

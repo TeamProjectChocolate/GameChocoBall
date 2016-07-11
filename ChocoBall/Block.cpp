@@ -9,6 +9,7 @@ void CBlock::OnDestroy(){
 	if (m_child){
 		m_child->OnDestroyParent();
 	}
+
 	m_isDead = true;
 }
 
@@ -55,6 +56,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 
 	C3DImage::SetImage();
+	m_hShaderTecnique = m_pEffect->GetTechniqueByName("NotNormalMapNonAnimationFresnelShadowTec");
 }
 
 

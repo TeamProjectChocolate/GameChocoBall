@@ -513,7 +513,7 @@ technique ZMask{
 technique ShadowMaskTec{
 	pass p0{
 		VertexShader = compile vs_3_0 ShadowVertex();
-		PixelShader = compile ps_3_0 ShadowPixel(true, true,false);
+		PixelShader = compile ps_3_0 ShadowPixel(false, true,false);
 	}
 };
 

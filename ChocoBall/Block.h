@@ -22,7 +22,7 @@ public:
 	void Update();
 	void Draw();
 	void SetUpTechnique()override{
-		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelShadowTec");
+		m_pEffect->SetTechnique(m_hShaderTecnique);
 	}
 	D3DXVECTOR3 GetPos(){
 		return m_transform.position;
@@ -81,4 +81,5 @@ private:
 	EnState				m_eState;	//状態。
 	float				m_fallPosY;	//落下位置。
 	bool m_isDead;
+	D3DXHANDLE m_hShaderTecnique;	//シェーダーテクニックのハンドル。
 };

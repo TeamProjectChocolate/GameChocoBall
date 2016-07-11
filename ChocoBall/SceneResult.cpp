@@ -29,7 +29,7 @@ void CSceneResult::Initialize(){
 
 void CSceneResult::Update(){
 	SINSTANCE(CObjectManager)->Update();
-	}
+}
 void CSceneResult::Draw(){
 	SINSTANCE(CObjectManager)->Draw();
 }

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "EnemyManager.h"
 #include "ShadowRender.h"
+#include "tkStopwatch.h"
 
 void CEnemyManager::Initialize()
 {

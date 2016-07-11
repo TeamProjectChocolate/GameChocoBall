@@ -16,6 +16,7 @@
 #include "SceneResult.h"
 #include "BulletPhysics.h"
 #include "StageManager.h"
+#include "tkStopwatch.h"
 
 
 #define MAX_LOADSTRING 100
@@ -35,6 +36,8 @@ void addScene();
 void Initialize();
 void Update();
 void Draw();
+
+CStopwatch g_watch;
 
 // このコード モジュールに含まれる関数の宣言を転送します:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -80,6 +83,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
+			g_watch.Start();
+
 			if (SINSTANCE(CInputManager)->GetCurrentInput()->IsTriggerEscape()){
 				PostQuitMessage(0);
 			}
@@ -88,6 +93,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			SINSTANCE(CShadowRender)->ExcuteDeleteObjects();
 			SINSTANCE(CGameManager)->SetNextScene();
 			SINSTANCE(CObjectManager)->ExcuteDeleteObjects();
+
+			
+			//MessageBox(nullptr, text, _T("メッセージ"), MB_OK);
 		}
 
 	} while (msg.message != WM_QUIT);
@@ -247,7 +255,7 @@ void Initialize()
 	SINSTANCE(CStageManager)->SetAudio(pAudio);
 	SINSTANCE(CGameManager)->SetAudio(pAudio);
 	AddScene();
-	SINSTANCE(CGameManager)->ChangeScene(_T("Title"));
+	SINSTANCE(CGameManager)->ChangeScene(_T(/*"Title"*/"Main"));
 	SINSTANCE(CGameManager)->SetNextScene();
 }
 
@@ -266,5 +274,11 @@ void Draw()
 		SINSTANCE(CGameManager)->Draw();		// シーン描画
 		(*graphicsDevice()).EndScene();
 	}
+	
 	(*graphicsDevice()).Present(NULL, NULL, NULL, NULL);
+	g_watch.Stop();
+	char text[MAX_FILENAME];
+	sprintf(text, "%lf\n", g_watch.GetElapsedMillisecond());
+	OutputDebugString(text);
+
 }

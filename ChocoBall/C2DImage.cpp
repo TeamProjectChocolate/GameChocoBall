@@ -30,6 +30,16 @@ void C2DImage::Initialize(){
 	m_pVertexBuffer->Unlock();
 	m_Now = D3DXVECTOR2(0.0f, 0.0f);
 	m_Split = D3DXVECTOR2(1.0f, 1.0f);
+	m_hWorld = m_pEffect->GetParameterByName(nullptr,"World");
+	m_hSplit_X = m_pEffect->GetParameterByName(nullptr,"Split_X");
+	m_hSplit_Y = m_pEffect->GetParameterByName(nullptr,"Split_Y");
+	m_hNowCol = m_pEffect->GetParameterByName(nullptr,"NowCol");
+	m_hNowRow = m_pEffect->GetParameterByName(nullptr,"NowRow");
+	m_hRatio_X = m_pEffect->GetParameterByName(nullptr,"Ratio_X");
+	m_hRatio_Y = m_pEffect->GetParameterByName(nullptr,"Ratio_Y");
+	m_hTexture = m_pEffect->GetParameterByName(nullptr,"g_Texture");
+	m_hAlpha = m_pEffect->GetParameterByName(nullptr,"Alpha");
+
 }
 
 void C2DImage::Draw()
@@ -51,23 +61,22 @@ void C2DImage::Draw()
 
 	(*graphicsDevice()).SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SVertex));
 	(*graphicsDevice()).SetFVF(D3DFVF_CUSTOMVERTEX);
-	m_pEffect->SetMatrix("World", &mWorld);
-	m_pEffect->SetInt("Split_X", static_cast<int>(m_Split.x));
-	m_pEffect->SetInt("Split_Y", static_cast<int>(m_Split.y));
-	m_pEffect->SetInt("NowCol", static_cast<int>(m_Now.x));
-	m_pEffect->SetInt("NowRow", static_cast<int>(m_Now.y));
+	m_pEffect->SetMatrix(m_hWorld, &mWorld);
+	m_pEffect->SetInt(m_hSplit_X, static_cast<int>(m_Split.x));
+	m_pEffect->SetInt(m_hSplit_Y, static_cast<int>(m_Split.y));
+	m_pEffect->SetInt(m_hNowCol, static_cast<int>(m_Now.x));
+	m_pEffect->SetInt(m_hNowRow, static_cast<int>(m_Now.y));
 
 	float ratio_X = m_pImage->RealSize.x / m_pImage->UnRealSize.x;
 	float ratio_Y = m_pImage->RealSize.y / m_pImage->UnRealSize.y;
 
-	m_pEffect->SetFloat("Ratio_X", ratio_X);
-	m_pEffect->SetFloat("Ratio_Y", ratio_Y);
+	m_pEffect->SetFloat(m_hRatio_X, ratio_X);
+	m_pEffect->SetFloat(m_hRatio_Y, ratio_Y);
 	
-	m_pEffect->SetTexture("g_Texture", m_pImage->pTex /*テクスチャ情報*/);
+	m_pEffect->SetTexture(m_hTexture, m_pImage->pTex /*テクスチャ情報*/);
 
 
-	m_pEffect->SetFloat("Alpha", GetAlpha());
-	//m_pEffect->SetFloat("g_brightness", m_brightness);
+	m_pEffect->SetFloat(m_hAlpha, GetAlpha());
 	m_pEffect->CommitChanges();				//この関数を呼び出すことで、データの転送が確定する。描画を行う前に一回だけ呼び出す。
 
 	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
@@ -94,7 +103,6 @@ void C2DImage::SetupMatrices()
 	D3DXMatrixIdentity(&this->mWorld);	//ワールド行列初期化
 	D3DXMatrixScaling(&matScale, Scale.x, Scale.y, Scale.z);
 	D3DXMatrixRotationQuaternion(&matRota, &m_transform.angle);
-	//D3DXMatrixRotationZ(&matRota, D3DXToRadian(m_transform.angle.z));
 	D3DXMatrixTranslation(&matTrans, Transform.x, Transform.y, 0);
 	mWorld = matScale * matRota * matTrans;
 }

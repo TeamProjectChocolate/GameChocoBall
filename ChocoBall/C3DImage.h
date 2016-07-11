@@ -50,6 +50,18 @@ protected:
 	// 3D描画用メンバ変数
 	D3DXMATRIX m_World;		// ワールド行列
 	CAnimation m_animation;
+
+	// シェーダーに値をセットするためのハンドル群
+	D3DXHANDLE m_hEyePosition;
+	D3DXHANDLE m_hWorldMatrixArray; 
+	D3DXHANDLE m_hluminance;
+	D3DXHANDLE m_hnumBone;
+	D3DXHANDLE m_hAlpha;
+	D3DXHANDLE m_hRota;
+	D3DXHANDLE m_hWorld;
+	D3DXHANDLE m_hTexture;
+	D3DXHANDLE m_hShadowMap;
+
 	int m_currentAnimNo;
 	bool m_UseBorn;		// ボーンを使用するかどうかのフラグ(trueなら使用、falseなら使用しない)
 	float m_luminance;	// 輝度の光量を調整するための変数

@@ -48,5 +48,16 @@ protected:
 	D3DXMATRIX mWorld;		// ワールド行列
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;		// 生成された頂点バッファへのポインタを格納する変数
+
+	// シェーダーに値をセットするためのハンドル群
+	D3DXHANDLE m_hWorld;
+	D3DXHANDLE m_hSplit_X;
+	D3DXHANDLE m_hSplit_Y;
+	D3DXHANDLE m_hNowCol;
+	D3DXHANDLE m_hNowRow;
+	D3DXHANDLE m_hRatio_X;
+	D3DXHANDLE m_hRatio_Y;
+	D3DXHANDLE m_hTexture;
+	D3DXHANDLE m_hAlpha;
 };
 
