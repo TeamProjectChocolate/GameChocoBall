@@ -68,6 +68,7 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 void CStage::Update()
 {
 	m_GameState = m_pPlayer->GetGameState();
+	SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("NUMBER"))->SetValue(CPlayerBullet::EnemyDownNum);
 	m_score.Update();
 	m_pCamera->SetGameState(m_GameState);
 	if (m_isGameContinue){
@@ -134,6 +135,9 @@ void CStage::ActivateObjects(){
 		}
 		else if (strcmp(ObjectDataArray[idx], "TEST3D") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "NUMBER") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
 		}
 	}
 }
