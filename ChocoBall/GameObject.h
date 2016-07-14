@@ -45,7 +45,9 @@ public:
 	virtual D3DXVECTOR3 GetPos()
 	{
 		return m_transform.position;
-
+	}
+	virtual void SetScale(const D3DXVECTOR3 scale){
+		m_transform.scale = scale;
 	}
 	D3DXVECTOR3 GetmoveSpeed()
 	{

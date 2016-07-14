@@ -4,6 +4,13 @@
 #include "RenderContext.h"
 
 
+namespace{
+#if defined(USE_LOW_QUALITY_BLOOM)
+	const float BLUR_OFFFSET = 8.0f;
+#else
+	const float BLUR_OFFFSET = 16.0f;
+#endif
+}
 CBloomRender::CBloomRender()
 {
 };
@@ -72,7 +79,7 @@ void CBloomRender::Draw()
 		//XBlur
 		{
 			(*graphicsDevice()).SetRenderTarget(0, m_downSamplingRenderTarget[0]);
-			(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
+			//(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
 			m_pEffect->SetTechnique("XBlur");
 			m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 			m_pEffect->BeginPass(0);
@@ -81,7 +88,7 @@ void CBloomRender::Draw()
 				static_cast<float>(SINSTANCE(CRenderContext)->GetWindowHeight())
 			};
 			float offset[] = {
-				16.0f / static_cast<float>(SINSTANCE(CRenderContext)->GetWindowWidth()),
+				BLUR_OFFFSET / static_cast<float>(SINSTANCE(CRenderContext)->GetWindowWidth()),
 				0.0f
 			};
 			m_pEffect->SetValue("g_luminanceTexSize", size, sizeof(size));
@@ -104,7 +111,7 @@ void CBloomRender::Draw()
 		//YBlur
 		{
 			(*graphicsDevice()).SetRenderTarget(0, m_downSamplingRenderTarget[1]);
-			(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
+			//(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
 			m_pEffect->SetTechnique("YBlur");
 			m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 			m_pEffect->BeginPass(0);
@@ -114,7 +121,7 @@ void CBloomRender::Draw()
 			};
 			float offset[] = {
 				0.0f,
-				16.0f / static_cast<float>(m_size[0].h)
+				BLUR_OFFFSET / static_cast<float>(m_size[0].h)
 			};
 			m_pEffect->SetValue("g_luminanceTexSize", size, sizeof(size));
 			m_pEffect->SetValue("g_offset", offset, sizeof(offset));
@@ -135,7 +142,7 @@ void CBloomRender::Draw()
 		//XBlur2
 		{
 			(*graphicsDevice()).SetRenderTarget(0, m_downSamplingRenderTarget[2]);
-			(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
+			//(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
 			m_pEffect->SetTechnique("XBlur");
 			m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 			m_pEffect->BeginPass(0);
@@ -144,7 +151,7 @@ void CBloomRender::Draw()
 				static_cast<float>(m_size[1].h)
 			};
 			float offset[] = { 
-				16.0f / static_cast<float>(m_size[1].w),
+				BLUR_OFFFSET / static_cast<float>(m_size[1].w),
 				0.0f
 			};
 			m_pEffect->SetValue("g_luminanceTexSize", size, sizeof(size));
@@ -166,7 +173,7 @@ void CBloomRender::Draw()
 		//YBlur2
 		{
 			(*graphicsDevice()).SetRenderTarget(0, m_downSamplingRenderTarget[3]);
-			(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
+			//(*graphicsDevice()).Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0, 1.0f, 0);
 			m_pEffect->SetTechnique( "YBlur");
 			m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 			m_pEffect->BeginPass( 0);
@@ -176,7 +183,7 @@ void CBloomRender::Draw()
 			};
 			float offset[] = {
 				0.0f,
-				16.0f / static_cast<float>(m_size[2].h)
+				BLUR_OFFFSET / static_cast<float>(m_size[2].h)
 			};
 			m_pEffect->SetValue("g_luminanceTexSize", size, sizeof(size));
 			m_pEffect->SetValue("g_offset", offset, sizeof(offset));

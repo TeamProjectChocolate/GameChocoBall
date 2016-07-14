@@ -2,6 +2,7 @@
 #include "Block.h"
 #include "ShadowRender.h"
 #include "BulletPhysics.h"
+#include "RenderContext.h"
 
 void CBlock::OnDestroy(){
 	SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->RemoveRigidBody(m_rigidBody);
@@ -56,7 +57,7 @@ void CBlock::Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot)
 	//m_IsIntersect.CollisitionInitialize(&m_transform.position, m_radius);
 
 	C3DImage::SetImage();
-	m_hShaderTecnique = m_pEffect->GetTechniqueByName("NotNormalMapNonAnimationFresnelShadowTec");
+	m_hShaderTecnique = m_pEffect->GetTechniqueByName("NotNormalMapNonAnimationFresnelTec");
 }
 
 
@@ -107,11 +108,31 @@ void CBlock::Update()
 
 void CBlock::Draw()
 {
-	SetUpTechnique();
-	C3DImage::Draw();
+	C3DImage::DrawSimple();
 }
 
+void CBlock::BeginDraw()
+{
+	SetUpTechnique();
 
+	UINT numPass;
+	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
+	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
+
+	// 現在のプロジェクション行列とビュー行列をシェーダーに転送
+	SINSTANCE(CRenderContext)->GetCurrentCamera()->SetCamera(m_pEffect);
+	SINSTANCE(CRenderContext)->GetCurrentLight()->SetLight(m_pEffect);
+	// 視点をシェーダーに転送
+	m_pEffect->SetVector(m_hEyePosition, reinterpret_cast<D3DXVECTOR4*>(&SINSTANCE(CRenderContext)->GetCurrentCamera()->GetPos()));
+
+
+	SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
+}
+void CBlock::EndDraw()
+{
+	m_pEffect->EndPass();
+	m_pEffect->End();
+}
 void CBlock::Build(const D3DXVECTOR3& size, const D3DXVECTOR3& pos)
 {
 

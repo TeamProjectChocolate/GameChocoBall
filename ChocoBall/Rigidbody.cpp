@@ -34,8 +34,8 @@ void CRigidbody::Update(D3DXVECTOR3* m_position)
 	m_position->x = rPos.x();
 	m_position->y = rPos.y();
 	m_position->z = rPos.z();
-	D3DXVECTOR3 axis(0.707f, -0.707f, 0.0f);
-	D3DXQuaternionRotationAxis(&m_rotation, &axis, D3DXToRadian(45.0f));
+	//D3DXVECTOR3 axis(0.707f, -0.707f, 0.0f);
+	//D3DXQuaternionRotationAxis(&m_rotation, &axis, D3DXToRadian(45.0f));
 	m_rotation.x = rRot.x();
 	m_rotation.y = rRot.y();
 	m_rotation.z = rRot.z();

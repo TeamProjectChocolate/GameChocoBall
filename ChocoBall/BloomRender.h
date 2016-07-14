@@ -3,6 +3,7 @@
 #include "Effect.h"
 #include "Primitive.h"
 
+//#define USE_LOW_QUALITY_BLOOM		//定義で低クォリティのブルーム処理が有効になる。品質は劣化する。
 
 typedef struct int2{
 	int w;
@@ -32,7 +33,11 @@ private:
 	*/
 	void UpdateWeight(float dispersion);
 private:
+#if defined(USE_LOW_QUALITY_BLOOM)
+	static const int NUM_WEIGHTS = 4;
+#else
 	static const int NUM_WEIGHTS = 8;
+#endif
 	LPD3DXEFFECT	m_pEffect;						//!<エフェクト。
 	LPDIRECT3DSURFACE9	m_luminanceRenderTarget;		//!<輝度を抽出するレンダリングターゲット。
 	LPDIRECT3DSURFACE9	m_downSamplingRenderTarget[4];	//!<輝度をダウンサンプリングするためのレンダリングターゲット。

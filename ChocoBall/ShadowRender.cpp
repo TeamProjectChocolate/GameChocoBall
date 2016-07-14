@@ -53,6 +53,8 @@ void CShadowRender::Draw(){
 
 	(*graphicsDevice()).Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
 
+	m_RenderState = RenderState::None;
+
 	for (int idx = 0, size = m_ShadowObjects.size(); idx < size; idx++){
 		if (m_ShadowObjects[idx] != nullptr){
 			if (m_ShadowObjects[idx]->GetAlive()){
@@ -63,7 +65,7 @@ void CShadowRender::Draw(){
 			DeleteObject(m_ShadowObjects[idx]);
 		}
 	}
-
+	EndDraw();
 	// レンダリングターゲットを元に戻す
 	(*graphicsDevice()).SetRenderTarget(0, pOldBackBuffer);
 	(*graphicsDevice()).SetDepthStencilSurface(pOldZBuffer);
@@ -92,82 +94,106 @@ void CShadowRender::DrawMeshContainer(/*LPDIRECT3DDEVICE9 Device,*/LPD3DXMESHCON
 
 	// オフスクリーンレンダリング
 	if (pMeshContainer->pSkinInfo != nullptr){
+		if (m_RenderState != RenderState::Bone){
+			if (m_RenderState != RenderState::None){
+				EndDraw();
+			}
+			m_RenderState = RenderState::Bone;
+			BeginDraw();
+		}
 		// ボーンありの影の描画
 		AnimationDraw(/*Device, */pMeshContainer/*, pMeshContainerBase, pFrameBase*/,pObject);
 	}
 	else{
+		if (m_RenderState != RenderState::Boneless){
+			if (m_RenderState != RenderState::None){
+				EndDraw();
+			}
+			m_RenderState = RenderState::Boneless;
+			BeginDraw();
+		}
 		// ボーンなしの影の描画
 		NonAnimationDraw(pObject);
 	}
 }
 
-void CShadowRender::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer,C3DImage* Object){
-	if (Object->GetAlive()){
-
+void CShadowRender::BeginDraw(){
+	if (m_RenderState == RenderState::Bone){
 		m_pEffect->SetTechnique("BoneShadowMapping");
-		m_pEffect->Begin(NULL, 0);
+	}
+	else if(m_RenderState == RenderState::Boneless){
+		m_pEffect->SetTechnique("BonelessShadowMapping");
+	}
+	m_pEffect->Begin(NULL, 0);
+	m_pEffect->BeginPass(0);
+}
 
-		//D3DXFRAME_DERIVED* pFrame = static_cast<D3DXFRAME_DERIVED*>(pFrameBase);
-		LPD3DXBONECOMBINATION pBoneComb;
+void CShadowRender::EndDraw(){
+	m_pEffect->EndPass();
+	m_pEffect->End();
+}
 
-		//D3DCAPS9 d3dCaps;
-		//Device->GetDeviceCaps(&d3dCaps);
-		pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
-		for (unsigned int iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
-			for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry){
-				DWORD iMatrixIndex = pBoneComb[iattrib].BoneId[iPaletteEntry];
-				if (iMatrixIndex != UINT_MAX){
-					D3DXMatrixMultiply(
-						&g_pBoneMatrices[iPaletteEntry],
-						&pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
-						pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]
-						);
-				}
+void CShadowRender::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, C3DImage* Object){
+	LPD3DXBONECOMBINATION pBoneComb;
+
+	pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
+	for (unsigned int iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
+		for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry){
+			DWORD iMatrixIndex = pBoneComb[iattrib].BoneId[iPaletteEntry];
+			if (iMatrixIndex != UINT_MAX){
+				D3DXMatrixMultiply(
+					&g_pBoneMatrices[iPaletteEntry],
+					&pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
+					pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]
+					);
 			}
-			m_pEffect->BeginPass(0);
-
-			m_camera.SetCamera(m_pEffect);
-			m_camera.SetFarNear(m_pEffect);
-
-			m_pEffect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
-
-			// ボーンの数
-			m_pEffect->SetFloat("g_numBone", pMeshContainer->NumInfl);
-
-			m_pEffect->CommitChanges();
-			pMeshContainer->MeshData.pMesh->DrawSubset(iattrib);
-			m_pEffect->EndPass();
 		}
-		m_pEffect->End();
+
+		m_camera.SetCamera(m_pEffect);
+		m_camera.SetFarNear(m_pEffect);
+
+		m_pEffect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
+
+		// ボーンの数
+		m_pEffect->SetFloat("g_numBone", pMeshContainer->NumInfl);
+
+		m_pEffect->CommitChanges();
+		pMeshContainer->MeshData.pMesh->DrawSubset(iattrib);
 	}
 }
 
 void CShadowRender::NonAnimationDraw(C3DImage* pObject){
-	if (pObject->GetAlive()){
-		m_pEffect->SetTechnique("BonelessShadowMapping");
-		m_pEffect->Begin(NULL, 0);
 
-		m_pEffect->BeginPass(0);
-		m_camera.SetCamera(m_pEffect);
-		m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &pObject->GetWorldMatrix()/*設定したい行列へのポインタ*/);
-		// 頂点フォーマットをセット
+	m_camera.SetCamera(m_pEffect);
+	m_pEffect->SetMatrix("World"/*エフェクトファイル内の変数名*/, &pObject->GetWorldMatrix()/*設定したい行列へのポインタ*/);
+	// 頂点フォーマットをセット
 
-		D3DXMESHCONTAINER_DERIVED* container = pObject->GetImage()->pModel->GetContainer();
+	D3DXMESHCONTAINER_DERIVED* container = pObject->GetImage()->pModel->GetContainer();
 
-		//(*graphicsDevice()).SetFVF(container->pMesh->GetFVF());
+	//(*graphicsDevice()).SetFVF(container->pMesh->GetFVF());
 
-		m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
+	m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
 
-		for (DWORD i = 0; i < container->NumMaterials; i++){
-			container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
-		}
-		m_pEffect->EndPass();
-		m_pEffect->End();
+	for (DWORD i = 0; i < container->NumMaterials; i++){
+		container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
 	}
 }
 
 void CShadowRender::DeleteObject(C3DImage* pObject){
 	m_DeleteObjects.push_back(pObject);
+}
+
+void CShadowRender::DeleteObjectImidieit(C3DImage* pObject){
+	vector<C3DImage*>::iterator itr;
+	for (itr = m_ShadowObjects.begin(); itr != m_ShadowObjects.end();){
+		if (pObject == (*itr)){
+			itr = m_ShadowObjects.erase(itr);
+			return;
+		}
+		else{
+			itr++;
+		}
+	}
 }
 
 void CShadowRender::CleanManager(){

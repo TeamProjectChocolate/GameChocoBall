@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ChocoBall.h"
 #include "CollisionType.h"
+#include "RenderContext.h"
+#include "ShadowRender.h"
 
 void CChocoBall::Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos)
 {
@@ -62,10 +64,30 @@ void CChocoBall::Update()
 
 }
 
+void CChocoBall::BeginDraw(){
+	SetUpTechnique();
+
+	UINT numPass;
+	m_pEffect->Begin(&numPass/*テクニック内に定義されているパスの数が返却される*/, 0);
+	m_pEffect->BeginPass(0);	//パスの番号を指定してどのパスを使用するか指定
+
+	// 現在のプロジェクション行列とビュー行列をシェーダーに転送
+	SINSTANCE(CRenderContext)->GetCurrentCamera()->SetCamera(m_pEffect);
+	SINSTANCE(CRenderContext)->GetCurrentLight()->SetLight(m_pEffect);
+	// 視点をシェーダーに転送
+	m_pEffect->SetVector(m_hEyePosition, reinterpret_cast<D3DXVECTOR4*>(&SINSTANCE(CRenderContext)->GetCurrentCamera()->GetPos()));
+
+	SINSTANCE(CShadowRender)->SetShadowCamera(m_pEffect);
+}
+
+void CChocoBall::EndDraw(){
+	m_pEffect->EndPass();
+	m_pEffect->End();
+}
+
 void CChocoBall::Draw()
 {
-	SetUpTechnique();
-	C3DImage::Draw();
+	C3DImage::DrawSimple();
 }
 
 void CChocoBall::OnDestroy()

@@ -8,7 +8,8 @@ public:
 	CAnimation(){
 		m_pAnimController = nullptr;
 		m_numAnimSet = 0;
-		m_currentAnimationSetNo = 0;
+		m_currentAnimationSetNo = -1;
+		m_oldAnimationSetNo = -1;
 		m_currentTrackNo = 0;
 		m_numMaxTracks = 0;
 		m_isBlending = false;
@@ -47,6 +48,10 @@ public:
 #endif
 	int GetNumAnimationSet() const{
 		return m_numAnimSet;
+	}
+	bool IsHasAnimationController() const
+	{
+		return m_pAnimController;
 	}
 private:
 	// アニメーション用メンバ変数

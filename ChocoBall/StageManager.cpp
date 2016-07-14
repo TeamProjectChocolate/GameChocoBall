@@ -6,6 +6,7 @@
 
 CStageManager* CStageManager::m_instance = nullptr;
 
+int CStageManager::m_ClearNum = 0;
 
 void CStageManager::Initialize()
 {

@@ -19,7 +19,7 @@ class CCBManager;
 class CParticleEmitter;
 class MoveFloor;
 
-enum PLAYER_STATE{ Wait, Walk, Jump };
+enum PLAYER_STATE{Wait = 0, Walk, Jump };
 class CPlayer : public C3DImage
 {
 public:

@@ -76,6 +76,9 @@ void CAnimation::PlayAnimation(int animationSetIndex, float interpolateTime){
 			if (m_oldAnimationSetNo == m_currentAnimationSetNo){
 				return;
 			}
+			if (m_currentAnimationSetNo == -1){
+				return;
+			}
 
 			// 補間中フラグをtrueにする
 			m_isInterpolate = true;
@@ -98,45 +101,43 @@ void CAnimation::SetAnimSpeed(float speed)
 	}
 }
 void CAnimation::Update(float deltaTime){
-	if (m_pAnimController){
-		m_localAnimationTime += deltaTime;
+	m_localAnimationTime += deltaTime;
 
-		if (m_animationEndTime[m_currentAnimationSetNo] > 0.0f	// アニメーションの終了時間が設定されている
-			&& m_localAnimationTime > m_animationEndTime[m_currentAnimationSetNo]){	// アニメーションの終了時間を超えた
-			m_localAnimationTime -= m_animationEndTime[m_currentAnimationSetNo];
-			m_pAnimController->SetTrackPosition(m_currentTrackNo, m_localAnimationTime);
-			m_pAnimController->AdvanceTime(0, nullptr);
-		}
-		else{
-			// 普通に再生
-			m_pAnimController->AdvanceTime(deltaTime, nullptr);
-		}
-		if (m_isInterpolate){
-			// 補間中
-			m_interpolateTime += deltaTime;
-			float weight = 0.0f;
-			if (m_interpolateTime > m_interpolateEndTime){
-				// 補間終了
-				m_isInterpolate = false;
-				weight = 1.0f;
-				// 現在のトラック以外を無効にする
-				for (int i = 0; i < m_numMaxTracks; i++){
-					if (i != m_currentTrackNo){
-						m_pAnimController->SetTrackEnable(i, false);
-					}
+	if (m_animationEndTime[m_currentAnimationSetNo] > 0.0f	// アニメーションの終了時間が設定されている
+		&& m_localAnimationTime > m_animationEndTime[m_currentAnimationSetNo]){	// アニメーションの終了時間を超えた
+		m_localAnimationTime -= m_animationEndTime[m_currentAnimationSetNo];
+		m_pAnimController->SetTrackPosition(m_currentTrackNo, m_localAnimationTime);
+		m_pAnimController->AdvanceTime(0, nullptr);
+	}
+	else{
+		// 普通に再生
+		m_pAnimController->AdvanceTime(deltaTime, nullptr);
+	}
+	if (m_isInterpolate){
+		// 補間中
+		m_interpolateTime += deltaTime;
+		float weight = 0.0f;
+		if (m_interpolateTime > m_interpolateEndTime){
+			// 補間終了
+			m_isInterpolate = false;
+			weight = 1.0f;
+			// 現在のトラック以外を無効にする
+			for (int i = 0; i < m_numMaxTracks; i++){
+				if (i != m_currentTrackNo){
+					m_pAnimController->SetTrackEnable(i, false);
 				}
 			}
-			else{
-				weight = m_interpolateTime / m_interpolateEndTime;
-				float invWeight = 1.0f - weight;
-				// ウェイトを設定していく
-				for (int i = 0; i < m_numMaxTracks; i++){
-					if (i != m_currentTrackNo){
-						m_pAnimController->SetTrackWeight(i, m_blendRateTable[i] * invWeight);
-					}
-					else{
-						m_pAnimController->SetTrackWeight(i, weight);
-					}
+		}
+		else{
+			weight = m_interpolateTime / m_interpolateEndTime;
+			float invWeight = 1.0f - weight;
+			// ウェイトを設定していく
+			for (int i = 0; i < m_numMaxTracks; i++){
+				if (i != m_currentTrackNo){
+					m_pAnimController->SetTrackWeight(i, m_blendRateTable[i] * invWeight);
+				}
+				else{
+					m_pAnimController->SetTrackWeight(i, weight);
 				}
 			}
 		}

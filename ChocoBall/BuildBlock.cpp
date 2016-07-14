@@ -63,12 +63,26 @@ void CBuildBlock::Update()
 
 void CBuildBlock::Draw()
 {
+	bool isBeginDraw = false;
+	int beginDrawBlockNo_w = 0;
+	int beginDrawBlockNo_h = 0;
+
 	for (int i = 0; i < BUILD_H; i++){
 
 		for (int j = 0; j < BUILD_W; j++){
 			if (m_blocks[i][j].GetAlive()){
+				if (!isBeginDraw){
+					m_blocks[i][j].BeginDraw();
+					isBeginDraw = true;
+					beginDrawBlockNo_w = j;
+					beginDrawBlockNo_h = i;
+
+				}
 				m_blocks[i][j].Draw();
 			}
 		}
+	}
+	if (isBeginDraw){
+		m_blocks[beginDrawBlockNo_h][beginDrawBlockNo_w].EndDraw();
 	}
 }

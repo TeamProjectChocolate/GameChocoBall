@@ -5,6 +5,7 @@
 
 void EnemyBase::Build(){
 	m_pEnemyManager = SINSTANCE(CObjectManager)->FindGameObject<CEnemyManager>(_T("EnemyManager"));
+	m_IsHit = false;
 }
 
 void EnemyBase::Update(){
@@ -17,7 +18,6 @@ void EnemyBase::Update(){
 
 void EnemyBase::OnDestroy()
 {
-	SetAlive(false);
 }
 
 void EnemyBase::PlayerBulletHit(D3DXVECTOR3 moveDir)

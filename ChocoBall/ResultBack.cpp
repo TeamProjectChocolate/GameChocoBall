@@ -16,9 +16,9 @@ CResultBack::~CResultBack()
 
 void CResultBack::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(480.0f, 300.0f, 1.0f);
+	m_transform.position = D3DXVECTOR3(480.0f, 270.0f, 1.0f);
 	SetRotation(0.0f);
-	m_transform.scale = D3DXVECTOR3(960, 520, 100);
+	m_transform.scale = D3DXVECTOR3(960, 570, 100);
 	SetAlive(true);
 	C2DImage::SetImage();
 }

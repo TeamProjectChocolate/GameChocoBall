@@ -6,6 +6,7 @@
 class CShadowRender
 {
 	SINGLETON_DECL(CShadowRender)
+	enum RenderState{None = 0,Boneless,Bone};
 public:
 	// 影を生成するオブジェクトを登録する関数
 	// 引き数： C3DImage* C3DImageを継承したクラスのポインタ
@@ -14,6 +15,8 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	void BeginDraw();
+	void EndDraw();
 	void SetObjectPos(D3DXVECTOR3 pos){
 		m_target = pos;
 	}
@@ -35,6 +38,7 @@ public:
 	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,C3DImage*);
 	void NonAnimationDraw(C3DImage*);
 	void DeleteObject(C3DImage*);
+	void DeleteObjectImidieit(C3DImage*);
 	void CleanManager();
 	void ExcuteDeleteObjects();
 private:
@@ -51,5 +55,6 @@ private:
 	D3DXMATRIX m_View;					// ライトのビュー行列
 	D3DXMATRIX m_Proj;					// ライトのプロジェクション行列
 	void DeleteAll();
+	RenderState m_RenderState;
 };
 

@@ -26,7 +26,6 @@ void CTitleSelect::Initialize(){
 	C2DImage::SetImage();
 	m_cursor = SINSTANCE(CObjectManager)->FindGameObject<CTitleCursor>(_T("Cursor"));
 	t = 1.0f;
-
 }
 
 void CTitleSelect::Update(){

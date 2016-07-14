@@ -39,6 +39,7 @@ void CPlayerBullet::Draw(){
 }
 
 void CPlayerBullet::OnDestroy(){
+	SINSTANCE(CObjectManager)->DeleteGameObject(m_bullet);
 	m_bullet->OnDestroy();
 }
 
@@ -58,9 +59,10 @@ bool CPlayerBullet::BulletEnemyCollision(){
 
 		if (L <= 1)
 		{
+			if (!Enemy->GetIsHit()){
+				EnemyDownNum++;
+			}
 			Enemy->PlayerBulletHit(m_bullet->GetDirection());
-			EnemyDownNum++;
-
 			return true;
 		}
 	}

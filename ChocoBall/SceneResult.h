@@ -31,4 +31,5 @@ private:
 	int m_enemycounter;
 	int score;
 	CNumber* num;
+	CNumber* StageNum;
 };

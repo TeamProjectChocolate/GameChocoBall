@@ -7,6 +7,7 @@
 #include "StageManager.h"
 #include "StageTable.h"
 #include "ParticleEmitter.h"
+#include "Icon.h"
 
 CStage::CStage()
 {
@@ -41,7 +42,13 @@ void CStage::Initialize(CAudio* pAudio,STAGE_ID NowId)
 
 	SINSTANCE(CObjectManager)->Intialize();
 
-	
+	m_StageClearNum = SINSTANCE(CObjectManager)->FindGameObject<CNumber>(_T("StageNUMBER"));
+	m_StageClearNum->SetPos(D3DXVECTOR3(230.0f, 130.0f, 0.0f));
+	m_StageClearNum->SetValue(CStageManager::m_ClearNum);
+
+	CIcon* obj = SINSTANCE(CObjectManager)->FindGameObject<CIcon>(_T("Clear_Icon"));
+	obj->SetPos(D3DXVECTOR3(60.0f, 130.0f, 1.0f));
+	obj->SetScale(D3DXVECTOR3(60.0f, 65.0f, 0.0f));
 
 	CCourceDef* cource = m_pPlayer->GetCourceDef();
 	COURCE_BLOCK block = cource->FindCource(cource->EndCource());
@@ -76,6 +83,8 @@ void CStage::Update()
 		{
 			SINSTANCE(CObjectManager)->GenerationObject<CClearText>(_T("Clear"), PRIORTY::OBJECT2D_ALPHA, false);
 			SINSTANCE(CObjectManager)->FindGameObject<CClearText>(_T("Clear"))->Initialize();
+			CStageManager::m_ClearNum++;
+			m_StageClearNum->SetValue(CStageManager::m_ClearNum);
 			m_isGameContinue = false;
 			SINSTANCE(CStageManager)->SetIsContinue(true);
 		}
@@ -137,6 +146,9 @@ void CStage::ActivateObjects(){
 			SINSTANCE(CObjectManager)->GenerationObject<CPlayer>(_T(ObjectDataArray[idx]), PRIORTY::PLAYER, false);
 		}
 		else if (strcmp(ObjectDataArray[idx], "NUMBER") == 0){
+			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
+		}
+		else if (strcmp(ObjectDataArray[idx], "StageNUMBER") == 0){
 			SINSTANCE(CObjectManager)->GenerationObject<CNumber>(_T(ObjectDataArray[idx]), PRIORTY::OBJECT2D_ALPHA, false);
 		}
 	}

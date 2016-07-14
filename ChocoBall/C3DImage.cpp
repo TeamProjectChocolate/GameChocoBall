@@ -9,6 +9,36 @@
 #include "SkinModelData.h"
 #include "AllocateHierarchy.h"
 
+
+	//他で使うな。
+	#define MultipyMatrix(mOut, m1)										\
+	{																	\
+		D3DXMATRIX m0 = mOut;											\
+		for (int i = 0; i<4; i++) {										\
+			for (int j = 0; j<4; j++) {									\
+				mOut.m[i][j] = 0.0f;									\
+				for (int k = 0; k<4; k++) {								\
+					mOut.m[i][j] += m0.m[i][k] * m1.m[k][j];			\
+				}														\
+			}															\
+		}																\
+																		\
+	}
+
+//他で使うな。
+	#define MultipyMatrix2(mOut, m0, m1)										\
+	{																	\
+		for (int i = 0; i<4; i++) {										\
+			for (int j = 0; j<4; j++) {									\
+				mOut.m[i][j] = 0.0f;									\
+				for (int k = 0; k<4; k++) {								\
+					mOut.m[i][j] += m0.m[i][k] * m1.m[k][j];			\
+				}														\
+			}															\
+		}																\
+																		\
+	}
+
 HRESULT C3DImage::SetImage(){
 
 	m_pImage = SINSTANCE(CImageManager)->Find3DImage(m_pFileName);
@@ -36,7 +66,7 @@ HRESULT C3DImage::LoadXFile(){
 
 void C3DImage::Initialize(){
 	m_pEffect = SINSTANCE(CEffect)->SetEffect(_T("Shader/ModelShader.hlsl"));	// 使用するshaderファイルを指定(デフォルト)
-	m_hEyePosition = m_pEffect->GetParameterByName(NULL, "EyePosition");
+	m_hEyePosition = m_pEffect->GetParameterByName(nullptr, "EyePosition");
 	m_hWorldMatrixArray = m_pEffect->GetParameterByName(nullptr, "g_WorldMatrixArray");
 	m_hluminance = m_pEffect->GetParameterByName(nullptr, "g_luminance");
 	m_hnumBone = m_pEffect->GetParameterByName(nullptr, "g_numBone");
@@ -49,7 +79,9 @@ void C3DImage::Initialize(){
 
 void C3DImage::Update(){
 	UpdateFrame(graphicsDevice(), m_pImage->pModel->GetFrameRoot());
-	m_animation.Update(DELTA_TIME);
+	if (m_animation.IsHasAnimationController()){
+		m_animation.Update(DELTA_TIME);
+	}
 }
 
 void C3DImage::UpdateFrame(LPDIRECT3DDEVICE9 Device, LPD3DXFRAME pFrame){
@@ -59,17 +91,37 @@ void C3DImage::UpdateFrame(LPDIRECT3DDEVICE9 Device, LPD3DXFRAME pFrame){
 void C3DImage::AnimationUpdate(){
 	D3DXMATRIX Trans;	// 移動行列
 	D3DXMATRIX Scale;	// 拡大・縮小行列
-	D3DXMatrixIdentity(&m_World);	// 行列初期化
+	//D3DXMatrixIdentity(&m_World);	// 行列初期化
 
-	D3DXMatrixRotationQuaternion(&m_World, &m_transform.angle);	// クォータニオンによる回転行列の作成
+	D3DXMatrixRotationQuaternion(&m_Rota, &m_transform.angle);	// クォータニオンによる回転行列の作成
 
-	m_Rota = m_World;
+	//m_Rota = m_World;
 
 	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
-	D3DXMatrixMultiply(&m_World, &Scale, &m_World);
+	MultipyMatrix2(m_World, Scale, m_Rota);
 
-	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
-	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
+	Trans.m[0][0] = 1.0f;
+	Trans.m[0][1] = 0.0f;
+	Trans.m[0][2] = 0.0f;
+	Trans.m[0][3] = 0.0f;
+
+	Trans.m[1][0] = 0.0f;
+	Trans.m[1][1] = 1.0f;
+	Trans.m[1][2] = 0.0f;
+	Trans.m[1][3] = 0.0f;
+
+	Trans.m[2][0] = 0.0f;
+	Trans.m[2][1] = 0.0f;
+	Trans.m[2][2] = 1.0f;
+	Trans.m[2][3] = 0.0f;
+
+	Trans.m[3][0] = m_transform.position.x;
+	Trans.m[3][1] = m_transform.position.y;
+	Trans.m[3][2] = m_transform.position.z;
+	Trans.m[3][3] = 1.0f;
+//	D3DXMatrixTranslation(&Trans, m_transform.position.x, m_transform.position.y, m_transform.position.z);
+	MultipyMatrix(m_World, Trans);
+//	D3DXMatrixMultiply(&m_World, &m_World, &Trans);
 
 	
 	if (m_pImage->pModel){
@@ -79,6 +131,10 @@ void C3DImage::AnimationUpdate(){
 
 void C3DImage::Draw(){
 	DrawFrame(m_pImage->pModel->GetFrameRoot());
+}
+void C3DImage::DrawSimple()
+{
+	DrawFrameSimple(m_pImage->pModel->GetFrameRoot());
 }
 
 void C3DImage::DrawFrame(LPD3DXFRAME pFrame){
@@ -98,7 +154,23 @@ void C3DImage::DrawFrame(LPD3DXFRAME pFrame){
 		DrawFrame(pFrame->pFrameFirstChild);
 	}
 }
+void C3DImage::DrawFrameSimple(LPD3DXFRAME pFrame){
+	LPD3DXMESHCONTAINER pMeshContainer;
 
+	pMeshContainer = pFrame->pMeshContainer;
+	while (pMeshContainer != nullptr){
+		DrawMeshContainerSimple(pMeshContainer, pFrame);
+		pMeshContainer = pMeshContainer->pNextMeshContainer;
+	}
+
+	if (pFrame->pFrameSibling != nullptr){
+		DrawFrameSimple(pFrame->pFrameSibling);
+	}
+
+	if (pFrame->pFrameFirstChild != nullptr){
+		DrawFrameSimple(pFrame->pFrameFirstChild);
+	}
+}
 void C3DImage::DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase,LPD3DXFRAME pFrameBase){
 	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 	D3DXMESHCONTAINER_DERIVED* pMeshContainer = static_cast<D3DXMESHCONTAINER_DERIVED*>(pMeshContainerBase);
@@ -112,7 +184,11 @@ void C3DImage::DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase,LPD3DXFR
 		NonAnimationDraw(pFrame);
 	}
 }
-
+void C3DImage::DrawMeshContainerSimple(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase){
+	// スキン情報なし
+	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
+	NonAnimationDrawSimple(pFrame);
+}
 void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame){
 
 	LPD3DXBONECOMBINATION pBoneComb;
@@ -209,5 +285,45 @@ void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
 	}
 	m_pEffect->EndPass();
 	m_pEffect->End();
-	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	
 }
+void C3DImage::NonAnimationDrawSimple(D3DXFRAME_DERIVED* pFrame){
+
+	D3DXMATRIX World;
+	if (pFrame != nullptr){
+		if (m_UseBorn){
+			World = pFrame->CombinedTransformationMatrix;
+		}
+		else{
+			World = m_World;
+		}
+	}
+
+	D3DXMESHCONTAINER_DERIVED* container = m_pImage->pModel->GetContainer();
+
+	
+
+	
+	//ここで固定描画と同じように、ローカル座標に設定された頂点群をデバイスに渡す。通常と同じ方法。
+	//	メッシュも同じく、マテリアルやテクスチャを設定
+	//DrawSubset()を呼び出して描画
+
+	// ワールドトランスフォーム(絶対座標変換)
+	// ワールド行列生成
+
+
+	m_pEffect->SetMatrix(m_hRota, &m_Rota);
+	m_pEffect->SetMatrix(m_hWorld/*エフェクトファイル内の変数名*/, &World/*設定したい行列へのポインタ*/);
+
+	m_pEffect->SetFloat(m_hAlpha, GetAlpha());
+	m_pEffect->SetFloat(m_hluminance, m_luminance);
+	for (DWORD i = 0; i < container->NumMaterials; i++){
+		m_pEffect->SetTexture(m_hShadowMap, SINSTANCE(CShadowRender)->GetTexture());	// テクスチャ情報をセット
+		m_pEffect->SetTexture(m_hTexture, container->ppTextures[i]);	// テクスチャ情報をセット
+		//m_pEffect->SetTexture("g_normalMap", SINSTANCE(CImageManager)->Find2DImage(_T("image/normal.jpg"))->pTex);
+		m_pEffect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
+		container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
+	}
+}
+
+

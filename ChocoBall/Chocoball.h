@@ -7,12 +7,14 @@
 
 class CChocoBall : public C3DImage {
 public:
-	CChocoBall(){  }
+	CChocoBall(){}
 	~CChocoBall(){}
 
 	void Initialize(D3DXVECTOR3 Spos, D3DXVECTOR3 Epos);
 	void Update();
 	void Draw();
+	void BeginDraw();
+	void EndDraw();
 	virtual void SetUpTechnique()override{
 		m_pEffect->SetTechnique("NotNormalMapNonAnimationFresnelTec");
 	}

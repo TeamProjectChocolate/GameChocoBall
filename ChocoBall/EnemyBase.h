@@ -20,6 +20,9 @@ public:
 	void SetStageID(STAGE_ID id){
 		m_StageID = id;
 	}
+	bool GetIsHit(){
+		return m_IsHit;
+	}
 protected:
 	STAGE_ID m_StageID;
 private:

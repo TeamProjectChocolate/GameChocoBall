@@ -118,9 +118,17 @@ void CCBManager::Update()
 
 void CCBManager::Draw()
 {
+	bool isBeginDraw = false;
 	for (int i = 0; i < m_numCreate; i++)
 	{
+		if (!isBeginDraw){
+			m_Choco[i].BeginDraw();
+			isBeginDraw = true;
+		}
 		m_Choco[i].Draw();
+	}
+	if (m_numCreate> 0){
+		m_Choco[m_numCreate - 1].EndDraw();
 	}
 }
 
@@ -164,7 +172,7 @@ void CCBManager::FindCource(){
 void CCBManager::NonActivate(){
 	for (int idx = 0; idx < CHOCO_NUM; idx++){
 		m_Choco[idx].SetAlive(false);
-
+		SINSTANCE(CShadowRender)->DeleteObject(&m_Choco[idx]);
 	}
 	SetAlive(false);
 }

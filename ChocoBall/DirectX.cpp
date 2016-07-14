@@ -17,6 +17,7 @@
 #include "BulletPhysics.h"
 #include "StageManager.h"
 #include "tkStopwatch.h"
+#include "Icon.h"
 
 
 #define MAX_LOADSTRING 100
@@ -83,11 +84,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			g_watch.Start();
-
-			if (SINSTANCE(CInputManager)->GetCurrentInput()->IsTriggerEscape()){
-				PostQuitMessage(0);
-			}
+			//if (SINSTANCE(CInputManager)->GetCurrentInput()->IsTriggerEscape()){
+			//	PostQuitMessage(0);
+			//}
 			Update();
 			Draw();	
 			SINSTANCE(CShadowRender)->ExcuteDeleteObjects();
@@ -256,6 +255,8 @@ void Initialize()
 	SINSTANCE(CGameManager)->SetAudio(pAudio);
 	AddScene();
 	SINSTANCE(CGameManager)->ChangeScene(_T("Title"/*"Main"*/));
+	SINSTANCE(CObjectManager)->GenerationObject<CIcon>(_T("Kill_Icon"), PRIORTY::OBJECT2D_ALPHA, true);
+	SINSTANCE(CObjectManager)->GenerationObject<CIcon>(_T("Clear_Icon"), PRIORTY::OBJECT2D_ALPHA, true)->SetFileName(_T("Image/CLEAR_icon.png"));
 	SINSTANCE(CGameManager)->SetNextScene();
 }
 
@@ -276,9 +277,4 @@ void Draw()
 	}
 	
 	(*graphicsDevice()).Present(NULL, NULL, NULL, NULL);
-	g_watch.Stop();
-	char text[MAX_FILENAME];
-	sprintf(text, "%lf\n", g_watch.GetElapsedMillisecond());
-	OutputDebugString(text);
-
 }

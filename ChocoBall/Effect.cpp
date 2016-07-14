@@ -25,7 +25,7 @@ LPD3DXEFFECT CEffect::LoadEffect(LPCSTR pFileName){
 	strcpy(Effect->pFileName,pFileName);
 	// ID3DXEffectインタフェース生成
 	hr = D3DXCreateEffectFromFile(graphicsDevice(), pFileName/*シェーダプログラムが書き込まれたファイル名*/,
-		NULL, NULL, D3DXSHADER_DEBUG, NULL, &(Effect->Effect), &compileErrorBuffer/*エラー情報が入る*/);
+		NULL, NULL, D3DXSHADER_SKIPVALIDATION, NULL, &(Effect->Effect), &compileErrorBuffer/*エラー情報が入る*/);
 	if (FAILED(hr)) {
 		MessageBox(nullptr, reinterpret_cast<char*>(compileErrorBuffer->GetBufferPointer()), "error", MB_OK);
 		abort();

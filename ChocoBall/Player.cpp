@@ -19,12 +19,10 @@ CPlayer::~CPlayer(){
 		SAFE_DELETE(m_bullets[idx]);
 	}
 	m_bullets.clear();
+	m_Deletebullets.clear();
 
-	list<CCBManager*>::iterator itr = m_CBManager.begin();
-	for (; itr != m_CBManager.end();itr++){
-		SINSTANCE(CObjectManager)->DeleteGameObjectImmediate(*itr);
-	}
 	m_CBManager.clear();
+	m_DeleteChocoBall.clear();
 }
 
 void CPlayer::Initialize()
@@ -131,6 +129,7 @@ void CPlayer::Initialize()
 	m_UseBorn = true;
 	m_MoveFlg = true;
 	m_vibration.Initialize();
+	m_animation.PlayAnimation(-1,0.0f);
 }
 
 void CPlayer::SetParent(MoveFloor* parent)
@@ -199,7 +198,7 @@ void CPlayer::Update()
 		// デバイスが切り替わった場合は自動で切り替える
 		SINSTANCE(CInputManager)->IsInputChanged(&m_pInput);
 
-		m_currentAnimNo = 0;		
+		m_currentAnimNo = Wait;		
 
 		// ライトの更新
 		this->UpdateLight();
@@ -296,7 +295,7 @@ void CPlayer::Update()
 	}
 
 	SINSTANCE(CShadowRender)->SetObjectPos(m_transform.position);
-	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f, 0.0f));
+	SINSTANCE(CShadowRender)->SetShadowCameraPos(m_transform.position + D3DXVECTOR3(0.0f, 15.0f/*30.0f*/, 0.0f));
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
@@ -382,7 +381,7 @@ void CPlayer::Move()
 		pos.y = pos.y - 0.5f;
 		m_pEmitter->SetEmitPos(pos);
 		m_PreviousJumpFlag = Jumpflag;
-		m_currentAnimNo = 2;
+		m_currentAnimNo = Jump;
 	}
 
 	m_moveSpeed.x = 0.0f;
@@ -632,6 +631,7 @@ void CPlayer::ExcuteDeleteBullets(){
 	for (int idx = 0; idx < size; idx++){
 		for (itr = m_bullets.begin(); itr != m_bullets.end();){
 			if (m_Deletebullets[idx] == *itr){
+				(*itr)->OnDestroy();
 				SAFE_DELETE(*itr);
 				itr = m_bullets.erase(itr);
 				break;

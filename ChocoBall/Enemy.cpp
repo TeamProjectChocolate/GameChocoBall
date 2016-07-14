@@ -120,7 +120,7 @@ void CEnemy::EnemyBulletShot()
 		}
 	}
 
-	//エネミーと弾の距離が30mになると弾が自動でDeleteする。
+	//エネミーと弾の距離が10mになると弾が自動でDeleteする。
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
@@ -147,6 +147,7 @@ void CEnemy::ExcuteDeleteBullets(){
 	for (int idx = 0; idx < size; idx++){
 		for (itr = m_bullets.begin(); itr != m_bullets.end();){
 			if (m_Deletebullets[idx] == *itr){
+				(*itr)->OnDestroy();
 				SAFE_DELETE(*itr);
 				itr = m_bullets.erase(itr);
 				break;

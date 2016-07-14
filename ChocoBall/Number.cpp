@@ -7,7 +7,7 @@ CNumber::CNumber(){
 }
 void CNumber::Initialize(){
 	C2DImage::Initialize();
-	m_transform.position = D3DXVECTOR3(150.0f, 50.0f, 0.0f);
+	m_transform.position = D3DXVECTOR3(230.0f, 50.0f, 0.0f);
 	SetRotation(0.0f);
 	m_transform.scale = D3DXVECTOR3(50, 80, 1);
 	SetAlpha(1.0f);

@@ -3,6 +3,8 @@
 */
 
 
+//#define USE_LOW_QUALITY_BLOOM		//定義で低クォリティのブルーム処理が有効になる。品質は劣化する。
+
 texture g_scene;	//シーンテクスチャ。
 
 sampler g_SceneSampler =
@@ -50,10 +52,13 @@ struct VS_BlurOutput{
 	float2 tex1 : TEXCOORD1;
 	float2 tex2 : TEXCOORD2;
 	float2 tex3 : TEXCOORD3;
+#if !defined(USE_LOW_QUALITY_BLOOM)
 	float2 tex4 : TEXCOORD4;
 	float2 tex5 : TEXCOORD5;
 	float2 tex6 : TEXCOORD6;
 	float2 tex7 : TEXCOORD7;
+#endif //#if !defined(USE_LOW_QUALITY_BLOOM)
+
 };
 texture g_blur;	//ブラーテクスチャ
 
@@ -68,7 +73,11 @@ sampler_state
 
 float2 g_luminanceTexSize;		//輝度テクスチャのサイズ。
 float2 g_offset;				//オフセット
+#if defined( USE_LOW_QUALITY_BLOOM )		
+float  g_weight[4];				//ガウスフィルタの重み。
+#else
 float  g_weight[8];				//ガウスフィルタの重み。
+#endif
 /*!
 * @brief	Xブラー頂点シェーダー。
 */
@@ -83,10 +92,12 @@ VS_BlurOutput VSXBlur(VS_INPUT In)
 	Out.tex1 = tex + float2(-3.0f / g_luminanceTexSize.x, 0.0f);
 	Out.tex2 = tex + float2(-5.0f / g_luminanceTexSize.x, 0.0f);
 	Out.tex3 = tex + float2(-7.0f / g_luminanceTexSize.x, 0.0f);
+#if !defined(USE_LOW_QUALITY_BLOOM)
 	Out.tex4 = tex + float2(-9.0f / g_luminanceTexSize.x, 0.0f);
 	Out.tex5 = tex + float2(-11.0f / g_luminanceTexSize.x, 0.0f);
 	Out.tex6 = tex + float2(-13.0f / g_luminanceTexSize.x, 0.0f);
 	Out.tex7 = tex + float2(-15.0f / g_luminanceTexSize.x, 0.0f);
+#endif // #if !defined(USE_LOW_QUALITY_BLOOM)
 	return Out;
 }
 /*!
@@ -95,6 +106,17 @@ VS_BlurOutput VSXBlur(VS_INPUT In)
 float4 PSXBlur(VS_BlurOutput In) : COLOR
 {
 	float4 Color;
+#if defined(USE_LOW_QUALITY_BLOOM)
+	Color = g_weight[0] * (tex2D(g_blurSampler, In.tex0)
+		+ tex2D(g_blurSampler, In.tex3 + g_offset));
+	Color += g_weight[1] * (tex2D(g_blurSampler, In.tex1)
+		+ tex2D(g_blurSampler, In.tex2 + g_offset));
+	Color += g_weight[2] * (tex2D(g_blurSampler, In.tex2)
+		+ tex2D(g_blurSampler, In.tex1 + g_offset));
+	Color += g_weight[3] * (tex2D(g_blurSampler, In.tex3)
+		+ tex2D(g_blurSampler, In.tex0 + g_offset));
+	
+#else
 	Color = g_weight[0] * (tex2D(g_blurSampler, In.tex0)
 		+ tex2D(g_blurSampler, In.tex7 + g_offset));
 	Color += g_weight[1] * (tex2D(g_blurSampler, In.tex1)
@@ -111,6 +133,7 @@ float4 PSXBlur(VS_BlurOutput In) : COLOR
 		+ tex2D(g_blurSampler, In.tex1 + g_offset));
 	Color += g_weight[7] * (tex2D(g_blurSampler, In.tex7)
 		+ tex2D(g_blurSampler, In.tex0 + g_offset));
+#endif
 	return Color;
 }
 /*!
@@ -123,14 +146,18 @@ VS_BlurOutput VSYBlur(VS_INPUT In)
 	float2 tex = (In.pos * 0.5f) + 0.5f;
 		tex.y = 1.0f - tex.y;
 	tex += float2(0.5 / g_luminanceTexSize.x, 0.5 / g_luminanceTexSize.y);
+
 	Out.tex0 = tex + float2(0.0f, -1.0f / g_luminanceTexSize.y);
 	Out.tex1 = tex + float2(0.0f, -3.0f / g_luminanceTexSize.y);
 	Out.tex2 = tex + float2(0.0f, -5.0f / g_luminanceTexSize.y);
 	Out.tex3 = tex + float2(0.0f, -7.0f / g_luminanceTexSize.y);
+#if !defined(USE_LOW_QUALITY_BLOOM)
 	Out.tex4 = tex + float2(0.0f, -9.0f / g_luminanceTexSize.y);
 	Out.tex5 = tex + float2(0.0f, -11.0f / g_luminanceTexSize.y);
 	Out.tex6 = tex + float2(0.0f, -13.0f / g_luminanceTexSize.y);
 	Out.tex7 = tex + float2(0.0f, -15.0f / g_luminanceTexSize.y);
+#endif // #if !defined(USE_LOW_QUALITY_BLOOM)
+
 	return Out;
 }
 /*!
@@ -139,6 +166,16 @@ VS_BlurOutput VSYBlur(VS_INPUT In)
 float4 PSYBlur(VS_BlurOutput In) : COLOR
 {
 	float4 Color;
+#if defined(USE_LOW_QUALITY_BLOOM)
+	Color = g_weight[0] * (tex2D(g_blurSampler, In.tex0)
+		+ tex2D(g_blurSampler, In.tex3 + g_offset));
+	Color += g_weight[1] * (tex2D(g_blurSampler, In.tex1)
+		+ tex2D(g_blurSampler, In.tex2 + g_offset));
+	Color += g_weight[2] * (tex2D(g_blurSampler, In.tex2)
+		+ tex2D(g_blurSampler, In.tex1 + g_offset));
+	Color += g_weight[3] * (tex2D(g_blurSampler, In.tex3)
+		+ tex2D(g_blurSampler, In.tex0 + g_offset));
+#else
 	Color = g_weight[0] * (tex2D(g_blurSampler, In.tex0)
 		+ tex2D(g_blurSampler, In.tex7 + g_offset));
 	Color += g_weight[1] * (tex2D(g_blurSampler, In.tex1)
@@ -155,6 +192,8 @@ float4 PSYBlur(VS_BlurOutput In) : COLOR
 		+ tex2D(g_blurSampler, In.tex1 + g_offset));
 	Color += g_weight[7] * (tex2D(g_blurSampler, In.tex7)
 		+ tex2D(g_blurSampler, In.tex0 + g_offset));
+#endif
+	
 	return Color;
 }
 /*!
@@ -181,8 +220,8 @@ technique SamplingLuminance
 {
 	pass p0
 	{
-		VertexShader = compile vs_2_0 VSSamplingLuminance();
-		PixelShader = compile ps_2_0 PSSamplingLuminance();
+		VertexShader = compile vs_3_0 VSSamplingLuminance();
+		PixelShader = compile ps_3_0 PSSamplingLuminance();
 	}
 }
 
@@ -193,8 +232,8 @@ technique XBlur
 {
 	pass p0
 	{
-		VertexShader = compile vs_2_0 VSXBlur();
-		PixelShader = compile ps_2_0 PSXBlur();
+		VertexShader = compile vs_3_0 VSXBlur();
+		PixelShader = compile ps_3_0 PSXBlur();
 	}
 }
 
@@ -205,15 +244,15 @@ technique YBlur
 {
 	pass p0
 	{
-		VertexShader = compile vs_2_0 VSYBlur();
-		PixelShader = compile ps_2_0 PSYBlur();
+		VertexShader = compile vs_3_0 VSYBlur();
+		PixelShader = compile ps_3_0 PSYBlur();
 	}
 }
 technique Final
 {
 	pass p0
 	{
-		VertexShader = compile vs_2_0 VSFinal();
-		PixelShader = compile ps_2_0 PSFinal();
+		VertexShader = compile vs_3_0 VSFinal();
+		PixelShader = compile ps_3_0 PSFinal();
 	}
 }

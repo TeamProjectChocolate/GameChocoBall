@@ -85,10 +85,6 @@ void CSkinModelData::UpdateFrameMatrices(LPD3DXFRAME pFrameBase, const D3DXMATRI
 {
 	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 
-	if (pFrame &&  pFrame->Name && strcmp(pFrame->Name, "_face") == 0){
-		printf("joge");
-	}
-
 	if (pParentMatrix != NULL)
 		// ボーンのワールド変換?
 		D3DXMatrixMultiply(&pFrame->CombinedTransformationMatrix, &pFrame->TransformationMatrix, pParentMatrix);

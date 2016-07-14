@@ -35,7 +35,8 @@ public:
 	void SetContinueStage(STAGE_ID id){
 		m_ContinueStage = id;
 	}
-
+public:
+	static int m_ClearNum;
 private:
 	bool m_IsContinue;		// ステージを続きから遊ぶ場合はtrue,そうでなければfalse
 	STAGE_ID m_ContinueStage;	// ゲームオーバーしたときに現在のステージを保持する
@@ -47,5 +48,4 @@ private:
 	CAudio* m_pAudio;
 	//※デストラクタにて呼び出される
 	void DeleteAll();
-	
 };

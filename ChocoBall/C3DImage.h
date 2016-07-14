@@ -19,6 +19,9 @@ public:
 	virtual void Initialize()override;
 	virtual void Update()override;
 	virtual void Draw()override;
+	//DrawSubsetとSetTextureのみを行う描画関数。
+
+	void DrawSimple();
 	virtual void SetUpTechniqueAnimation(){
 		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
 	}
@@ -43,9 +46,13 @@ private:
 	void UpdateFrame(LPDIRECT3DDEVICE9, LPD3DXFRAME);
 	void AnimationUpdate();
 	void DrawFrame(LPD3DXFRAME);
+	void DrawFrameSimple(LPD3DXFRAME pFrame);
+	void DrawMeshContainerSimple(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 	void DrawMeshContainer(LPD3DXMESHCONTAINER, LPD3DXFRAME);
 	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,D3DXFRAME_DERIVED*);
 	void NonAnimationDraw(D3DXFRAME_DERIVED*);
+	void NonAnimationDrawSimple(D3DXFRAME_DERIVED*);
+
 protected:
 	// 3D描画用メンバ変数
 	D3DXMATRIX m_World;		// ワールド行列

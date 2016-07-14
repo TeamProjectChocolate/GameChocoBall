@@ -18,4 +18,5 @@ public:
 	void Release();
 private:
 	CNumber* num;
+	CNumber* StageNum;
 };

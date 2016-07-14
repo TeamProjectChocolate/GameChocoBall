@@ -73,6 +73,7 @@ static LPCSTR StageGameObject_1[] = {
 	{ "EnemyManager" },// すべてのステージにこれが必要です
 	{ "TEST3D" },// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_2[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -81,6 +82,7 @@ static LPCSTR StageGameObject_2[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_3[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -89,6 +91,7 @@ static LPCSTR StageGameObject_3[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_4[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -97,6 +100,7 @@ static LPCSTR StageGameObject_4[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_5[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -105,6 +109,7 @@ static LPCSTR StageGameObject_5[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_6[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -113,6 +118,7 @@ static LPCSTR StageGameObject_6[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 static LPCSTR StageGameObject_Final[] = {
 	{ "BulletPhysics" },	// すべてのステージにこれが必要です
@@ -121,6 +127,7 @@ static LPCSTR StageGameObject_Final[] = {
 	{ "EnemyManager" },	// すべてのステージにこれが必要です
 	{ "TEST3D" },	// すべてのステージにこれが必要です
 	{ "NUMBER" },// すべてのステージにこれが必要です
+	{ "StageNUMBER" },// すべてのステージにこれが必要です
 };
 
 // 上に新しい配列を追加したらここにそのオブジェクト配列のポインタを順番どおりに格納してください

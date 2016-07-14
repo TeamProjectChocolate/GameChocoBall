@@ -1,4 +1,7 @@
 
+//#define ENABLE_NORMAL_MAP		//定義すると法線マップが有効になる。
+//#define ENABLE_VERTEX_COLOR	//定義すると頂点カラーが有効になる。
+
 float4x4 World;	// ワールド変換行列宣言
 float4x4 View;	// ビュー変換行列宣言
 float4x4 Proj;	// 射影変換行列宣言
@@ -76,21 +79,29 @@ struct VS_INPUT{
 	float4	pos		: POSITION;
 	float4  BlendWeights:BLENDWEIGHT;
 	float4  BlendIndices:BLENDINDICES;
+#if !defined(ENABLE_VERTEX_COLOR)
 	float4	color	: COLOR0;
+#endif
 	float3  normal  : NORMAL0;	// ワールド座標における法線?
 	float2  uv		: TEXCOORD0;
+#if !defined(ENABLE_NORMAL_MAP)
 	float3  tangent : TANGENT0;	// 接ベクトル(ポリゴンから発される法線と直角に交わるベクトル、ポリゴンに沿う)
+#endif
 };
 
 // 頂点情報出力用構造体
 struct VS_OUTPUT{
 	float4	pos		: POSITION;
+#if !defined(ENABLE_VERTEX_COLOR)
 	float4	color	: COLOR0;
+#endif
 	float2  uv		: TEXCOORD0;
 	float3  normal	: TEXCOORD1;
 	float4  WorldPos	: TEXCOORD2;	// ワールド空間での頂点座標
 	float4  ShadowPos	: TEXCOORD3;
+#if !defined(ENABLE_NORMAL_MAP)
 	float3  tangent :  TEXCOORD4;	// 接ベクトル
+#endif
 };
 
 // 頂点シェーダ
@@ -105,10 +116,14 @@ VS_OUTPUT BasicTransform(VS_INPUT In /*頂点情報(ローカル座標*/)
 	pos = mul(pos, View);			// ビュー座標に変換
 	pos = mul(pos, Proj);			// プロジェクション座標に変換
 	Screen.pos = pos;
+#if !defined(ENABLE_VERTEX_COLOR)
 	Screen.color = In.color;
+#endif
 	Screen.uv = In.uv;
 	Screen.normal = mul(In.normal, Rota);		// 法線を回す
+#if !defined(ENABLE_NORMAL_MAP)
 	Screen.tangent = mul(In.tangent, Rota);		// 接ベクトルを回す
+#endif
 	return Screen;	// 頂点情報(スクリーン座標)←スクリーン座標を返さなければエラーとなってしまう。
 }
 
@@ -121,10 +136,14 @@ VS_OUTPUT ShadowVertex(VS_INPUT In){
 	pos = mul(pos, View);
 	pos = mul(pos, Proj);
 	Out.pos = pos;
+#if !defined(ENABLE_VERTEX_COLOR)
 	Out.color = In.color;
+#endif
 	Out.uv = In.uv;
 	Out.normal = mul(In.normal, Rota);
+#if !defined(ENABLE_NORMAL_MAP)
 	Out.tangent = mul(In.tangent, Rota);
+#endif
 	return Out;
 }
 
@@ -169,7 +188,9 @@ VS_OUTPUT AnimationVertex(VS_INPUT In){
 	Out.pos = mul(Out.WorldPos, View);
 	Out.pos = mul(Out.pos, Proj);
 	Out.normal = normal;// mul(normalize(normal), Rota);
+#if !defined(ENABLE_VERTEX_COLOR)
 	Out.color = In.color;
+#endif
 	Out.uv = In.uv;
 	return Out;
 }
@@ -215,6 +236,7 @@ float CalcLuminance(float3 color)
 
 float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMask ,uniform bool isIluminance) :	COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
+#if !defined(ENABLE_NORMAL_MAP)
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
 		// -1.0～1.0の範囲に調整する
@@ -232,7 +254,9 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 		// ポリゴンの基底軸(ワールド座標から見たポリゴンの軸の向き)と法線マップから得た値を使ってワールド座標での法線を求める
 		normal = TangentSpaceMatrix[0] * normal.x + TangentSpaceMatrix[1] * normal.y + TangentSpaceMatrix[2] * normal.z;
 	}
-	else{
+	else
+#endif
+	{
 		normal = In.normal;
 	}
 	if (hasZMask){
@@ -243,9 +267,7 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 		screenPos.xy *= float2(0.5f, -0.5f);			//-0.5～0.5の範囲にする
 		screenPos.xy += 0.5f;						//0.0～1.0の範囲する。
 		float4 zmask = tex2D(g_ZMaskSampler, screenPos.xy);
-		if (zmask.z > screenPos.z){
-			clip(-1.0f);
-		}
+		clip(screenPos.z - zmask.z);
 	}
 
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
@@ -289,6 +311,7 @@ float4 ShadowPixel(VS_OUTPUT In, uniform bool hasNormalMap, uniform bool hasZMas
 // ピクセルシェーダ
 float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasIluminance) : COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
+#if !defined(ENABLE_NORMAL_MAP)
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
 		// -1.0～1.0の範囲に調整する
@@ -306,7 +329,9 @@ float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasIlu
 		// ポリゴンの基底軸(ワールド座標から見たポリゴンの軸の向き)と法線マップから得た値を使ってワールド座標での法線を求める
 		normal = TangentSpaceMatrix[0] * normal.x + TangentSpaceMatrix[1] * normal.y + TangentSpaceMatrix[2] * normal.z;
 	}
-	else{
+	else
+#endif
+	{
 		normal = In.normal;
 	}
 	// ディフューズライトの計算
@@ -329,6 +354,7 @@ float4 TextureShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasIlu
 
 float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
+#if !defined(ENABLE_NORMAL_MAP)
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
 		// -1.0～1.0の範囲に調整する
@@ -346,7 +372,9 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 		// ポリゴンの基底軸(ワールド座標から見たポリゴンの軸の向き)と法線マップから得た値を使ってワールド座標での法線を求める
 		normal = TangentSpaceMatrix[0] * normal.x + TangentSpaceMatrix[1] * normal.y + TangentSpaceMatrix[2] * normal.z;
 	}
-	else{
+	else
+#endif
+	{
 		normal = In.normal;
 	}
 
@@ -356,8 +384,11 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 	light += CalcSpeculerLight(normal,In.WorldPos);
 	// アンビエントライトを加算
 	light.xyz += ambientLight;
-
+#if !defined(ENABLE_VERTEX_COLOR)
 	float4 color = In.color;	// テクスチャを貼り付ける
+#else
+	float4 color = 1.0f;	// テクスチャを貼り付ける
+#endif
 	color *= light;	// テクスチャのカラーとライトを乗算
 	color.w = Alpha;
 	return color;
@@ -365,6 +396,7 @@ float4 NoWorkingPixelShader(VS_OUTPUT In, uniform bool hasNormalMap) :COLOR{
 
 float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasShadow,uniform bool hasluminance) :COLOR{
 	float3 normal;		// 法線マップに書き込まれている法線
+#if !defined(ENABLE_NORMAL_MAP)
 	if (hasNormalMap){
 		normal = tex2D(g_normalMapSampler, In.uv);	// ここで得られる値は0.0から1.0(本来は-1.0から1.0の意味でなければならない)
 		// -1.0～1.0の範囲に調整する
@@ -382,7 +414,9 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasSha
 		// ポリゴンの基底軸(ワールド座標から見たポリゴンの軸の向き)と法線マップから得た値を使ってワールド座標での法線を求める
 		normal = TangentSpaceMatrix[0] * normal.x + TangentSpaceMatrix[1] * normal.y + TangentSpaceMatrix[2] * normal.z;
 	}
-	else{
+	else
+#endif
+	{
 		normal = In.normal;
 	}
 
@@ -397,7 +431,7 @@ float4 FresnelShader(VS_OUTPUT In, uniform bool hasNormalMap,uniform bool hasSha
 	// 法線をカメラ座標系に変換する
 	float3 normalInCamera = mul(normal, g_CameraRotaInverse);
 	float fresnel = 1.0f - abs(dot(normalInCamera, float3(0.0f, 0.0f, 1.0f)));
-	fresnel = pow(fresnel, 1.5f);
+	fresnel *= fresnel;// pow(fresnel, 1.5f);
 	float4 color = tex2D(g_TextureSampler, In.uv);	// テクスチャを貼り付ける
 	color *= light;	// テクスチャのカラーとライトを乗算
 	color += fresnel;

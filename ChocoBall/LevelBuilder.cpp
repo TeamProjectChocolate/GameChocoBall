@@ -93,7 +93,7 @@ void CLevelBuilder::Build(CAudio* pAudio)
 		}
 		else if (info.gimmickType == GimmickType_Chocoball){
 			//チョコボールを生成。
-			CCBManager* mgr =new CCBManager;
+			CCBManager* mgr = SINSTANCE(CObjectManager)->GenerationObject<CCBManager>(_T("Mgr"), PRIORTY::OBJECT3D, false);
 			m_chocoballMgrList.push_back(mgr);
 			D3DXVECTOR3 startPos(-pInfo[i].pos.x, pInfo[i].pos.y, -pInfo[i].pos.z);
 			D3DXQUATERNION rot(pInfo[i].rot.x, pInfo[i].rot.y, pInfo[i].rot.z, pInfo[i].rot.w);
@@ -107,6 +107,7 @@ void CLevelBuilder::Build(CAudio* pAudio)
 			mgr->SetEndPosition(startPos + back);
 			mgr->SetStageID(m_IsStage);
 			mgr->FindCource();
+			mgr->SetAlive(false);
 		}
 		else if (info.gimmickType == GimmickType_Wall){
 			//チョコ壁の生成
@@ -234,9 +235,8 @@ void CLevelBuilder::Build(CAudio* pAudio)
 		m_ghostObject[i]->setUserIndex(CollisionType_ChocoballTrigger);
 		m_ghostObject[i]->setUserPointer(m_chocoballMgrList[i]);
 
-		m_chocoballMgrList.clear();
-
 		//ワールドに追加。
 		SINSTANCE(CObjectManager)->FindGameObject<CBulletPhysics>(_T("BulletPhysics"))->AddCollisionObject(m_ghostObject[i]);
 	}
+	m_chocoballMgrList.clear();
 }

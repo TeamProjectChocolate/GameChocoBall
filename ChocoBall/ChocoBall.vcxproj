@@ -129,6 +129,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GamePad.h" />
+    <ClInclude Include="Icon.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="islntersect.h" />
     <ClInclude Include="JetGimmick.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="GraphicsDevice.cpp" />
+    <ClCompile Include="Icon.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Interface.cpp" />

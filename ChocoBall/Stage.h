@@ -43,5 +43,6 @@ private:
 	CEnemyManager* m_pEnemyManager;
 	Skybox m_skybox;
 	CZBufferSphere m_zbuffersphere;
+	CNumber* m_StageClearNum;
 };
 

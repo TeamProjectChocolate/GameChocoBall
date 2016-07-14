@@ -21,6 +21,8 @@ public:
 	void Initialize(D3DXVECTOR3 pos, D3DXQUATERNION rot);
 	void Update();
 	void Draw();
+	void BeginDraw();
+	void EndDraw();
 	void SetUpTechnique()override{
 		m_pEffect->SetTechnique(m_hShaderTecnique);
 	}

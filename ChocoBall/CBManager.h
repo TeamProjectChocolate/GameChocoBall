@@ -27,7 +27,7 @@ public:
 	CCBManager(){};
 	~CCBManager(){
 		for (int idx = 0; idx <= CHOCO_NUM; idx++){
-			SINSTANCE(CShadowRender)->DeleteObject(&m_Choco[idx]);
+			SINSTANCE(CShadowRender)->DeleteObjectImidieit(&m_Choco[idx]);
 		}
 	};
 	void Initialize();
