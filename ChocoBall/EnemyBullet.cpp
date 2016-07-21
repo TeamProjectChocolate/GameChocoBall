@@ -6,10 +6,12 @@
 
 CEnemyBullet::CEnemyBullet()
 {
+	m_enemybullet = nullptr;
 }
 
 CEnemyBullet::~CEnemyBullet()
 {
+
 }
 
 void CEnemyBullet::Initialize(){

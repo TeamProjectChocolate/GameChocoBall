@@ -6,11 +6,13 @@ int CPlayerBullet::EnemyDownNum = 0;
 
 CPlayerBullet::CPlayerBullet()
 {
+	m_bullet = nullptr;
 }
 
 
 CPlayerBullet::~CPlayerBullet()
 {
+
 }
 
 void CPlayerBullet::Initialize(){
