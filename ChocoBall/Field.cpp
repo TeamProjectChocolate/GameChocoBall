@@ -4,6 +4,8 @@
 #include "ObjectManager.h"
 #include "StageTable.h"
 #include "ZBufferSphere.h"
+#include "RenderContext.h"
+#include "Camera.h"
 
 CField::~CField()
 {
@@ -65,4 +67,49 @@ void CField::Draw(){
 		m_pEffect->SetTexture("g_ZMask", m_czbuffersphere->GetTexture());
 	}
 	C3DImage::Draw();
+}
+
+void CField::DrawDepth(LPD3DXEFFECT effect, const D3DXVECTOR2& FarNear){
+	D3DXMATRIX World;
+	World = m_World;
+
+	C3DImage* pPintoObject = SINSTANCE(CObjectManager)->FindGameObject<C3DImage>(_T("TEST3D"));
+	D3DXMATRIX work = pPintoObject->GetWorldMatrix();
+	D3DXMATRIX PintoWorld;
+	D3DXMatrixIdentity(&PintoWorld);
+	memcpy(&PintoWorld.m[3][0], &work.m[3][0], sizeof(float)* 4);
+
+
+	effect->SetTechnique("DepthSampling_NonAnimation_Z");
+	effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+	effect->BeginPass(0);
+
+
+	// 現在のプロジェクション行列とビュー行列をシェーダーに転送
+	effect->SetVector("g_FarNear", &(static_cast<D3DXVECTOR4>(FarNear)));
+	D3DXVECTOR3 pos = pPintoObject->GetPos();
+
+	if (m_czbuffersphere == NULL){
+		m_czbuffersphere = SINSTANCE(CObjectManager)->FindGameObject<CZBufferSphere>(_T("ZBufferSphere"));
+	}
+	if (m_czbuffersphere){
+		effect->SetTexture("g_ZMaskSample", m_czbuffersphere->GetTexture());
+	}
+
+	effect->SetVector("g_PintoPoint", &(static_cast<D3DXVECTOR4>(pos)));
+	effect->SetMatrix("g_Proj", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetProj()));
+	effect->SetMatrix("g_View", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetView()));
+	effect->SetMatrix("g_PintoWorld", &PintoWorld);// ピントを合わせるポイントを行列変換するためのワールド行列
+	effect->SetMatrix("g_World", &World/*設定したい行列へのポインタ*/);
+
+	D3DXMESHCONTAINER_DERIVED* container = GetImage()->pModel->GetContainer();
+
+	for (DWORD i = 0; i < container->NumMaterials; i++){
+		effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
+		container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
+	}
+	effect->EndPass();
+	effect->End();
+
+
 }

@@ -18,7 +18,7 @@ public:
 	/*!
 	* @brief	•`‰æB
 	*/
-	void Draw();
+	void Draw(LPDIRECT3DTEXTURE9);
 	/*!
 	* @brief	ì¬B
 	*/

@@ -19,6 +19,7 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&);
 	virtual void SetUpTechnique();	// エフェクトのテクニックを変える場合は継承先でこの関数をoverrideしてください
 	void SetFileName(LPCSTR Name){
 		CH_ASSERT(strlen(Name) < MAX_FILENAME);

@@ -132,6 +132,12 @@ void CCBManager::Draw()
 	}
 }
 
+void CCBManager::DrawDepth(LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+	for (int i = 0; i < m_numCreate; i++){
+		m_Choco[i].DrawDepth(effect,FarNear);
+	}
+}
+
 bool CCBManager::IsHit(D3DXVECTOR3 pos,D3DXVECTOR3 size)
 {
 	for (int i = 0; i < m_numCreate; i++){

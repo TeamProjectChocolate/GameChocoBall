@@ -137,16 +137,26 @@ void CObjectManager::Draw(){
 
 	int size = m_GameObjects.size();
 	
-	for (short priorty = 0; priorty <= PRIORTY::MAX_PRIORTY; priorty++){	// —Dæ“x‚Ì‚‚¢‚à‚Ì‚©‚çXV
-		
-		if (priorty == PRIORTY::OBJECT2D){
-			// 3D•`‰æ‚ªI‚í‚Á‚½‚çƒŒƒ“ƒ_ƒŠƒ“ƒOƒ^[ƒQƒbƒg‚ðŒ³‚É–ß‚·
-			SINSTANCE(CRenderContext)->RenderingEnd();
-			SINSTANCE(CRenderContext)->SetRenderingBuffer();
-		}
-
+	// 3D‚Ì•`‰æ
+	for (short priorty = 0; priorty < PRIORTY::OBJECT2D; priorty++){	// —Dæ“x‚Ì‚‚¢‚à‚Ì‚©‚çXV
 		for (int idx = 0; idx < size; idx++){
 			
+			if (m_GameObjects[idx]->object->GetAlive()){	// ¶‘¶‚µ‚Ä‚¢‚é‚à‚Ì‚Ì‚Ý•`‰æ
+				if (m_GameObjects[idx]->priority == priorty){	// Œ»Ý‚Ì—Dæ“x‚Æˆê’v‚·‚é‚à‚Ì‚ð•`‰æ
+					m_GameObjects[idx]->object->Draw();
+				}
+			}
+		}
+	}
+
+	SINSTANCE(CRenderContext)->RenderingEnd();
+
+	SINSTANCE(CRenderContext)->SetRenderingBuffer();
+
+	// 2D‚Ì•`‰æ
+	for (short priorty = PRIORTY::OBJECT2D; priorty <= PRIORTY::MAX_PRIORTY; priorty++){	// —Dæ“x‚Ì‚‚¢‚à‚Ì‚©‚çXV
+		for (int idx = 0; idx < size; idx++){
+
 			if (m_GameObjects[idx]->object->GetAlive()){	// ¶‘¶‚µ‚Ä‚¢‚é‚à‚Ì‚Ì‚Ý•`‰æ
 				if (m_GameObjects[idx]->priority == priorty){	// Œ»Ý‚Ì—Dæ“x‚Æˆê’v‚·‚é‚à‚Ì‚ð•`‰æ
 					m_GameObjects[idx]->object->Draw();

@@ -22,6 +22,7 @@ public:
 	}
 	void Update()override;
 	void Draw()override;
+	void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&)override;
 	void Initialize(D3DVECTOR pos, D3DXQUATERNION rot);
 	CBlock* GetBlocks(int x,int y){
 		return &m_blocks[y][x];

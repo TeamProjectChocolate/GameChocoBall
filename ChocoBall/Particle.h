@@ -26,6 +26,7 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&)override;
 	void SetupMatrices()override;
 	void InitParticle(CRandom&, CCamera&, const SParticleEmitParameter*, const D3DXVECTOR3&,D3DXVECTOR3);
 	// パーティクルに力を加える関数
@@ -44,6 +45,7 @@ public:
 	}
 private:
 	CPrimitive m_Primitive;
+	D3DXMATRIX mWorldViewProj;
 	CCamera* m_camera;
 	CRandom* m_random;
 	float m_life;

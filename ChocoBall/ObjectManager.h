@@ -143,6 +143,9 @@ public:
 	void Intialize();
 	void Update();
 	void Draw();
+	const vector<OBJECT_DATA*>& GetObjectList(){
+		return m_GameObjects;
+	}
 private:
 	void Add(CGameObject*,LPCSTR, PRIORTY);
 	vector<OBJECT_DATA*> m_GameObjects;	// GameObject*‚ÌƒŠƒXƒg

@@ -43,7 +43,7 @@ void CBloomRender::UpdateWeight(float dispersion)
 /*!
 * @brief	•`‰æB
 */
-void CBloomRender::Draw()
+void CBloomRender::Draw(LPDIRECT3DTEXTURE9 tex)
 {
 
 	if (m_isEnable) {
@@ -63,7 +63,7 @@ void CBloomRender::Draw()
 			m_pEffect->SetTechnique("SamplingLuminance");
 			m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
 			m_pEffect->BeginPass(0);
-			m_pEffect->SetTexture("g_scene",SINSTANCE(CRenderContext)->GetTexture());
+			m_pEffect->SetTexture("g_scene",tex);
 			m_pEffect->CommitChanges();
 
 			(*graphicsDevice()).SetVertexDeclaration(m_Primitive->GetVertexDecl());

@@ -2,6 +2,7 @@
 #include "Particle.h"
 #include "ObjectManager.h"
 #include "ParticleEmitter.h"
+#include "RenderContext.h"
 
 
 CParticle::CParticle()
@@ -79,7 +80,7 @@ void CParticle::Draw(){
 	(*graphicsDevice()).SetIndices(m_Primitive.GetIndexBuffer());
 	(*graphicsDevice()).SetVertexDeclaration(m_Primitive.GetVertexDecl());
 
-	m_pEffect->SetMatrix("World", &mWorld);
+	m_pEffect->SetMatrix("World", &mWorldViewProj);
 	m_pEffect->SetInt("Split_X", m_Split.x);
 	m_pEffect->SetInt("Split_Y", m_Split.y);
 	m_pEffect->SetInt("NowCol", m_Now.x);
@@ -111,6 +112,60 @@ void CParticle::Draw(){
 
 	(*graphicsDevice()).SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	(*graphicsDevice()).SetRenderState(D3DRS_ZWRITEENABLE, true);
+}
+
+void CParticle::DrawDepth(LPD3DXEFFECT effect, const D3DXVECTOR2& FarNear){
+	C3DImage* pPintoObject = SINSTANCE(CObjectManager)->FindGameObject<C3DImage>(_T("TEST3D"));
+	D3DXMATRIX work = pPintoObject->GetWorldMatrix();
+	D3DXMATRIX PintoWorld;
+	D3DXMatrixIdentity(&PintoWorld);
+	memcpy(&PintoWorld.m[3][0], &work.m[3][0], sizeof(float)* 4);
+
+	effect->SetTechnique("DepthSampling_Primitive");
+	effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+	effect->BeginPass(0);
+
+	// アルファテストを有効化
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	// アルファの値が一定値より大きければ合格とし、描画する。小さければピクセルが破棄される
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+	// アルファテストの境界値
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHAREF, 0x1);
+
+	(*graphicsDevice()).SetStreamSource(0, m_Primitive.GetVertexBuffer(), 0, sizeof(SShapeVertex_PT));
+	(*graphicsDevice()).SetIndices(m_Primitive.GetIndexBuffer());
+	(*graphicsDevice()).SetVertexDeclaration(m_Primitive.GetVertexDecl());
+
+	effect->SetInt("Split_X", m_Split.x);
+	effect->SetInt("Split_Y", m_Split.y);
+	effect->SetInt("NowCol", m_Now.x);
+	effect->SetInt("NowRow", m_Now.y);
+	float ratio_X = m_pImage->RealSize.x / m_pImage->UnRealSize.x;
+	float ratio_Y = m_pImage->RealSize.y / m_pImage->UnRealSize.y;
+	effect->SetFloat("Ratio_X", ratio_X);
+	effect->SetFloat("Ratio_Y", ratio_Y);
+	effect->SetVector("g_ScreenSize", &D3DXVECTOR4(SINSTANCE(CRenderContext)->GetWindowWidth(), SINSTANCE(CRenderContext)->GetWindowHeight(), 0.0f, 0.0f));
+	effect->SetVector("g_PrimSize", &D3DXVECTOR4(m_pImage->RealSize.x,m_pImage->RealSize.y, 0.0f, 0.0f));
+	effect->SetTexture("g_PrimTex", m_pImage->pTex);
+	effect->SetTexture("g_DepthSample", SINSTANCE(CRenderContext)->GetDofRender()->GetDepthTex());
+
+	effect->SetVector("g_FarNear", &(static_cast<D3DXVECTOR4>(FarNear)));
+
+	D3DXVECTOR3 pos = pPintoObject->GetPos();
+	//effect->SetFloat("g_Alpha", GetAlpha());
+	effect->SetVector("g_PintoPoint", &(static_cast<D3DXVECTOR4>(pos)));
+	effect->SetMatrix("g_Proj", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetProj()));
+	effect->SetMatrix("g_View", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetView()));
+	effect->SetMatrix("g_PintoWorld", &PintoWorld);// ピントを合わせるポイントを行列変換するためのワールド行列
+	effect->SetMatrix("g_World", &mWorldViewProj/*設定したい行列へのポインタ*/);
+
+	effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
+	(*graphicsDevice()).DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	effect->EndPass();
+	effect->End();
+
+	// アルファテスト、オフ
+	(*graphicsDevice()).SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 void CParticle::SetupMatrices(){
@@ -159,8 +214,8 @@ void CParticle::SetupMatrices(){
 		SINSTANCE(CObjectManager)->DeleteGameObject(this);
 		break;
 	}
-	D3DXMatrixMultiply(&mWorld, &mWorld, &(m_camera->GetView()));
-	D3DXMatrixMultiply(&mWorld, &mWorld, &(m_camera->GetProj()));
+	D3DXMatrixMultiply(&mWorldViewProj, &mWorld, &(m_camera->GetView()));
+	D3DXMatrixMultiply(&mWorldViewProj, &mWorldViewProj, &(m_camera->GetProj()));
 }
 
 void CParticle::InitParticle(CRandom& random, CCamera& camera, const SParticleEmitParameter* param, const D3DXVECTOR3& emitPosition,D3DXVECTOR3 dir){

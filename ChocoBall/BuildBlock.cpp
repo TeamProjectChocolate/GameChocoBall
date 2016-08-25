@@ -86,3 +86,13 @@ void CBuildBlock::Draw()
 		m_blocks[beginDrawBlockNo_h][beginDrawBlockNo_w].EndDraw();
 	}
 }
+
+void CBuildBlock::DrawDepth(LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+	for (int i = 0; i < BUILD_H; i++){
+		for (int j = 0; j < BUILD_W; j++){
+			if (m_blocks[i][j].GetAlive()){
+				m_blocks[i][j].DrawDepth(effect,FarNear);
+			}
+		}
+	}
+}

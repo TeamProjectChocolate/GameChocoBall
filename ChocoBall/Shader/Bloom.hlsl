@@ -36,6 +36,7 @@ VS_OUTPUT VSSamplingLuminance(VS_INPUT In)
 	Out.tex.y = 1.0f - Out.tex.y;
 	return Out;
 }
+
 float4 PSSamplingLuminance(VS_OUTPUT In) : COLOR
 {
 	float4 color = tex2D(g_SceneSampler, In.tex);
@@ -85,7 +86,7 @@ VS_BlurOutput VSXBlur(VS_INPUT In)
 {
 	VS_BlurOutput Out;
 	Out.pos = In.pos;
-	float2 tex = (In.pos * 0.5f) + 0.5f;;
+	float2 tex = (In.pos * 0.5f) + 0.5f;
 		tex.y = 1.0f - tex.y;
 	tex += float2(0.5 / g_luminanceTexSize.x, 0.5 / g_luminanceTexSize.y);
 	Out.tex0 = tex + float2(-1.0f / g_luminanceTexSize.x, 0.0f);

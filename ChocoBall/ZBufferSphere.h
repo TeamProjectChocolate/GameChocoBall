@@ -14,6 +14,7 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+	void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&)override;
 	void SetUpTechnique()override{
 		m_pEffect->SetTechnique("ZMask");
 	};

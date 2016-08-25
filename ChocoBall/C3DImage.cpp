@@ -8,6 +8,7 @@
 #include "ShadowRender.h"
 #include "SkinModelData.h"
 #include "AllocateHierarchy.h"
+#include "ObjectManager.h"
 
 
 	//他で使うな。
@@ -94,7 +95,6 @@ void C3DImage::AnimationUpdate(){
 	//D3DXMatrixIdentity(&m_World);	// 行列初期化
 
 	D3DXMatrixRotationQuaternion(&m_Rota, &m_transform.angle);	// クォータニオンによる回転行列の作成
-
 	//m_Rota = m_World;
 
 	D3DXMatrixScaling(&Scale, m_transform.scale.x, m_transform.scale.y, m_transform.scale.z);
@@ -136,6 +136,9 @@ void C3DImage::DrawSimple()
 {
 	DrawFrameSimple(m_pImage->pModel->GetFrameRoot());
 }
+void C3DImage::DrawDepth(LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+	DrawFrameDepth(m_pImage->pModel->GetFrameRoot(),effect,FarNear);
+}
 
 void C3DImage::DrawFrame(LPD3DXFRAME pFrame){
 	LPD3DXMESHCONTAINER pMeshContainer;
@@ -171,6 +174,24 @@ void C3DImage::DrawFrameSimple(LPD3DXFRAME pFrame){
 		DrawFrameSimple(pFrame->pFrameFirstChild);
 	}
 }
+void C3DImage::DrawFrameDepth(LPD3DXFRAME pFrame,LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+	LPD3DXMESHCONTAINER pMeshContainer;
+
+	pMeshContainer = pFrame->pMeshContainer;
+	while (pMeshContainer != nullptr){
+		DrawMeshContainerDepth(pMeshContainer, pFrame,effect,FarNear);
+		pMeshContainer = pMeshContainer->pNextMeshContainer;
+	}
+
+	if (pFrame->pFrameSibling != nullptr){
+		DrawFrameDepth(pFrame->pFrameSibling,effect,FarNear);
+	}
+
+	if (pFrame->pFrameFirstChild != nullptr){
+		DrawFrameDepth(pFrame->pFrameFirstChild,effect,FarNear);
+	}
+}
+
 void C3DImage::DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase,LPD3DXFRAME pFrameBase){
 	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 	D3DXMESHCONTAINER_DERIVED* pMeshContainer = static_cast<D3DXMESHCONTAINER_DERIVED*>(pMeshContainerBase);
@@ -189,6 +210,20 @@ void C3DImage::DrawMeshContainerSimple(LPD3DXMESHCONTAINER pMeshContainerBase, L
 	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 	NonAnimationDrawSimple(pFrame);
 }
+void C3DImage::DrawMeshContainerDepth(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase,LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+	D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
+	D3DXMESHCONTAINER_DERIVED* pMeshContainer = static_cast<D3DXMESHCONTAINER_DERIVED*>(pMeshContainerBase);
+
+	if (pMeshContainer->pSkinInfo != nullptr){
+		// スキン情報あり
+		AnimationDrawDepth(pMeshContainer, pFrame,effect,FarNear);
+	}
+	else{
+		// スキン情報なし
+		NonAnimationDrawDepth(pFrame,effect,FarNear);
+	}
+}
+
 void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame){
 
 	LPD3DXBONECOMBINATION pBoneComb;
@@ -226,6 +261,50 @@ void C3DImage::AnimationDraw(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAM
 	}
 
 }
+void C3DImage::AnimationDrawDepth(D3DXMESHCONTAINER_DERIVED* pMeshContainer, D3DXFRAME_DERIVED* pFrame,LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+
+	LPD3DXBONECOMBINATION pBoneComb;
+	effect->SetTechnique("DepthSampling_Animation");
+	pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer());
+
+	C3DImage* pPintoObject = SINSTANCE(CObjectManager)->FindGameObject<C3DImage>(_T("TEST3D"));
+	D3DXMATRIX work = pPintoObject->GetWorldMatrix();
+	D3DXMATRIX PintoWorld;
+	D3DXMatrixIdentity(&PintoWorld);
+	memcpy(&PintoWorld.m[3][0], &work.m[3][0], sizeof(float)* 4);
+
+	for (unsigned int iattrib = 0; iattrib < pMeshContainer->NumAttributeGroups; iattrib++){
+		for (DWORD iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry){
+			DWORD iMatrixIndex = pBoneComb[iattrib].BoneId[iPaletteEntry];
+			if (iMatrixIndex != UINT_MAX){
+				D3DXMatrixMultiply(
+					&g_pBoneMatrices[iPaletteEntry],
+					&pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
+					pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]
+					);
+			}
+		}
+		effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+		effect->BeginPass(0);
+
+		effect->SetVector("g_PintoPoint", &(static_cast<D3DXVECTOR4>(pPintoObject->GetPos())));
+		effect->SetVector("g_FarNear", &(static_cast<D3DXVECTOR4>(FarNear)));
+		effect->SetMatrix("g_PintoWorld", &PintoWorld);// ピントを合わせるポイントを行列変換するためのワールド行列
+		effect->SetMatrix("g_Proj", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetProj()));
+		effect->SetMatrix("g_View", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetView()));
+		effect->SetMatrixArray("g_WorldMatrixArray", g_pBoneMatrices, pMeshContainer->NumPaletteEntries);
+
+		// ボーンの数
+		effect->SetFloat("g_numBone", pMeshContainer->NumInfl);
+
+		effect->CommitChanges();
+		pMeshContainer->MeshData.pMesh->DrawSubset(iattrib);
+		effect->EndPass();
+		effect->End();
+	}
+
+}
+
 
 void C3DImage::NonAnimationDraw(D3DXFRAME_DERIVED* pFrame){
 
@@ -325,5 +404,46 @@ void C3DImage::NonAnimationDrawSimple(D3DXFRAME_DERIVED* pFrame){
 		container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
 	}
 }
+void C3DImage::NonAnimationDrawDepth(D3DXFRAME_DERIVED* pFrame,LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+
+	D3DXMATRIX World;
+	if (pFrame != nullptr){
+		if (m_UseBorn){
+			World = pFrame->CombinedTransformationMatrix;
+		}
+		else{
+			World = m_World;
+		}
+	}
+	C3DImage* pPintoObject = SINSTANCE(CObjectManager)->FindGameObject<C3DImage>(_T("TEST3D"));
+	D3DXMATRIX work = pPintoObject->GetWorldMatrix();
+	D3DXMATRIX PintoWorld;
+	D3DXMatrixIdentity(&PintoWorld);
+	memcpy(&PintoWorld.m[3][0], &work.m[3][0], sizeof(float) * 4);
 
 
+	D3DXMESHCONTAINER_DERIVED* container = m_pImage->pModel->GetContainer();
+
+	effect->SetTechnique("DepthSampling_NonAnimation");
+	effect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);
+	effect->BeginPass(0);
+
+
+	// 現在のプロジェクション行列とビュー行列をシェーダーに転送
+	effect->SetVector("g_FarNear", &(static_cast<D3DXVECTOR4>(FarNear)));
+	D3DXVECTOR3 pos = pPintoObject->GetPos();
+
+	effect->SetVector("g_PintoPoint", &(static_cast<D3DXVECTOR4>(pos)));
+	effect->SetMatrix("g_Proj", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetProj()));
+	effect->SetMatrix("g_View", &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetView()));
+	effect->SetMatrix("g_PintoWorld", &PintoWorld);// ピントを合わせるポイントを行列変換するためのワールド行列
+	effect->SetMatrix("g_World", &World/*設定したい行列へのポインタ*/);
+
+	for (DWORD i = 0; i < container->NumMaterials; i++){
+		effect->CommitChanges();						//この関数を呼び出すことで、データの転送が確定する。
+		container->MeshData.pMesh->DrawSubset(i);						// メッシュを描画
+	}
+	effect->EndPass();
+	effect->End();
+
+}

@@ -30,9 +30,10 @@ public:
 			SINSTANCE(CShadowRender)->DeleteObjectImidieit(&m_Choco[idx]);
 		}
 	};
-	void Initialize();
-	void Update();
-	void Draw();
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+	void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&)override;
 	void FindCource();
 	void NonActivate();
 

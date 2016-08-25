@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "SkinModelData.h"
 #include "Animation.h"
+#include "Primitive.h"
 
 extern UINT g_NumBoneMatricesMax;
 extern D3DXMATRIXA16* g_pBoneMatrices;
@@ -20,8 +21,9 @@ public:
 	virtual void Update()override;
 	virtual void Draw()override;
 	//DrawSubsetとSetTextureのみを行う描画関数。
-
 	void DrawSimple();
+	//深度をテクスチャに書き込む関数
+	void DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&)override;
 	virtual void SetUpTechniqueAnimation(){
 		m_pEffect->SetTechnique("NotNormalMapAnimationFresnelTec");
 	}
@@ -47,12 +49,15 @@ private:
 	void AnimationUpdate();
 	void DrawFrame(LPD3DXFRAME);
 	void DrawFrameSimple(LPD3DXFRAME pFrame);
+	void DrawFrameDepth(LPD3DXFRAME, LPD3DXEFFECT,const D3DXVECTOR2&);
 	void DrawMeshContainerSimple(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 	void DrawMeshContainer(LPD3DXMESHCONTAINER, LPD3DXFRAME);
+	void DrawMeshContainerDepth(LPD3DXMESHCONTAINER, LPD3DXFRAME, LPD3DXEFFECT,const D3DXVECTOR2&);
 	void AnimationDraw(D3DXMESHCONTAINER_DERIVED*,D3DXFRAME_DERIVED*);
+	void AnimationDrawDepth(D3DXMESHCONTAINER_DERIVED*, D3DXFRAME_DERIVED*, LPD3DXEFFECT,const D3DXVECTOR2&);
 	void NonAnimationDraw(D3DXFRAME_DERIVED*);
 	void NonAnimationDrawSimple(D3DXFRAME_DERIVED*);
-
+	void NonAnimationDrawDepth(D3DXFRAME_DERIVED*, LPD3DXEFFECT,const D3DXVECTOR2&);
 protected:
 	// 3D描画用メンバ変数
 	D3DXMATRIX m_World;		// ワールド行列

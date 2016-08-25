@@ -39,6 +39,13 @@ void CEnemyManager::Draw()
 	}
 }
 
+void CEnemyManager::DrawDepth(LPD3DXEFFECT peffect,const D3DXVECTOR2& FarNear){
+	for (short i = 0; i < numEnemy; i++)
+	{
+		Enemy[i]->DrawDepth(peffect,FarNear);
+	}
+}
+
 void CEnemyManager::DeleteAll(){
 	//for (int i = 0; i < ENEMY_MAX; i++){
 	//	if (Enemy[i] != nullptr){

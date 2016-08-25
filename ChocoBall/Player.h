@@ -28,6 +28,7 @@ public:
 		m_pEmitter = nullptr;
 		m_pCamera = nullptr;
 		parent = nullptr;
+		m_testFlg = false;
 	};
 	~CPlayer();
 
@@ -182,6 +183,8 @@ private:
 
 	CAudio* m_pAudio;//SEŽg—p
 	int m_NowCourceNo;
+
+	static bool m_testFlg;
 };
 
 extern CPlayer* g_player;

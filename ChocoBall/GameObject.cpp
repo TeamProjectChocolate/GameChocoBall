@@ -10,3 +10,6 @@ CGameObject::~CGameObject()
 void CGameObject::SetUpTechnique(){
 
 }
+void CGameObject::DrawDepth(LPD3DXEFFECT,const D3DXVECTOR2&){
+
+}

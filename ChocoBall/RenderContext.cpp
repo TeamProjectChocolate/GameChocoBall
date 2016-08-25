@@ -47,6 +47,9 @@ void CRenderContext::CreateRenderingTerget(){
 	m_bufferSize_Width = WINDOW_WIDTH * 2;
 	m_bufferSize_Height = WINDOW_HEIGHT * 2;
 
+	// 被写界深度描画用クラス
+	m_DofRender.Create();
+
 	// ブルーム描画用クラス
 	m_BloomRender.Create();
 	
@@ -71,14 +74,14 @@ void CRenderContext::RenderingStart(){
 }
 
 void CRenderContext::RenderingEnd(){
-	m_BloomRender.Draw();
-
-	// レンダリングターゲットを元に戻す
-	(*graphicsDevice()).SetRenderTarget(0, m_SavedBuffer);
-	(*graphicsDevice()).SetDepthStencilSurface(m_SavedMapZ);
+	m_BloomRender.Draw(m_pTexture);
+	m_DofRender.Draw(m_pTexture);
 }
 
 void CRenderContext::SetRenderingBuffer(){
+	// レンダリングターゲットを元に戻す
+	(*graphicsDevice()).SetRenderTarget(0, m_SavedBuffer);
+	(*graphicsDevice()).SetDepthStencilSurface(m_SavedMapZ);
 
 	m_pEffect->SetTechnique("TransformedPrim");
 	m_pEffect->Begin(NULL, D3DXFX_DONOTSAVESHADERSTATE);

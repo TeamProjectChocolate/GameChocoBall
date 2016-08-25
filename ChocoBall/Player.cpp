@@ -13,6 +13,9 @@
 #include "FireJet.h"
 
 CPlayer* g_player = NULL;
+bool CPlayer::m_testFlg = false;
+
+
 CPlayer::~CPlayer(){ 
 	int bulletMax = m_bullets.size();
 	for (int idx = 0; idx < bulletMax; idx++){
@@ -23,6 +26,10 @@ CPlayer::~CPlayer(){
 
 	m_CBManager.clear();
 	m_DeleteChocoBall.clear();
+	char text[256];
+	sprintf(text, "プレイヤーのデストラクタ\n");
+	OutputDebugString(text);
+	m_testFlg = true;
 }
 
 void CPlayer::Initialize()
@@ -308,6 +315,28 @@ void CPlayer::Update()
 void CPlayer::Draw(){
 	SetUpTechnique();
 	C3DImage::Draw();
+
+	D3DXVECTOR3 pos = m_transform.position;
+
+
+
+	//// テスト
+	//D3DXMATRIX mPos[4];
+	//ZeroMemory(mPos, sizeof(D3DXMATRIX) * 4);
+
+	//mPos[0]._11 = pos.x;
+	//mPos[0]._12 = pos.y;
+	//mPos[0]._13 = pos.z;
+	//mPos[0]._14 = 1.0f;
+
+	//D3DXMatrixMultiply(&mPos[1], &mPos[0], &m_World);
+	//mPos[1]._14 = 1.0f;
+	//D3DXMatrixMultiply(&mPos[2], &mPos[1], &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetView()));
+	//D3DXMatrixMultiply(&mPos[3], &mPos[2], &(SINSTANCE(CRenderContext)->GetCurrentCamera()->GetProj()));
+
+	//float f = (mPos[3]._13 - 1.0f) / (100.0f - 1.0f);
+
+
 
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
@@ -612,6 +641,11 @@ void CPlayer::BulletShot()
 	int size = m_bullets.size();
 	for (int idx = 0; idx < size; idx++){
 		D3DXVECTOR3 V5;
+		if (m_testFlg){
+			char text[256];
+			sprintf(text, "BreakPoint\n");
+			OutputDebugString(text);
+		}
 		V5 = m_bullets[idx]->GetPos() - m_transform.position;
 		float length = D3DXVec3Length(&V5);
 		if (length > BULLET_LENG)

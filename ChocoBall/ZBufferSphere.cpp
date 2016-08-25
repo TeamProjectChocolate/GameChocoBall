@@ -78,3 +78,7 @@ void CZBufferSphere::Draw()
 	(*graphicsDevice()).SetDepthStencilSurface(pOldZBuffer);
 
 }
+
+void CZBufferSphere::DrawDepth(LPD3DXEFFECT effect,const D3DXVECTOR2& FarNear){
+
+}
